@@ -21,6 +21,7 @@ services:
       - ../config/logback-spring.xml:/app/config/logback-spring.xml
     networks:
       - calle-service-net
+#    network_mode: bridge
 
 volumes:
     applogs:
