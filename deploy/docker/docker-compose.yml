@@ -9,7 +9,6 @@ services:
       - "50900:50900"
     environment:
       - spring.config.location=/app/config/application.yml
-#      - logging.config=/app/config/logback-spring.xml
       - logging.config=/app/config/${LOGGER_CONFIG}
     healthcheck:
       test: ["CMD", "wget", "-Y", "off", "-O", "/dev/null", "http://localhost:50900/actuator/health"]
