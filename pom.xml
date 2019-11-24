@@ -20,6 +20,7 @@
         <maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>
         <docker.image.prefix>registry.hub.docker.com/goafabric</docker.image.prefix>
         <jib-maven-plugin.version>1.7.0</jib-maven-plugin.version>
+        <maven-assembly-plugin.version>2.5.4</maven-assembly-plugin.version>
     </properties>
 
 
@@ -162,6 +163,24 @@
                                 <phase>package</phase>
                                 <goals>
                                     <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>${maven-assembly-plugin.version}</version>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptor>deploy/assembly.xml</descriptor>
+                            <finalName>${project.name}-${project.version}-deploy</finalName>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
                                 </goals>
                             </execution>
                         </executions>
