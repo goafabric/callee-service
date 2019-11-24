@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  example-service:
+    container_name: calle-service_${STACK_NAME}
+    image: goafabric/calle-service:1.0.0-SNAPSHOT
+    restart: 'no'
+    ports:
+      - "50900:50900"
+    environment:
+      - spring.config.location=/app/config/application.yml
+      - logging.config=/app/config/logback-spring.xml
+    healthcheck:
+      test: ["CMD", "wget", "-Y", "off", "-O", "/dev/null", "http://localhost:50900/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+    volumes:
+      - applogs:/app/logs
+      - ../config/application.yml:/app/config/application.yml
+      - ../config/logback-spring.xml:/app/config/logback-spring.xml
+    networks:
+      - calle-service-net
+
+volumes:
+    applogs:
+
+networks:
+  calle-service-net:
+    driver: bridge
