@@ -1,0 +1,6 @@
+- rollingfile speziell
+- memory per parameter
+- asembly
+- env
+- automatic network name
+- network join

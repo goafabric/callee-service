@@ -9,16 +9,18 @@ services:
       - "50900:50900"
     environment:
       - spring.config.location=/app/config/application.yml
+#      - logging.config=/app/config/logback-spring.xml
       - logging.config=/app/config/logback-spring.xml
     healthcheck:
       test: ["CMD", "wget", "-Y", "off", "-O", "/dev/null", "http://localhost:50900/actuator/health"]
       interval: 30s
       timeout: 10s
-      retries: 10
+      retries: 5
     volumes:
       - applogs:/app/logs
       - ../config/application.yml:/app/config/application.yml
       - ../config/logback-spring.xml:/app/config/logback-spring.xml
+      - ../config/logback-spring.xml:/app/config/logback-rollingfile-spring.xml
     networks:
       - calle-service-net
 #    network_mode: bridge
