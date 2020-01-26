@@ -3,10 +3,7 @@ package org.goafabric.calleservice.service;
 import org.goafabric.calleservice.logic.CalleeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = CalleService.RESOURCE,
@@ -24,6 +21,12 @@ public class CalleServiceBean implements CalleService {
     @Override
     @GetMapping("sayMyName")
     public String sayMyName(@RequestParam String name) {
+        return "Your name is: " + name;
+    }
+
+    @Override
+    @GetMapping("sayMyOtherName/{name}")
+    public String sayMyOtherName(@PathVariable("name") String name) {
         return "Your name is: " + name;
     }
 }
