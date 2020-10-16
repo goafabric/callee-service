@@ -3,15 +3,18 @@ server:
   tomcat.max-threads: 20
 
 management:
-  endpoint:
-    health:
-      show-details: always
-  endpoints:
-    web:
-      exposure:
-        include: "info,health"
+    endpoint:
+      health:
+        show-details: always
+    endpoints:
+      web:
+        exposure:
+          include: "info,health"
 
 info:
-  status: ok
+    status: ok
 
 
+security:
+  authentication:
+    enabled: true
