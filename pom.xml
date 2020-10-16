@@ -14,12 +14,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
+        <spring.boot.version>2.3.4.RELEASE</spring.boot.version>
 
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>
         <docker.image.prefix>registry.hub.docker.com/goafabric</docker.image.prefix>
-        <jib-maven-plugin.version>1.7.0</jib-maven-plugin.version>
+        <jib-maven-plugin.version>2.4.0</jib-maven-plugin.version>
         <maven-assembly-plugin.version>2.5.4</maven-assembly-plugin.version>
     </properties>
 
@@ -140,7 +140,7 @@
                         <version>${jib-maven-plugin.version}</version>
                         <configuration>
                             <from>
-                                <image>adoptopenjdk/openjdk11:alpine</image>
+                                <image>adoptopenjdk/openjdk11:jdk-11.0.8_10-debian-slim</image>
                             </from>
                             <to>
                                 <image>${docker.image.prefix}/${project.artifactId}</image>
@@ -152,7 +152,6 @@
                                 <jvmFlags>
                                     <jvmFlag>-Xms128m</jvmFlag>
                                     <jvmFlag>-Xmx128m</jvmFlag>
-                                    <jvmFlag>-XX:MaxMetaspaceSize=64m</jvmFlag>
                                     <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
                                 </jvmFlags>
                                 <volumes>
