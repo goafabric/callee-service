@@ -9,7 +9,7 @@
     </formats>
     <fileSets>
         <fileSet>
-            <directory>${project.basedir}/deploy</directory>
+            <directory>${project.basedir}/src/deploy</directory>
             <outputDirectory>/</outputDirectory>
         </fileSet>
     </fileSets>

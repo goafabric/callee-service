@@ -174,7 +174,7 @@
                         <version>${maven-assembly-plugin.version}</version>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
-                            <descriptor>deploy/assembly.xml</descriptor>
+                            <descriptor>src/deploy/assembly.xml</descriptor>
                             <finalName>${project.name}-${project.version}-deploy</finalName>
                         </configuration>
                         <executions>
