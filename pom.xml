@@ -140,7 +140,7 @@
                         <version>${jib-maven-plugin.version}</version>
                         <configuration>
                             <from>
-                                <image>adoptopenjdk/openjdk11:jdk-11.0.8_10-debian-slim</image>
+                                <image>adoptopenjdk/openjdk11-openj9:jdk-11.0.8_10_openj9-0.21.0-debian</image>
                             </from>
                             <to>
                                 <image>${docker.image.prefix}/${project.artifactId}</image>
