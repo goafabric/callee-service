@@ -18,8 +18,8 @@
 
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>
-        <docker.image.prefix>registry.hub.docker.com/goafabric</docker.image.prefix>
-        <jib-maven-plugin.version>2.4.0</jib-maven-plugin.version>
+        <docker.registry>docker.io/goafabric</docker.registry>
+        <jib-maven-plugin.version>2.6.0</jib-maven-plugin.version>
         <maven-assembly-plugin.version>2.5.4</maven-assembly-plugin.version>
     </properties>
 
@@ -131,58 +131,84 @@
 
     <profiles>
         <profile>
-            <id>docker-image</id>
+            <id>docker-image-amd64</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>com.google.cloud.tools</groupId>
                         <artifactId>jib-maven-plugin</artifactId>
                         <version>${jib-maven-plugin.version}</version>
-                        <configuration>
-                            <from>
-                                <image>adoptopenjdk/openjdk11-openj9:jdk-11.0.8_10_openj9-0.21.0-debian</image>
-                            </from>
-                            <to>
-                                <image>${docker.image.prefix}/${project.artifactId}</image>
-                                <tags>
-                                    <tag>${project.version}</tag>
-                                </tags>
-                            </to>
-                            <container>
-                                <jvmFlags>
-                                    <jvmFlag>-Xms128m</jvmFlag>
-                                    <jvmFlag>-Xmx128m</jvmFlag>
-                                    <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
-                                </jvmFlags>
-                                <volumes>
-                                    <volume>/tmp</volume>
-                                </volumes>
-                            </container>
-                        </configuration>
                         <executions>
                             <execution>
-                                <phase>package</phase>
+                                <id>docker-image-amd64</id>
+                                <phase>install</phase>
                                 <goals>
                                     <goal>build</goal>
                                 </goals>
+                                <configuration>
+                                    <from>
+                                        <image>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.9_11_openj9-0.23.0
+                                        </image>
+                                    </from>
+                                    <to>
+                                        <image>${docker.registry}/${project.artifactId}</image>
+                                        <tags>
+                                            <tag>${project.version}</tag>
+                                        </tags>
+                                    </to>
+                                    <container>
+                                        <jvmFlags>
+                                            <jvmFlag>-Xms256m</jvmFlag>
+                                            <jvmFlag>-Xmx256m</jvmFlag>
+                                            <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
+                                        </jvmFlags>
+                                        <volumes>
+                                            <volume>/tmp</volume>
+                                        </volumes>
+                                    </container>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>docker-image-arm64v8</id>
+            <build>
+                <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <version>${maven-assembly-plugin.version}</version>
-                        <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <descriptor>src/deploy/assembly.xml</descriptor>
-                            <finalName>${project.name}-${project.version}-deploy</finalName>
-                        </configuration>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                        <version>${jib-maven-plugin.version}</version>
                         <executions>
                             <execution>
-                                <phase>package</phase>
+                                <id>docker-image-arm64v8</id>
+                                <phase>install</phase>
                                 <goals>
-                                    <goal>single</goal>
+                                    <goal>build</goal>
                                 </goals>
+                                <configuration>
+                                    <from>
+                                        <image>adoptopenjdk/openjdk11-openj9:aarch64-debian-jdk-11.0.9_11_openj9-0.23.0</image>
+                                    </from>
+                                    <to>
+                                        <image>${docker.registry}/${project.artifactId}-arm64v8</image>
+                                        <tags>
+                                            <tag>${project.version}</tag>
+                                        </tags>
+                                    </to>
+                                    <container>
+                                        <jvmFlags>
+                                            <jvmFlag>-Xms256m</jvmFlag>
+                                            <jvmFlag>-Xmx256m</jvmFlag>
+                                            <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
+                                        </jvmFlags>
+                                        <volumes>
+                                            <volume>/tmp</volume>
+                                        </volumes>
+                                    </container>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
