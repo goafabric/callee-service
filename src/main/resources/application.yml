@@ -18,3 +18,7 @@ info:
 security:
   authentication:
     enabled: true
+
+#opentracing.jaeger.udp-sender.host: "localhost"
+#opentracing.jaeger.udp-sender.port: "14250"
+#opentracing.jaeger.service-name: "callee-service"
