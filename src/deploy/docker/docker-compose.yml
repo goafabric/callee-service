@@ -12,6 +12,8 @@ services:
       - "50900:50900"
     environment:
       - security.authentication.enabled=false
+    entrypoint: ["java","-Xms${SERVICE_MEM}","-Xmx${SERVICE_MEM}",
+                 "-Djava.security.egd=file:/dev/./urandom","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleservice.Application"]
     healthcheck:
       test: "curl -f http://localhost:50900/actuator/health || exit 1"
       interval: 15s

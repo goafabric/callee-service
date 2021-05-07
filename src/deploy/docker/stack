@@ -1,5 +1,5 @@
 #!/bin/bash
-export STACK_NAME="example-service-stack-1"
-export SERVICE_MEM="256m"
+export STACK_NAME="calle-service-stack-1"
+export SERVICE_MEM="128m"
 [[ "$(uname -m)" == "arm64" || "$(uname -m)" == "aarch64" ]] && export ARCH_SUFFIX="-arm64v8"
 ./stack_util ${STACK_NAME} $1

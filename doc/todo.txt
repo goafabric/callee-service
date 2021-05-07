@@ -1,7 +1,0 @@
-- memory via parameter
-- is it good to have anonymous tmp volumes ? shouldnt they be named ?
-
-- env
-- automatic network name
-- network join
-
