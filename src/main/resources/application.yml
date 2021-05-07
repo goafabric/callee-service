@@ -22,3 +22,13 @@ security:
 #opentracing.jaeger.udp-sender.host: "localhost"
 #opentracing.jaeger.udp-sender.port: "14250"
 #opentracing.jaeger.service-name: "callee-service"
+
+#log levels
+logging.level.root: "WARN"
+logging.level.org.goafabric: "INFO"
+
+logging.level.org.springframework: "INFO"
+logging.level.org.flywaydb.core: "INFO"
+logging.level.org.hibernate.SQL: "INFO"
+
+logging.pattern.console: "%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"

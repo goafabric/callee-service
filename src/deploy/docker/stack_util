@@ -1,0 +1,30 @@
+#!/bin/bash
+export STACK_NAME=$1
+export COMMAND=$2
+
+function func_compose {
+    echo Going $1 ...
+    docker-compose -p ${STACK_NAME} -f docker-compose.yml $1 $2 $3 $4 $5
+}
+
+if [ "${COMMAND}" = "up" ]
+then
+    func_compose up -d
+elif [ "${COMMAND}" = "down" ]
+then
+    func_compose down
+elif [ "${COMMAND}" = "pull" ]
+then
+    func_compose down
+    func_compose pull
+elif [ "${COMMAND}" = "build" ]
+then
+    func_compose build
+elif [ "${COMMAND}" = "prune" ]
+then
+    func_compose down --volumes
+else
+    echo Doing nothing !
+fi
+
+#CleanUp: docker volume prune
