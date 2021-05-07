@@ -11,7 +11,7 @@ services:
     ports:
       - "50900:50900"
     environment:
-      - security.authentication=false
+      - security.authentication.enabled=false
     healthcheck:
       test: "curl -f http://localhost:50900/actuator/health || exit 1"
       interval: 15s
