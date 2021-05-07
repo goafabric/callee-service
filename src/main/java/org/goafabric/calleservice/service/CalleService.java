@@ -2,7 +2,9 @@ package org.goafabric.calleservice.service;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping(value = CalleService.RESOURCE,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -12,9 +14,12 @@ public interface CalleService {
     @GetMapping("isAlive")
     Boolean isAlive();
 
+    @GetMapping("setSleepTime")
+    String setSleepTime(@RequestParam Long sleepTime);
+
     @GetMapping("sayMyName")
-    String sayMyName(String name);
+    String sayMyName(@RequestParam String name);
 
     @GetMapping("sayMyOtherName/{name}")
-    String sayMyOtherName(String name);
+    String sayMyOtherName(@PathVariable String name);
 }
