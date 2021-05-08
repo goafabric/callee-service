@@ -1,4 +1,3 @@
-/*
 package org.goafabric.calleservice.logic;
 
 import org.junit.jupiter.api.Test;
@@ -28,5 +27,3 @@ class CalleLogicIT {
         assertThat(calleLogic.sayMyOtherName("SlimShady")).isEqualTo("Your name is: SlimShady");
     }
 }
-
- */

@@ -245,9 +245,14 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <executions>
                             <execution>
+                                <!-- repackage will break the integration-test class-path for JUNIT5, so schedule after -->
+                                <phase>post-integration-test</phase>
                                 <goals>
                                     <goal>repackage</goal>
                                 </goals>
+                                <configuration>
+                                    <layout>JAR</layout>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
