@@ -245,13 +245,14 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <executions>
                             <execution>
-                                <!-- repackage will break the integration-test class-path for JUNIT5, so schedule after -->
-                                <phase>post-integration-test</phase>
+                                <id>repackage</id>
                                 <goals>
                                     <goal>repackage</goal>
                                 </goals>
                                 <configuration>
                                     <layout>JAR</layout>
+                                    <!-- needed for junit5 integration tests not to crash with no classdeffound because of the two jars-->
+                                    <classifier>fat</classifier>
                                 </configuration>
                             </execution>
                         </executions>
