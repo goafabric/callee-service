@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleservice.configuration;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,3 +18,5 @@ public class JaegerDisableConfiguration {
         return io.opentracing.noop.NoopTracerFactory.create();
     }
 }
+
+ */
