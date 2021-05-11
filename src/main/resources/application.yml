@@ -20,7 +20,7 @@ security:
     enabled: true
 
 #jaeger
-opentracing.jaeger.enabled: "false"
+#opentracing.jaeger.disabled: "true"
 #opentracing.jaeger.udp-sender.host: "jaeger-collector.istio-system.svc"
 #opentracing.jaeger.udp-sender.port: "14268" #"14250"
 #opentracing.jaeger.service-name: "callee-service"
