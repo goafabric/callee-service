@@ -20,9 +20,8 @@ security:
     enabled: true
 
 #jaeger
-#opentracing.jaeger.disabled: "true"
-#opentracing.jaeger.udp-sender.host: "jaeger-collector.istio-system.svc"
-#opentracing.jaeger.udp-sender.port: "14268" #"14250"
+#opentracing.jaeger.disabled: "false"
+#opentracing.jaeger.http-sender.url: "http://jaeger-collector.istio-system.svc:14268/api/traces"
 #opentracing.jaeger.service-name: "callee-service"
 
 #log levels
