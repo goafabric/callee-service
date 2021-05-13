@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
  * Created by amautsch on 26.06.2015.
  */
 
-@SpringBootApplication(exclude =
-        { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
+@SpringBootApplication(proxyBeanMethods = false,
+        exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
 public class Application {
 
     public static void main(String[] args){

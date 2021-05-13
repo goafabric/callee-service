@@ -34,4 +34,4 @@ logging.level.org.hibernate.SQL: "INFO"
 
 #logging.level.io.opentracing: "DEBUG"
 
-logging.pattern.console: "%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"
+#logging.pattern.console: "%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"
