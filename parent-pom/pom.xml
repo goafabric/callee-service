@@ -388,7 +388,7 @@
                     <plugin>
                         <groupId>org.springframework.experimental</groupId>
                         <artifactId>spring-aot-maven-plugin</artifactId>
-                        <version>${spring-native.version}</version>
+                        <version>${spring.native.version}</version>
                         <executions>
                             <execution>
                                 <id>test-generate</id>
