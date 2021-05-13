@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleservice.service;
 
 import org.springframework.http.MediaType;
@@ -23,3 +24,5 @@ public interface CalleService {
     @GetMapping("sayMyOtherName/{name}")
     String sayMyOtherName(@PathVariable String name);
 }
+
+ */
