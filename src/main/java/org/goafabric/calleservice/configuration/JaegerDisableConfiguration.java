@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 @ConditionalOnProperty(value = "opentracing.jaeger.disabled", havingValue = "true", matchIfMissing = true)
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @Slf4j
 public class JaegerDisableConfiguration {
 
