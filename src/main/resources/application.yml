@@ -9,7 +9,7 @@ management:
     endpoints:
       web:
         exposure:
-          include: "info,health"
+          include: "health,prometheus"
 
 security:
   authentication:
