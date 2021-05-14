@@ -1,5 +1,6 @@
 #1.0.2
 - Prometheus Metrics readded 
+- Jaeger and Zipkin Tryouts (deactivated)
 
 #1.0.1
 - whole docker container handling reworked
