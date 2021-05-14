@@ -33,7 +33,7 @@
 
         <!-- have to be synced manually with spring-boot-dependencies because of annotation and build processors -->
         <lombok.version>1.18.20</lombok.version>
-        <hibernate.version>5.4.29.Final</hibernate.version>
+        <hibernate.version>5.4.30.Final</hibernate.version>
         
         <!-- 3rd Party -->
         <mapstruct.version>1.4.2.Final</mapstruct.version>
@@ -404,6 +404,29 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <!-- Spring Native documentation claims that hibernate enhance is needed, seems to work without it
+                    https://docs.jboss.org/hibernate/orm/5.4/topical/html_single/bytecode/BytecodeEnhancement.html#_build_time_enhancement -->
+                    <!--
+                    <plugin>
+                        <groupId>org.hibernate.orm.tooling</groupId>
+                        <artifactId>hibernate-enhance-maven-plugin</artifactId>
+                        <version>${hibernate.version}</version>
+                        <executions>
+                            <execution>
+                                <configuration>
+                                    <failOnError>true</failOnError>
+                                    <enableLazyInitialization>true</enableLazyInitialization>
+                                    <enableDirtyTracking>true</enableDirtyTracking>
+                                    <enableAssociationManagement>true</enableAssociationManagement>
+                                    <enableExtendedEnhancement>false</enableExtendedEnhancement>
+                                </configuration>
+                                <goals>
+                                    <goal>enhance</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    -->
                     <plugin>
                         <!-- workaround for missing publish functionality, see: https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#build-image-example-publish -->
                         <groupId>org.codehaus.mojo</groupId>
