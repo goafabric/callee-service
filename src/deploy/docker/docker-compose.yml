@@ -6,7 +6,7 @@ services:
     # we need to add the STACK Name because the container name needs to be unique inside the whole docker cluster
     # and with this option we can also be tenant aware
     container_name: calle-service_${STACK_NAME}
-    image: goafabric/calle-service${ARCH_SUFFIX}:1.0.2-SNAPSHOT
+    image: goafabric/calle-service${ARCH_SUFFIX}:1.0.3-SNAPSHOT
     restart: 'no'
     ports:
       - "50900:50900"

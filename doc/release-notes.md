@@ -1,3 +1,5 @@
+#1.0.3
+
 #1.0.2
 - Prometheus Metrics readded 
 - Jaeger and Zipkin Tryouts (deactivated)
