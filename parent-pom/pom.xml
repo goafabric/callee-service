@@ -435,19 +435,35 @@
                         <version>3.0.0</version>
                         <executions>
                             <execution>
+                                <id>integrity</id>
                                 <phase>install</phase>
                                 <goals>
                                     <goal>exec</goal>
                                 </goals>
+                                <configuration>
+                                    <executable>docker</executable>
+                                    <arguments>
+                                        <argument>run</argument>
+                                        <argument>${docker.registry}/${project.artifactId}-native:${project.version}</argument>
+                                        <argument>-check-integrity</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>docker push</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>docker</executable>
+                                    <arguments>
+                                        <argument>push</argument>
+                                        <argument>${docker.registry}/${project.artifactId}-native:${project.version}</argument>
+                                    </arguments>
+                                </configuration>
                             </execution>
                         </executions>
-                        <configuration>
-                            <executable>docker</executable>
-                            <arguments>
-                                <argument>push</argument>
-                                <argument>${docker.registry}/${project.artifactId}-native:${project.version}</argument>
-                            </arguments>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
