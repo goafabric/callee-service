@@ -381,6 +381,7 @@
                                 <builder>paketobuildpacks/builder:base</builder> <!-- to get wget or curl we need build:full but this blows up the image to 700MB -->
                                 <env>
                                     <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                                    <BP_JVM_VERSION>11</BP_JVM_VERSION>
                                 </env>
                             </image>
                         </configuration>
