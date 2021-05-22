@@ -1,4 +1,6 @@
 #1.0.3
+- Upgrade to Spring Boot 2.5.0
+- Upgrade to Java Language Level 11
 
 #1.0.2
 - Prometheus Metrics readded 
