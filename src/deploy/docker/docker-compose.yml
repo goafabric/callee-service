@@ -10,6 +10,12 @@ services:
     environment:
       - TZ=Europe/Berlin
       - security.authentication.enabled=false
+      #log levels
+      - logging.level.root="WARN"
+      - logging.level.org.goafabric="INFO"
+      - logging.level.org.springframework="INFO"
+      - logging.level.org.flywaydb.core="INFO"
+      - logging.level.org.hibernate.SQL="INFO"
     entrypoint: ["java","-Xms${SERVICE_MEM}","-Xmx${SERVICE_MEM}",
                  "-Djava.security.egd=file:/dev/./urandom","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleservice.Application"]
     healthcheck:
