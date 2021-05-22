@@ -28,11 +28,7 @@ public class Application {
         return args -> {
             if ((args.length > 0) && ("-check-integrity".equals(args[0]))) {
                 log.info("##checking integrity ...");
-                if (true) {
-                    throw new IllegalStateException("yo");
-                }
                 SpringApplication.exit(context, () -> 0);
-            }
-        };
+            }};
     }
 }
