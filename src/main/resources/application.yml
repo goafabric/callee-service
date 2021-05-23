@@ -29,4 +29,6 @@ logging.level.org.springframework: "INFO"
 logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
 
+#logging.level.org.springframework.cloud.sleuth: "DEBUG"
+
 #logging.pattern.console: "%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"
