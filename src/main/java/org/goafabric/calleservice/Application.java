@@ -1,6 +1,5 @@
 package org.goafabric.calleservice;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration;
@@ -14,7 +13,6 @@ import org.springframework.context.annotation.Bean;
  * Created by amautsch on 26.06.2015.
  */
 
-@Slf4j
 @SpringBootApplication(proxyBeanMethods = false,
         exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
 public class Application {
@@ -25,10 +23,6 @@ public class Application {
 
     @Bean
     public CommandLineRunner init(ApplicationContext context) {
-        return args -> {
-            if ((args.length > 0) && ("-check-integrity".equals(args[0]))) {
-                log.info("##checking integrity ...");
-                SpringApplication.exit(context, () -> 0);
-            }};
+        return args -> {if ((args.length > 0) && ("-check-integrity".equals(args[0]))) {SpringApplication.exit(context, () -> 0);}};
     }
 }
