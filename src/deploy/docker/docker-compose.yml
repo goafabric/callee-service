@@ -1,9 +1,9 @@
 version: "3.7"
 
 services:
-  calle-service:
-    container_name: calle-service_${STACK_NAME}
-    image: goafabric/calle-service${ARCH_SUFFIX}:1.0.3-SNAPSHOT
+  callee-service:
+    container_name: callee-service_${STACK_NAME}
+    image: goafabric/callee-service${ARCH_SUFFIX}:1.0.3-SNAPSHOT
     restart: 'no'
     ports:
       - "50900:50900"
@@ -18,7 +18,7 @@ services:
     volumes:
       - applogs:/app/logs
     networks:
-      - calle-service-net
+      - callee-service-net
     environment:
       - TZ=Europe/Berlin
       - security.authentication.enabled=false
@@ -38,5 +38,5 @@ volumes:
     applogs:
 
 networks:
-  calle-service-net:
+  callee-service-net:
     driver: bridge
