@@ -15,12 +15,11 @@ security:
   authentication:
     enabled: true
 
-#jaeger
-#opentracing.jaeger.disabled: "false"
-#opentracing.jaeger.http-sender.url: "http://jaeger-collector.istio-system.svc:14268/api/traces"
-#opentracing.jaeger.service-name: "callee-service"
+#zipkin/jaeger
 #spring.zipkin.baseUrl: "http://zipkin.istio-system:9411"
 #spring.zipkin.service.name: "callee-service"
+#spring.sleuth.enabled: "true"
+#spring.zipkin.enabled: "true"
 
 #log levels
 logging.level.root: "WARN"
@@ -30,6 +29,6 @@ logging.level.org.springframework: "INFO"
 logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
 
-#logging.level.io.opentracing: "DEBUG"
+#logging.level.org.springframework.cloud.sleuth: "DEBUG"
 
 #logging.pattern.console: "%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"

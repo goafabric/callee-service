@@ -7,13 +7,13 @@
     <parent>
         <groupId>org.goafabric</groupId>
         <artifactId>goa-parent</artifactId>
-        <version>2.4.5</version>
+        <version>2.5.0</version>
         <relativePath>parent-pom/pom.xml</relativePath>
     </parent>
 
     <groupId>org.goafabric</groupId>
-    <artifactId>calle-service</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <artifactId>callee-service</artifactId>
+    <version>1.0.3-SNAPSHOT</version>
 
     <description>Demo project for Spring Boot</description>
 

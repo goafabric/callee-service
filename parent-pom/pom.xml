@@ -5,7 +5,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>goa-parent</artifactId>
-    <version>2.4.5</version>
+    <version>2.5.0</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
     <description>goa parent pom</description>
@@ -17,7 +17,7 @@
 
     <properties>
         <!-- Project -->
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,13 +27,13 @@
         <docker.registry>docker.io/goafabric</docker.registry>
 
         <!-- Spring Boot -->
-        <spring.boot.version>2.4.5</spring.boot.version>
+        <spring.boot.version>2.5.0</spring.boot.version>
         <spring.cloud.version>2020.0.2</spring.cloud.version>
         <spring.native.version>0.9.2</spring.native.version>
 
         <!-- have to be synced manually with spring-boot-dependencies because of annotation and build processors -->
         <lombok.version>1.18.20</lombok.version>
-        <hibernate.version>5.4.30.Final</hibernate.version>
+        <hibernate.version>5.4.31.Final</hibernate.version>
         
         <!-- 3rd Party -->
         <mapstruct.version>1.4.2.Final</mapstruct.version>
@@ -53,7 +53,7 @@
         <!-- Build Plugins -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>  <!-- warning tests crash with strange noclassdeffound when upgrading to failsafe 2.22.2 -->
+        <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>  <!-- warning tests crash with strange noclassdeffound when upgrading to failsafe 2.22.2 -->
         <maven-assembly-plugin.version>2.5.5</maven-assembly-plugin.version>
 
         <!-- Release and Deploy Plugins -->
@@ -93,6 +93,7 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- needs to be managed here again (vs spring boot dependendencies), because of annotation processor and lombok upgrades often surprise us with breaking changes -->
@@ -381,6 +382,7 @@
                                 <builder>paketobuildpacks/builder:base</builder> <!-- to get wget or curl we need build:full but this blows up the image to 700MB -->
                                 <env>
                                     <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                                    <BP_JVM_VERSION>11</BP_JVM_VERSION>
                                 </env>
                             </image>
                         </configuration>
@@ -434,19 +436,35 @@
                         <version>3.0.0</version>
                         <executions>
                             <execution>
+                                <id>integrity</id>
                                 <phase>install</phase>
                                 <goals>
                                     <goal>exec</goal>
                                 </goals>
+                                <configuration>
+                                    <executable>docker</executable>
+                                    <arguments>
+                                        <argument>run</argument>
+                                        <argument>${docker.registry}/${project.artifactId}-native:${project.version}</argument>
+                                        <argument>-check-integrity</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>docker push</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>docker</executable>
+                                    <arguments>
+                                        <argument>push</argument>
+                                        <argument>${docker.registry}/${project.artifactId}-native:${project.version}</argument>
+                                    </arguments>
+                                </configuration>
                             </execution>
                         </executions>
-                        <configuration>
-                            <executable>docker</executable>
-                            <arguments>
-                                <argument>push</argument>
-                                <argument>${docker.registry}/${project.artifactId}-native:${project.version}</argument>
-                            </arguments>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>

@@ -1,17 +1,13 @@
 version: "3.7"
 
 services:
-  calle-service:
-    # wee need to set the container name if one container wants to call the other by name
-    # we need to add the STACK Name because the container name needs to be unique inside the whole docker cluster
-    # and with this option we can also be tenant aware
-    container_name: calle-service_${STACK_NAME}
-    image: goafabric/calle-service${ARCH_SUFFIX}:1.0.2-SNAPSHOT
+  callee-service:
+    container_name: callee-service_${STACK_NAME}
+    image: goafabric/callee-service${ARCH_SUFFIX}:1.0.3-SNAPSHOT
     restart: 'no'
     ports:
       - "50900:50900"
-    environment:
-      - security.authentication.enabled=false
+
     entrypoint: ["java","-Xms${SERVICE_MEM}","-Xmx${SERVICE_MEM}",
                  "-Djava.security.egd=file:/dev/./urandom","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleservice.Application"]
     healthcheck:
@@ -22,13 +18,25 @@ services:
     volumes:
       - applogs:/app/logs
     networks:
-      - calle-service-net
-
-#    network_mode: bridge
+      - callee-service-net
+    environment:
+      - TZ=Europe/Berlin
+      - security.authentication.enabled=false
+      #log levels
+      - logging.level.root=WARN
+      - logging.level.org.goafabric=INFO
+      - logging.level.org.springframework=INFO
+      - logging.level.org.flywaydb.core=INFO
+      - logging.level.org.hibernate.SQL=INFO
+      #log standard settings
+      - logging.file.max-size=10MB
+      - logging.file.name=/usr/share/logs/application.log
+      - logging.pattern.file=%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n%throwable
+      #- logging.pattern.console=%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}) %msg%n%throwable
 
 volumes:
     applogs:
 
 networks:
-  calle-service-net:
+  callee-service-net:
     driver: bridge

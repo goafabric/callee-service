@@ -1,3 +1,8 @@
+#1.0.3
+- Upgrade to Spring Boot 2.5.0
+- Upgrade to Java Language Level 11 
+- Docker Build Integrity Check added
+
 #1.0.2
 - Prometheus Metrics readded 
 - Jaeger and Zipkin Tryouts (deactivated)
