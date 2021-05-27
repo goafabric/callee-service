@@ -1,3 +1,5 @@
+#1.0.4
+
 #1.0.3
 - Upgrade to Spring Boot 2.5.0
 - Upgrade to Java Language Level 11 
