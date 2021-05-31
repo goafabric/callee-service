@@ -1,6 +1,6 @@
-package org.goafabric.calleservice.service;
+package org.goafabric.calleeservice.service;
 
-import org.goafabric.calleservice.logic.CalleLogic;
+import org.goafabric.calleeservice.logic.CalleeLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,28 +12,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "callees",
         produces = MediaType.APPLICATION_JSON_VALUE)
-public class CalleServiceBean {
+public class CalleeServiceBean {
     @Autowired
-    private CalleLogic calleLogic;
+    private CalleeLogic calleeLogic;
 
     @GetMapping("isAlive")
     public Boolean isAlive() {
-        return calleLogic.isAlive();
+        return calleeLogic.isAlive();
     }
 
     @GetMapping("setSleepTime")
     public String setSleepTime(@RequestParam Long sleepTime) {
-        return calleLogic.setSleepTime(sleepTime);
+        return calleeLogic.setSleepTime(sleepTime);
     }
 
     @GetMapping("sayMyName")
     public String sayMyName (@RequestParam String name) {
-        return calleLogic.sayMyName(name);
+        return calleeLogic.sayMyName(name);
     }
 
     @GetMapping("sayMyOtherName/{name}")
     String sayMyOtherName(@PathVariable String name) {
-        return calleLogic.sayMyOtherName(name);
+        return calleeLogic.sayMyOtherName(name);
     }
 
 }

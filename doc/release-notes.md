@@ -1,4 +1,5 @@
 #1.0.4
+- Typo in Callee fixed
 
 #1.0.3
 - Upgrade to Spring Boot 2.5.0

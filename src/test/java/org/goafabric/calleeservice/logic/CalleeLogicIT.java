@@ -1,4 +1,4 @@
-package org.goafabric.calleservice.logic;
+package org.goafabric.calleeservice.logic;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,22 +8,22 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 //@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class CalleLogicIT {
+class CalleeLogicIT {
     @Autowired
-    private CalleLogic calleLogic;
+    private CalleeLogic calleeLogic;
 
     @Test
     void isAlive() {
-        assertThat(calleLogic.isAlive()).isEqualTo(Boolean.TRUE);
+        assertThat(calleeLogic.isAlive()).isEqualTo(Boolean.TRUE);
     }
 
     @Test
     void sayMyName() {
-        assertThat(calleLogic.sayMyName("SlimShady")).isEqualTo("Your name is: SlimShady");
+        assertThat(calleeLogic.sayMyName("SlimShady")).isEqualTo("Your name is: SlimShady");
     }
 
     @Test
     void sayMyOtherName() {
-        assertThat(calleLogic.sayMyOtherName("SlimShady")).isEqualTo("Your name is: SlimShady");
+        assertThat(calleeLogic.sayMyOtherName("SlimShady")).isEqualTo("Your name is: SlimShady");
     }
 }
