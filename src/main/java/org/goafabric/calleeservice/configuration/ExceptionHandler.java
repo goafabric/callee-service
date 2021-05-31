@@ -1,4 +1,4 @@
-package org.goafabric.calleservice.configuration;
+package org.goafabric.calleeservice.configuration;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

@@ -3,13 +3,13 @@ version: "3.7"
 services:
   callee-service:
     container_name: callee-service_${STACK_NAME}
-    image: goafabric/callee-service${ARCH_SUFFIX}:1.0.3-SNAPSHOT
+    image: goafabric/callee-service${ARCH_SUFFIX}:1.0.4-SNAPSHOT
     restart: 'no'
     ports:
       - "50900:50900"
 
     entrypoint: ["java","-Xms${SERVICE_MEM}","-Xmx${SERVICE_MEM}",
-                 "-Djava.security.egd=file:/dev/./urandom","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleservice.Application"]
+                 "-Djava.security.egd=file:/dev/./urandom","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleeservice.Application"]
     healthcheck:
       test: "curl -f http://localhost:50900/actuator/health || exit 1"
       interval: 15s

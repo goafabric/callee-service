@@ -1,10 +1,10 @@
-package org.goafabric.calleservice.logic;
+package org.goafabric.calleeservice.logic;
 
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CalleLogic {
+public class CalleeLogic {
     private Long sleepTime = 0l;
 
     @SneakyThrows
