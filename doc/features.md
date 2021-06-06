@@ -6,5 +6,6 @@
 
 #Not Working
 - Flyway, Annotations (e.g. @Transactional)
-- Aspects, Cache, Swagger
+- Cache, Swagger
 - Resilience4j, Tracing
+- Aspects, Jasypt
