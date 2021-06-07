@@ -15,12 +15,6 @@ security:
   authentication:
     enabled: true
 
-#zipkin/jaeger
-#spring.zipkin.baseUrl: "http://zipkin.istio-system:9411"
-#spring.zipkin.service.name: "callee-service"
-#spring.sleuth.enabled: "true"
-#spring.zipkin.enabled: "true"
-
 #log levels
 logging.level.root: "WARN"
 logging.level.org.goafabric: "INFO"
