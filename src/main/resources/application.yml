@@ -1,7 +1,9 @@
+#Spring
 server:
   port: 50900
   tomcat.max-threads: 20
 
+#Monitoring
 management:
     endpoint:
       health:
@@ -15,11 +17,11 @@ security:
   authentication:
     enabled: true
 
-#log levels
+#Logging
 logging.level.root: "WARN"
-logging.level.org.goafabric: "INFO"
-
 logging.level.org.springframework: "INFO"
+
+logging.level.org.goafabric: "INFO"
 logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
 

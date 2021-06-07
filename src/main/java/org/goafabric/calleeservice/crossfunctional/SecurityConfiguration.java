@@ -1,5 +1,5 @@
 
-package org.goafabric.calleeservice.configuration;
+package org.goafabric.calleeservice.crossfunctional;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
