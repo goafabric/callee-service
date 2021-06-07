@@ -3,7 +3,7 @@ version: "3.7"
 services:
   callee-service:
     container_name: callee-service_${STACK_NAME}
-    image: goafabric/callee-service-native:1.0.5-SNAPSHOT
+    image: goafabric/callee-service-native:1.0.6-SNAPSHOT
     restart: 'no'
     ports:
       - "50900:50900"
