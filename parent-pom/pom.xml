@@ -34,7 +34,8 @@
         <!-- have to be synced manually with spring-boot-dependencies because of annotation and build processors -->
         <lombok.version>1.18.20</lombok.version>
         <hibernate.version>5.4.31.Final</hibernate.version>
-        
+        <h2.version>1.4.200</h2.version>
+
         <!-- 3rd Party -->
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
@@ -357,6 +358,16 @@
         </profile>
         <profile>
             <id>docker-image-native</id>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>${h2.version}</version> <!-- this is basically a workaround because spring native does not honour runtime scope-->
+                        <scope>test</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
             <dependencies>
                 <dependency>
                     <groupId>org.springframework.experimental</groupId>
@@ -408,27 +419,6 @@
                     </plugin>
                     <!-- Spring Native documentation claims that hibernate enhance is needed, seems to work without it
                     https://docs.jboss.org/hibernate/orm/5.4/topical/html_single/bytecode/BytecodeEnhancement.html#_build_time_enhancement -->
-                    <!--
-                    <plugin>
-                        <groupId>org.hibernate.orm.tooling</groupId>
-                        <artifactId>hibernate-enhance-maven-plugin</artifactId>
-                        <version>${hibernate.version}</version>
-                        <executions>
-                            <execution>
-                                <configuration>
-                                    <failOnError>true</failOnError>
-                                    <enableLazyInitialization>true</enableLazyInitialization>
-                                    <enableDirtyTracking>true</enableDirtyTracking>
-                                    <enableAssociationManagement>true</enableAssociationManagement>
-                                    <enableExtendedEnhancement>false</enableExtendedEnhancement>
-                                </configuration>
-                                <goals>
-                                    <goal>enhance</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    -->
                     <plugin>
                         <!-- workaround for missing publish functionality, see: https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#build-image-example-publish -->
                         <groupId>org.codehaus.mojo</groupId>

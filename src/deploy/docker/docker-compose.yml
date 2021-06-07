@@ -3,18 +3,17 @@ version: "3.7"
 services:
   callee-service:
     container_name: callee-service_${STACK_NAME}
-    image: goafabric/callee-service${ARCH_SUFFIX}:1.0.4-SNAPSHOT
+    image: goafabric/callee-service-native:1.0.5-SNAPSHOT
     restart: 'no'
     ports:
       - "50900:50900"
-
-    entrypoint: ["java","-Xms${SERVICE_MEM}","-Xmx${SERVICE_MEM}",
-                 "-Djava.security.egd=file:/dev/./urandom","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleeservice.Application"]
-    healthcheck:
-      test: "curl -f http://localhost:50900/actuator/health || exit 1"
-      interval: 15s
-      timeout: 10s
-      retries: 5
+    entrypoint: ["/workspace/org.goafabric.calleeservice.Application", "-Xmx64m"]
+#    entrypoint: ["java","-Xms${SERVICE_MEM}","-Xmx${SERVICE_MEM}","-Djava.security.egd=file:/dev/./urandom","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleeservice.Application"]
+#    healthcheck:
+#      test: "curl -f http://localhost:50900/actuator/health || exit 1"
+#      interval: 15s
+#      timeout: 10s
+#      retries: 5
     volumes:
       - applogs:/app/logs
     networks:
@@ -22,18 +21,6 @@ services:
     environment:
       - TZ=Europe/Berlin
       - security.authentication.enabled=false
-      #log levels
-      - logging.level.root=WARN
-      - logging.level.org.goafabric=INFO
-      - logging.level.org.springframework=INFO
-      - logging.level.org.flywaydb.core=INFO
-      - logging.level.org.hibernate.SQL=INFO
-      #log standard settings
-      - logging.file.max-size=10MB
-      - logging.file.name=/usr/share/logs/application.log
-      - logging.pattern.file=%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n%throwable
-      #- logging.pattern.console=%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}) %msg%n%throwable
-
 volumes:
     applogs:
 

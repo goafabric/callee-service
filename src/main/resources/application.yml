@@ -1,7 +1,9 @@
+#Spring
 server:
   port: 50900
   tomcat.max-threads: 20
 
+#Monitoring
 management:
     endpoint:
       health:
@@ -15,20 +17,12 @@ security:
   authentication:
     enabled: true
 
-#zipkin/jaeger
-#spring.zipkin.baseUrl: "http://zipkin.istio-system:9411"
-#spring.zipkin.service.name: "callee-service"
-#spring.sleuth.enabled: "true"
-#spring.zipkin.enabled: "true"
-
-#log levels
+#Logging
 logging.level.root: "WARN"
-logging.level.org.goafabric: "INFO"
-
 logging.level.org.springframework: "INFO"
+
+logging.level.org.goafabric: "INFO"
 logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
-
-#logging.level.org.springframework.cloud.sleuth: "DEBUG"
 
 #logging.pattern.console: "%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"

@@ -4,7 +4,7 @@ export COMMAND=$2
 
 function func_compose {
     echo Going $1 ...
-    docker compose -p ${STACK_NAME} -f docker-compose.yml $1 $2 $3 $4 $5
+    docker-compose -p ${STACK_NAME} -f docker-compose.yml $1 $2 $3 $4 $5
 }
 
 if [ "${COMMAND}" = "up" ]
