@@ -25,5 +25,4 @@ public class CalleeLogic {
     public String sayMyOtherName(String name) {
         return "Your name is: " + name;
     }
-
 }
