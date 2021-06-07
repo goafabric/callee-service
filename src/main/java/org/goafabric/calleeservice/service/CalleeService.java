@@ -34,6 +34,5 @@ public class CalleeService {
     String sayMyOtherName(@PathVariable String name) {
         return calleeLogic.sayMyOtherName(name);
     }
-
 }
 
