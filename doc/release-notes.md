@@ -1,4 +1,5 @@
 #1.0.5
+- sync callee-service and calle-service-quarkus
 
 #1.0.4
 - Typo in Callee fixed
