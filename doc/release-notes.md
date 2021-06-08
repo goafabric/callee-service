@@ -1,4 +1,5 @@
 #1.0.6
+- OpenJ9 Heapdump added
 
 #1.0.5
 - sync with quarkus variant
