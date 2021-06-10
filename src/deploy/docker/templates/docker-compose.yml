@@ -4,12 +4,12 @@ services:
   callee-service:
     container_name: ${_Values_root_name}-application
     image: ${_Values_image_repository}-native:${_Values_image_tag}
-#    image: goafabric/callee-service${_Values_server_arch}:1.0.6-SNAPSHOT
+#    image: goafabric/callee-service${_Values_server_arch}:${_Values_image_tag}
     restart: 'no'
     ports:
       - "${_Values_service_port}:${_Values_service_port}"
 #    entrypoint: ["java","-Xms${_Values_resources_requests_memory}","-Xmx${_Values_resources_requests_memory}","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleeservice.Application"]
-    entrypoint: ["/workspace/org.goafabric.calleeservice.Application", "-Xmx${_Values_resources_requests_memory}"]
+    command: ["-Xmx${_Values_resources_requests_memory}"]
 
 #    healthcheck:
 #      test: "curl -f http://localhost:50900/actuator/health || exit 1"
