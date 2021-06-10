@@ -18,6 +18,7 @@ services:
 #      timeout: 10s
 #      retries: 5
     volumes:
+      - tmp:/tmp
       - applogs:/usr/share/logs
     networks:
       - ${_Values_root_name}-net
@@ -38,6 +39,7 @@ services:
       - logging.file.name=/usr/share/logs/application.log
 
 volumes:
+    tmp:
     applogs:
 
 networks:
