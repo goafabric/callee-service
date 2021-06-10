@@ -9,7 +9,7 @@ services:
     ports:
       - "${_Values_service_port}:${_Values_service_port}"
     entrypoint: ["java","-Xms${_Values_resources_requests_memory}","-Xmx${_Values_resources_requests_memory}","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleeservice.Application"]
-    command: ["-Xmx${_Values_resources_requests_memory}"]
+#    command: ["-Xmx${_Values_resources_requests_memory}"]
 
 #    we cannot active the healthcheck because base native images dont have curl
 #    healthcheck:
