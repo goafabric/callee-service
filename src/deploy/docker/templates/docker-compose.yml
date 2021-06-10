@@ -13,7 +13,7 @@ services:
 
 #    we cannot active the healthcheck because base native images dont have curl
 #    healthcheck:
-#      test: "curl -f http://localhost:50900/actuator/health || exit 1"
+#      test: "curl -f http://localhost:${_Values_service_port}/actuator/health || exit 1"
 #      interval: 10s
 #      timeout: 10s
 #      retries: 5
