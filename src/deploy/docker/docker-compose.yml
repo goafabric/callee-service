@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   callee-service:
-    container_name: ${STACK_NAME}-application
+    container_name: ${_Values_root_name}-application
     image: goafabric/callee-service-native:1.0.6-SNAPSHOT
 #    image: goafabric/callee-service${_Values_server_arch}:1.0.6-SNAPSHOT
     restart: 'no'
@@ -18,7 +18,7 @@ services:
     volumes:
       - applogs:/usr/share/logs
     networks:
-      - ${STACK_NAME}-net
+      - ${_Values_root_name}-net
     environment:
       #application
       - TZ=Europe/Berlin
