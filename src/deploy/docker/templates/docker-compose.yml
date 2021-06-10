@@ -11,7 +11,7 @@ services:
     entrypoint: ["java","-Xms${_Values_resources_requests_memory}","-Xmx${_Values_resources_requests_memory}","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleeservice.Application"]
 #    command: ["-Xmx${_Values_resources_requests_memory}"]
 
-#    we cannot active the healthcheck because base native images dont have curl
+#    we cannot active the healthcheck because base native images does not have curl
 #    healthcheck:
 #      test: "curl -f http://localhost:${_Values_service_port}/actuator/health || exit 1"
 #      interval: 10s
