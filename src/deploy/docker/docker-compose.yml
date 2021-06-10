@@ -18,7 +18,7 @@ services:
     volumes:
       - applogs:/usr/share/logs
     networks:
-      - callee-service-net
+      - ${STACK_NAME}-net
     environment:
       #application
       - TZ=Europe/Berlin
