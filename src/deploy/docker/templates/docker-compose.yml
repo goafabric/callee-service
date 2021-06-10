@@ -3,13 +3,14 @@ version: "3.7"
 services:
   callee-service:
     container_name: ${_Values_root_name}-application
-    image: goafabric/callee-service-native:1.0.6-SNAPSHOT
+    image: ${_Values_image_repository}-native:${_Values_image_tag}
 #    image: goafabric/callee-service${_Values_server_arch}:1.0.6-SNAPSHOT
     restart: 'no'
     ports:
-      - "50900:50900"
-    entrypoint: ["/workspace/org.goafabric.calleeservice.Application", "-Xmx${SERVICE_MEM}"]
-#    entrypoint: ["java","-Xms${SERVICE_MEM}","-Xmx${SERVICE_MEM}","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleeservice.Application"]
+      - "${_Values_service_port}:${_Values_service_port}"
+#    entrypoint: ["java","-Xms${_Values_resources_requests_memory}","-Xmx${_Values_resources_requests_memory}","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleeservice.Application"]
+    entrypoint: ["/workspace/org.goafabric.calleeservice.Application", "-Xmx${_Values_resources_requests_memory}"]
+
 #    healthcheck:
 #      test: "curl -f http://localhost:50900/actuator/health || exit 1"
 #      interval: 15s
@@ -22,7 +23,7 @@ services:
     environment:
       #application
       - TZ=Europe/Berlin
-      - server.port=50900
+      - server.port=${_Values_service_port}
       - tomcat.max-threads=20
       - security.authentication.enabled=false
       #monitoring

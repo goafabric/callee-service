@@ -6,7 +6,7 @@ export COMMAND=$1
 
 function func_compose {
     echo Going $1 ...
-    docker-compose -p ${_Values_root_name} -f docker-compose.yml --env-file .values $1 $2 $3 $4 $5
+    docker-compose -p ${_Values_root_name} -f ./templates/docker-compose.yml --env-file .values $1 $2 $3 $4 $5
 }
 
 if [ "${COMMAND}" = "up" ]
