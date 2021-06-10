@@ -1,4 +1,4 @@
-#Spring
+#Application
 server:
   port: 50900
   tomcat.max-threads: 20

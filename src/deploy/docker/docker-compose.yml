@@ -2,14 +2,14 @@ version: "3.7"
 
 services:
   callee-service:
-    container_name: callee-service_${STACK_NAME}
+    container_name: ${STACK_NAME}-application
     image: goafabric/callee-service-native:1.0.6-SNAPSHOT
 #    image: goafabric/callee-service${ARCH_SUFFIX}:1.0.6-SNAPSHOT
     restart: 'no'
     ports:
       - "50900:50900"
     entrypoint: ["/workspace/org.goafabric.calleeservice.Application", "-Xmx${SERVICE_MEM}"]
-#    entrypoint: ["java","-Xms${SERVICE_MEM}","-Xmx${SERVICE_MEM}","-Djava.security.egd=file:/dev/./urandom","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleeservice.Application"]
+#    entrypoint: ["java","-Xms${SERVICE_MEM}","-Xmx${SERVICE_MEM}","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleeservice.Application"]
 #    healthcheck:
 #      test: "curl -f http://localhost:50900/actuator/health || exit 1"
 #      interval: 15s
@@ -20,8 +20,21 @@ services:
     networks:
       - callee-service-net
     environment:
+      #application
       - TZ=Europe/Berlin
+      - server.port=50900
+      - tomcat.max-threads=20
       - security.authentication.enabled=false
+      #monitoring
+#      - management.endpoints.web.exposure.include="health,prometheus,heapdump"
+#      - management.endpoint.health.show-details="always"
+      #logging
+#      - logging.level.root="WARN"
+#      - logging.level.org.springframework="INFO"
+#      - logging.level.org.goafabric="INFO"
+#      - logging.file.max-size=10MB
+#      - logging.file.name="/usr/share/logs/application.log"
+
 volumes:
     applogs:
 
