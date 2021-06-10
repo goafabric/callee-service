@@ -3,7 +3,7 @@ source .values
 
 export COMMAND=$1
 
-[[ "$(uname -m)" == "arm64" || "$(uname -m)" == "aarch64" ]] && export ARCH_SUFFIX="-arm64v8"
+[[ "$(uname -m)" == "arm64" || "$(uname -m)" == "aarch64" ]] && export _Values_server_arch="-arm64v8"
 
 function func_compose {
     echo Going $1 ...
