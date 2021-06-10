@@ -16,7 +16,7 @@ services:
 #      timeout: 10s
 #      retries: 5
     volumes:
-      - applogs:/app/logs
+      - applogs:/usr/share/logs
     networks:
       - callee-service-net
     environment:
@@ -26,8 +26,8 @@ services:
       - tomcat.max-threads=20
       - security.authentication.enabled=false
       #monitoring
-      - management.endpoints.web.exposure.include=health,prometheus,heapdump
       - management.endpoint.health.show-details=always
+      - management.endpoints.web.exposure.include=health,prometheus,heapdump
       #logging
       - logging.level.root=WARN
       - logging.level.org.springframework=INFO
