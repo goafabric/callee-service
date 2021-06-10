@@ -26,14 +26,14 @@ services:
       - tomcat.max-threads=20
       - security.authentication.enabled=false
       #monitoring
-#      - management.endpoints.web.exposure.include="health,prometheus,heapdump"
-#      - management.endpoint.health.show-details="always"
+      - management.endpoints.web.exposure.include=health,prometheus,heapdump
+      - management.endpoint.health.show-details=always
       #logging
-#      - logging.level.root="WARN"
-#      - logging.level.org.springframework="INFO"
-#      - logging.level.org.goafabric="INFO"
-#      - logging.file.max-size=10MB
-#      - logging.file.name="/usr/share/logs/application.log"
+      - logging.level.root=WARN
+      - logging.level.org.springframework=INFO
+      - logging.level.org.goafabric=INFO
+      - logging.file.max-size=10MB
+      - logging.file.name=/usr/share/logs/application.log
 
 volumes:
     applogs:
