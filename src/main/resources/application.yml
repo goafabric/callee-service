@@ -1,9 +1,9 @@
-#Application
+#application
 server:
   port: 50900
   tomcat.max-threads: 20
 
-#Monitoring
+#monitoring
 management:
     endpoint:
       health:
@@ -17,7 +17,7 @@ security:
   authentication:
     enabled: true
 
-#Logging
+#logging
 logging.level.root: "WARN"
 logging.level.org.springframework: "INFO"
 
