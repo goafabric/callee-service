@@ -9,7 +9,7 @@ function func_compose {
 
 if [ "${COMMAND}" = "up" ]
 then
-    func_compose up -d
+    func_compose up
 elif [ "${COMMAND}" = "down" ]
 then
     func_compose down
