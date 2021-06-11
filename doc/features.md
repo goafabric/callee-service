@@ -3,7 +3,6 @@
   
 #Not Working
 - Swagger
-- Aspects
 
 #build times apple silicon:
 - not working
