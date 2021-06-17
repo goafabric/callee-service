@@ -1,9 +1,11 @@
-#Working 
-- Tomcat, Actuator, Prometheus, Lombok, Mapstruct, ExceptionHandler
+#Working
+- Web, Health, Prometheus, ExceptionHandler
+- Lombok, Mapstruct
 - Security
   
 #Not Working
 - Swagger
+- DurationLogger
 
 #build times apple silicon:
 - not working
