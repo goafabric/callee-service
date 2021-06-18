@@ -5,7 +5,6 @@
   
 #Not Working
 - Swagger
-- DurationLogger
 
 #build times apple silicon:
 - not working
