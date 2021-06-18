@@ -23,8 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             throws Exception {
         auth.inMemoryAuthentication()
                 .passwordEncoder(passwordEncoder())
-                .withUser("exampleuser")
-                .password(passwordEncoder().encode("cdKBo95xcTVVH3dh"))
+                .withUser("admin")
+                .password(passwordEncoder().encode("admin"))
                 .roles("STANDARD_ROLE");
     }
 
