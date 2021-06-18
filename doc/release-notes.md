@@ -1,5 +1,6 @@
 #1.0.6
 - OpenJ9 Heapdump added
+- Upgrade to Spring Boot 2.5.1 and Spring Native 0.10.0
 
 #1.0.5
 - sync with quarkus variant
