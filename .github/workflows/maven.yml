@@ -19,6 +19,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Build with Maven
-#      run: mvn -B clean verify --file pom.xml
+    - name: JVM Build
+      run: mvn -B clean install -P docker-image-amd64,docker-image-arm64v8 --file pom.xml
+    - name: Native Build
       run: mvn -B clean spring-boot:build-image install -P docker-image-native --file pom.xml

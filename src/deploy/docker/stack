@@ -1,5 +1,36 @@
 #!/bin/bash
-export STACK_NAME="callee-service-stack-1"
-export SERVICE_MEM="128m"
-[[ "$(uname -m)" == "arm64" || "$(uname -m)" == "aarch64" ]] && export ARCH_SUFFIX="-arm64v8"
-./stack_util ${STACK_NAME} $1
+source .values
+export COMMAND=$1
+
+[[ "$(uname -m)" == "arm64" || "$(uname -m)" == "aarch64" ]] && export _Values_server_arch="-arm64v8"
+
+function func_compose {
+    echo Going $1 ...
+    docker-compose -p ${_Values_root_name} -f ./templates/docker-compose.yml --env-file .values $1 $2 $3 $4 $5
+}
+
+if [ "${COMMAND}" = "up" ]
+then
+    func_compose up -d
+elif [ "${COMMAND}" = "down" ]
+then
+    func_compose down
+elif [ "${COMMAND}" = "restart" ]
+then
+    func_compose down
+    func_compose up -d
+elif [ "${COMMAND}" = "pull" ]
+then
+    func_compose down
+    func_compose pull
+elif [ "${COMMAND}" = "build" ]
+then
+    func_compose build
+elif [ "${COMMAND}" = "prune" ]
+then
+    func_compose down --volumes
+else
+    echo Doing nothing !
+fi
+
+#CleanUp: docker volume prune

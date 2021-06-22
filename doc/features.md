@@ -1,9 +1,10 @@
-#Working 
-- Tomcat, Actuator, Prometheus, Lombok, Mapstruct, ExceptionHandler
+#Working
+- Web, Health, Prometheus, ExceptionHandler
+- Lombok, Mapstruct
+- Security
   
 #Not Working
 - Swagger
-- Aspects
 
 #build times apple silicon:
 - not working
@@ -11,4 +12,4 @@
 #build times github:
 - console: 4m
 - web: 8m
-- jpa: 12m
+- jpa: 15m

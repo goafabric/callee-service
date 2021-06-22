@@ -1,0 +1,50 @@
+version: "3.7"
+
+services:
+  callee-service:
+    container_name: ${_Values_root_name}-application
+    image:  ${_Values_image_repository}${_Values_server_arch}:${_Values_image_tag}
+#    image: ${_Values_image_repository}-native:${_Values_image_tag}
+    restart: 'no'
+    ports:
+      - "${_Values_service_port}:${_Values_service_port}"
+    entrypoint: ["java","-Xms${_Values_resources_requests_memory}","-Xmx${_Values_resources_requests_memory}","-cp","/app/resources:/app/classes:/app/libs/*","org.goafabric.calleeservice.Application"]
+#    command: ["-Xmx${_Values_resources_requests_memory}"]
+
+#    we cannot active the healthcheck because base native images does not have curl
+#    healthcheck:
+#      test: "curl -f http://localhost:${_Values_service_port}/actuator/health || exit 1"
+#      interval: 10s
+#      timeout: 10s
+#      retries: 5
+    volumes:
+      - tmp:/tmp
+      - applogs:/usr/share/logs
+    networks:
+      - ${_Values_root_name}-net
+    environment:
+      #application
+      - TZ=Europe/Berlin
+      - server.port=${_Values_service_port}
+      - tomcat.max-threads=20
+      - security.authentication.enabled=true
+      #monitoring
+      - management.endpoint.health.show-details=always
+      - management.endpoints.web.exposure.include=health,prometheus,heapdump
+      #log levels
+      - logging.level.root=WARN
+      - logging.level.org.springframework=INFO
+      - logging.level.org.goafabric=INFO
+      - logging.level.org.flywaydb.core="INFO"
+      - logging.level.org.hibernate.SQL="INFO"
+      #log file settings
+      - logging.file.max-size=10MB
+      - logging.file.name=/usr/share/logs/application.log
+
+volumes:
+    tmp:
+    applogs:
+
+networks:
+  callee-service-net:
+    driver: bridge
