@@ -1,5 +1,5 @@
 #1.0.7
-- upgrade to 1.0.7
+- upgrade to Spring Boot 2.52 and Spring Native 0.10.1
 
 #1.0.6
 - OpenJ9 Heapdump added
