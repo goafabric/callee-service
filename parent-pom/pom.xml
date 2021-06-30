@@ -95,7 +95,6 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
-                <scope>provided</scope>
             </dependency>
 
             <!-- needs to be managed here again (vs spring boot dependendencies), because of annotation processor and lombok upgrades often surprise us with breaking changes -->
