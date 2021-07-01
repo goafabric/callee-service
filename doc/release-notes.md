@@ -1,3 +1,7 @@
+#1.0.7
+- upgrade to Spring Boot 2.52 and Spring Native 0.10.1
+- added CalleService.sayMyName instead of isAlive
+
 #1.0.6
 - OpenJ9 Heapdump added
 - Upgrade to Spring Boot 2.5.1 and Spring Native 0.10.0

@@ -5,7 +5,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>goa-parent</artifactId>
-    <version>2.5.1</version>
+    <version>2.5.2</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
     <description>goa parent pom</description>
@@ -27,9 +27,9 @@
         <docker.registry>docker.io/goafabric</docker.registry>
 
         <!-- Spring Boot -->
-        <spring.boot.version>2.5.1</spring.boot.version>
+        <spring.boot.version>2.5.2</spring.boot.version>
         <spring.cloud.version>2020.0.2</spring.cloud.version>
-        <spring.native.version>0.10.0</spring.native.version>
+        <spring.native.version>0.10.1</spring.native.version>
 
         <!-- have to be synced manually with spring-boot-dependencies because of annotation and build processors -->
         <lombok.version>1.18.20</lombok.version>
@@ -95,7 +95,6 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
-                <scope>provided</scope>
             </dependency>
 
             <!-- needs to be managed here again (vs spring boot dependendencies), because of annotation processor and lombok upgrades often surprise us with breaking changes -->
@@ -360,14 +359,16 @@
         <profile>
             <id>docker-image-native</id>
             <dependencyManagement>
+                <!--
                 <dependencies>
                     <dependency>
                         <groupId>com.h2database</groupId>
                         <artifactId>h2</artifactId>
-                        <version>${h2.version}</version> <!-- this is basically a workaround because spring native does not honour runtime scope-->
+                        <version>${h2.version}</version>
                         <scope>test</scope>
                     </dependency>
                 </dependencies>
+                -->
             </dependencyManagement>
             <dependencies>
                 <dependency>
