@@ -2,8 +2,7 @@
 - Web, Health, Prometheus, ExceptionHandler
 - Lombok, Mapstruct
 - Security
-  
-#Not Working
+
 - Swagger
 
 #build times apple silicon:
