@@ -13,6 +13,9 @@ management:
         exposure:
           include: "health,prometheus,heapdump"
 
+springdoc.swagger-ui.path: "/swagger-ui.html"
+
+#security
 security:
   authentication:
     enabled: true
