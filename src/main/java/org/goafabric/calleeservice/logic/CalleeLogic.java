@@ -1,6 +1,7 @@
 package org.goafabric.calleeservice.logic;
 
 import lombok.SneakyThrows;
+import org.goafabric.calleeservice.service.Callee;
 import org.springframework.stereotype.Component;
 
 @Component
