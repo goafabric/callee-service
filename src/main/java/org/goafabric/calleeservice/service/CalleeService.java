@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "callees", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CalleeService {
     @Autowired
-    private CalleeLogic calleeLogic;
+    CalleeLogic calleeLogic;
 
     @GetMapping("sayMyName")
     public Callee sayMyName (@RequestParam String name) {
