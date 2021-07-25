@@ -15,11 +15,6 @@
     <artifactId>callee-service</artifactId>
     <version>1.0.8-SNAPSHOT</version>
 
-    <description>Demo project for Spring Boot</description>
-
-    <properties>
-    </properties>
-
     <dependencies>
         <!-- web -->
         <dependency>
