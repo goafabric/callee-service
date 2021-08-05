@@ -3,6 +3,8 @@
 - Lombok, Mapstruct
 - Security
 
+- Swagger
+
 #build times apple silicon:
 - not working
 
