@@ -41,8 +41,8 @@
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
         <joda-time.version>2.10.10</joda-time.version>
 
-        <springfox-swagger.version>${exec-maven-plugin.version}</springfox-swagger.version>
-
+        <springdoc-openapi-ui.version>1.5.10</springdoc-openapi-ui.version>
+        
         <resilience4j.version>1.7.0</resilience4j.version>
         <jasypt-spring-boot-starter.version>3.0.3</jasypt-spring-boot-starter.version>
         <jasypt-hibernate5.version>1.9.3</jasypt-hibernate5.version>
@@ -115,6 +115,12 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
                 <version>${springfox-swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc-openapi-ui.version}</version>
             </dependency>
 
             <dependency>
