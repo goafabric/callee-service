@@ -13,7 +13,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>callee-service</artifactId>
-    <version>1.0.8-jaeger-SNAPSHOT</version>
+    <version>1.0.8-SNAPSHOT</version>
 
     <dependencies>
         <!-- web -->
