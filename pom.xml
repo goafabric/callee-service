@@ -13,7 +13,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>callee-service</artifactId>
-    <version>1.0.8-SNAPSHOT</version>
+    <version>1.0.8-jaeger-SNAPSHOT</version>
 
     <dependencies>
         <!-- web -->
@@ -36,6 +36,16 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
         </dependency>
 
         <!-- code generation -->

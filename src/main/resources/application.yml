@@ -15,6 +15,11 @@ management:
 
 springdoc.swagger-ui.path: /swagger-ui/index.html
 
+#jaeger / zipkin
+spring.zipkin.service.name: "person-service"
+spring.sleuth.enabled: false
+spring.zipkin.enabled: false
+
 #security
 security:
   authentication:
