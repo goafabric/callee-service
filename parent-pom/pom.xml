@@ -44,8 +44,7 @@
         <springdoc-openapi-ui.version>1.5.10</springdoc-openapi-ui.version>
         
         <resilience4j.version>1.7.0</resilience4j.version>
-        <jasypt-spring-boot-starter.version>3.0.3</jasypt-spring-boot-starter.version>
-        <jasypt-hibernate5.version>1.9.3</jasypt-hibernate5.version>
+        <jasypt.version>1.9.3</jasypt.version>
         <opentracing-spring-jaeger-web-starter.version>3.2.2</opentracing-spring-jaeger-web-starter.version>
 
         <!-- Test -->
@@ -110,29 +109,11 @@
                 <artifactId>joda-time</artifactId>
                 <version>${joda-time.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>${springfox-swagger.version}</version>
-            </dependency>
-
+            
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc-openapi-ui.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.ulisesbocchio</groupId>
-                <artifactId>jasypt-spring-boot-starter</artifactId>
-                <version>${jasypt-spring-boot-starter.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.jasypt</groupId>
-                <artifactId>jasypt-hibernate5</artifactId>
-                <version>${jasypt-hibernate5.version}</version>
             </dependency>
 
             <dependency>
@@ -146,6 +127,19 @@
                 <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
                 <version>${opentracing-spring-jaeger-web-starter.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.jasypt</groupId>
+                <artifactId>jasypt</artifactId>
+                <version>${jasypt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jasypt</groupId>
+                <artifactId>jasypt-hibernate5</artifactId>
+                <version>${jasypt.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.databene</groupId>
