@@ -383,23 +383,33 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <version>${spring.boot.version}</version>
-                        <configuration>
-                            <excludes>
-                                <exclude>
-                                    <groupId>org.projectlombok</groupId>
-                                    <artifactId>lombok</artifactId>
-                                </exclude>
-                            </excludes>
-                            <image>
-                                <name>${docker.registry}/${project.artifactId}-native:${project.version}</name>
-                                <builder>paketobuildpacks/builder:base</builder> <!-- to get wget or curl we need build:full but this blows up the image to 700MB -->
-                                <env>
-                                    <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
-                                    <BP_JVM_VERSION>11</BP_JVM_VERSION>
-                                    <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>--enable-http</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
-                                </env>
-                            </image>
-                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>build-image</id>
+                                <goals>
+                                    <goal>build-image</goal>
+                                </goals>
+                                <configuration>
+                                    <excludes>
+                                        <exclude>
+                                            <groupId>org.projectlombok</groupId>
+                                            <artifactId>lombok</artifactId>
+                                        </exclude>
+                                    </excludes>
+                                    <image>
+                                        <name>${docker.registry}/${project.artifactId}-native:${project.version}</name>
+                                        <builder>paketobuildpacks/builder:base
+                                        </builder> <!-- to get wget or curl we need build:full but this blows up the image to 700MB -->
+                                        <env>
+                                            <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                                            <BP_JVM_VERSION>11</BP_JVM_VERSION>
+                                            <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>--enable-http</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                                        </env>
+                                        <pullPolicy>IF_NOT_PRESENT</pullPolicy>
+                                    </image>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.springframework.experimental</groupId>
