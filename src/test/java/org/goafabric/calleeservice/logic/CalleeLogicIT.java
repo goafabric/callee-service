@@ -13,12 +13,14 @@ class CalleeLogicIT {
 
     @Test
     void sayMyName() {
-        assertThat(calleeLogic.sayMyName("Heisenberg")).isNotNull();
+        assertThat(calleeLogic.sayMyName("Heisenberg").getMessage())
+                .isNotNull().isEqualTo("Your name is: Heisenberg");
     }
 
     @Test
     void sayMyOtherName() {
-        assertThat(calleeLogic.sayMyOtherName("SlimShady")).isNotNull();
+        assertThat(calleeLogic.sayMyOtherName("SlimShady").getMessage())
+                .isNotNull().isEqualTo("Your name is: SlimShady");
     }
 
     @Test

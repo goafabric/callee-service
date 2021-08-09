@@ -1,3 +1,8 @@
+#1.1.0
+- Upgrade to Spring Boot 2.5.3 / Spring Native 10.0.2
+- Swagger added
+- spring sleuth for jaeger added
+
 #1.0.7
 - upgrade to Spring Boot 2.52 and Spring Native 0.10.1
 - added CalleService.sayMyName instead of isAlive

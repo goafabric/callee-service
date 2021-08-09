@@ -1,6 +1,5 @@
 package org.goafabric.calleeservice.service;
 
-import org.goafabric.calleeservice.logic.Callee;
 import org.goafabric.calleeservice.logic.CalleeLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

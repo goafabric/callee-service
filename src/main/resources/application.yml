@@ -13,6 +13,14 @@ management:
         exposure:
           include: "health,prometheus,heapdump"
 
+springdoc.swagger-ui.path: /swagger-ui/index.html
+
+#jaeger / zipkin
+spring.zipkin.service.name: "person-service"
+spring.sleuth.enabled: false
+spring.zipkin.enabled: false
+
+#security
 security:
   authentication:
     enabled: true
@@ -26,3 +34,4 @@ logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
 
 #logging.pattern.console: "%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"
+

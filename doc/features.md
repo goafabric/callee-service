@@ -1,10 +1,11 @@
 #Working
-- Web, Health, Prometheus, ExceptionHandler
+- Web, ExceptionHandler
 - Lombok, Mapstruct
-- Security
-  
-#Not Working
+
+- Health, Prometheus
 - Swagger
+
+- Security
 
 #build times apple silicon:
 - not working
