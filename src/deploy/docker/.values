@@ -1,7 +1,7 @@
 _Values_root_name="callee-service"
 
 _Values_image_repository=goafabric/callee-service
-_Values_image_tag=1.1.0-SNAPSHOT
+_Values_image_tag=1.1.1-SNAPSHOT
 
 _Values_service_port=50900
 _Values_resources_requests_memory=128M
