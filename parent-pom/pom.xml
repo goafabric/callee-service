@@ -93,6 +93,12 @@
             </dependency>
 
             <dependency>
+                <groupId>org.springframework.experimental</groupId>
+                <artifactId>spring-native</artifactId>
+                <version>${spring.native.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
@@ -375,7 +381,6 @@
                 <dependency>
                     <groupId>org.springframework.experimental</groupId>
                     <artifactId>spring-native</artifactId>
-                    <version>${spring.native.version}</version>
                 </dependency>
             </dependencies>
 
