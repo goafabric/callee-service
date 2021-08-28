@@ -75,6 +75,7 @@
         </dependency>
     </dependencies>
 
+    <!-- application build -->
     <build>
         <plugins>
             <plugin>
