@@ -13,7 +13,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>callee-service</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.1-plugins-SNAPSHOT</version>
 
     <dependencies>
         <!-- web -->
@@ -81,4 +81,16 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
