@@ -5,7 +5,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>goa-parent</artifactId>
-    <version>2.5.3</version>
+    <version>2.5.4</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
     <description>goa parent pom</description>
@@ -27,7 +27,7 @@
         <docker.registry>docker.io/goafabric</docker.registry>
 
         <!-- Spring Boot -->
-        <spring.boot.version>2.5.3</spring.boot.version>
+        <spring.boot.version>2.5.4</spring.boot.version>
         <spring.cloud.version>2020.0.3</spring.cloud.version>
         <spring.native.version>0.10.2</spring.native.version>
 
