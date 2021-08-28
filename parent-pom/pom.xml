@@ -29,7 +29,7 @@
         <!-- Spring Boot -->
         <spring.boot.version>2.5.4</spring.boot.version>
         <spring.cloud.version>2020.0.3</spring.cloud.version>
-        <spring.native.version>0.10.2</spring.native.version>
+        <spring.native.version>0.10.3</spring.native.version>
 
         <!-- have to be synced manually with spring-boot-dependencies because of annotation and build processors -->
         <lombok.version>1.18.20</lombok.version>
