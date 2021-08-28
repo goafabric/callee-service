@@ -89,6 +89,7 @@
         </plugins>
     </build>
 
+    <!-- native application build -->
     <profiles>
         <profile>
             <id>docker-image-native</id>
