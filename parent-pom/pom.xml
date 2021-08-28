@@ -51,7 +51,8 @@
         <!-- Build Plugins -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>  <!-- warning tests crash with strange noclassdeffound when upgrading to failsafe 2.22.2 -->
+        <maven-failsafe-plugin.version>2.22.2
+        </maven-failsafe-plugin.version>  <!-- warning tests crash with strange noclassdeffound when upgrading to failsafe 2.22.2 -->
         <maven-assembly-plugin.version>2.5.5</maven-assembly-plugin.version>
         <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
 
@@ -68,7 +69,7 @@
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.language>java</sonar.language>
 
-        <!-- Deploy -->
+        <!-- Deploy disabled here-->
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
@@ -109,7 +110,7 @@
                 <artifactId>joda-time</artifactId>
                 <version>${joda-time.version}</version>
             </dependency>
-            
+
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
@@ -139,7 +140,7 @@
                 <artifactId>jasypt-hibernate5</artifactId>
                 <version>${jasypt.version}</version>
             </dependency>
-            
+
         </dependencies>
     </dependencyManagement>
 
@@ -278,44 +279,47 @@
             <id>docker-image-amd64</id>
             <build>
                 <pluginManagement>
-                <plugins>
-                    <plugin>
-                        <groupId>com.google.cloud.tools</groupId>
-                        <artifactId>jib-maven-plugin</artifactId>
-                        <version>${jib-maven-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>docker-image-amd64</id> <!-- we need a unique id ALSO here, otherwise maven will only deploy one of the profiles if both are selected -->
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>build</goal>
-                                </goals>
-                                <configuration>
-                                    <from>
-                                        <image>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.10_9_openj9-0.24.0</image>
-                                        <!-- <image>adoptopenjdk/openjdk16-openj9:x86_64-debian-jre-16_36_openj9-0.25.0</image> -->
-                                    </from>
-                                    <to>
-                                        <image>${docker.registry}/${project.artifactId}</image>
-                                        <tags>
-                                            <tag>${project.version}</tag>
-                                        </tags>
-                                    </to>
-                                    <container>
-                                        <jvmFlags>
-                                            <jvmFlag>-Xms256m</jvmFlag>
-                                            <jvmFlag>-Xmx256m</jvmFlag>
-                                            <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
-                                        </jvmFlags>
-                                        <volumes>
-                                            <volume>/tmp</volume>
-                                        </volumes>
-                                    </container>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.google.cloud.tools</groupId>
+                            <artifactId>jib-maven-plugin</artifactId>
+                            <version>${jib-maven-plugin.version}</version>
+                            <executions>
+                                <execution>
+                                    <id>docker-image-amd64
+                                    </id> <!-- we need a unique id ALSO here, otherwise maven will only deploy one of the profiles if both are selected -->
+                                    <phase>deploy</phase>
+                                    <goals>
+                                        <goal>build</goal>
+                                    </goals>
+                                    <configuration>
+                                        <from>
+                                            <image>
+                                                adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.10_9_openj9-0.24.0
+                                            </image>
+                                            <!-- <image>adoptopenjdk/openjdk16-openj9:x86_64-debian-jre-16_36_openj9-0.25.0</image> -->
+                                        </from>
+                                        <to>
+                                            <image>${docker.registry}/${project.artifactId}</image>
+                                            <tags>
+                                                <tag>${project.version}</tag>
+                                            </tags>
+                                        </to>
+                                        <container>
+                                            <jvmFlags>
+                                                <jvmFlag>-Xms256m</jvmFlag>
+                                                <jvmFlag>-Xmx256m</jvmFlag>
+                                                <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
+                                            </jvmFlags>
+                                            <volumes>
+                                                <volume>/tmp</volume>
+                                            </volumes>
+                                        </container>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
                 </pluginManagement>
             </build>
         </profile>
@@ -323,44 +327,45 @@
             <id>docker-image-arm64v8</id>
             <build>
                 <pluginManagement>
-                <plugins>
-                    <plugin>
-                        <groupId>com.google.cloud.tools</groupId>
-                        <artifactId>jib-maven-plugin</artifactId>
-                        <version>${jib-maven-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>docker-image-arm64v8</id> <!-- we need a unique id ALSO here, otherwise maven will only deploy one of the profiles if both are selected -->
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>build</goal>
-                                </goals>
-                                <configuration>
-                                    <from>
-                                        <image>adoptopenjdk/openjdk11-openj9:aarch64-debian-jre-11.0.10_9_openj9-0.24.0</image>
-                                        <!-- <image>adoptopenjdk/openjdk16-openj9:aarch64-debian-jre-16_36_openj9-0.25.0</image> -->
-                                    </from>
-                                    <to>
-                                        <image>${docker.registry}/${project.artifactId}-arm64v8</image>
-                                        <tags>
-                                            <tag>${project.version}</tag>
-                                        </tags>
-                                    </to>
-                                    <container>
-                                        <jvmFlags>
-                                            <jvmFlag>-Xms256m</jvmFlag>
-                                            <jvmFlag>-Xmx256m</jvmFlag>
-                                            <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
-                                        </jvmFlags>
-                                        <volumes>
-                                            <volume>/tmp</volume>
-                                        </volumes>
-                                    </container>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.google.cloud.tools</groupId>
+                            <artifactId>jib-maven-plugin</artifactId>
+                            <version>${jib-maven-plugin.version}</version>
+                            <executions>
+                                <execution>
+                                    <id>docker-image-arm64v8
+                                    </id> <!-- we need a unique id ALSO here, otherwise maven will only deploy one of the profiles if both are selected -->
+                                    <phase>deploy</phase>
+                                    <goals>
+                                        <goal>build</goal>
+                                    </goals>
+                                    <configuration>
+                                        <from>
+                                            <image>adoptopenjdk/openjdk11-openj9:aarch64-debian-jre-11.0.10_9_openj9-0.24.0</image>
+                                            <!-- <image>adoptopenjdk/openjdk16-openj9:aarch64-debian-jre-16_36_openj9-0.25.0</image> -->
+                                        </from>
+                                        <to>
+                                            <image>${docker.registry}/${project.artifactId}-arm64v8</image>
+                                            <tags>
+                                                <tag>${project.version}</tag>
+                                            </tags>
+                                        </to>
+                                        <container>
+                                            <jvmFlags>
+                                                <jvmFlag>-Xms256m</jvmFlag>
+                                                <jvmFlag>-Xmx256m</jvmFlag>
+                                                <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
+                                            </jvmFlags>
+                                            <volumes>
+                                                <volume>/tmp</volume>
+                                            </volumes>
+                                        </container>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
                 </pluginManagement>
             </build>
         </profile>
@@ -399,7 +404,8 @@
                                         <env>
                                             <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
                                             <BP_JVM_VERSION>11</BP_JVM_VERSION>
-                                            <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>--enable-http</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                                            <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>--enable-http
+                                            </BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                         </env>
                                         <pullPolicy>IF_NOT_PRESENT</pullPolicy>
                                     </image>
@@ -444,7 +450,8 @@
                                     <executable>docker</executable>
                                     <arguments>
                                         <argument>run</argument>
-                                        <argument>${docker.registry}/${project.artifactId}-native:${project.version}</argument>
+                                        <argument>${docker.registry}/${project.artifactId}-native:${project.version}
+                                        </argument>
                                         <argument>-check-integrity</argument>
                                     </arguments>
                                 </configuration>
@@ -459,7 +466,8 @@
                                     <executable>docker</executable>
                                     <arguments>
                                         <argument>push</argument>
-                                        <argument>${docker.registry}/${project.artifactId}-native:${project.version}</argument>
+                                        <argument>${docker.registry}/${project.artifactId}-native:${project.version}
+                                        </argument>
                                     </arguments>
                                 </configuration>
                             </execution>
