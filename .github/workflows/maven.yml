@@ -14,11 +14,11 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}   
     - uses: actions/checkout@v2
-    - name: Set up JDK 11
+    - name: Set up JDK 
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
-        distribution: 'adopt'
+        distribution: 'temurin'
+        java-version: '17'
     - name: JVM Build
       run: mvn -B clean deploy -P docker-image-amd64,docker-image-arm64v8 --file pom.xml
     - name: Native Build
