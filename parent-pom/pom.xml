@@ -301,7 +301,7 @@
                                             <image>
                                                 adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.10_9_openj9-0.24.0
                                             </image>
-                                            <!-- <image>adoptopenjdk/openjdk16-openj9:x86_64-debian-jre-16_36_openj9-0.25.0</image> -->
+                                            <!-- <image>eclipse-temurin:17-jdk-focal@sha256:a576b23ab2bdcf3746b10ce9a83004798bf4d9bc9d62d926ffe2c987a7dd3c2b</image> -->
                                         </from>
                                         <to>
                                             <image>${docker.registry}/${project.artifactId}</image>
@@ -347,7 +347,7 @@
                                     <configuration>
                                         <from>
                                             <image>adoptopenjdk/openjdk11-openj9:aarch64-debian-jre-11.0.10_9_openj9-0.24.0</image>
-                                            <!-- <image>adoptopenjdk/openjdk16-openj9:aarch64-debian-jre-16_36_openj9-0.25.0</image> -->
+                                            <!-- <image>eclipse-temurin:17-jdk-focal@sha256:c6860cf252999c6b22b69a88fd5b80e6da26684b789ed861db31247e469969c9</image> -->
                                         </from>
                                         <to>
                                             <image>${docker.registry}/${project.artifactId}-arm64v8</image>
