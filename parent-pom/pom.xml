@@ -46,6 +46,7 @@
         <joda-time.version>2.10.10</joda-time.version>
         <resilience4j.version>1.7.0</resilience4j.version>
         <jasypt.version>1.9.3</jasypt.version>
+        <keycloak-adapter-bom.version>15.0.2</keycloak-adapter-bom.version>
 
         <!-- Build Plugins -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -87,6 +88,14 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.keycloak.bom</groupId>
+                <artifactId>keycloak-adapter-bom</artifactId>
+                <version>${keycloak-adapter-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
