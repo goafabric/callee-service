@@ -48,7 +48,8 @@
         <jasypt.version>1.9.3</jasypt.version>
         <keycloak-adapter-bom.version>15.0.2</keycloak-adapter-bom.version>
 
-        <!-- Build Plugins -->
+        <!--                   Build and Build Plugins                   -->
+
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
