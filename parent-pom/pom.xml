@@ -16,14 +16,14 @@
     </scm>
 
     <properties>
-        <!-- Project -->
+        <!--                   Project                                 -->
         <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- Docker -->
         <docker.registry>docker.io/goafabric</docker.registry>
 
+        <!--                   Dependency Management                   -->
         <!-- Spring Boot -->
         <spring.boot.version>2.5.5</spring.boot.version>
         <spring.cloud.version>2020.0.3</spring.cloud.version>
