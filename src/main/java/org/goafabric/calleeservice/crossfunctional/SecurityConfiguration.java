@@ -13,7 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Configuration(proxyBeanMethods = false)
+@Configuration//(proxyBeanMethods = false)
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @ConditionalOnProperty(value = "security.authentication.enabled", matchIfMissing = false)
