@@ -12,17 +12,17 @@ public class CalleeService {
     CalleeLogic calleeLogic;
 
     @GetMapping("sayMyName")
-    public Callee sayMyName (@RequestParam String name) {
+    public Callee sayMyName (@RequestParam("name") String name) {
         return calleeLogic.sayMyName(name);
     }
 
     @GetMapping("sayMyOtherName/{name}")
-    public Callee sayMyOtherName(@PathVariable String name) {
+    public Callee sayMyOtherName(@PathVariable("name") String name) {
         return calleeLogic.sayMyOtherName(name);
     }
 
     @GetMapping("setSleepTime")
-    public Callee setSleepTime(@RequestParam Long sleepTime) {
+    public Callee setSleepTime(@RequestParam("sleepTime") Long sleepTime) {
         return calleeLogic.setSleepTime(sleepTime);
     }
 
