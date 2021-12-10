@@ -7,7 +7,7 @@
 
 - OpenJ9HeapDump Endpoint removed, as it is now supported by Spring Boot 2.6.0                               
 
-- Spring REST Variables now explictly defined (e.g. @PathVariable("name")), as Name Inference seems to be removed from native 0.11
+- Spring REST Variables now explicitly defined (e.g. @PathVariable("name")), as Name Inference seems to be removed from native 0.11
 - Changes to SecurityConfiguration, as @ConditionalProperty seems to be resolved at build time now for native
 
 #1.1.0
