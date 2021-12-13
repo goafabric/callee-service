@@ -1,7 +1,7 @@
 #1.1.2
 - plugin management
 - upgrade to Spring Native 0.11
-- upgrade to Spring Boot 2.6.0
+- upgrade to Spring Boot 2.6.1
 - upgrade to Spring Cloud 2021.0.0
 - build updated to jdk 17
 
