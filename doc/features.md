@@ -3,7 +3,8 @@
 - Lombok, Mapstruct
 
 - Health, Prometheus
-- Swagger
+- Tracing
+- OpenAPI
 
 - Security
 
