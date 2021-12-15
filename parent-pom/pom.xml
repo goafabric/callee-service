@@ -522,16 +522,6 @@
                     <name>Spring Releases</name>
                     <url>https://repo.spring.io/release</url>
                 </repository>
-                <!--
-                <repository>
-                    <id>spring-milestones</id>
-                    <name>Spring Milestones</name>
-                    <url>https://repo.spring.io/milestone</url>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </repository>
-                -->
             </repositories>
             <pluginRepositories>
                 <pluginRepository>
@@ -539,16 +529,6 @@
                     <name>Spring Releases</name>
                     <url>https://repo.spring.io/release</url>
                 </pluginRepository>
-                <!--
-                <pluginRepository>
-                    <id>spring-milestones</id>
-                    <name>Spring Milestones</name>
-                    <url>https://repo.spring.io/milestone</url>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </pluginRepository>
-                -->
             </pluginRepositories>
         </profile>
     </profiles>
