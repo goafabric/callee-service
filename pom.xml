@@ -13,7 +13,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>callee-service</artifactId>
-    <version>1.1.2-SNAPSHOT</version>
+    <version>1.1.2-aop-SNAPSHOT</version>
 
     <dependencies>
         <!-- web -->
@@ -66,6 +66,18 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+        <!-- crosscutting -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!-- native -->
+        <dependency>
+            <groupId>org.springframework.experimental</groupId>
+            <artifactId>spring-native</artifactId>
+        </dependency>
+
         <!-- test *-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -78,6 +90,7 @@
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <!-- application build -->
