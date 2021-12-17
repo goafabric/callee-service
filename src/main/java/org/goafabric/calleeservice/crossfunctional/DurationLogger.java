@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Aspect
 @Slf4j
 @AotProxyHint(targetClass = org.goafabric.calleeservice.logic.CalleeLogic.class, proxyFeatures = ProxyBits.IS_STATIC)
-public class DurationLogAspect {
+public class DurationLogger {
 
     @Around("execution(public * org.goafabric.calleeservice.logic.CalleeLogic.*(..))")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
