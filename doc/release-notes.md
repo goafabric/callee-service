@@ -9,6 +9,7 @@
 
 - Spring REST Variables now explicitly defined (e.g. @PathVariable("name")), as Name Inference seems to be removed from native 0.11
 - Changes to SecurityConfiguration, as @ConditionalProperty seems to be resolved at build time now for native
+- DurationLog Aspect added    
 
 #1.1.0
 - Upgrade to Spring Boot 2.5.3 / Spring Native 0.10.3
