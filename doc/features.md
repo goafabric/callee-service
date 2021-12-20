@@ -1,11 +1,15 @@
 #Working
+Core
 - Web, ExceptionHandler
 - Lombok, Mapstruct
 
 - Health, Prometheus
-- Swagger
+- Tracing
+- OpenAPI
 
 - Security
+
+- DurationLogger Aspect
 
 #build times apple silicon:
 - not working
