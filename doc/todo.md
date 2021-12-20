@@ -1,3 +1,4 @@
 - jdk 17 openj9 base images
+- entrypoint with Java OPTS
 - native arm builds (https://github.com/paketo-buildpacks/stacks/issues/51)
- 
+- Constructor Injection verify (also FHIR Facade) 
