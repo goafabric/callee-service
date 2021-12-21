@@ -1,15 +1,15 @@
 package org.goafabric.calleeservice.service;
 
-import lombok.RequiredArgsConstructor;
 import org.goafabric.calleeservice.logic.CalleeLogic;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "callees", produces = MediaType.APPLICATION_JSON_VALUE)
-@RequiredArgsConstructor
 public class CalleeService {
-    private final CalleeLogic calleeLogic;
+    @Autowired
+    CalleeLogic calleeLogic;
 
     @GetMapping("sayMyName")
     public Callee sayMyName (@RequestParam("name") String name) {
