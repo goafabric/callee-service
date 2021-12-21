@@ -386,7 +386,6 @@
                                             <jvmFlags>
                                                 <jvmFlag>-Xms256m</jvmFlag>
                                                 <jvmFlag>-Xmx256m</jvmFlag>
-                                                <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
                                             </jvmFlags>
                                             <volumes>
                                                 <volume>/tmp</volume>
