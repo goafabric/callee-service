@@ -27,7 +27,7 @@
         <!-- Spring Boot -->
         <spring.boot.version>2.6.2</spring.boot.version>
         <spring.cloud.version>2021.0.0</spring.cloud.version>
-        <spring.native.version>0.11.0</spring.native.version>
+        <spring.native.version>0.11.1</spring.native.version>
 
         <!-- code generation -->
         <lombok.version>1.18.20</lombok.version>
