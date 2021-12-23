@@ -1,6 +1,6 @@
 #1.2.1
 - upgrade to Spring Boot 2.6.2
-- upgrade to Spring Native 0.11 
+- upgrade to Spring Native 0.11.1
 
 #1.2.0
 - plugin management
