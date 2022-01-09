@@ -287,9 +287,6 @@
     <profiles>
         <profile>
             <id>java-17</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <docker.baseimage.amd64>ibm-semeru-runtimes:open-17.0.1_12-jre-focal@sha256:f18b5167fdec384c60f838bb5100d3c0dc5133645a0cf74167c13ded3c82e24c</docker.baseimage.amd64>
                 <docker.baseimage.arm64>ibm-semeru-runtimes:open-17.0.1_12-jre-focal@sha256:55a19b0e3bf1507a23c5fa30c678d43bf82ef1d49c02c03f153d5051e358ca78</docker.baseimage.arm64>
