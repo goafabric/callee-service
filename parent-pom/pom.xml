@@ -21,16 +21,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- Java 11 -->
         <docker.baseimage.amd64>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:076f7784ec158f166eabbc4d0240e5f3cef038802b43baad3738c9e52afaed60</docker.baseimage.amd64>
         <docker.baseimage.arm64>adoptopenjdk/openjdk11-openj9:aarch64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:3ee1ed87d14847d4b20aa6302c7ea762dc8cb5ec7f71020fb4a988a862a7f79e</docker.baseimage.arm64>
-
-        <!-- Java 17 -->
-        <!--
-        <docker.baseimage.amd64>ibm-semeru-runtimes:open-17.0.1_12-jre-focal@sha256:f18b5167fdec384c60f838bb5100d3c0dc5133645a0cf74167c13ded3c82e24c</docker.baseimage.amd64>
-        <docker.baseimage.arm64>ibm-semeru-runtimes:open-17.0.1_12-jre-focal@sha256:55a19b0e3bf1507a23c5fa30c678d43bf82ef1d49c02c03f153d5051e358ca78</docker.baseimage.arm64>
-        -->
-
 
         <docker.registry>docker.io/goafabric</docker.registry>
 
@@ -293,6 +285,17 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>java-17</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <docker.baseimage.amd64>ibm-semeru-runtimes:open-17.0.1_12-jre-focal@sha256:f18b5167fdec384c60f838bb5100d3c0dc5133645a0cf74167c13ded3c82e24c</docker.baseimage.amd64>
+                <docker.baseimage.arm64>ibm-semeru-runtimes:open-17.0.1_12-jre-focal@sha256:55a19b0e3bf1507a23c5fa30c678d43bf82ef1d49c02c03f153d5051e358ca78</docker.baseimage.arm64>
+            </properties>
+        </profile>
+
         <profile>
             <id>fat-jar</id>
             <build>
