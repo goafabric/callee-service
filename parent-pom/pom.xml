@@ -21,7 +21,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <docker.baseimage.amd64>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:076f7784ec158f166eabbc4d0240e5f3cef038802b43baad3738c9e52afaed60</docker.baseimage.amd64>
+        <docker.baseimage.amd64>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.13_8_openj9-0.29.0@sha256:8084efb1946109b872135b80bcf3db328ec0e78f3ad42d7bd852050cba474525</docker.baseimage.amd64>
         <docker.baseimage.arm64>adoptopenjdk/openjdk11-openj9:aarch64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:3ee1ed87d14847d4b20aa6302c7ea762dc8cb5ec7f71020fb4a988a862a7f79e</docker.baseimage.arm64>
 
         <docker.registry>docker.io/goafabric</docker.registry>
