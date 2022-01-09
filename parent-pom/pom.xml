@@ -21,6 +21,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+        <!-- Java 11 -->
+        <docker.baseimage.amd64>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:076f7784ec158f166eabbc4d0240e5f3cef038802b43baad3738c9e52afaed60</docker.baseimage.amd64>
+        <docker.baseimage.arm64>adoptopenjdk/openjdk11-openj9:aarch64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:3ee1ed87d14847d4b20aa6302c7ea762dc8cb5ec7f71020fb4a988a862a7f79e</docker.baseimage.arm64>
+
         <docker.registry>docker.io/goafabric</docker.registry>
 
         <!--                   Dependency Management                   -->
@@ -327,8 +331,7 @@
                                     </goals>
                                     <configuration>
                                         <from>
-                                            <image>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.10_9_openj9-0.24.0</image>
-                                            <!-- <image>eclipse-temurin:17-jdk-focal@sha256:a576b23ab2bdcf3746b10ce9a83004798bf4d9bc9d62d926ffe2c987a7dd3c2b</image> -->
+                                            <image>${docker.baseimage.amd64}</image>
                                         </from>
                                         <to>
                                             <image>${docker.registry}/${project.artifactId}</image>
@@ -373,8 +376,7 @@
                                     </goals>
                                     <configuration>
                                         <from>
-                                            <image>adoptopenjdk/openjdk11-openj9:aarch64-debian-jre-11.0.10_9_openj9-0.24.0</image>
-                                            <!-- <image>eclipse-temurin:17-jdk-focal@sha256:c6860cf252999c6b22b69a88fd5b80e6da26684b789ed861db31247e469969c9</image> -->
+                                            <image>${docker.baseimage.arm64}</image>
                                         </from>
                                         <to>
                                             <image>${docker.registry}/${project.artifactId}-arm64v8</image>
