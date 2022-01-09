@@ -17,8 +17,8 @@ springdoc.swagger-ui.path: /swagger-ui/index.html
 
 #jaeger / zipkin
 spring.zipkin.service.name: "callee-service"
-spring.sleuth.enabled: false
 spring.zipkin.enabled: false
+spring.sleuth.enabled: ${spring.zipkin.enabled}
 
 #security
 security:
