@@ -17,7 +17,7 @@ springdoc.swagger-ui.path: /swagger-ui/index.html
 
 #jaeger / zipkin
 spring.zipkin.service.name: "callee-service"
-spring.zipkin.enabled: false
+spring.zipkin.enabled: true
 spring.sleuth.enabled: ${spring.zipkin.enabled}
 
 #security
@@ -32,6 +32,8 @@ logging.level.org.springframework: "INFO"
 logging.level.org.goafabric: "INFO"
 logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
+
+logging.level.zipkin2: "FATAL"
 
 #logging.pattern.console: "%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"
 
