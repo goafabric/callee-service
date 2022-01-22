@@ -17,7 +17,7 @@
 
     <properties>
         <!--                   Project                                 -->
-        <maven.compiler.release>11</maven.compiler.release>
+        <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -194,7 +194,7 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
-                        <release>${maven.compiler.release}</release>
+                        <release>${java.version}</release>
                         <!-- mapstruct now needs mapstruct-binding configured like this, also order seems to be important first mapstruct than lombok -->
                         <annotationProcessorPaths>
                             <path>
