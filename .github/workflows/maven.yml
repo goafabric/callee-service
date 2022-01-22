@@ -21,5 +21,5 @@ jobs:
         java-version: '17'
     - name: JVM Build
       run: mvn -B clean deploy -P docker-image-amd64,docker-image-arm64v8,java-17 --file pom.xml
-    - name: Native Build
-      run: mvn -B clean deploy -P docker-image-native --file pom.xml
+#    - name: Native Build
+#      run: mvn -B clean deploy -P docker-image-native --file pom.xml
