@@ -2,6 +2,7 @@
 - upgrade to Spring Boot 2.6.2
 - upgrade to Spring Native 0.11.1
 - Java 17 IBM Semeru Runtime für JVM Images
+- Update to OpenAPI 1.6.4 + JIB 3.2.0
 
 #1.2.0
 - plugin management
