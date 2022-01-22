@@ -14,10 +14,12 @@
         <url>https://github.com/goafabric/goa-parent.git</url>
         <tag>HEAD</tag>
     </scm>
-
+    
     <properties>
         <!--                   Project                                 -->
         <java.version>11</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -194,7 +196,7 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
-                        <release>${java.version}</release>
+                        <release>${maven.compiler.release}</release>
                         <!-- mapstruct now needs mapstruct-binding configured like this, also order seems to be important first mapstruct than lombok -->
                         <annotationProcessorPaths>
                             <path>
