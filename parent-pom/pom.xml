@@ -347,7 +347,7 @@
                                                     <os>linux</os>
                                                 </platform>
                                                 <platform>
-                                                    <architecture>arm64</architecture>
+                                                    <architecture>arm64/v8</architecture>
                                                     <os>linux</os>
                                                 </platform>
                                             </platforms>
