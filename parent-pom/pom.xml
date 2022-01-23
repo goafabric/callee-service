@@ -322,7 +322,7 @@
             </build>
         </profile>
         <profile>
-            <id>docker-image-amd64</id>
+            <id>docker-image-multi</id>
             <build>
                 <pluginManagement>
                     <plugins>
@@ -332,7 +332,7 @@
                             <version>${jib-maven-plugin.version}</version>
                             <executions>
                                 <execution>
-                                    <id>docker-image-amd64
+                                    <id>docker-image-multi
                                     </id> <!-- we need a unique id ALSO here, otherwise maven will only deploy one of the profiles if both are selected -->
                                     <phase>deploy</phase>
                                     <goals>
@@ -340,7 +340,17 @@
                                     </goals>
                                     <configuration>
                                         <from>
-                                            <image>${docker.baseimage.amd64}</image>
+                                            <image>ibm-semeru-runtimes:open-17.0.1_12-jre-focal</image>
+                                            <platforms>
+                                                <platform>
+                                                    <architecture>amd64</architecture>
+                                                    <os>linux</os>
+                                                </platform>
+                                                <platform>
+                                                    <architecture>arm64</architecture>
+                                                    <os>linux</os>
+                                                </platform>
+                                            </platforms>
                                         </from>
                                         <to>
                                             <image>${docker.registry}/${project.artifactId}</image>
@@ -366,166 +376,7 @@
                 </pluginManagement>
             </build>
         </profile>
-        <profile>
-            <id>docker-image-arm64v8</id>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>com.google.cloud.tools</groupId>
-                            <artifactId>jib-maven-plugin</artifactId>
-                            <version>${jib-maven-plugin.version}</version>
-                            <executions>
-                                <execution>
-                                    <id>docker-image-arm64v8
-                                    </id> <!-- we need a unique id ALSO here, otherwise maven will only deploy one of the profiles if both are selected -->
-                                    <phase>deploy</phase>
-                                    <goals>
-                                        <goal>build</goal>
-                                    </goals>
-                                    <configuration>
-                                        <from>
-                                            <image>${docker.baseimage.arm64}</image>
-                                        </from>
-                                        <to>
-                                            <image>${docker.registry}/${project.artifactId}-arm64v8</image>
-                                            <tags>
-                                                <tag>${project.version}</tag>
-                                            </tags>
-                                        </to>
-                                        <container>
-                                            <jvmFlags>
-                                                <jvmFlag>-Xms256m</jvmFlag>
-                                                <jvmFlag>-Xmx256m</jvmFlag>
-                                            </jvmFlags>
-                                            <volumes>
-                                                <volume>/tmp</volume>
-                                            </volumes>
-                                        </container>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-        
-        <profile>
-            <id>docker-image-native</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.experimental</groupId>
-                    <artifactId>spring-native</artifactId>
-                </dependency>
-            </dependencies>
 
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.springframework.boot</groupId>
-                            <artifactId>spring-boot-maven-plugin</artifactId>
-                            <version>${spring.boot.version}</version>
-                            <executions>
-                                <execution>
-                                    <id>build-image</id>
-                                    <goals>
-                                        <goal>build-image</goal>
-                                    </goals>
-                                    <configuration>
-                                        <excludes>
-                                            <exclude>
-                                                <groupId>org.projectlombok</groupId>
-                                                <artifactId>lombok</artifactId>
-                                            </exclude>
-                                            <exclude>
-                                                <groupId>com.h2database</groupId>
-                                                <artifactId>h2</artifactId>
-                                            </exclude>
-                                        </excludes>
-                                        <image>
-                                            <name>${docker.registry}/${project.artifactId}-native:${project.version}
-                                            </name>
-                                            <builder>paketobuildpacks/builder:base
-                                            </builder> <!-- to get wget or curl we need build:full but this blows up the image to 700MB -->
-                                            <env>
-                                                <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
-                                                <BP_JVM_VERSION>11</BP_JVM_VERSION>
-                                                <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>--enable-http</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
-                                                <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-J-Xmx6000m</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
-                                            </env>
-                                            <pullPolicy>IF_NOT_PRESENT</pullPolicy>
-                                        </image>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.springframework.experimental</groupId>
-                            <artifactId>spring-aot-maven-plugin</artifactId>
-                            <version>${spring.native.version}</version>
-                            <executions>
-                                <execution>
-                                    <id>test-generate</id>
-                                    <goals>
-                                        <goal>test-generate</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>generate</id>
-                                    <goals>
-                                        <goal>generate</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        <!-- Spring Native documentation claims that hibernate enhance is needed, seems to work without it
-                        https://docs.jboss.org/hibernate/orm/5.4/topical/html_single/bytecode/BytecodeEnhancement.html#_build_time_enhancement -->
-                        <plugin>
-                            <!-- workaround for missing publish functionality, see: https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#build-image-example-publish -->
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>exec-maven-plugin</artifactId>
-                            <version>${exec-maven-plugin.version}</version>
-                            <executions>
-                                <execution>
-                                    <id>integrity</id>
-                                    <phase>deploy</phase>
-                                    <goals>
-                                        <goal>exec</goal>
-                                    </goals>
-                                    <configuration>
-                                        <executable>docker</executable>
-                                        <arguments>
-                                            <argument>run</argument>
-                                            <argument>${docker.registry}/${project.artifactId}-native:${project.version}
-                                            </argument>
-                                            <argument>-check-integrity</argument>
-                                        </arguments>
-                                    </configuration>
-                                </execution>
-                                <execution>
-                                    <id>docker push</id>
-                                    <phase>deploy</phase>
-                                    <goals>
-                                        <goal>exec</goal>
-                                    </goals>
-                                    <configuration>
-                                        <executable>docker</executable>
-                                        <arguments>
-                                            <argument>push</argument>
-                                            <argument>${docker.registry}/${project.artifactId}-native:${project.version}
-                                            </argument>
-                                        </arguments>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-
-        </profile>
     </profiles>
 
     <repositories>
