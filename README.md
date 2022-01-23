@@ -11,3 +11,5 @@ docker pull goafabric/callee-service-native:1.2.1-SNAPSHOT && docker run --name 
 docker run --rm goafabric/callee-service:1.2.1-multi-SNAPSHOT
 
 docker run --platform linux/amd64 --rm goafabric/callee-service:1.2.1-multi-SNAPSHOT
+                                                        
+docker manifest inspect goafabric/callee-service:1.2.1-multi-SNAPSHOT
