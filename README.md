@@ -13,3 +13,8 @@ docker run --rm --name callee-service goafabric/callee-service:1.2.1-multi-SNAPS
 docker run --platform linux/amd64 --rm --name callee-service goafabric/callee-service:1.2.1-multi-SNAPSHOT
                                                         
 docker manifest inspect goafabric/callee-service:1.2.1-multi-SNAPSHOT
+
+#postgres
+docker run --rm --name postgres -e POSTGRES_PASSWORD=password postgres:14.1
+
+docker run --platform linux/amd64 --rm --name postgres -e POSTGRES_PASSWORD=password postgres:14.1
