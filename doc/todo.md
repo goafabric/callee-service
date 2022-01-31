@@ -2,5 +2,3 @@
                       
 - native builds in general
 - zipkin sleuth
-
-- spring.datasource.schema param not working
