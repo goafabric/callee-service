@@ -27,7 +27,7 @@
         <docker.baseimage.arm64>adoptopenjdk/openjdk11-openj9:aarch64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:3ee1ed87d14847d4b20aa6302c7ea762dc8cb5ec7f71020fb4a988a862a7f79e</docker.baseimage.arm64>
 
         <!-- Spring Boot -->
-        <spring.boot.version>2.6.2</spring.boot.version>
+        <spring.boot.version>2.6.3</spring.boot.version>
         <spring.cloud.version>2021.0.0</spring.cloud.version>
         <spring.native.version>0.11.1</spring.native.version>
 
