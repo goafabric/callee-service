@@ -16,19 +16,16 @@
     </scm>
     
     <properties>
-        <!--                   Project                                 -->
+        <!-- Project -->
         <java.version>11</java.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <docker.baseimage.amd64>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.13_8_openj9-0.29.0@sha256:8084efb1946109b872135b80bcf3db328ec0e78f3ad42d7bd852050cba474525</docker.baseimage.amd64>
+        <docker.baseimage.amd64>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:076f7784ec158f166eabbc4d0240e5f3cef038802b43baad3738c9e52afaed60</docker.baseimage.amd64>
         <docker.baseimage.arm64>adoptopenjdk/openjdk11-openj9:aarch64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:3ee1ed87d14847d4b20aa6302c7ea762dc8cb5ec7f71020fb4a988a862a7f79e</docker.baseimage.arm64>
 
-        <docker.registry>docker.io/goafabric</docker.registry>
-
-        <!--                   Dependency Management                   -->
         <!-- Spring Boot -->
         <spring.boot.version>2.6.2</spring.boot.version>
         <spring.cloud.version>2021.0.0</spring.cloud.version>
@@ -54,8 +51,7 @@
         <!-- Test -->
         <equalsverifier.version>3.7.2</equalsverifier.version>
 
-        <!--                   Build and Build Plugins                   -->
-
+        <!-- Build Plugins-->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
@@ -68,6 +64,12 @@
         <!-- Further Build Plugins -->
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <jib-maven-plugin.version>3.2.0</jib-maven-plugin.version>
+
+
+        <!--   OWN   -->
+
+        <!-- Docker Registry -->
+        <docker.registry>docker.io/goafabric</docker.registry>
 
         <!-- Sonarqube -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -179,7 +181,6 @@
                 <version>${equalsverifier.version}</version>
                 <scope>test</scope>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
