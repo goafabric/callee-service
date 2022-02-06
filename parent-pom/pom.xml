@@ -326,6 +326,7 @@
                 </pluginManagement>
             </build>
         </profile>
+
         <profile>
             <id>docker-image</id>
             <build>
@@ -380,6 +381,7 @@
                 </pluginManagement>
             </build>
         </profile>
+
         <profile>
             <id>docker-image-native</id>
             <dependencies>
