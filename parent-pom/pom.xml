@@ -5,7 +5,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>goa-parent</artifactId>
-    <version>2.6.2</version>
+    <version>2.6.3</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
     <description>goa parent pom</description>
@@ -16,7 +16,7 @@
     </scm>
     
     <properties>
-        <!--                   Project                                 -->
+        <!-- Project -->
         <java.version>11</java.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
 
@@ -27,13 +27,10 @@
         <docker.baseimage.arm64>adoptopenjdk/openjdk11-openj9:aarch64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:3ee1ed87d14847d4b20aa6302c7ea762dc8cb5ec7f71020fb4a988a862a7f79e</docker.baseimage.arm64>
         <docker.baseimage.multi>ibm-semeru-runtimes:open-11.0.14_8-jre-focal</docker.baseimage.multi>
 
-        <docker.registry>docker.io/goafabric</docker.registry>
-
-        <!--                   Dependency Management                   -->
         <!-- Spring Boot -->
-        <spring.boot.version>2.6.2</spring.boot.version>
+        <spring.boot.version>2.6.3</spring.boot.version>
         <spring.cloud.version>2021.0.0</spring.cloud.version>
-        <spring.native.version>0.11.1</spring.native.version>
+        <spring.native.version>0.11.2</spring.native.version>
 
         <!-- code generation -->
         <lombok.version>1.18.20</lombok.version>
@@ -55,8 +52,7 @@
         <!-- Test -->
         <equalsverifier.version>3.7.2</equalsverifier.version>
 
-        <!--                   Build and Build Plugins                   -->
-
+        <!-- Build Plugins-->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
@@ -71,6 +67,12 @@
         <!-- Further Build Plugins -->
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <jib-maven-plugin.version>3.2.0</jib-maven-plugin.version>
+
+
+        <!--   OWN   -->
+
+        <!-- Docker Registry -->
+        <docker.registry>docker.io/goafabric</docker.registry>
 
         <!-- Sonarqube -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -182,7 +184,6 @@
                 <version>${equalsverifier.version}</version>
                 <scope>test</scope>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
