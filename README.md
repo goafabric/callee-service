@@ -8,6 +8,8 @@ docker pull goafabric/callee-service-arm64v8:1.2.1-multi-SNAPSHOT && docker run 
 docker pull goafabric/callee-service-native:1.2.1-SNAPSHOT && docker run --name callee-service-native --rm -p50900:50900 goafabric/callee-service-native:1.2.1-SNAPSHOT -Xmx64m
           
 #multi
+docker pull goafabric/callee-service:1.2.1-multi-SNAPSHOT \
+
 docker run --rm --name callee-service goafabric/callee-service:1.2.1-multi-SNAPSHOT
 
 docker run --platform linux/amd64 --rm --name callee-service goafabric/callee-service:1.2.1-multi-SNAPSHOT
