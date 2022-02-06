@@ -23,8 +23,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <docker.baseimage.amd64>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.13_8_openj9-0.29.0@sha256:8084efb1946109b872135b80bcf3db328ec0e78f3ad42d7bd852050cba474525</docker.baseimage.amd64>
+        <docker.baseimage.amd64>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:076f7784ec158f166eabbc4d0240e5f3cef038802b43baad3738c9e52afaed60</docker.baseimage.amd64>
         <docker.baseimage.arm64>adoptopenjdk/openjdk11-openj9:aarch64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:3ee1ed87d14847d4b20aa6302c7ea762dc8cb5ec7f71020fb4a988a862a7f79e</docker.baseimage.arm64>
+        <docker.baseimage.multi>ibm-semeru-runtimes:open-11.0.14_8-jre-focal</docker.baseimage.multi>
 
         <docker.registry>docker.io/goafabric</docker.registry>
 
@@ -292,8 +293,9 @@
         <profile>
             <id>java-17</id>
             <properties>
-                <docker.baseimage.amd64>ibm-semeru-runtimes:open-17.0.1_12-jre-focal@sha256:f18b5167fdec384c60f838bb5100d3c0dc5133645a0cf74167c13ded3c82e24c</docker.baseimage.amd64>
-                <docker.baseimage.arm64>ibm-semeru-runtimes:open-17.0.1_12-jre-focal@sha256:55a19b0e3bf1507a23c5fa30c678d43bf82ef1d49c02c03f153d5051e358ca78</docker.baseimage.arm64>
+                <docker.baseimage.amd64>ibm-semeru-runtimes:open-17.0.2_8-jre-focal@sha256:d2fdda69b7a6262f1c9a13e344d2d0bd63165fe5c686c76e46835162872db349</docker.baseimage.amd64>
+                <docker.baseimage.arm64>ibm-semeru-runtimes:open-17.0.2_8-jre-focal@0b723ed7ffa872a8f90d0348a32edc4efc1fa03cf21a752df34a998e95ab817e</docker.baseimage.arm64>
+                <docker.baseimage.multi>ibm-semeru-runtimes:open-17.0.2_8-jre-focal</docker.baseimage.multi>
             </properties>
         </profile>
 
@@ -342,7 +344,7 @@
                                     </goals>
                                     <configuration>
                                         <from>
-                                            <image>ibm-semeru-runtimes:open-17.0.2_8-jre-focal</image>
+                                            <image>${docker.baseimage.multi}</image>
                                             <platforms>
                                                 <platform>
                                                     <architecture>amd64</architecture>
