@@ -292,15 +292,6 @@
 
     <profiles>
         <profile>
-            <id>java-17</id>
-            <properties>
-                <docker.baseimage.amd64>ibm-semeru-runtimes:open-17.0.2_8-jre-focal@sha256:d2fdda69b7a6262f1c9a13e344d2d0bd63165fe5c686c76e46835162872db349</docker.baseimage.amd64>
-                <docker.baseimage.arm64>ibm-semeru-runtimes:open-17.0.2_8-jre-focal@sha256:0b723ed7ffa872a8f90d0348a32edc4efc1fa03cf21a752df34a998e95ab817e</docker.baseimage.arm64>
-                <docker.baseimage.multi>ibm-semeru-runtimes:open-17.0.2_8-jre-focal@sha256:727543ea31c493f0f4405d553d4cb28068fd38200c7d3d3962d691aa91a24d55</docker.baseimage.multi>
-            </properties>
-        </profile>
-
-        <profile>
             <id>fat-jar</id>
             <build>
                 <pluginManagement>
@@ -496,54 +487,6 @@
                 </pluginManagement>
             </build>
         </profile>
-        
-        <!--
-        <profile>
-            <id>docker-image-tar</id>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>com.google.cloud.tools</groupId>
-                            <artifactId>jib-maven-plugin</artifactId>
-                            <version>${jib-maven-plugin.version}</version>
-                            <executions>
-                                <execution>
-                                    <id>docker-image-tar</id>
-                                    <phase>deploy</phase>
-                                    <goals>
-                                        <goal>buildTar</goal>
-                                    </goals>
-                                    <configuration>
-                                        <from>
-                                            <image>${docker.baseimage.amd64}</image>
-                                        </from>
-                                        <to>
-                                            <image>${docker.registry}/${project.artifactId}</image>
-                                            <tags>
-                                                <tag>${project.version}</tag>
-                                            </tags>
-                                        </to>
-                                        <container>
-                                            <jvmFlags>
-                                                <jvmFlag>-Xms256m</jvmFlag>
-                                                <jvmFlag>-Xmx256m</jvmFlag>
-                                                <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
-                                            </jvmFlags>
-                                            <volumes>
-                                                <volume>/tmp</volume>
-                                            </volumes>
-                                        </container>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-        -->
-
     </profiles>
 
     <repositories>
