@@ -413,7 +413,7 @@
                                             </builder> <!-- to get wget or curl we need build:full but this blows up the image to 700MB -->
                                             <env>
                                                 <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
-                                                <BP_JVM_VERSION>11</BP_JVM_VERSION>
+                                                <BP_JVM_VERSION>17</BP_JVM_VERSION>
                                                 <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>--enable-http</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                                 <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-J-Xmx6000m</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                             </env>
