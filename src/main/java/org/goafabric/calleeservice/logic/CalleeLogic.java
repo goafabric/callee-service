@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Component
 public class CalleeLogic {
-    private AtomicLong sleepTime = new AtomicLong(0L);
+    private final AtomicLong sleepTime = new AtomicLong(0L);
 
     public Callee sayMyName(@NonNull String name) {
         sleep();
