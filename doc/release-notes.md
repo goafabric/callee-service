@@ -4,6 +4,7 @@
 - Update to OpenAPI 1.6.4 + JIB 3.2.0
 
 - Java 17 IBM Semeru Runtime for JVM Images
+- Java 17 Compiler Level and Native Image
 - Multi Arch JVM Images
 
 #1.2.0
