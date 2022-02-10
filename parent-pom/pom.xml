@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.goafabric</groupId>
-    <artifactId>goa-parent</artifactId>
+    <artifactId>spring-parent</artifactId>
     <version>2.6.3</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
