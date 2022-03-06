@@ -38,7 +38,7 @@
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
 
         <!-- swagger openapi -->
-        <springdoc-openapi-ui.version>1.6.4</springdoc-openapi-ui.version>
+        <springdoc-openapi-ui.version>1.6.6</springdoc-openapi-ui.version>
         <springfox-swagger.version>3.0.0</springfox-swagger.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
 
