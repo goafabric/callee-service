@@ -1,7 +1,7 @@
 #1.2.2
 - upgrade to Spring Boot 2.6.4 
 - upgrade to Spring Native 0.11.3
-- lombok upgrade
+- upgrade to Lombok 1.18.22
 
 #1.2.1
 - upgrade to Spring Boot 2.6.3
