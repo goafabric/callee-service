@@ -13,8 +13,7 @@ import org.springframework.context.annotation.Bean;
  * Created by amautsch on 26.06.2015.
  */
 
-@SpringBootApplication(proxyBeanMethods = false,
-        exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
 public class Application {
 
     public static void main(String[] args){
