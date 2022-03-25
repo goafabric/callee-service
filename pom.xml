@@ -16,7 +16,7 @@
     <version>1.2.1-BOOT3-SNAPSHOT</version>
 
     <properties>
-        <spring.boot.version>3.0.0-M1</spring.boot.version>
+        <spring.boot.version>3.0.0-M2</spring.boot.version>
         <docker.baseimage.multi>ibm-semeru-runtimes:open-17.0.2_8-jre-focal@sha256:727543ea31c493f0f4405d553d4cb28068fd38200c7d3d3962d691aa91a24d55</docker.baseimage.multi>
     </properties>
 
