@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.goafabric</groupId>
-    <artifactId>goa-parent</artifactId>
-    <version>2.6.3</version>
+    <artifactId>spring-parent</artifactId>
+    <version>2.6.4</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
     <description>goa parent pom</description>
@@ -28,17 +28,17 @@
         <docker.baseimage.multi>ibm-semeru-runtimes:open-11.0.14_8-jre-focal@sha256:54da1cb72276830707cf5f94f699d5166c47ac47e98012bed737a5befdede5f2</docker.baseimage.multi>
 
         <!-- Spring Boot -->
-        <spring.boot.version>2.6.3</spring.boot.version>
+        <spring.boot.version>2.6.4</spring.boot.version>
         <spring.cloud.version>2021.0.0</spring.cloud.version>
-        <spring.native.version>0.11.2</spring.native.version>
+        <spring.native.version>0.11.3</spring.native.version>
 
         <!-- code generation -->
-        <lombok.version>1.18.20</lombok.version>
+        <lombok.version>1.18.22</lombok.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
 
         <!-- swagger openapi -->
-        <springdoc-openapi-ui.version>1.6.4</springdoc-openapi-ui.version>
+        <springdoc-openapi-ui.version>1.6.6</springdoc-openapi-ui.version>
         <springfox-swagger.version>3.0.0</springfox-swagger.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
 
@@ -413,7 +413,7 @@
                                             </builder> <!-- to get wget or curl we need build:full but this blows up the image to 700MB -->
                                             <env>
                                                 <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
-                                                <BP_JVM_VERSION>11</BP_JVM_VERSION>
+                                                <BP_JVM_VERSION>17</BP_JVM_VERSION>
                                                 <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>--enable-http</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                                 <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-J-Xmx6000m</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                             </env>

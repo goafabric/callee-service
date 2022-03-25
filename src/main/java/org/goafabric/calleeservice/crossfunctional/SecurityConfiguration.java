@@ -2,7 +2,6 @@
 package org.goafabric.calleeservice.crossfunctional;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -11,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration//(proxyBeanMethods = false)
 @EnableWebSecurity
@@ -21,10 +19,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private Boolean isAuthenticationEnabled;
 
     @Override //in memory authentication
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder())
+                .passwordEncoder(new BCryptPasswordEncoder())
                 .withUser("admin")
                 .password("$2a$10$X3nRHu5n2X0Ibny6fWJJvOFbdmrbZOmkTZbWv9001G8HY6LEPxWei")
                 .roles("standard_role");
@@ -34,23 +31,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity httpSecurity) throws Exception {
         if (isAuthenticationEnabled) {
             httpSecurity.authorizeRequests()
-                    .antMatchers(
-                            "/actuator/**",
-                            "/", "/welcome/**"
-                    ).permitAll()
+                    .antMatchers("/actuator/**").permitAll()
                     .anyRequest().authenticated()
-                    .and()
-                    .httpBasic()
-                    .and()
-                    .csrf().disable()
+                    .and().httpBasic()
+                    .and().csrf().disable()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         } else {
             httpSecurity.authorizeRequests().anyRequest().permitAll();
         }
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
 }
