@@ -30,7 +30,7 @@
         <!-- Spring Boot -->
         <spring.boot.version>2.6.6</spring.boot.version>
         <spring.cloud.version>2021.0.0</spring.cloud.version>
-        <spring.native.version>0.11.3</spring.native.version>
+        <spring.native.version>0.11.4</spring.native.version>
 
         <!-- code generation -->
         <lombok.version>1.18.22</lombok.version>
@@ -47,7 +47,6 @@
         <resilience4j.version>1.7.0</resilience4j.version>
         <jasypt.version>1.9.3</jasypt.version>
         <jasypt-spring-boot-starter.version>3.0.3</jasypt-spring-boot-starter.version>
-        <keycloak-adapter-bom.version>15.0.2</keycloak-adapter-bom.version>
 
         <!-- Test -->
         <equalsverifier.version>3.7.2</equalsverifier.version>
@@ -58,7 +57,7 @@
         <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
         <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
 
-        <build-helper-maven-plugin.version>3.2.0</build-helper-maven-plugin.version>
+        <build-helper-maven-plugin.version>3.2.1</build-helper-maven-plugin.version>
 
         <!-- Release and Deploy Plugins -->
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
@@ -103,14 +102,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.keycloak.bom</groupId>
-                <artifactId>keycloak-adapter-bom</artifactId>
-                <version>${keycloak-adapter-bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
                 <groupId>org.springframework.experimental</groupId>
                 <artifactId>spring-native</artifactId>
                 <version>${spring.native.version}</version>
@@ -145,18 +136,6 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-native</artifactId>
                 <version>${springdoc-openapi-ui.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>${springfox-swagger.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger-annotations.version}</version>
             </dependency>
 
             <dependency>
