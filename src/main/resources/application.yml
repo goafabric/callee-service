@@ -22,9 +22,10 @@ spring.sleuth.enabled: ${spring.zipkin.enabled}
 logging.level.zipkin2: "FATAL"
 
 #security
-security:
-  authentication:
-    enabled: true
+security.authentication.enabled: true
+
+spring.security.user.name: "admin"
+spring.security.user.password: "admin"
 
 #logging
 logging.level.root: "WARN"
