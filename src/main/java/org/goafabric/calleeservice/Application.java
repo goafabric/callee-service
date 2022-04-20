@@ -34,7 +34,7 @@ public class Application {
 
         @Override
         protected void configure(final HttpSecurity httpSecurity) throws Exception {
-            if (isAuthenticationEnabled) { httpSecurity.authorizeRequests().anyRequest().authenticated().and().httpBasic(); }
+            if (isAuthenticationEnabled) { httpSecurity.authorizeRequests().anyRequest().authenticated().and().httpBasic().and().csrf().disable(); }
             else { httpSecurity.authorizeRequests().anyRequest().permitAll(); }
         }
     }
