@@ -55,7 +55,7 @@
         <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
         <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
 
-        <build-helper-maven-plugin.version>3.2.1</build-helper-maven-plugin.version>
+        <build-helper-maven-plugin.version>3.2.0</build-helper-maven-plugin.version>
 
         <!-- Release and Deploy Plugins -->
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
