@@ -14,12 +14,7 @@
     <groupId>org.goafabric</groupId>
     <artifactId>callee-service</artifactId>
     <version>1.2.3-SNAPSHOT</version>
-
-    <properties>
-        <docker.baseimage.multi>ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e</docker.baseimage.multi>
-        <java.version>17</java.version>
-    </properties>
-
+    
     <dependencies>
         <!-- web -->
         <dependency>
