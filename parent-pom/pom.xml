@@ -42,7 +42,7 @@
 
         <!-- 3rd party -->
         <joda-time.version>2.10.10</joda-time.version>
-        <resilience4j.version>1.7.1</resilience4j.version>
+        <resilience4j.version>1.7.0</resilience4j.version>
         <jasypt.version>1.9.3</jasypt.version>
         <jasypt-spring-boot-starter.version>3.0.3</jasypt-spring-boot-starter.version>
 
