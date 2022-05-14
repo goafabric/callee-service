@@ -5,7 +5,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>spring-parent</artifactId>
-    <version>2.6.4</version>
+    <version>2.6.7</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
     <description>goa parent pom</description>
@@ -17,20 +17,18 @@
     
     <properties>
         <!-- Project -->
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <docker.baseimage.amd64>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:076f7784ec158f166eabbc4d0240e5f3cef038802b43baad3738c9e52afaed60</docker.baseimage.amd64>
-        <docker.baseimage.arm64>adoptopenjdk/openjdk11-openj9:aarch64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:3ee1ed87d14847d4b20aa6302c7ea762dc8cb5ec7f71020fb4a988a862a7f79e</docker.baseimage.arm64>
-        <docker.baseimage.multi>ibm-semeru-runtimes:open-11.0.14_8-jre-focal@sha256:54da1cb72276830707cf5f94f699d5166c47ac47e98012bed737a5befdede5f2</docker.baseimage.multi>
+        <docker.baseimage.multi>ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e</docker.baseimage.multi>
 
         <!-- Spring Boot -->
-        <spring.boot.version>2.6.4</spring.boot.version>
-        <spring.cloud.version>2021.0.0</spring.cloud.version>
-        <spring.native.version>0.11.3</spring.native.version>
+        <spring.boot.version>2.6.7</spring.boot.version>
+        <spring.cloud.version>2021.0.1</spring.cloud.version>
+        <spring.native.version>0.11.4</spring.native.version>
 
         <!-- code generation -->
         <lombok.version>1.18.22</lombok.version>
@@ -47,7 +45,6 @@
         <resilience4j.version>1.7.0</resilience4j.version>
         <jasypt.version>1.9.3</jasypt.version>
         <jasypt-spring-boot-starter.version>3.0.3</jasypt-spring-boot-starter.version>
-        <keycloak-adapter-bom.version>15.0.2</keycloak-adapter-bom.version>
 
         <!-- Test -->
         <equalsverifier.version>3.7.2</equalsverifier.version>
@@ -65,8 +62,8 @@
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
 
         <!-- Further Build Plugins -->
-        <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
-        <jib-maven-plugin.version>3.2.0</jib-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
+        <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
 
 
         <!--   OWN   -->
@@ -98,14 +95,6 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.keycloak.bom</groupId>
-                <artifactId>keycloak-adapter-bom</artifactId>
-                <version>${keycloak-adapter-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -145,18 +134,6 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-native</artifactId>
                 <version>${springdoc-openapi-ui.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>${springfox-swagger.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger-annotations.version}</version>
             </dependency>
 
             <dependency>

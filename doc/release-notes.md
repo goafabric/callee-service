@@ -1,7 +1,12 @@
+#1.2.3
+- upgrade to Spring Boot 2.6.7    
+- upgrade to JDK 17.0.3
+
 #1.2.2
-- upgrade to Spring Boot 2.6.4 
-- upgrade to Spring Native 0.11.3
+- upgrade to Spring Boot 2.6.6
+- upgrade to Spring Native 0.11.4
 - upgrade to Lombok 1.18.22
+- HttpInterceptor for Username and TenantId
 
 #1.2.1
 - upgrade to Spring Boot 2.6.3
