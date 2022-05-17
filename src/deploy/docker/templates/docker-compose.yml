@@ -38,6 +38,16 @@ services:
       #log file settings
       - logging.file.max-size=10MB
       - logging.file.name=/usr/share/logs/application.log
+  nginx:
+    container_name: ${_Values_root_name}-nginx
+    image: nginx:1.17.10
+    restart: 'no'
+    ports:
+      - 8080:8080
+    networks:
+      - ${_Values_root_name}-net
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
 
 volumes:
     tmp:
