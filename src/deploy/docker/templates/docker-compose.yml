@@ -38,6 +38,7 @@ services:
       #log file settings
       - logging.file.max-size=10MB
       - logging.file.name=/usr/share/logs/application.log
+
   nginx:
     container_name: ${_Values_root_name}-nginx
     image: nginx:1.17.10
