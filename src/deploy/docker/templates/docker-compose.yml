@@ -26,6 +26,7 @@ services:
       - server.port=${_Values_service_port}
       - tomcat.max-threads=20
       - security.authentication.enabled=false
+      #forwarding sub url
       - server.forward-headers-strategy=FRAMEWORK
       #monitoring
       - management.endpoint.health.show-details=always
