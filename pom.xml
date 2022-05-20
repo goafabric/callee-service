@@ -16,7 +16,7 @@
     <version>1.2.3-BOOT3-SNAPSHOT</version>
 
     <properties>
-        <spring.boot.version>3.0.0-M2</spring.boot.version>
+        <spring.boot.version>3.0.0-M3</spring.boot.version>
     </properties>
 
     <dependencies>
@@ -32,10 +32,12 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
+        -->
 
         <!--
         <dependency>
