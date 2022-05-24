@@ -17,6 +17,7 @@
 
     <properties>
         <spring.boot.version>3.0.0-M3</spring.boot.version>
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>
