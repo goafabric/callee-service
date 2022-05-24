@@ -28,7 +28,7 @@
         <!-- Spring Boot -->
         <spring.boot.version>2.7.0</spring.boot.version>
         <spring.cloud.version>2021.0.2</spring.cloud.version>
-        <spring.native.version>0.11.4</spring.native.version>
+        <spring.native.version>0.12.0-SNAPSHOT</spring.native.version>
 
         <!-- code generation -->
         <lombok.version>1.18.22</lombok.version>
@@ -472,6 +472,12 @@
             <name>Spring Releases</name>
             <url>https://repo.spring.io/release</url>
         </repository>
+
+        <repository>
+            <id>spring-snapshot</id>
+            <name>Spring snapshot</name>
+            <url>https://repo.spring.io/snapshot</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -479,6 +485,12 @@
             <id>spring-releases</id>
             <name>Spring Releases</name>
             <url>https://repo.spring.io/release</url>
+        </pluginRepository>
+
+        <pluginRepository>
+            <id>spring-snapshot</id>
+            <name>Spring snapshot</name>
+            <url>https://repo.spring.io/snapshot</url>
         </pluginRepository>
     </pluginRepositories>
 </project>
