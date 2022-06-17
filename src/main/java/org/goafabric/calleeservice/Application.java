@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.SecurityFilterChain;
 
 
 /**
@@ -28,14 +28,15 @@ public class Application {
     }
 
     @Configuration
-    static class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    static class SecurityConfiguration  {
         @Value("${security.authentication.enabled:true}")
         private Boolean isAuthenticationEnabled;
 
-        @Override
-        protected void configure(final HttpSecurity httpSecurity) throws Exception {
-            if (isAuthenticationEnabled) { httpSecurity.authorizeRequests().anyRequest().authenticated().and().httpBasic(); }
-            else { httpSecurity.authorizeRequests().anyRequest().permitAll(); }
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+            if (isAuthenticationEnabled) { http.authorizeRequests().anyRequest().authenticated().and().httpBasic().and().csrf().disable(); }
+            else { http.authorizeRequests().anyRequest().permitAll(); }
+            return http.build();
         }
     }
 }

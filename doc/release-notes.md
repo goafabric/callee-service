@@ -1,3 +1,9 @@
+#1.2.3
+- upgrade to Spring Boot 2.7.0   
+- upgrade to Spring Native 0.12.0
+- upgrade to Spring Cloud 2021.0.3
+- upgrade to JDK 17.0.3
+
 #1.2.2
 - upgrade to Spring Boot 2.6.6
 - upgrade to Spring Native 0.11.4

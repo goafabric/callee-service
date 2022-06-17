@@ -7,24 +7,19 @@
     <parent>
         <groupId>org.goafabric</groupId>
         <artifactId>spring-parent</artifactId>
-        <version>2.6.6</version>
+        <version>2.7.0</version>
         <relativePath>parent-pom/pom.xml</relativePath>
     </parent>
 
     <groupId>org.goafabric</groupId>
     <artifactId>callee-service</artifactId>
-    <version>1.2.2-SNAPSHOT</version>
-
-    <properties>
-        <docker.baseimage.multi>ibm-semeru-runtimes:open-17.0.2_8-jre-focal@sha256:727543ea31c493f0f4405d553d4cb28068fd38200c7d3d3962d691aa91a24d55</docker.baseimage.multi>
-        <java.version>17</java.version>
-    </properties>
-
+    <version>1.2.3-SNAPSHOT</version>
+    
     <dependencies>
         <!-- web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
         
         <!-- monitoring -->
