@@ -1,3 +1,5 @@
+#1.2.4
+
 #1.2.3
 - upgrade to Spring Boot 2.7.0   
 - upgrade to Spring Native 0.12.0
