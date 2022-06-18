@@ -30,6 +30,11 @@ then
 elif [ "${COMMAND}" = "prune" ]
 then
     func_compose down --volumes
+elif [ "${COMMAND}" = "update" ]
+then
+    func_compose down --volumes
+    func_compose pull
+    func_compose up -d
 else
     echo Doing nothing !
 fi
