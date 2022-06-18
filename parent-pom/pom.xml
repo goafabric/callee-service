@@ -14,7 +14,7 @@
         <url>https://github.com/goafabric/goa-parent.git</url>
         <tag>HEAD</tag>
     </scm>
-    
+
     <properties>
         <!-- Project -->
         <java.version>17</java.version>
@@ -378,10 +378,12 @@
                                                 <groupId>org.projectlombok</groupId>
                                                 <artifactId>lombok</artifactId>
                                             </exclude>
+                                            <!--
                                             <exclude>
                                                 <groupId>com.h2database</groupId>
                                                 <artifactId>h2</artifactId>
                                             </exclude>
+                                            -->
                                         </excludes>
                                         <image>
                                             <name>${docker.registry}/${project.artifactId}-native:${project.version}
@@ -391,9 +393,10 @@
                                             <env>
                                                 <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
                                                 <BP_JVM_VERSION>17</BP_JVM_VERSION>
-                                                <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-J-Xmx6000m</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                                                <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-J-Xmx6000m --initialize-at-build-time=org.flywaydb.NativePathLocationScanner</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                             </env>
                                             <pullPolicy>IF_NOT_PRESENT</pullPolicy>
+                                            <buildpacks><buildpack>gcr.io/paketo-buildpacks/java-native-image:7.19.0</buildpack></buildpacks>
                                         </image>
                                     </configuration>
                                 </execution>
