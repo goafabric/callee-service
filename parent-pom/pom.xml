@@ -10,11 +10,6 @@
     <name>goa parent pom</name>
     <description>goa parent pom</description>
 
-    <scm>
-        <url>https://github.com/goafabric/goa-parent.git</url>
-        <tag>HEAD</tag>
-    </scm>
-
     <properties>
         <!-- Project -->
         <java.version>17</java.version>
@@ -29,6 +24,8 @@
         <spring.boot.version>2.7.0</spring.boot.version>
         <spring.cloud.version>2021.0.3</spring.cloud.version>
         <spring.native.version>0.12.0</spring.native.version>
+        <spring.native.buildpack.version>gcr.io/paketo-buildpacks/java-native-image:7.19.0</spring.native.buildpack.version>
+        <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
 
         <!-- code generation -->
         <lombok.version>1.18.24</lombok.version>
@@ -396,7 +393,7 @@
                                                 <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-J-Xmx6000m --initialize-at-build-time=org.flywaydb.NativePathLocationScanner</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                             </env>
                                             <pullPolicy>IF_NOT_PRESENT</pullPolicy>
-                                            <buildpacks><buildpack>gcr.io/paketo-buildpacks/java-native-image:7.19.0</buildpack></buildpacks>
+                                            <buildpacks><buildpack>${spring.native.buildpack.version}</buildpack></buildpacks>
                                         </image>
                                     </configuration>
                                 </execution>
@@ -431,7 +428,7 @@
                             <executions>
                                 <execution>
                                     <id>integrity</id>
-                                    <phase>deploy</phase>
+                                    <phase>integration-test</phase>
                                     <goals>
                                         <goal>exec</goal>
                                     </goals>
@@ -439,6 +436,7 @@
                                         <executable>docker</executable>
                                         <arguments>
                                             <argument>run</argument>
+                                            <argument>${spring.native.check.integrity.argument}</argument>
                                             <argument>${docker.registry}/${project.artifactId}-native:${project.version}
                                             </argument>
                                             <argument>-check-integrity</argument>
