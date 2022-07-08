@@ -3,22 +3,54 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.goafabric</groupId>
+    <groupId>com.cgm.de.ais</groupId>
     <artifactId>spring-parent</artifactId>
-    <version>2.7.1</version>
+    <version>2.7.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>goa parent pom</name>
-    <description>goa parent pom</description>
+    <name>spring parent pom</name>
+    <description>spring parent pom</description>
+
+    <organization>
+        <name>CompuGroup Medical SE - Synchronizing Healthcare</name>
+        <url>https://www.cgm.com</url>
+    </organization>
+
+    <scm>
+        <connection>scm:git:https://git.cgm.ag/cgm.de.ais.spirit/spring-parent.git</connection>
+        <developerConnection>scm:git:https://git.cgm.ag/cgm.de.ais.spirit/spring-parent.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://git.cgm.ag/cgm.de.ais.spirit/spring-parent.git</url>
+    </scm>
+
+    <issueManagement>
+        <system>JIRA</system>
+        <url>https://jira.cgm.ag/browse/ALBTL</url>
+    </issueManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>gss.eos.release</id>
+            <name>artifactory.cgm.ag/gss.eos.release</name>
+            <url>https://artifactory.cgm.ag/gss.eos.release</url>
+        </repository>
+        <snapshotRepository>
+            <id>gss.eos.snapshot</id>
+            <name>artifactory.cgm.ag/gss.eos.snapshot</name>
+            <url>https://artifactory.cgm.ag/gss.eos.snapshot</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <properties>
         <!-- Project -->
-        <java.version>17</java.version>
+        <java.version>11</java.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <docker.baseimage.multi>ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e</docker.baseimage.multi>
+        <docker.baseimage.amd64>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:076f7784ec158f166eabbc4d0240e5f3cef038802b43baad3738c9e52afaed60</docker.baseimage.amd64>
+        <docker.baseimage.arm64>adoptopenjdk/openjdk11-openj9:aarch64-debian-jre-11.0.10_9_openj9-0.24.0@sha256:3ee1ed87d14847d4b20aa6302c7ea762dc8cb5ec7f71020fb4a988a862a7f79e</docker.baseimage.arm64>
+        <docker.baseimage.multi>ibm-semeru-runtimes:open-11.0.14_8-jre-focal@sha256:54da1cb72276830707cf5f94f699d5166c47ac47e98012bed737a5befdede5f2</docker.baseimage.multi>
 
         <!-- Spring Boot -->
         <spring.boot.version>2.7.1</spring.boot.version>
@@ -31,11 +63,14 @@
         <lombok.version>1.18.24</lombok.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
-        
+
         <!-- 3rd party -->
         <springdoc-openapi-ui.version>1.6.9</springdoc-openapi-ui.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
         <joda-time.version>2.10.14</joda-time.version>
+
+        <resilience4j.version>1.7.0</resilience4j.version>
+        <jasypt.version>1.9.3</jasypt.version>
 
         <!-- Test -->
         <equalsverifier.version>3.7.2</equalsverifier.version>
@@ -56,19 +91,39 @@
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
         <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
 
-        <!--   OWN   -->
+
+        <!-- CGM -->
 
         <!-- Docker Registry -->
-        <docker.registry>docker.io/goafabric</docker.registry>
+        <docker.registry>gss-eos.docker.artifactory.cgm.ag</docker.registry>
+        <artifactory.registry.mirror>cgm-hub.docker.artifactory.cgm.ag</artifactory.registry.mirror>
 
         <!-- Sonarqube -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.language>java</sonar.language>
+        <sonar-maven-plugin.version>3.6.1.1688</sonar-maven-plugin.version>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
         <!-- Deploy disabled here-->
         <maven.javadoc.skip>true</maven.javadoc.skip>
-        <maven.deploy.skip>true</maven.deploy.skip>
+
+        <!-- More Plugins -->
+        <maven-changes-plugin.version>2.12.1</maven-changes-plugin.version>
+        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+        <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
+        <maven-help-plugin.version>3.2.0</maven-help-plugin.version>
+        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+        <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
+        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+        <maven-project-info-reports-plugin.version>3.0.1</maven-project-info-reports-plugin.version>
+        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+        <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+
+        <ecs-mvn-plugin.version>0.2.2</ecs-mvn-plugin.version>
+        <git-commit-id-plugin.version>3.0.1</git-commit-id-plugin.version>
+
     </properties>
 
     <dependencyManagement>
@@ -124,6 +179,30 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-native</artifactId>
                 <version>${springdoc-openapi-ui.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox-swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.resilience4j</groupId>
+                <artifactId>resilience4j-spring-boot2</artifactId>
+                <version>${resilience4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jasypt</groupId>
+                <artifactId>jasypt</artifactId>
+                <version>${jasypt.version}</version>
             </dependency>
 
             <!-- Test -->
@@ -185,6 +264,128 @@
                     <artifactId>jib-maven-plugin</artifactId>
                     <version>${jib-maven-plugin.version}</version>
                 </plugin>
+
+                <!-- CGM -->
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>de.eacg</groupId>
+                    <artifactId>ecs-mvn-plugin</artifactId>
+                    <version>${ecs-mvn-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>dependency-scan</id>
+                            <phase>none</phase>
+                            <goals>
+                                <goal>dependency-scan</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <projectName>cgm-private</projectName>
+                        <baseUrl>https://app.trustsource.io</baseUrl>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-changes-plugin</artifactId>
+                    <version>${maven-changes-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven-clean-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven-dependency-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven-enforcer-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-help-plugin</artifactId>
+                    <version>${maven-help-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${maven-install-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>${maven-project-info-reports-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${maven-release-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${maven-site-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.versioneye</groupId>
+                    <artifactId>versioneye-maven-plugin</artifactId>
+                    <version>${versioneye-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>${versions-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.googlecode.maven-download-plugin</groupId>
+                    <artifactId>download-maven-plugin</artifactId>
+                    <version>${download-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>${git-commit-id-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -214,10 +415,6 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco-maven-plugin.version}</version>
-                <configuration>
-                    <destFile>${sonar.jacoco.reportPaths}</destFile>
-                    <append>true</append>
-                </configuration>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -229,12 +426,49 @@
 
                     <execution>
                         <id>report</id>
-                        <phase>prepare-package</phase>
+                        <phase>verify</phase>
                         <goals>
-                            <goal>prepare-agent</goal>
+                            <goal>report</goal>
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!-- CGM -->
+
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <inherited>true</inherited>
+            </plugin>
+
+            <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>1.0.0-CGM02</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>xerces</groupId>
+                        <artifactId>xercesImpl</artifactId>
+                        <version>2.11.0</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <enableSshAgent>true</enableSshAgent>
+                    <pushFeatures>false</pushFeatures>
+                    <pushHotfixes>true</pushHotfixes>
+                    <pushReleases>true</pushReleases>
+                    <keepBranch>false</keepBranch>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -285,7 +519,7 @@
                                     </goals>
                                     <configuration>
                                         <from>
-                                            <image>${docker.baseimage.multi}</image>
+                                            <image>${artifactory.registry.mirror}/${docker.baseimage.multi}</image>
                                             <platforms>
                                                 <platform>
                                                     <architecture>amd64</architecture>
@@ -439,6 +673,77 @@
                 </pluginManagement>
             </build>
         </profile>
+
+        <profile>
+            <id>docker-image-tar</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>build-helper-maven-plugin</artifactId>
+                            <version>${build-helper-maven-plugin.version}</version>
+                            <executions>
+                                <execution>
+                                    <id>attach-artifacts</id>
+                                    <phase>deploy</phase>
+                                    <goals>
+                                        <goal>attach-artifact</goal>
+                                    </goals>
+                                    <configuration>
+                                        <artifacts>
+                                            <artifact>
+                                                <file>${project.build.directory}/${project.artifactId}-${project.version}.tar</file>
+                                                <type>tar</type>
+                                            </artifact>
+                                        </artifacts>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+
+                        <plugin>
+                            <groupId>com.google.cloud.tools</groupId>
+                            <artifactId>jib-maven-plugin</artifactId>
+                            <version>${jib-maven-plugin.version}</version>
+                            <executions>
+                                <execution>
+                                    <id>docker-image-tar</id>
+                                    <phase>deploy</phase>
+                                    <goals>
+                                        <goal>buildTar</goal>
+                                    </goals>
+                                    <configuration>
+                                        <from>
+                                            <image>${artifactory.registry.mirror}/${docker.baseimage.amd64}</image>
+                                        </from>
+                                        <to>
+                                            <image>${docker.registry}/${project.artifactId}</image>
+                                            <tags>
+                                                <tag>${project.version}</tag>
+                                            </tags>
+                                        </to>
+                                        <outputPaths>
+                                            <tar>${project.build.directory}/${project.artifactId}-${project.version}.tar</tar>
+                                        </outputPaths>
+                                        <container>
+                                            <jvmFlags>
+                                                <jvmFlag>-Xms256m</jvmFlag>
+                                                <jvmFlag>-Xmx256m</jvmFlag>
+                                                <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
+                                            </jvmFlags>
+                                            <volumes>
+                                                <volume>/tmp</volume>
+                                            </volumes>
+                                        </container>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
     </profiles>
 
     <repositories>
@@ -448,7 +753,6 @@
             <url>https://repo.spring.io/release</url>
         </repository>
     </repositories>
-
     <pluginRepositories>
         <pluginRepository>
             <id>spring-releases</id>
@@ -456,4 +760,5 @@
             <url>https://repo.spring.io/release</url>
         </pluginRepository>
     </pluginRepositories>
+
 </project>
