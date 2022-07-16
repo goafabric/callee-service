@@ -24,7 +24,7 @@
         <spring.boot.version>2.7.1</spring.boot.version>
         <spring.cloud.version>2021.0.3</spring.cloud.version>
         <spring.native.version>0.12.1</spring.native.version>
-        <spring.native.buildpack.version>gcr.io/paketo-buildpacks/java-native-image:7.19.0</spring.native.buildpack.version>
+        <spring.native.buildpack.version>gcr.io/paketo-buildpacks/java-native-image:7.23.0</spring.native.buildpack.version>
         <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
 
         <!-- code generation -->
