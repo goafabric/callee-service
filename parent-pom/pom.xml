@@ -348,6 +348,25 @@
                 <pluginManagement>
                     <plugins>
                         <plugin>
+                            <groupId>org.springframework.experimental</groupId>
+                            <artifactId>spring-aot-maven-plugin</artifactId>
+                            <version>${spring.native.version}</version>
+                            <executions>
+                                <execution>
+                                    <id>test-generate</id>
+                                    <goals>
+                                        <goal>test-generate</goal>
+                                    </goals>
+                                </execution>
+                                <execution>
+                                    <id>generate</id>
+                                    <goals>
+                                        <goal>generate</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-maven-plugin</artifactId>
                             <version>${spring.boot.version}</version>
@@ -387,27 +406,6 @@
                                 </execution>
                             </executions>
                         </plugin>
-                        <plugin>
-                            <groupId>org.springframework.experimental</groupId>
-                            <artifactId>spring-aot-maven-plugin</artifactId>
-                            <version>${spring.native.version}</version>
-                            <executions>
-                                <execution>
-                                    <id>test-generate</id>
-                                    <goals>
-                                        <goal>test-generate</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>generate</id>
-                                    <goals>
-                                        <goal>generate</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        <!-- Spring Native documentation claims that hibernate enhance is needed, seems to work without it
-                        https://docs.jboss.org/hibernate/orm/5.4/topical/html_single/bytecode/BytecodeEnhancement.html#_build_time_enhancement -->
                         <plugin>
                             <!-- workaround for missing publish functionality, see: https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#build-image-example-publish -->
                             <groupId>org.codehaus.mojo</groupId>
