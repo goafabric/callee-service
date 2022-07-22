@@ -18,7 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <docker.baseimage.multi>ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e</docker.baseimage.multi>
+        <docker.baseimage>ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e</docker.baseimage>
 
         <!-- Spring Boot -->
         <spring.boot.version>2.7.2</spring.boot.version>
@@ -298,7 +298,7 @@
                                     </goals>
                                     <configuration>
                                         <from>
-                                            <image>${docker.baseimage.multi}</image>
+                                            <image>${docker.baseimage}</image>
                                             <platforms>
                                                 <platform>
                                                     <architecture>amd64</architecture>
