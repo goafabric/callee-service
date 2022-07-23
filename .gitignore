@@ -8,3 +8,4 @@
 /target/
 /logs/
 /.gradle/
+/build/
