@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.crossfunctional;
 
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +14,6 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-/**
- * This Aspect will be invoked around every method that is part of a {@link org.springframework.web.bind.annotation.RestController} annotated class. It will log the method's signature and duration of the call.
- */
 @Component
 @Aspect
 @Slf4j
@@ -42,3 +40,6 @@ public class DurationLogger {
     }
 
 }
+
+
+ */

@@ -1,14 +1,10 @@
 package org.goafabric.calleeservice;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
 
 
 /**
@@ -27,6 +23,7 @@ public class Application {
         return args -> {if ((args.length > 0) && ("-check-integrity".equals(args[0]))) {SpringApplication.exit(context, () -> 0);}};
     }
 
+    /*
     @Configuration
     static class SecurityConfiguration  {
         @Value("${security.authentication.enabled:true}")
@@ -39,4 +36,5 @@ public class Application {
             return http.build();
         }
     }
+     */
 }
