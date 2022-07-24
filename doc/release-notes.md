@@ -1,5 +1,6 @@
 #1.2.4
 - owasp added to parent pom
+- upgrade to Spring Boot 2.7.2
 - upgrade to Spring Native 0.12.1
 
 #1.2.3
