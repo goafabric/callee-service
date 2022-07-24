@@ -8,5 +8,5 @@
 /target/
 /logs/
 /.gradle/
+/gradle*
 /build/
-/gradle/
