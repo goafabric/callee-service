@@ -27,7 +27,7 @@ public class HttpInterceptor implements WebMvcConfigurer {
                 tenantId.set(request.getHeader("X-TenantId") != null ? request.getHeader("X-TenantId") : "0"); //TODO
                 userName.set(request.getHeader("X-Auth-Request-Preferred-Username") != null ? request.getHeader("X-Auth-Request-Preferred-Username")
                                                 :  SecurityContextHolder.getContext().getAuthentication().getName());
-                log.info("tenantId: {}", tenantId.get());
+                //log.info("tenantId: {}", tenantId.get());
                 return true;
             }
 
