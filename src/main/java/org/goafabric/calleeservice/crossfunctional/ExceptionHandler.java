@@ -1,4 +1,3 @@
-/*
 package org.goafabric.calleeservice.crossfunctional;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +26,3 @@ public class ExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
-
-
- */
