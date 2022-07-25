@@ -74,12 +74,6 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!-- native -->
-        <dependency>
-            <groupId>org.springframework.experimental</groupId>
-            <artifactId>spring-native</artifactId>
-        </dependency>
-
         <!-- test *-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
