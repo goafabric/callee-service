@@ -21,7 +21,20 @@ repositories {
 
 ext {
 	set('springCloudVersion', "2022.0.0-M3")
-	set('dockerBaseImage', 'ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e')
+}
+
+jib {
+	from.image = 'ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e'
+	from.platforms = [PlatformParameters.of("linux/amd64"), PlatformParameters.of("linux/arm64")]
+	to.image = "goafabric/${project.name}"
+	to.tags = project.provider{[version]}
+	container.jvmFlags = ['-Xms256m', '-Xmx256m']
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 dependencies {
@@ -49,46 +62,6 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
-}
-
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-jib.from.image = 'ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e'
-jib.from.platforms = [PlatformParameters.of("linux/amd64"), PlatformParameters.of("linux/arm64")]
-jib.to.image = "goafabric/${project.name}"
-jib.to.tags = project.provider{[version]}
-jib.container.jvmFlags = ['-Xms256m', '-Xmx256m']
-
-/*
-jib {
-	from {
-		image = 'ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e'
-		platforms {
-			platform {
-				architecture = 'amd64'
-				os = 'linux'
-			}
-			platform {
-				architecture = 'arm64'
-				os = 'linux'
-			}
-		}
-	}
-	to {
-		image = "goafabric/${project.name}"
-		tags = project.provider{[version]}
-	}
-	container {
-		jvmFlags = ['-Xms256m', '-Xmx256m']
-		volumes = ['/tmp']
-	}
-}
-*/
-
-
