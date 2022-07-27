@@ -2,11 +2,12 @@ plugins {
 	id 'org.springframework.boot' version '3.0.0-M4'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
 	id 'org.graalvm.buildtools.native' version '0.9.13'
+	id 'com.google.cloud.tools.jib' version '3.2.1'
 	id 'java'
 }
 
 group = 'org.goafabric'
-version = '1.2.4-SNAPSHOT'
+version = '1.2.4-BOOT3-SNAPSHOT'
 sourceCompatibility = '17'
 
 repositories {
@@ -54,3 +55,10 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+jib {
+	to {
+		image 'gaofabric/callee-service:1.2.4-BOOT3-SNAPSHOT'
+	}
+}
+
