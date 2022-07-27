@@ -19,6 +19,7 @@ repositories {
 
 ext {
 	set('springCloudVersion', "2022.0.0-M3")
+	set('dockerBaseImage', 'ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e')
 }
 
 dependencies {
@@ -56,9 +57,19 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+jib.from.image = 'ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e'
+jib.to.image = 'goafabric/callee-service'
+jib.to.tags = project.provider{[version]}
+
+/*
 jib {
+	from {
+
+	}
 	to {
 		image 'gaofabric/callee-service:1.2.4-BOOT3-SNAPSHOT'
 	}
 }
+
+ */
 
