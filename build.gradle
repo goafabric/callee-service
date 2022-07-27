@@ -16,9 +16,15 @@ repositories {
 	maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots'}
 }
 
+ext {
+	set('springCloudVersion', "2022.0.0-M3")
+}
+
 dependencies {
+	//web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+	//monitoring
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 
@@ -26,14 +32,23 @@ dependencies {
 	//implementation 'spring-cloud-sleuth-zipkin'
 	//implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0-M4-SNAPSHOT'
 
+	//crosscuting
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
 
+	//code generation
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
+	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 tasks.named('test') {
