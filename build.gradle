@@ -1,5 +1,3 @@
-import com.google.cloud.tools.jib.gradle.PlatformParameters
-
 plugins {
 	id 'org.springframework.boot' version '3.0.0-M4'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
@@ -25,7 +23,7 @@ ext {
 
 jib {
 	from.image = 'ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e'
-	from.platforms = [PlatformParameters.of("linux/amd64"), PlatformParameters.of("linux/arm64")]
+	from.platforms = [com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/amd64"), com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/arm64")]
 	to.image = "goafabric/${project.name}"
 	to.tags = project.provider{[version]}
 	container.jvmFlags = ['-Xms256m', '-Xmx256m']
