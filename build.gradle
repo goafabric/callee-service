@@ -57,19 +57,36 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+/*
 jib.from.image = 'ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e'
 jib.to.image = 'goafabric/callee-service' // + project.provider{[rootProject.name]}
 jib.to.tags = project.provider{[version]}
+jib.container.jvmFlags = ['-Xms256m', '-Xmx256m']
+//jib.from.platforms = []
+*/
 
-/*
 jib {
 	from {
-
+		image = 'ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e'
+		platforms {
+			platform {
+				architecture = 'amd64'
+				os = 'linux'
+			}
+			platform {
+				architecture = 'arm64'
+				os = 'linux'
+			}
+		}
 	}
 	to {
-		image 'gaofabric/callee-service:1.2.4-BOOT3-SNAPSHOT'
+		image = 'goafabric/callee-service'
+		tags = project.provider{[version]}
+	}
+	container {
+		jvmFlags = ['-Xms256m', '-Xmx256m']
+		volumes = ['/tmp']
 	}
 }
 
- */
 
