@@ -58,7 +58,7 @@ tasks.named('test') {
 }
 
 jib.from.image = 'ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e'
-jib.to.image = 'goafabric/callee-service'
+jib.to.image = 'goafabric/callee-service' // + project.provider{[rootProject.name]}
 jib.to.tags = project.provider{[version]}
 
 /*
