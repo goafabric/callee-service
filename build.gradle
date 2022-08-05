@@ -1,17 +1,20 @@
+//TODO: toggle AOT Compiler
 plugins {
 	id 'org.springframework.boot' version '2.7.2'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+	id 'org.springframework.experimental.aot' version '0.12.1'
 	id 'org.graalvm.buildtools.native' version '0.9.13'
 	id 'com.google.cloud.tools.jib' version '3.2.1'
-	id 'org.springframework.experimental.aot' version '0.12.1'
 	id 'jacoco'
 	id 'java'
 }
 
 ext {
 	set('dockerRegistry', "goafabric")
+	set('baseImage', "ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e")
 	set('springCloudVersion', "2021.0.3")
 	set('springDocOpenApiVersion', "1.6.9")
+	set('mapStructVersion', "1.5.2.Final")
 }
 
 group = 'org.goafabric'
@@ -21,14 +24,6 @@ sourceCompatibility = '17'
 repositories {
 	maven { url 'https://repo.spring.io/release' }
 	mavenCentral()
-}
-
-jib {
-	from.image = 'ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e'
-	from.platforms = [com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/amd64"), com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/arm64")]
-	to.image = "${dockerRegistry}/${project.name}"
-	to.tags = project.provider{[version]}
-	container.jvmFlags = ['-Xms256m', '-Xmx256m']
 }
 
 dependencyManagement {
@@ -59,6 +54,9 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	implementation "org.mapstruct:mapstruct:${mapStructVersion}"
+	annotationProcessor "org.mapstruct:mapstruct-processor:${mapStructVersion}"
 	
 	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -72,15 +70,19 @@ tasks.named('test') {
 
 jacoco.reportsDirectory = layout.buildDirectory.dir('reports/jacoco')
 
-
-//TODO: toggle AOT Compiler
-//TODO: jacoco + mapstruct
+jib {
+	from.image = "${baseImage}"
+	from.platforms = [com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/amd64"), com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/arm64")]
+	to.image = "${dockerRegistry}/${project.name}"
+	to.tags = project.provider{[version]}
+	container.jvmFlags = ['-Xms256m', '-Xmx256m']
+}
 
 /*
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder:tiny'
 	buildpacks = ["gcr.io/paketo-buildpacks/java-native-image:7.23.0"]
-	bootBuildImage.imageName = "goafabric/${project.name}-native:${project.version}"
+	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native:${project.version}"
 	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m']
 }
 */
