@@ -66,6 +66,9 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+//TODO: Lombok test build for Adapter
+//TODO: toggle AOT Compiler
+
 /*
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder:tiny'
