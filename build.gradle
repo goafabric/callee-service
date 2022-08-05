@@ -1,0 +1,67 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.2'
+	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+	id 'org.graalvm.buildtools.native' version '0.9.13'
+	id 'com.google.cloud.tools.jib' version '3.2.1'
+	//id 'org.springframework.experimental.aot' version '0.12.1'
+	id 'java'
+}
+
+ext {
+	set('springCloudVersion', "2021.0.3")
+}
+
+group = 'org.goafabric'
+version = '2.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	maven { url 'https://repo.spring.io/release' }
+	mavenCentral()
+}
+
+jib {
+	from.image = 'ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e'
+	from.platforms = [com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/amd64"), com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/arm64")]
+	to.image = "goafabric/${project.name}"
+	to.tags = project.provider{[version]}
+	container.jvmFlags = ['-Xms256m', '-Xmx256m']
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+dependencies {
+	//web
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	//monitoring
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+
+	//implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+	//implementation 'spring-cloud-sleuth-zipkin'
+	//implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0-M4-SNAPSHOT'
+
+	//crosscuting
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+	//code generation
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	//native
+	//implementation 'org.springframework.experimental:spring-native'
+
+	//test
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

@@ -5,8 +5,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.nativex.hint.AotProxyHint;
-import org.springframework.nativex.hint.ProxyBits;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -19,7 +17,7 @@ import java.util.stream.Collectors;
 @Component
 @Aspect
 @Slf4j
-@AotProxyHint(targetClass = org.goafabric.calleeservice.logic.CalleeLogic.class, proxyFeatures = ProxyBits.IS_STATIC)
+//@AotProxyHint(targetClass = org.goafabric.calleeservice.logic.CalleeLogic.class, proxyFeatures = ProxyBits.IS_STATIC)
 public class DurationLogger {
 
     @Around("execution(public * org.goafabric.calleeservice.logic.CalleeLogic.*(..))")
