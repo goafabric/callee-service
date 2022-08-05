@@ -4,6 +4,7 @@ plugins {
 	id 'org.graalvm.buildtools.native' version '0.9.13'
 	id 'com.google.cloud.tools.jib' version '3.2.1'
 	id 'org.springframework.experimental.aot' version '0.12.1'
+	id 'jacoco'
 	id 'java'
 }
 
@@ -65,9 +66,13 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+	jacocoTestReport.dependsOn(test)
 }
 
-//TODO: Lombok test build for Adapter
+jacoco.reportsDirectory = layout.buildDirectory.dir('reports/jacoco')
+
+
 //TODO: toggle AOT Compiler
 //TODO: jacoco + mapstruct
 

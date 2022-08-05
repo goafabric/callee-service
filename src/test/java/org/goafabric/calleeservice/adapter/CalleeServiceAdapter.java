@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-//@Slf4j
 @Component
 public class CalleeServiceAdapter {
     @Autowired
@@ -16,9 +15,7 @@ public class CalleeServiceAdapter {
     private String url;
 
     public Callee sayMyName(String name) {
-        //log.info("Calling CalleService ...");
         final Callee callee = restTemplate.getForObject(url + "/callees/sayMyName?name={name}", Callee.class, name);
-        //log.info("got: " + callee);
         return callee;
     }
 }
