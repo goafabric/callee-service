@@ -35,8 +35,7 @@ public class DurationLogger {
 
     private String toString(final Method method) {
         final String parameterTypes = Arrays.stream(method.getParameterTypes())
-                .map(Class::getSimpleName)
-                .collect(Collectors.joining(","));
+                .map(Class::getSimpleName).collect(Collectors.joining(","));
         return String.format("%s.%s(%s)", method.getDeclaringClass().getSimpleName(),
                 method.getName(), parameterTypes);
     }
