@@ -12,10 +12,23 @@ plugins {
 ext {
 	set('dockerRegistry', "goafabric")
 	set('baseImage', "ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e")
-	set('springCloudVersion', "2021.0.3")
-	set('springDocOpenApiVersion', "1.6.9")
-	set('mapStructVersion', "1.5.2.Final")
 }
+
+dependencies {
+	constraints {
+		implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+		implementation 'org.springdoc:springdoc-openapi-native:1.6.9'
+		implementation 'org.mapstruct:mapstruct:1.5.2.Final'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
+	}
+
+	dependencyManagement {
+		imports {
+			mavenBom 'org.springframework.cloud:spring-cloud-dependencies:2021.0.3'
+		}
+	}
+}
+
 
 group = 'org.goafabric'
 version = '2.0.1-gradle-SNAPSHOT'
@@ -24,12 +37,6 @@ sourceCompatibility = '17'
 repositories {
 	maven { url 'https://repo.spring.io/release' }
 	mavenCentral()
-}
-
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
 }
 
 dependencies {
@@ -43,8 +50,8 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
 	implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
 
-	implementation "org.springdoc:springdoc-openapi-ui:${springDocOpenApiVersion}"
-	implementation "org.springdoc:springdoc-openapi-native:${springDocOpenApiVersion}"
+	implementation 'org.springdoc:springdoc-openapi-ui'
+	implementation 'org.springdoc:springdoc-openapi-native'
 
 	//crosscuting
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -55,8 +62,8 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
-	implementation "org.mapstruct:mapstruct:${mapStructVersion}"
-	annotationProcessor "org.mapstruct:mapstruct-processor:${mapStructVersion}"
+	implementation 'org.mapstruct:mapstruct'
+	annotationProcessor 'org.mapstruct:mapstruct-processor'
 	
 	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
