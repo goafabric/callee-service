@@ -9,6 +9,7 @@ plugins {
 
 ext {
 	set('springCloudVersion', "2021.0.3")
+	set('springDocOpenApiVersion', "1.6.9")
 }
 
 group = 'org.goafabric'
@@ -45,8 +46,8 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
 	implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
 
-	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
-	implementation 'org.springdoc:springdoc-openapi-native:1.6.9'
+	implementation "org.springdoc:springdoc-openapi-ui:${springDocOpenApiVersion}"
+	implementation "org.springdoc:springdoc-openapi-native:${springDocOpenApiVersion}"
 
 	//crosscuting
 	implementation 'org.springframework.boot:spring-boot-starter-security'
