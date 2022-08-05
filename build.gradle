@@ -68,7 +68,10 @@ tasks.named('test') {
 /*
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder:tiny'
-	environment = ['BP_NATIVE_IMAGE': 'true']
+	buildpacks = ["gcr.io/paketo-buildpacks/java-native-image:7.23.0"]
+	bootBuildImage.imageName = "goafabric/${project.name}-native:${project.version}"
+	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m']
 }
 
  */
+
