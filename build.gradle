@@ -6,6 +6,10 @@ plugins {
 	id 'java'
 }
 
+ext {
+	set('springCloudVersion', "2022.0.0-M4")
+}
+
 group = 'org.goafabric'
 version = '1.2.4-BOOT3-SNAPSHOT'
 sourceCompatibility = '17'
@@ -15,10 +19,6 @@ repositories {
 	maven { url 'https://repo.spring.io/milestone' }
 	maven { url 'https://repo.spring.io/snapshot' }
 	maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots'}
-}
-
-ext {
-	set('springCloudVersion', "2022.0.0-M4")
 }
 
 jib {
