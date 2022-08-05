@@ -27,7 +27,6 @@ dependencies {
 	}
 }
 
-
 group = 'org.goafabric'
 version = '2.0.1-gradle-SNAPSHOT'
 sourceCompatibility = '17'
