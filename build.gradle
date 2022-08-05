@@ -11,7 +11,7 @@ ext {
 }
 
 group = 'org.goafabric'
-version = '1.2.4-BOOT3-SNAPSHOT'
+version = '3.0.0-SNAPSHOT'
 sourceCompatibility = '17'
 
 repositories {
