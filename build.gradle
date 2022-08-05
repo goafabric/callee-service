@@ -42,9 +42,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 
-	//implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
-	//implementation 'spring-cloud-sleuth-zipkin'
-	//implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0-M4-SNAPSHOT'
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+	implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
+
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+	implementation 'org.springdoc:springdoc-openapi-native:1.6.9'
 
 	//crosscuting
 	implementation 'org.springframework.boot:spring-boot-starter-security'
