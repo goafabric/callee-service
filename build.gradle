@@ -69,6 +69,7 @@ tasks.named('test') {
 
 //TODO: Lombok test build for Adapter
 //TODO: toggle AOT Compiler
+//TODO: jacoco + mapstruct
 
 /*
 tasks.named('bootBuildImage') {
