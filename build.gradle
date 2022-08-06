@@ -3,11 +3,25 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
 	id 'org.graalvm.buildtools.native' version '0.9.13'
 	id 'com.google.cloud.tools.jib' version '3.2.1'
+	id 'jacoco'
 	id 'java'
 }
 
 ext {
-	set('springCloudVersion', "2022.0.0-M4")
+	set('dockerRegistry', "goafabric")
+	set('baseImage', "ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e")
+}
+
+dependencies {
+	constraints {
+		implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0-M4-SNAPSHOT'
+		implementation 'org.mapstruct:mapstruct:1.5.2.Final'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
+	}
+
+	dependencyManagement.imports {
+		mavenBom 'org.springframework.cloud:spring-cloud-dependencies:2022.0.0-M4'
+	}
 }
 
 group = 'org.goafabric'
@@ -21,20 +35,6 @@ repositories {
 	maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots'}
 }
 
-jib {
-	from.image = 'ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e'
-	from.platforms = [com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/amd64"), com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/arm64")]
-	to.image = "goafabric/${project.name}"
-	to.tags = project.provider{[version]}
-	container.jvmFlags = ['-Xms256m', '-Xmx256m']
-}
-
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
-}
-
 dependencies {
 	//web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -44,8 +44,8 @@ dependencies {
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 
 	//implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
-	//implementation 'spring-cloud-sleuth-zipkin'
-	//implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0-M4-SNAPSHOT'
+	//implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
+	//implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui'
 
 	//crosscuting
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -56,10 +56,35 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
+	implementation 'org.mapstruct:mapstruct'
+	annotationProcessor 'org.mapstruct:mapstruct-processor'
+
 	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+	jacocoTestReport.dependsOn(test)
 }
+
+jacoco.reportsDirectory = layout.buildDirectory.dir('reports/jacoco')
+
+jib {
+	from.image = "${baseImage}"
+	from.platforms = [com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/amd64"), com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/arm64")]
+	to.image = "${dockerRegistry}/${project.name}"
+	to.tags = project.provider{[version]}
+	container.jvmFlags = ['-Xms256m', '-Xmx256m']
+}
+
+/*
+tasks.named('bootBuildImage') {
+	builder = 'paketobuildpacks/builder:tiny'
+	buildpacks = ["gcr.io/paketo-buildpacks/java-native-image:7.23.0"]
+	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native:${project.version}"
+	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m']
+}
+*/
+
