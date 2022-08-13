@@ -80,12 +80,3 @@ jib {
 	container.jvmFlags = ['-Xms256m', '-Xmx256m']
 }
 
-/*
-tasks.named('bootBuildImage') {
-	builder = 'paketobuildpacks/builder:tiny'
-	buildpacks = ["gcr.io/paketo-buildpacks/java-native-image:7.23.0"]
-	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native:${project.version}"
-	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m']
-}
-*/
-
