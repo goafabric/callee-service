@@ -13,7 +13,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>callee-service</artifactId>
-    <version>2.0.1-gradle-SNAPSHOT</version>
+    <version>2.0.1-SNAPSHOT</version>
     
     <dependencies>
         <!-- web -->
