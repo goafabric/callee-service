@@ -5,7 +5,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>spring-parent</artifactId>
-    <version>2.7.2</version>
+    <version>2.7.3</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
     <description>goa parent pom</description>
@@ -21,7 +21,7 @@
         <docker.baseimage>ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e</docker.baseimage>
 
         <!-- Spring Boot -->
-        <spring.boot.version>2.7.2</spring.boot.version>
+        <spring.boot.version>2.7.3</spring.boot.version>
         <spring.cloud.version>2021.0.3</spring.cloud.version>
         <spring.native.version>0.12.1</spring.native.version>
         <spring.native.buildpack.version>gcr.io/paketo-buildpacks/java-native-image:7.23.0</spring.native.buildpack.version>
