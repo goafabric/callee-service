@@ -1,6 +1,6 @@
 //TODO: toggle AOT Compiler + Gradle Github
 plugins {
-	id 'org.springframework.boot' version '2.7.2'
+	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
 	id 'org.springframework.experimental.aot' version '0.12.1'
 	id 'org.graalvm.buildtools.native' version '0.9.13'
