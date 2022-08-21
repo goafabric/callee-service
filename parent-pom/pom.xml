@@ -20,6 +20,11 @@
 
         <docker.baseimage>ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e</docker.baseimage>
 
+        <!-- Kotlin -->
+        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin.code.style>official</kotlin.code.style>
+        <kotlin.compiler.jvmTarget>${java.version}</kotlin.compiler.jvmTarget>
+
         <!-- Spring Boot -->
         <spring.boot.version>2.7.3</spring.boot.version>
         <spring.cloud.version>2021.0.3</spring.cloud.version>
@@ -31,7 +36,7 @@
         <lombok.version>1.18.24</lombok.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
-        
+
         <!-- 3rd party -->
         <springdoc-openapi-ui.version>1.6.9</springdoc-openapi-ui.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
@@ -194,6 +199,42 @@
                         <execution>
                             <goals>
                                 <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-maven-plugin</artifactId>
+                    <version>${kotlin.version}</version>
+                    <configuration>
+                        <args>
+                            <arg>-Xjsr305=strict</arg>
+                        </args>
+                        <compilerPlugins>
+                            <plugin>spring</plugin>
+                        </compilerPlugins>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.jetbrains.kotlin</groupId>
+                            <artifactId>kotlin-maven-allopen</artifactId>
+                            <version>${kotlin.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <executions>
+                        <execution>
+                            <id>compile</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>test-compile</id>
+                            <phase>test-compile</phase>
+                            <goals>
+                                <goal>test-compile</goal>
                             </goals>
                         </execution>
                     </executions>
