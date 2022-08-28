@@ -7,6 +7,6 @@
 /.project
 /target/
 /logs/
-/.gradle/
-/gradle*
+/*gradle/
+/gradlew*
 /build/
