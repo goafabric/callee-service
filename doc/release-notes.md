@@ -1,3 +1,7 @@
+# 2.0.1
+- upgrade to openapi 1.6.10
+- upgrade to ibm semeru baseimage 17.0.4
+
 # 2.0.0
 - Parity with Spring Boot Version
 
