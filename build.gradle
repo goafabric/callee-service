@@ -89,3 +89,9 @@ tasks.named('bootBuildImage') {
 	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m']
 }
 
+/*
+if (project.property('aotEnabled') == "true") {
+	apply plugin: "org.springframework.experimental.aot"
+	apply plugin: "org.graalvm.buildtools.native"
+}
+*/
