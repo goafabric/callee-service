@@ -64,13 +64,11 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 	finalizedBy jacocoTestReport
-	jacocoTestReport.dependsOn(test)
 }
-
-jacoco.reportsDirectory = layout.buildDirectory.dir('reports/jacoco')
+jacocoTestReport.dependsOn(test)
 
 jib {
 	from.image = "${baseImage}"
