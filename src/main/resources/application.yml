@@ -21,6 +21,7 @@ spring.zipkin.enabled: true
 spring.sleuth.enabled: ${spring.zipkin.enabled}
 #logging.level.zipkin2: "FATAL"
 
+management.tracing.enabled: "true"
 management.zipkin.tracing.endpoint: "http://localhost:9411/api/v2/spans"
 
 #security
