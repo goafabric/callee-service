@@ -19,7 +19,9 @@ springdoc.swagger-ui.path: /swagger-ui/index.html
 spring.zipkin.service.name: "callee-service"
 spring.zipkin.enabled: true
 spring.sleuth.enabled: ${spring.zipkin.enabled}
-logging.level.zipkin2: "FATAL"
+#logging.level.zipkin2: "FATAL"
+
+management.zipkin.tracing.endpoint: "http://localhost:9411/api/v2/spans"
 
 #security
 security.authentication.enabled: true
