@@ -5,4 +5,4 @@
 - DurationLogger Aspect
 
 - OpenAPI
-- Zipkin sleuth (https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0.0-M3-Release-Notes)
+- Zipkin
