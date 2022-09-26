@@ -3,6 +3,7 @@ server:
   port: 50900
   tomcat.max-threads: 20
 
+
 #monitoring
 management:
     endpoint:
@@ -16,13 +17,10 @@ management:
 springdoc.swagger-ui.path: /swagger-ui/index.html
 
 #jaeger / zipkin
-spring.zipkin.service.name: "callee-service"
-spring.zipkin.enabled: true
-spring.sleuth.enabled: ${spring.zipkin.enabled}
 #logging.level.zipkin2: "FATAL"
-
-management.tracing.enabled: "true"
+spring.application.name: callee-service
 management.zipkin.tracing.endpoint: "http://localhost:9411/api/v2/spans"
+
 
 #security
 security.authentication.enabled: true
