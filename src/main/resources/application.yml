@@ -17,10 +17,8 @@ management:
 springdoc.swagger-ui.path: /swagger-ui/index.html
 
 #jaeger / zipkin
-#logging.level.zipkin2: "FATAL"
 spring.application.name: callee-service
 management.zipkin.tracing.endpoint: "http://localhost:9411/api/v2/spans"
-
 
 #security
 security.authentication.enabled: true
