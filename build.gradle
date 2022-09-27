@@ -66,6 +66,7 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+	exclude '**/*NRIT*'
 	finalizedBy jacocoTestReport
 }
 jacocoTestReport.dependsOn(test)
