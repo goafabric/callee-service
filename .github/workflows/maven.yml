@@ -33,9 +33,9 @@ jobs:
 #      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
 #      with:
 #        arguments: bootBuildImage     
-    - name: Setup Gradle
+    - name: Multiarch Image
       uses: gradle/gradle-build-action@v2
       with:
         gradle-version: 7.4
-        arguments: build
+        arguments: jib jib
   
