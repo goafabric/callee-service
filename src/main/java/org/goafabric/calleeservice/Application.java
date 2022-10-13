@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.core.Ordered;
 import org.springframework.web.observation.HttpRequestsObservationFilter;
 
@@ -22,6 +23,7 @@ import java.util.Arrays;
  */
 
 @SpringBootApplication
+@ImportRuntimeHints(Application.ApplicationRuntimeHints.class)
 public class Application {
 
     public static void main(String[] args){
