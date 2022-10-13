@@ -39,13 +39,13 @@ public class Application {
 
         @Override
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
+            //Logger and ExceptionHandler
             registerReflection(org.goafabric.calleeservice.crossfunctional.DurationLogger.class, hints);
             registerReflection(org.goafabric.calleeservice.crossfunctional.ExceptionHandler.class, hints);
-            registerReflection(org.springframework.web.bind.annotation.ExceptionHandler.class, hints);
         }
 
         private void registerReflection(Class clazz, RuntimeHints hints) {
-            Arrays.stream(clazz.getConstructors()).forEach(
+            Arrays.stream(clazz.getDeclaredConstructors()).forEach(
                     r -> hints.reflection().registerConstructor(r, ExecutableMode.INVOKE));
             Arrays.stream(clazz.getDeclaredMethods()).forEach(
                     r -> hints.reflection().registerMethod(r, ExecutableMode.INVOKE));
