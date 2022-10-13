@@ -39,11 +39,9 @@ public class Application {
 
         @Override
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
-            /*
             registerReflection(org.goafabric.calleeservice.crossfunctional.DurationLogger.class, hints);
             registerReflection(org.goafabric.calleeservice.crossfunctional.ExceptionHandler.class, hints);
             registerReflection(org.springframework.web.bind.annotation.ExceptionHandler.class, hints);
-            */
         }
 
         private void registerReflection(Class clazz, RuntimeHints hints) {
