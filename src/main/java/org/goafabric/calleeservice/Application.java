@@ -2,7 +2,7 @@ package org.goafabric.calleeservice;
 
 import io.micrometer.observation.ObservationRegistry;
 import jakarta.servlet.DispatcherType;
-import org.springframework.aot.hint.ExecutableMode;
+import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.boot.CommandLineRunner;
@@ -14,8 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.core.Ordered;
 import org.springframework.web.observation.HttpRequestsObservationFilter;
-
-import java.util.Arrays;
 
 
 /**
@@ -36,21 +34,15 @@ public class Application {
     }
 
     static class ApplicationRuntimeHints implements RuntimeHintsRegistrar {
-
         @Override
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
             //Logger and ExceptionHandler
-            registerReflection(org.goafabric.calleeservice.crossfunctional.DurationLogger.class, hints);
-            registerReflection(org.goafabric.calleeservice.crossfunctional.ExceptionHandler.class, hints);
-        }
+            hints.reflection().registerType(org.goafabric.calleeservice.crossfunctional.DurationLogger.class,
+                    MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_DECLARED_METHODS);
 
-        private void registerReflection(Class clazz, RuntimeHints hints) {
-            Arrays.stream(clazz.getDeclaredConstructors()).forEach(
-                    r -> hints.reflection().registerConstructor(r, ExecutableMode.INVOKE));
-            Arrays.stream(clazz.getDeclaredMethods()).forEach(
-                    r -> hints.reflection().registerMethod(r, ExecutableMode.INVOKE));
+            hints.reflection().registerType(org.goafabric.calleeservice.crossfunctional.ExceptionHandler.class,
+                    MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_DECLARED_METHODS);
         }
-
     }
 
     @Bean
