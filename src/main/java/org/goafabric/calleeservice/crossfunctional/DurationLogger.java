@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @Component
 @Aspect
 @Slf4j
-//@AotProxyHint(targetClass = org.goafabric.calleeservice.logic.CalleeLogic.class, proxyFeatures = ProxyBits.IS_STATIC)
 public class DurationLogger {
 
     @Around("execution(public * org.goafabric.calleeservice.logic.CalleeLogic.*(..))")
