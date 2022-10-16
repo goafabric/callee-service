@@ -34,5 +34,5 @@ jobs:
       uses: gradle/gradle-build-action@v2
       with:
         gradle-version: 7.4
-        arguments: bootBuildImage       
+        arguments: bootBuildImage dockerPush  
   
