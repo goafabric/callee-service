@@ -69,21 +69,20 @@ test {
 	exclude '**/*NRIT*'
 	finalizedBy jacocoTestReport
 }
-jacocoTestReport.dependsOn(test)
 
 jib {
 	from.image = "${baseImage}"
 	from.platforms = [com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/amd64"), com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/arm64")]
-	to.image = "${dockerRegistry}/${project.name}"
-	to.tags = project.provider{[version]}
+	to.image = "${dockerRegistry}/${project.name}:${project.version}"
 	container.jvmFlags = ['-Xms256m', '-Xmx256m']
 }
 
+//native image
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder:tiny'
 	buildpacks = ["gcr.io/paketo-buildpacks/java-native-image:7.35.0"]
 	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native:${project.version}"
-	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m,--enable-url-protocols=http']
+	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m --enable-url-protocols=http']
 }
 
 task dockerRun(type:Exec) { commandLine 'docker', 'run', "--rm", "${dockerRegistry}/${project.name}-native:${project.version}", '-check-integrity' }

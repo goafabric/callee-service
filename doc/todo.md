@@ -3,6 +3,4 @@
 
 - ExceptionHandler
 - DurationLogger Aspect
-
-- OpenAPI
 - Zipkin
