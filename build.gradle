@@ -78,6 +78,8 @@ jib {
 }
 
 //native image
+graalvmNative.binaries.main.buildArgs.add('--enable-url-protocols=http') //https://graalvm.github.io/native-build-tools/0.9.5/gradle-plugin.html#_native_image_optio
+
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder:tiny'
 	buildpacks = ["gcr.io/paketo-buildpacks/java-native-image:7.35.0"]
@@ -90,5 +92,3 @@ task dockerPush(type:Exec) {
 	commandLine 'docker', 'push', "${dockerRegistry}/${project.name}-native:${project.version}"
 	dependsOn(dockerRun)
 }
-
-graalvmNative.binaries.main.buildArgs.add('--enable-url-protocols=http') //https://graalvm.github.io/native-build-tools/0.9.5/gradle-plugin.html#_native_image_options
