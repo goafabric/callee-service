@@ -86,9 +86,10 @@ tasks.named('bootBuildImage') {
 	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m']
 }
 
+task dockerRun(type:Exec) { commandLine 'docker', 'run', "--rm", "${dockerRegistry}/${project.name}-native:${project.version}", '-check-integrity' }
 task dockerPush(type:Exec) {
 	commandLine 'docker', 'push', "${dockerRegistry}/${project.name}-native:${project.version}"
-	//dependsOn('bootBuildImage')
+	dependsOn(dockerRun)
 }
 
 //https://graalvm.github.io/native-build-tools/0.9.5/gradle-plugin.html#_native_image_options
