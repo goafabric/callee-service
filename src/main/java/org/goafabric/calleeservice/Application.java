@@ -40,16 +40,4 @@ public class Application {
         }
     }
 
-    /*
-    @Bean
-    FilterRegistrationBean traceWebFilter(ObservationRegistry observationRegistry) {
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new HttpRequestsObservationFilter(observationRegistry));
-        filterRegistrationBean.setDispatcherTypes(DispatcherType.ASYNC, DispatcherType.ERROR, DispatcherType.FORWARD,
-                DispatcherType.INCLUDE, DispatcherType.REQUEST);
-        filterRegistrationBean.setOrder(Ordered.LOWEST_PRECEDENCE);
-        return filterRegistrationBean;
-    }
-    
-     */
-
 }
