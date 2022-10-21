@@ -31,11 +31,8 @@ public class Application {
     static class ApplicationRuntimeHints implements RuntimeHintsRegistrar {
         @Override
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
-            //Logger and ExceptionHandler
+            //Logger
             hints.reflection().registerType(org.goafabric.calleeservice.crossfunctional.DurationLogger.class,
-                    MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_DECLARED_METHODS);
-
-            hints.reflection().registerType(org.goafabric.calleeservice.crossfunctional.ExceptionHandler.class,
                     MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_DECLARED_METHODS);
         }
     }
