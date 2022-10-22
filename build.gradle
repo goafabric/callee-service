@@ -9,7 +9,7 @@ plugins {
 
 ext {
 	set('dockerRegistry', "goafabric")
-	set('baseImage', "ibm-semeru-runtimes:open-17.0.3_7-jre-focal@sha256:e89df25f95379321ef61d5119eee68c28884ff8f8c5deaf2d474f3cdb1dbbb7e")
+	set('baseImage', "ibm-semeru-runtimes:open-17.0.4.1_1-jre-focal@sha256:29d74ccd3e20aff9cca04df418ba6dca38cf86ea1dba42635c8d8ba89f2d25a5")
 }
 
 dependencies {
