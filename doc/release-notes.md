@@ -2,9 +2,12 @@
 - upgrade to Spring Boot 3.0.0
 
 # 2.0.1
-- upgrade to openapi 1.6.10
+- upgrade to Spring Boot 2.7.5
+- upgrade to Spring Cloud 2021.0.4
+- upgrade to openapi 1.6.12
+
+- update jib plugin to version 3.3.0
 - upgrade to ibm semeru baseimage 17.0.4
-- upgrade to Spring Boot 2.7.4
 
 # 2.0.0
 - Parity with Spring Boot Version
