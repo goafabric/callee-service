@@ -26,12 +26,12 @@ jobs:
 #      run: mvn -B clean deploy -P docker-image-native --file pom.xml
    
     - name: Multiarch Image
-      uses: gradle/gradle-build-action@v3
+      uses: gradle/gradle-build-action@v2
       with:
         gradle-version: 7.4
         arguments: jib jib
     - name: Native Image
-      uses: gradle/gradle-build-action@v3
+      uses: gradle/gradle-build-action@v2
       with:
         gradle-version: 7.4
         arguments: bootBuildImage dockerPush  
