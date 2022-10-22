@@ -82,7 +82,7 @@ graalvmNative.binaries.main.buildArgs.add('--enable-url-protocols=http') //https
 
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder:tiny'
-	buildpacks =  ['gcr.io/paketo-buildpacks/bellsoft-liberica:9.9.0-ea', 'gcr.io/paketo-buildpacks/java-native-image']
+	buildpacks =  ['gcr.io/paketo-buildpacks/bellsoft-liberica:9.9.0-ea']
 	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native:${project.version}"
 	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m --enable-url-protocols=http']
 }
