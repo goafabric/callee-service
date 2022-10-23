@@ -14,7 +14,7 @@ import java.util.Base64;
 import java.util.Collections;
 
 @Configuration
-public class CalleeServiceConfiguration {
+public class CalleeServiceAdapterConfiguration {
 
     @Bean
     public RestTemplate restTemplate(

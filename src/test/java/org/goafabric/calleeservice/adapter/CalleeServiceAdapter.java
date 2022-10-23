@@ -16,9 +16,12 @@ public class CalleeServiceAdapter {
     private String url;
 
     public Callee sayMyName(String name) {
-        //log.info("Calling CalleService ...");
         final Callee callee = restTemplate.getForObject(url + "/callees/sayMyName?name={name}", Callee.class, name);
-        //log.info("got: " + callee);
+        return callee;
+    }
+
+    public Callee sayMyOtherName(String name) {
+        final Callee callee = restTemplate.getForObject(url + "/callees/sayMyOtherName/{name}", Callee.class, name);
         return callee;
     }
 }
