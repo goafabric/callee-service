@@ -4,6 +4,7 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.goafabric.calleeservice.service.Callee;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -27,6 +28,11 @@ public class CalleeLogic {
         this.sleepTime.set(sleepTime); //you should never change instance variables for a productive app
         return Callee.builder()
                 .message("set sleepTime to: " + sleepTime).build();
+    }
+
+    public Callee save(@RequestBody @NonNull Callee callee) {
+        return Callee.builder()
+                .message("Storing your message: " + callee.getMessage()).build();
     }
 
     @SneakyThrows

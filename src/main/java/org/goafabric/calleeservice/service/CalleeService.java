@@ -26,5 +26,10 @@ public class CalleeService {
         return calleeLogic.setSleepTime(sleepTime);
     }
 
+    @PostMapping(value = "save", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Callee save(@RequestBody Callee callee) {
+        return calleeLogic.save(callee);
+    }
+
 }
 
