@@ -31,7 +31,6 @@ public class HttpInterceptor implements WebMvcConfigurer {
                 tenantId.set(request.getHeader("X-TenantId") != null ? request.getHeader("X-TenantId") : "0"); //TODO
                 userName.set(request.getHeader("X-Auth-Request-Preferred-Username") != null ? request.getHeader("X-Auth-Request-Preferred-Username")
                                                 :  SecurityContextHolder.getContext().getAuthentication().getName());
-                //log.info("tenantId: {}", tenantId.get());
                 return true;
             }
 
@@ -48,8 +47,8 @@ public class HttpInterceptor implements WebMvcConfigurer {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        if (isAuthenticationEnabled) { http.authorizeRequests().anyRequest().authenticated().and().httpBasic().and().csrf().disable(); }
-        else { http.authorizeRequests().anyRequest().permitAll(); }
+        if (isAuthenticationEnabled) { http.authorizeHttpRequests().anyRequest().authenticated().and().httpBasic().and().csrf().disable(); }
+        else { http.authorizeHttpRequests().anyRequest().permitAll(); }
         return http.build();
     }
 }
