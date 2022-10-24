@@ -21,11 +21,6 @@ public class CalleeService {
         return calleeLogic.sayMyOtherName(name);
     }
 
-    @GetMapping("setSleepTime")
-    public Callee setSleepTime(@RequestParam("sleepTime") Long sleepTime) {
-        return calleeLogic.setSleepTime(sleepTime);
-    }
-
     @PostMapping(value = "save", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Callee save(@RequestBody Callee callee) {
         return calleeLogic.save(callee);

@@ -1,5 +1,6 @@
 package org.goafabric.calleeservice.logic;
 
+import org.goafabric.calleeservice.service.Callee;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +25,10 @@ class CalleeLogicIT {
     }
 
     @Test
-    void setSleepTime() {
-        assertThat(calleeLogic.setSleepTime(0l)).isNotNull();
+    void save() {
+        assertThat(calleeLogic.save(
+                Callee.builder().message("Secret").build()).getMessage())
+                .isEqualTo("Storing your message: Secret");
     }
+
 }
