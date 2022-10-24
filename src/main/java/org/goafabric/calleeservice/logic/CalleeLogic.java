@@ -1,7 +1,7 @@
 package org.goafabric.calleeservice.logic;
 
 import lombok.NonNull;
-import org.goafabric.calleeservice.service.Callee;
+import org.goafabric.calleeservice.controller.Callee;
 import org.springframework.stereotype.Component;
 
 @Component

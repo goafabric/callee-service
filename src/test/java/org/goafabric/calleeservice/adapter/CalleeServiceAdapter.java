@@ -1,6 +1,6 @@
 package org.goafabric.calleeservice.adapter;
 
-import org.goafabric.calleeservice.service.Callee;
+import org.goafabric.calleeservice.controller.Callee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package org.goafabric.calleeservice.logic;
 
-import org.goafabric.calleeservice.service.Callee;
+import org.goafabric.calleeservice.controller.Callee;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package org.goafabric.calleeservice.service;
+package org.goafabric.calleeservice.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
