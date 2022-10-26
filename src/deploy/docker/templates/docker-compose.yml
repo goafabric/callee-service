@@ -32,10 +32,8 @@ services:
       - management.endpoint.health.show-details=always
       - management.endpoints.web.exposure.include=health,prometheus,heapdump
       #zipkin / jaeger
-      - spring.zipkin.service.name=callee-service
-      - spring.zipkin.baseUrl=http://host.docker.internal:9411
-      - spring.sleuth.enabled=true
-      - spring.zipkin.enabled=true
+      - management.zipkin.tracing.endpoint=http://host.docker.internal:9411/api/v2/spans
+      - spring.application.name=callee-service
       #log levels
       - logging.level.root=WARN
       - logging.level.org.springframework=INFO
