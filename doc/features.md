@@ -11,10 +11,11 @@ Core
 
 - DurationLogger Aspect
 
-#build times apple silicon:
-- not working
+# Oracle GraalVM LOCAL Native Compile Times per Service Type
 
-#build times github:
-- console: 4m
-- web: 10m
-- jpa: 15m
+- Service with JPA + Monitoring + Openapi 2:45m
+- Service withOUT JPA + Monitoring + Openapi 1:30m
+- Service naked Web Only 1:10m
+- Service Console Only 43sec
+- 
+- Service with JPA inside Liberica GraalVm : 4m+                                
