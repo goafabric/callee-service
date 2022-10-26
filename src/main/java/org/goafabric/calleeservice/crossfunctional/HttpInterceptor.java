@@ -47,7 +47,7 @@ public class HttpInterceptor implements WebMvcConfigurer {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        if (isAuthenticationEnabled) { http.authorizeHttpRequests().anyRequest().authenticated().and().httpBasic().and().csrf().disable(); }
+        if (isAuthenticationEnabled) { http.authorizeHttpRequests().requestMatchers("/*").permitAll().anyRequest().authenticated().and().httpBasic().and().csrf().disable(); }
         else { http.authorizeHttpRequests().anyRequest().permitAll(); }
         return http.build();
     }
