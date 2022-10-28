@@ -4,7 +4,7 @@ plugins {
 	id 'org.graalvm.buildtools.native' version '0.9.16'
 	id 'com.google.cloud.tools.jib' version '3.3.0'
 	id 'jacoco'
-	id 'java'
+	//id 'java'
 
 	//kotlin
 	id 'org.jetbrains.kotlin.jvm' version '1.7.20'
@@ -44,6 +44,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	//monitoring
+	/*
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 
@@ -51,6 +52,7 @@ dependencies {
 	implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
 
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui'
+	*/
 
 	//crosscuting
 	implementation 'org.springframework.boot:spring-boot-starter-security'

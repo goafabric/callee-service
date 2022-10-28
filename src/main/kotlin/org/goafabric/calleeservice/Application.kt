@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -8,9 +9,6 @@ import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import kotlin.jvm.JvmStatic
 
-/**
- * Created by amautsch on 26.06.2015.
- */
 @SpringBootApplication
 class Application {
     companion object {
@@ -30,3 +28,5 @@ class Application {
     }
 
 }
+
+ */
