@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '3.0.0-RC1'
+	id 'org.springframework.boot' version '3.0.0-M5'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'org.graalvm.buildtools.native' version '0.9.16'
 	id 'com.google.cloud.tools.jib' version '3.3.0'
@@ -25,7 +25,7 @@ dependencies {
 }
 
 group = 'org.goafabric'
-version = '3.0.0-RC1'
+version = '3.0.0-arm64-RC1'
 sourceCompatibility = '17'
 
 repositories {
@@ -77,12 +77,15 @@ jib {
 	container.jvmFlags = ['-Xms256m', '-Xmx256m']
 }
 
-tasks.named('bootBuildImage') {
-	buildpacks =  ['gcr.io/paketo-buildpacks/bellsoft-liberica:9.9.0-ea', 'gcr.io/paketo-buildpacks/java-native-image:5.5.0']
-	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native:${project.version}"
-	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m']
-}
+//native image
+graalvmNative.binaries.main.buildArgs.add('--enable-url-protocols=http') //https://graalvm.github.io/native-build-tools/0.9.5/gradle-plugin.html#_native_image_optio
 
+tasks.named('bootBuildImage') {
+	builder = 'dashaun/java-native-builder-arm64:7.33.0'
+//	buildpacks =  ['gcr.io/paketo-buildpacks/bellsoft-liberica:9.9.0-ea', 'gcr.io/paketo-buildpacks/java-native-image']
+	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native:${project.version}"
+	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m --enable-url-protocols=http']
+}
 
 task dockerRun(type:Exec) { commandLine 'docker', 'run', "--rm", "${dockerRegistry}/${project.name}-native:${project.version}", '-check-integrity' }
 task dockerPush(type:Exec) {
