@@ -5,6 +5,10 @@ import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.reflect.MethodSignature
 import org.slf4j.LoggerFactory
+import org.springframework.aot.hint.MemberCategory
+import org.springframework.aot.hint.RuntimeHints
+import org.springframework.aot.hint.RuntimeHintsRegistrar
+import org.springframework.context.annotation.ImportRuntimeHints
 import org.springframework.stereotype.Component
 import java.lang.reflect.Method
 import java.util.*
@@ -15,6 +19,7 @@ import java.util.stream.Collectors
  */
 @Component
 @Aspect
+@ImportRuntimeHints(DurationLogger.ApplicationRuntimeHints::class)
 class DurationLogger {
     private val log = LoggerFactory.getLogger(this::class.java)
 
@@ -37,5 +42,11 @@ class DurationLogger {
         return String.format("%s.%s(%s)", method.declaringClass.simpleName,
             method.name, parameterTypes
         )
+    }
+
+    internal class ApplicationRuntimeHints : RuntimeHintsRegistrar {
+        override fun registerHints(hints: RuntimeHints, classLoader: ClassLoader?) {
+            hints.reflection().registerType(DurationLogger::class.java, MemberCategory.INVOKE_DECLARED_METHODS)
+        }
     }
 }
