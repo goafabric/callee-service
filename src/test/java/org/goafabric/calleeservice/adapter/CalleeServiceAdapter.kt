@@ -15,4 +15,9 @@ class CalleeServiceAdapter(
     fun sayMyName(name: String): Callee? {
         return restTemplate.getForObject("$url/callees/sayMyName?name={name}", Callee::class.java, name)
     }
+
+    fun sayMyOtherName(name: String): Callee? {
+        return restTemplate.getForObject("$url/callees/sayMyOtherName/{name}", Callee::class.java, name)
+    }
+
 }
