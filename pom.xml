@@ -18,7 +18,7 @@
     <properties>
         <spring.boot.version>3.0.0-RC1</spring.boot.version>
         <spring.cloud.version>2022.0.0-M5</spring.cloud.version>
-        <springdoc-openapi-ui.version>2.0.0-M7</springdoc-openapi-ui.version>
+        <springdoc-openapi-ui.version>2.0.0-RC1</springdoc-openapi-ui.version>
     </properties>
 
     <dependencies>
