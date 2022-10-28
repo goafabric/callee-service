@@ -13,4 +13,8 @@ class CalleeLogic {
         return Callee(message = "Your name is: $name")
     }
 
+
+    fun save(callee: Callee): Callee? {
+        return Callee(message = "Storing your message: $callee.message")
+    }
 }
