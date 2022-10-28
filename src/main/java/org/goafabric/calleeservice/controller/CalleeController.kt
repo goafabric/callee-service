@@ -1,4 +1,4 @@
-package org.goafabric.calleeservice.service
+package org.goafabric.calleeservice.controller
 
 import org.goafabric.calleeservice.logic.CalleeLogic
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping(value = ["callees"], produces = [APPLICATION_JSON_VALUE])
-class CalleeService (
+class CalleeController (
     private val calleeLogic : CalleeLogic) {
 
     @GetMapping("sayMyName")

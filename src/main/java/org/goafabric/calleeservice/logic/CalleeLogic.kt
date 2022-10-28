@@ -1,8 +1,7 @@
 package org.goafabric.calleeservice.logic
 
-import org.goafabric.calleeservice.service.Callee
+import org.goafabric.calleeservice.controller.Callee
 import org.springframework.stereotype.Component
-import java.util.concurrent.atomic.AtomicLong
 
 @Component
 class CalleeLogic {

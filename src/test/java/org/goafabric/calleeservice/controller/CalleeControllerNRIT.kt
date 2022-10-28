@@ -1,6 +1,5 @@
-package org.goafabric.calleeservice.service
+package org.goafabric.calleeservice.controller
 
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.goafabric.calleeservice.adapter.CalleeServiceAdapter
 import org.junit.jupiter.api.Test
@@ -8,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-internal class CalleeServiceNRIT(
+internal class CalleeControllerNRIT(
     @Autowired private val calleeServiceAdapter: CalleeServiceAdapter) {
 
     @Test
