@@ -21,8 +21,4 @@ internal class CalleeLogicIT(
             .isNotNull.isEqualTo("Your name is: SlimShady");
     }
 
-    @Test
-    fun setSleepTime() {
-        assertThat(calleeLogic.setSleepTime(0L)).isNotNull;
-    }
 }

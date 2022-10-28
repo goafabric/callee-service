@@ -23,8 +23,4 @@ class CalleeService (
         return calleeLogic.sayMyOtherName(name)
     }
 
-    @GetMapping("setSleepTime")
-    fun setSleepTime (@RequestParam("sleepTime") sleepTime : Long) : Callee {
-        return calleeLogic.setSleepTime(sleepTime)
-    }
 }
