@@ -5,6 +5,10 @@ plugins {
 	id 'com.google.cloud.tools.jib' version '3.3.0'
 	id 'jacoco'
 	id 'java'
+
+	//kotlin
+	id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+	id 'org.jetbrains.kotlin.plugin.spring' version '1.6.21'
 }
 
 ext {
@@ -25,7 +29,7 @@ dependencies {
 }
 
 group = 'org.goafabric'
-version = '3.0.0-RC1'
+version = '3.0.0-kotlin-RC1'
 sourceCompatibility = '17'
 
 repositories {
@@ -62,6 +66,11 @@ dependencies {
 
 	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//kotlin
+	implementation 'org.jetbrains.kotlin:kotlin-reflect'
+	implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 }
 
 test {
@@ -83,9 +92,14 @@ tasks.named('bootBuildImage') {
 	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m']
 }
 
-
 task dockerRun(type:Exec) { commandLine 'docker', 'run', "--rm", "${dockerRegistry}/${project.name}-native:${project.version}", '-check-integrity' }
 task dockerPush(type:Exec) {
 	commandLine 'docker', 'push', "${dockerRegistry}/${project.name}-native:${project.version}"
 	dependsOn(dockerRun)
+}
+
+///kotlin
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile.class) {
+	kotlinOptions.freeCompilerArgs = ['-Xjsr305=strict']
+	kotlinOptions.jvmTarget = '17'
 }
