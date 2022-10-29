@@ -16,6 +16,7 @@ public class CalleeServiceAdapterDecIT {
         assertThat(calleeServiceAdapterDec.sayMyName("Heisenberg").getMessage()).isEqualTo("Your name is: Heisenberg");
     }
 
+    //@Test
     public void sayMyOtherName() {
         assertThat(calleeServiceAdapterDec.sayMyOtherName("SlimShady").getMessage()).isEqualTo("Your name is: SlimShady");
     }
