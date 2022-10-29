@@ -8,9 +8,9 @@ import org.springframework.web.service.annotation.GetExchange;
 public interface CalleeServiceAdapterDec {
 
     @GetExchange("/callees/sayMyName")
-    Callee sayMyName (@RequestParam String name);
+    Callee sayMyName (@RequestParam("name") String name);
 
     @GetExchange("sayMyOtherName/{name}")
-    Callee sayMyOtherName(@PathVariable String name);
+    Callee sayMyOtherName(@PathVariable("name") String name);
 
 }
