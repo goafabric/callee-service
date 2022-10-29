@@ -12,12 +12,12 @@ public class CalleeController {
     CalleeLogic calleeLogic;
 
     @GetMapping("sayMyName")
-    public Callee sayMyName (@RequestParam("name") String name) {
+    public Callee sayMyName (@RequestParam String name) {
         return calleeLogic.sayMyName(name);
     }
 
     @GetMapping("sayMyOtherName/{name}")
-    public Callee sayMyOtherName(@PathVariable("name") String name) {
+    public Callee sayMyOtherName(@PathVariable String name) {
         return calleeLogic.sayMyOtherName(name);
     }
 
