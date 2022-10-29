@@ -1,6 +1,7 @@
 package org.goafabric.calleeservice.adapter;
 
 import org.goafabric.calleeservice.controller.Callee;
+import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 //@Slf4j
 @Component
+@RegisterReflectionForBinding(Callee.class)
 public class CalleeServiceAdapter {
     @Autowired
     private RestTemplate restTemplate;
