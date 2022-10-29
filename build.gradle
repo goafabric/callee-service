@@ -63,7 +63,6 @@ dependencies {
 	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
-
 }
 
 test {
@@ -79,9 +78,10 @@ jib {
 	container.jvmFlags = ['-Xms256m', '-Xmx256m']
 }
 
-def archSuffix = "";
+def archSuffix = ''
 tasks.named('bootBuildImage') {
-	if (archSuffix == "-arm64v8") { builder = 'dashaun/java-native-builder-arm64:7.33.0' }
+	print("archsuffix is: " + archSuffix)
+	if (archSuffix == '-arm64v8') { builder = 'dashaun/java-native-builder-arm64:7.33.0' }
 	else { buildpacks = ['gcr.io/paketo-buildpacks/bellsoft-liberica:9.9.0-ea', 'gcr.io/paketo-buildpacks/java-native-image:5.5.0'] }
 	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
 	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m']
@@ -90,6 +90,6 @@ tasks.named('bootBuildImage') {
 task dockerRun(type:Exec) { commandLine 'docker', 'run', "--rm", "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}", '-check-integrity' }
 task dockerPush(type:Exec) { commandLine 'docker', 'push', "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}" }
 task dockerImage() {
-	archSuffix = '-arm64v8'
+	//archSuffix = '-arm64v8'
 	dependsOn('bootBuildImage', dockerRun, dockerPush)
 }

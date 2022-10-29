@@ -1,4 +1,3 @@
-/*
 package org.goafabric.calleeservice.declarative;
 
 import org.junit.jupiter.api.Test;
@@ -23,4 +22,3 @@ public class CalleeServiceAdapterDecIT {
     }
 }
 
- */
