@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.declarative;
 
 
@@ -36,3 +37,5 @@ public class CalleeServiceAdapterDecConfiguration {
     }
 
 }
+
+ */

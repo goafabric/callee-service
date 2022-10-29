@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.declarative;
 
 import org.junit.jupiter.api.Test;
@@ -21,3 +22,5 @@ public class CalleeServiceAdapterDecIT {
         assertThat(calleeServiceAdapterDec.sayMyOtherName("SlimShady").getMessage()).isEqualTo("Your name is: SlimShady");
     }
 }
+
+ */
