@@ -29,7 +29,6 @@
         <spring.boot.version>2.7.5</spring.boot.version>
         <spring.cloud.version>2021.0.4</spring.cloud.version>
         <spring.native.version>0.12.1</spring.native.version>
-        <spring.native.buildpack.version>gcr.io/paketo-buildpacks/java-native-image:7.23.0</spring.native.buildpack.version>
         <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
 
         <!-- code generation -->
@@ -39,11 +38,12 @@
 
         <!-- 3rd party -->
         <springdoc-openapi-ui.version>1.6.12</springdoc-openapi-ui.version>
+        <springdoc-2-openapi-ui.version>2.0.0-RC1</springdoc-2-openapi-ui.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
-        <joda-time.version>2.10.14</joda-time.version>
+        <joda-time.version>2.12.0</joda-time.version>
 
         <!-- Test -->
-        <equalsverifier.version>3.7.2</equalsverifier.version>
+        <equalsverifier.version>3.10.1</equalsverifier.version>
 
         <!-- Build Plugins-->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -130,6 +130,12 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-native</artifactId>
                 <version>${springdoc-openapi-ui.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc-2-openapi-ui.version}</version>
             </dependency>
 
             <!-- Test -->
@@ -342,13 +348,9 @@
 
         <profile>
             <id>docker-image-native</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.experimental</groupId>
-                    <artifactId>spring-native</artifactId>
-                </dependency>
-            </dependencies>
-
+            <properties>
+                <native.image.name>${docker.registry}/${project.artifactId}-native:${project.version}</native.image.name>
+            </properties>
             <build>
                 <pluginManagement>
                     <plugins>
@@ -378,35 +380,24 @@
                             <executions>
                                 <execution>
                                     <id>build-image</id>
-                                    <goals>
-                                        <goal>build-image</goal>
-                                    </goals>
+                                    <goals><goal>build-image</goal></goals>
                                     <configuration>
-                                        <excludes>
-                                            <exclude>
-                                                <groupId>org.projectlombok</groupId>
-                                                <artifactId>lombok</artifactId>
-                                            </exclude>
-                                            <!--
-                                            <exclude>
-                                                <groupId>com.h2database</groupId>
-                                                <artifactId>h2</artifactId>
-                                            </exclude>
-                                            -->
-                                        </excludes>
                                         <image>
-                                            <name>${docker.registry}/${project.artifactId}-native:${project.version}
-                                            </name>
-                                            <builder>paketobuildpacks/builder:base
-                                            </builder> <!-- to get wget or curl we need build:full but this blows up the image to 700MB -->
+                                            <name>${native.image.name}</name>
+                                            <builder>paketobuildpacks/builder:base</builder>
                                             <env>
                                                 <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
                                                 <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
                                                 <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-J-Xmx6000m</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                             </env>
                                             <pullPolicy>IF_NOT_PRESENT</pullPolicy>
-                                            <buildpacks><buildpack>${spring.native.buildpack.version}</buildpack></buildpacks>
                                         </image>
+                                        <excludes>
+                                            <exclude>
+                                                <groupId>org.projectlombok</groupId>
+                                                <artifactId>lombok</artifactId>
+                                            </exclude>
+                                        </excludes>
                                     </configuration>
                                 </execution>
                             </executions>
@@ -428,8 +419,7 @@
                                         <arguments>
                                             <argument>run</argument>
                                             <argument>${spring.native.check.integrity.argument}</argument>
-                                            <argument>${docker.registry}/${project.artifactId}-native:${project.version}
-                                            </argument>
+                                            <argument>${native.image.name}</argument>
                                             <argument>-check-integrity</argument>
                                         </arguments>
                                     </configuration>
@@ -444,8 +434,7 @@
                                         <executable>docker</executable>
                                         <arguments>
                                             <argument>push</argument>
-                                            <argument>${docker.registry}/${project.artifactId}-native:${project.version}
-                                            </argument>
+                                            <argument>${native.image.name}</argument>
                                         </arguments>
                                     </configuration>
                                 </execution>
