@@ -17,27 +17,22 @@ import java.util.Base64;
 public class CalleeServiceAdapterDecConfiguration {
     
     @Bean
-    CalleeServiceAdapterDec calleeServiceAdapterDec(
+    public CalleeServiceAdapterDec calleeServiceAdapterDec(
             @Value("${adapter.calleeservice.url}") String url,
             @Value("${adapter.calleeservice.user}") String user,
             @Value("${adapter.calleeservice.password}") String password,
             @Value("${adapter.timeout}") Integer timeout) throws Exception {
 
-        final HttpServiceProxyFactory proxyFactory = WebClientAdapter.createHttpServiceProxyFactory(
-            WebClient.builder()
-                    .baseUrl(url)
-                    .defaultHeaders(header -> header.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
-                    .defaultHeaders(header -> header.setBasicAuth(new String(Base64.getDecoder().decode(user)), new String(Base64.getDecoder().decode(password))))
-                    .defaultHeaders(header -> header.set("X-TenantId", HttpInterceptor.getTenantId()))
-                    .defaultHeaders(header -> header.set("X-Auth-Request-Preferred-Username", HttpInterceptor.getUserName()))
-                    .build()
-        );
+        final WebClient client = WebClient.builder()
+                .baseUrl(url)
+                .defaultHeaders(header -> header.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
+                .defaultHeaders(header -> header.setBasicAuth(new String(Base64.getDecoder().decode(user)), new String(Base64.getDecoder().decode(password))))
+                .defaultHeaders(header -> header.set("X-TenantId", HttpInterceptor.getTenantId()))
+                .defaultHeaders(header -> header.set("X-Auth-Request-Preferred-Username", HttpInterceptor.getUserName()))
+                .build();
 
-        //proxyFactory.setBlockTimeout(Duration.ofSeconds(timeout));
-        proxyFactory.afterPropertiesSet();
-
-        return proxyFactory
-                .createClient(CalleeServiceAdapterDec.class);
+        final HttpServiceProxyFactory proxyFactory = HttpServiceProxyFactory.builder(WebClientAdapter.forClient(client)).build();
+        return proxyFactory.createClient(CalleeServiceAdapterDec.class);
     }
 
 }
