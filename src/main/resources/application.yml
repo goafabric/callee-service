@@ -14,6 +14,7 @@ management:
         exposure:
           include: "health,prometheus,heapdump"
 
+#openapi
 springdoc.swagger-ui.path: /swagger-ui/index.html
 springdoc.enable-native-support: "true"
 
@@ -23,7 +24,6 @@ management.zipkin.tracing.endpoint: "http://localhost:9411/api/v2/spans"
 
 #security
 security.authentication.enabled: true
-
 spring.security.user.name: "admin"
 spring.security.user.password: "admin"
 
@@ -34,6 +34,4 @@ logging.level.org.springframework: "INFO"
 logging.level.org.goafabric: "INFO"
 logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
-
-#logging.pattern.console: "%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"
 
