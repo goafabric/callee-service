@@ -15,7 +15,7 @@ public class Application {
         SpringApplication.run(Application.class, args);
 
         System.err.println("Hello from Spring Boot");
-        try { Thread.currentThread().join(5000);} catch (InterruptedException e) {}
+        try { Thread.currentThread().join(10000);} catch (InterruptedException e) {}
     }
 
 }
