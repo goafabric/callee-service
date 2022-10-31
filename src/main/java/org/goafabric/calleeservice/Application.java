@@ -6,6 +6,10 @@ import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportRuntimeHints;
+import org.springframework.core.io.ClassPathResource;
+
+import java.io.IOException;
+import java.nio.file.Files;
 
 
 /**
@@ -21,15 +25,32 @@ public class Application {
 
         System.err.println("Hello from Spring Boot");
 
-        try { doReflection(); } catch (Exception e ) {throw new RuntimeException(e);}
+        doReflection();
+        readFile();
 
-        try { Thread.currentThread().join(10000);} catch (InterruptedException e) {}
+        try { Thread.currentThread().join(5000);} catch (InterruptedException e) {}
     }
 
-    private static void doReflection() throws  Exception {
-        final Class clazz = Class.forName("org.goafabric.calleeservice.Callee");
-        System.err.println(clazz.getMethod("getMessage").invoke(
-                clazz.getDeclaredConstructor().newInstance()));
+
+
+    private static void doReflection() {
+        final Class clazz;
+        try {
+            clazz = Class.forName("org.goafabric.calleeservice.Callee");
+            System.err.println(clazz.getMethod("getMessage").invoke(
+                    clazz.getDeclaredConstructor().newInstance()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void readFile() {
+        try {
+            System.err.println("Reading file ...");
+            Files.readAllBytes(new ClassPathResource("secret/secret.txt").getFile().toPath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     static class ApplicationRuntimeHints implements RuntimeHintsRegistrar {
