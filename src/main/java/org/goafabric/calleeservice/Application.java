@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
-import java.nio.file.Files;
 
 
 /**
@@ -47,7 +46,7 @@ public class Application {
     public static byte[] readFile() {
         try {
             System.err.println("Reading file ...");
-            return Files.readAllBytes(new ClassPathResource("secret/secret.txt").getFile().toPath());
+            return new ClassPathResource("secret/secret.txt").getInputStream().readAllBytes();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
