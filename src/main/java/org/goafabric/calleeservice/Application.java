@@ -59,6 +59,8 @@ public class Application {
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
             hints.reflection().registerType(org.goafabric.calleeservice.Callee.class,
                     MemberCategory.INVOKE_DECLARED_METHODS, MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
+
+            hints.resources().registerPattern("secret/*");
         }
     }
 
