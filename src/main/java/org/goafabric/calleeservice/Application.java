@@ -21,7 +21,7 @@ public class Application {
 
         System.err.println("Hello from Spring Boot");
 
-        try { doReflection(); } catch (Exception e ) {}
+        try { doReflection(); } catch (Exception e ) {throw new RuntimeException(e);}
 
         try { Thread.currentThread().join(10000);} catch (InterruptedException e) {}
     }
