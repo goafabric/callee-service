@@ -44,7 +44,7 @@ public class Application {
         }
     }
 
-    private static byte[] readFile() {
+    public static byte[] readFile() {
         try {
             System.err.println("Reading file ...");
             return Files.readAllBytes(new ClassPathResource("secret/secret.txt").getFile().toPath());
