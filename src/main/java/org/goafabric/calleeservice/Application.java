@@ -44,10 +44,10 @@ public class Application {
         }
     }
 
-    private static void readFile() {
+    private static byte[] readFile() {
         try {
             System.err.println("Reading file ...");
-            Files.readAllBytes(new ClassPathResource("secret/secret.txt").getFile().toPath());
+            return Files.readAllBytes(new ClassPathResource("secret/secret.txt").getFile().toPath());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
