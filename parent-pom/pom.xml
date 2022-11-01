@@ -349,7 +349,7 @@
         <profile>
             <id>docker-image-native</id>
             <properties>
-                <native.image.name>${docker.registry}/${project.artifactId}-native:${project.version}</native.image.name>
+                <archSuffix></archSuffix>
             </properties>
             <build>
                 <pluginManagement>
@@ -383,7 +383,7 @@
                                     <goals><goal>build-image</goal></goals>
                                     <configuration>
                                         <image>
-                                            <name>${native.image.name}</name>
+                                            <name>${docker.registry}/${project.artifactId}-native${archSuffix}:${project.version}</name>
                                             <builder>paketobuildpacks/builder:base</builder>
                                             <env>
                                                 <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
@@ -419,7 +419,7 @@
                                         <arguments>
                                             <argument>run</argument>
                                             <argument>${spring.native.check.integrity.argument}</argument>
-                                            <argument>${native.image.name}</argument>
+                                            <argument>${docker.registry}/${project.artifactId}-native${archSuffix}:${project.version}</argument>
                                             <argument>-check-integrity</argument>
                                         </arguments>
                                     </configuration>
@@ -434,7 +434,7 @@
                                         <executable>docker</executable>
                                         <arguments>
                                             <argument>push</argument>
-                                            <argument>${native.image.name}</argument>
+                                            <argument>${docker.registry}/${project.artifactId}-native${archSuffix}:${project.version}</argument>
                                         </arguments>
                                     </configuration>
                                 </execution>

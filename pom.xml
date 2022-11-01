@@ -144,9 +144,7 @@
         </profile>
         <profile>
             <id>docker-image-native-arm64</id>
-            <properties>
-                <native.image.name>${docker.registry}/${project.artifactId}-native-arm64v8:${project.version}</native.image.name>
-            </properties>
+            <properties><archSuffix>-arm64v8</archSuffix></properties>
             <build>
                 <plugins>
                     <plugin>
