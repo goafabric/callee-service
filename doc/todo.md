@@ -1,5 +1,5 @@
 #Native Todos
-- Tracing
+- Tracing (security autoconfig + jpa-hang)
 - Elasticsearch
 - DurationLogger Aspect
 
