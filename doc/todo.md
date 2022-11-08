@@ -1,5 +1,5 @@
 #Native Todos
 - Tracing (security tracing + jpa-hang)
 - Elasticsearch
-- DurationLogger Aspect
+- DurationLogger Aspect + @Circuitbreaker
 - Native Arm builds
