@@ -1,7 +1,5 @@
 #Native Todos
-- Tracing (security autoconfig + jpa-hang)
+- Tracing (security tracing + jpa-hang)
 - Elasticsearch
 - DurationLogger Aspect
-
-- Example Konstruktion KIT
-- Native arm builds (https://github.com/paketo-buildpacks/stacks/issues/51)
+- Native Arm builds
