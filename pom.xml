@@ -124,7 +124,7 @@
                                     <image>
                                         <buildpacks>
                                             <buildpack>gcr.io/paketo-buildpacks/bellsoft-liberica:9.10.0</buildpack>
-                                            <buildpack>gcr.io/paketo-buildpacks/java-native-image:5.5.0</buildpack>
+                                            <buildpack>gcr.io/paketo-buildpacks/java-native-image</buildpack>
                                         </buildpacks>
                                     </image>
                                 </configuration>
