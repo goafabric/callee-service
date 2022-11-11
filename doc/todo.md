@@ -1,3 +1,5 @@
 #Native Todos
-- native arm builds (https://github.com/paketo-buildpacks/stacks/issues/51)
-- DurationLogger Aspect
+- Tracing (security tracing + jpa-hang)
+- Elasticsearch
+- DurationLogger Aspect + @Circuitbreaker
+- Native Arm builds

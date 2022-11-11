@@ -5,7 +5,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>spring-parent</artifactId>
-    <version>2.7.5</version>
+    <version>2.7.30</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
     <description>goa parent pom</description>
@@ -27,8 +27,10 @@
 
         <!-- Spring Boot -->
         <spring.boot.version>2.7.5</spring.boot.version>
+        <spring.boot-3.version>3.0.0-RC2</spring.boot-3.version>
         <spring.cloud.version>2021.0.4</spring.cloud.version>
-        <spring.native.version>0.12.1</spring.native.version>
+
+        <spring.native.buildpack.version>gcr.io/paketo-buildpacks/bellsoft-liberica:9.10.0</spring.native.buildpack.version>
         <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
 
         <!-- code generation -->
@@ -93,12 +95,6 @@
                 <version>${spring.cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.experimental</groupId>
-                <artifactId>spring-native</artifactId>
-                <version>${spring.native.version}</version>
             </dependency>
 
             <dependency>
@@ -355,29 +351,14 @@
                 <pluginManagement>
                     <plugins>
                         <plugin>
-                            <groupId>org.springframework.experimental</groupId>
-                            <artifactId>spring-aot-maven-plugin</artifactId>
-                            <version>${spring.native.version}</version>
-                            <executions>
-                                <execution>
-                                    <id>test-generate</id>
-                                    <goals>
-                                        <goal>test-generate</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>generate</id>
-                                    <goals>
-                                        <goal>generate</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        <plugin>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-maven-plugin</artifactId>
                             <version>${spring.boot.version}</version>
                             <executions>
+                                <execution>
+                                    <id>process-aot</id>
+                                    <goals><goal>process-aot</goal></goals>
+                                </execution>
                                 <execution>
                                     <id>build-image</id>
                                     <goals><goal>build-image</goal></goals>
@@ -446,19 +427,4 @@
         </profile>
     </profiles>
 
-    <repositories>
-        <repository>
-            <id>spring-releases</id>
-            <name>Spring Releases</name>
-            <url>https://repo.spring.io/release</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-releases</id>
-            <name>Spring Releases</name>
-            <url>https://repo.spring.io/release</url>
-        </pluginRepository>
-    </pluginRepositories>
 </project>

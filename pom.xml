@@ -7,18 +7,17 @@
     <parent>
         <groupId>org.goafabric</groupId>
         <artifactId>spring-parent</artifactId>
-        <version>2.7.5</version>
+        <version>2.7.30</version>
         <relativePath>parent-pom/pom.xml</relativePath>
     </parent>
 
     <groupId>org.goafabric</groupId>
     <artifactId>callee-service</artifactId>
-    <version>3.0.0-kotlin-RC1</version>
+    <version>3.0.0-kotlin-RC2</version>
 
     <properties>
-        <spring.boot.version>3.0.0-RC1</spring.boot.version>
+        <spring.boot.version>${spring.boot-3.version}</spring.boot.version>
         <spring.cloud.version>2022.0.0-RC1</spring.cloud.version>
-        <springdoc-openapi-ui.version>2.0.0-RC1</springdoc-openapi-ui.version>
         <kotlin.version>1.7.20</kotlin.version>
     </properties>
 
@@ -174,16 +173,12 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>process-aot</id>
-                                <goals><goal>process-aot</goal></goals>
-                            </execution>
-                            <execution>
                                 <id>build-image</id>
                                 <goals><goal>build-image</goal></goals>
                                 <configuration>
                                     <image>
                                         <buildpacks>
-                                            <buildpack>gcr.io/paketo-buildpacks/bellsoft-liberica:9.9.0-ea</buildpack>
+                                            <buildpack>${spring.native.buildpack.version}</buildpack>
                                             <buildpack>gcr.io/paketo-buildpacks/java-native-image</buildpack>
                                         </buildpacks>
                                     </image>
@@ -207,10 +202,6 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <executions>
-                            <execution>
-                                <id>process-aot</id>
-                                <goals><goal>process-aot</goal></goals>
-                            </execution>
                             <execution>
                                 <id>build-image</id>
                                 <goals><goal>build-image</goal></goals>

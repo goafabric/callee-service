@@ -24,7 +24,7 @@ services:
       #application
       - TZ=Europe/Berlin
       - server.port=${_Values_service_port}
-      - tomcat.max-threads=20
+      - server.tomcat.threads.max=20
       - security.authentication.enabled=false
       #forwarding sub url
       - server.forward-headers-strategy=FRAMEWORK
