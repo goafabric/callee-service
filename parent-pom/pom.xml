@@ -27,10 +27,11 @@
 
         <!-- Spring Boot -->
         <spring.boot.version>2.7.5</spring.boot.version>
-        <spring.cloud.version>2021.0.4</spring.cloud.version>
-        <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
-
         <spring.boot-3.version>3.0.0-RC2</spring.boot-3.version>
+        <spring.cloud.version>2021.0.4</spring.cloud.version>
+
+        <spring.native.buildpack.version>gcr.io/paketo-buildpacks/bellsoft-liberica:9.10.0</spring.native.buildpack.version>
+        <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
 
         <!-- code generation -->
         <lombok.version>1.18.24</lombok.version>
