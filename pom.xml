@@ -152,7 +152,7 @@
                                 <goals><goal>build-image</goal></goals>
                                 <configuration>
                                     <image>
-                                        <builder>dashaun/java-native-builder-arm64:7.33.0</builder>
+                                        <builder>dashaun/java-native-builder-arm64:7.37.0</builder>
                                     </image>
                                 </configuration>
                             </execution>
