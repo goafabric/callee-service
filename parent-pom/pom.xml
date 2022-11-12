@@ -366,7 +366,7 @@
                                     <configuration>
                                         <image>
                                             <name>${docker.registry}/${project.artifactId}-native${archSuffix}:${project.version}</name>
-                                            <builder>paketobuildpacks/builder:tiny</builder>
+                                            <builder>paketobuildpacks/builder:base</builder>
                                             <buildpacks><buildpack>gcr.io/paketo-buildpacks/java-native-image:7.37.0</buildpack></buildpacks>
                                             <env>
                                                 <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
