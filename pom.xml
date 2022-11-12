@@ -71,11 +71,7 @@
                                 <phase>install</phase>
                                 <goals><goal>build-image</goal></goals>
                                 <configuration>
-                                    <image>
-                                        <buildpacks>
-                                            <buildpack>gcr.io/paketo-buildpacks/java-native-image:7.37.0</buildpack>
-                                        </buildpacks>
-                                    </image>
+                                    <image><buildpacks><buildpack>gcr.io/paketo-buildpacks/java-native-image:7.37.0</buildpack></buildpacks></image>
                                 </configuration>
                             </execution>
                         </executions>
@@ -101,9 +97,7 @@
                                 <phase>install</phase>
                                 <goals><goal>build-image</goal></goals>
                                 <configuration>
-                                    <image>
-                                        <builder>dashaun/java-native-builder-arm64:7.33.0</builder>
-                                    </image>
+                                    <image><builder>dashaun/java-native-builder-arm64:7.33.0</builder></image>
                                 </configuration>
                             </execution>
                         </executions>
