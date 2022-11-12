@@ -61,7 +61,7 @@
 
         <!-- Further Build Plugins -->
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
-        <jib-maven-plugin.version>3.3.0</jib-maven-plugin.version>
+        <jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
         <dependency-check-maven.version>7.1.1</dependency-check-maven.version>
 
         <!--   OWN   -->
