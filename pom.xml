@@ -68,12 +68,12 @@
                         <executions>
                             <execution>
                                 <id>build-image</id>
+                                <phase>install</phase>
                                 <goals><goal>build-image</goal></goals>
                                 <configuration>
                                     <image>
                                         <buildpacks>
-                                            <buildpack>${spring.native.buildpack.version}</buildpack>
-                                            <buildpack>gcr.io/paketo-buildpacks/java-native-image</buildpack>
+                                            <buildpack>gcr.io/paketo-buildpacks/java-native-image:7.37.0</buildpack>
                                         </buildpacks>
                                     </image>
                                 </configuration>
@@ -98,6 +98,7 @@
                         <executions>
                             <execution>
                                 <id>build-image</id>
+                                <phase>install</phase>
                                 <goals><goal>build-image</goal></goals>
                                 <configuration>
                                     <image>
