@@ -87,6 +87,6 @@ tasks.named('bootBuildImage') {
 task dockerImageNativeRun(type:Exec) { dependsOn('bootBuildImage')
 	commandLine 'docker', 'run', "--rm", "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}", '-check-integrity'
 }
-task dockerImageNativeDeploy(type:Exec) { dependsOn(dockerImageNativeRun)
+task dockerPush(type:Exec) { dependsOn(dockerImageNativeRun)
 	commandLine 'docker', 'push', "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
 }
