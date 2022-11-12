@@ -432,7 +432,7 @@
                                     <configuration>
                                         <image>
                                             <name>${docker.registry}/${project.artifactId}-native${archSuffix}:${project.version}</name>
-                                            <builder>dashaun/java-native-builder-arm64:7.33.0</builder>
+                                            <builder>dashaun/java-native-builder-arm64:7.37.0</builder>
                                             <env>
                                                 <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
                                                 <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
