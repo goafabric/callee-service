@@ -2,10 +2,10 @@
 go to /src/deploy/docker and do "./stack up"
 
 #run jvm multi image
-docker pull goafabric/callee-service:2.0.1-SNAPSHOT && docker run --name callee-service --rm -p50900:50900 goafabric/callee-service:2.0.1-SNAPSHOT
+docker pull goafabric/callee-service:3.0.0-RC2 && docker run --name callee-service --rm -p50900:50900 goafabric/callee-service:3.0.0-RC2
 
 #run native image
-docker pull goafabric/callee-service-native:2.0.1-SNAPSHOT && docker run --name callee-service-native --rm -p50900:50900 goafabric/callee-service-native:2.0.1-SNAPSHOT -Xmx64m
-                
-#force amd64
-docker pull goafabric/callee-service:2.0.1-SNAPSHOT && docker run --platform linux/amd64 --name callee-service --rm -p50900:50900 goafabric/callee-service:2.0.1-SNAPSHOT
+docker pull goafabric/callee-service-native:3.0.0-RC2 && docker run --name callee-service-native --rm -p50900:50900 goafabric/callee-service-native:3.0.0-RC2 -Xmx32m
+
+#run native image arm
+docker pull goafabric/callee-service-native-arm64v8:3.0.0-RC2 && docker run --name callee-service-native-arm64v8 --rm -p50900:50900 goafabric/callee-service-native-arm64v8:3.0.0-RC2 -Xmx32m
