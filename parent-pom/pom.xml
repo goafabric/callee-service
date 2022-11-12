@@ -30,7 +30,7 @@
         <spring.boot-3.version>3.0.0-RC2</spring.boot-3.version>
         <spring.cloud.version>2021.0.4</spring.cloud.version>
 
-        <spring.native.buildpack.version>gcr.io/paketo-buildpacks/bellsoft-liberica:9.10.0</spring.native.buildpack.version>
+        <native-maven-plugin.version>0.9.17</native-maven-plugin.version>
         <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
 
         <!-- code generation -->
@@ -366,7 +366,7 @@
                                     <configuration>
                                         <image>
                                             <name>${docker.registry}/${project.artifactId}-native${archSuffix}:${project.version}</name>
-                                            <builder>paketobuildpacks/builder:base</builder>
+                                            <builder>paketobuildpacks/builder:tiny</builder>
                                             <buildpacks><buildpack>gcr.io/paketo-buildpacks/java-native-image:7.37.0</buildpack></buildpacks>
                                             <env>
                                                 <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
@@ -382,6 +382,25 @@
                                             </exclude>
                                         </excludes>
                                     </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.graalvm.buildtools</groupId>
+                            <artifactId>native-maven-plugin</artifactId>
+                            <version>${native-maven-plugin.version}</version>
+                            <configuration>
+                                <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                                <metadataRepository>
+                                    <enabled>true</enabled>
+                                </metadataRepository>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <id>add-reachability-metadata</id>
+                                    <goals>
+                                        <goal>add-reachability-metadata</goal>
+                                    </goals>
                                 </execution>
                             </executions>
                         </plugin>
@@ -428,6 +447,25 @@
                                             </exclude>
                                         </excludes>
                                     </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.graalvm.buildtools</groupId>
+                            <artifactId>native-maven-plugin</artifactId>
+                            <version>${native-maven-plugin.version}</version>
+                            <configuration>
+                                <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                                <metadataRepository>
+                                    <enabled>true</enabled>
+                                </metadataRepository>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <id>add-reachability-metadata</id>
+                                    <goals>
+                                        <goal>add-reachability-metadata</goal>
+                                    </goals>
                                 </execution>
                             </executions>
                         </plugin>
