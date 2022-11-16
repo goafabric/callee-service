@@ -80,7 +80,6 @@ jib {
 
 def archSuffix = (System.properties['os.arch'] == 'aarch64') ? "-arm64v8" : ""
 tasks.named('bootBuildImage') {
-	//if (archSuffix == '-arm64v8') { builder = 'dashaun/java-native-builder-arm64:7.37.0' } else { buildpacks = ['gcr.io/paketo-buildpacks/java-native-image:7.37.0'] }
 	builder = 'dashaun/java-native-builder-multiarch:7.37.0'
 	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
 	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m']
@@ -88,6 +87,6 @@ tasks.named('bootBuildImage') {
 task dockerImageNativeRun(type:Exec) { dependsOn('bootBuildImage')
 	commandLine 'docker', 'run', "--rm", "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}", '-check-integrity'
 }
-task dockerPush(type:Exec) { dependsOn(dockerImageNativeRun)
+task dockerImageNative(type:Exec) { dependsOn(dockerImageNativeRun)
 	commandLine 'docker', 'push', "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
 }
