@@ -1,5 +1,5 @@
 #Native Todos
-- Tracing (security tracing + jpa-hang)
-- Elasticsearch
+- Tracing (Security stuff)
 - DurationLogger Aspect + @Circuitbreaker
-- Native Arm builds
+- Spring Batch Hashmap Error
+- Elasticsearch

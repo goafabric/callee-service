@@ -419,6 +419,7 @@
                                         <executable>docker</executable>
                                         <arguments>
                                             <argument>run</argument>
+                                            <argument>--rm</argument>
                                             <argument>${spring.native.check.integrity.argument}</argument>
                                             <argument>${docker.registry}/${project.artifactId}-native${arch.suffix}:${project.version}</argument>
                                             <argument>-check-integrity</argument>
