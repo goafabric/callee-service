@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  callee-service:
+  application:
     container_name: ${_Values_root_name}-application
     image:  ${_Values_image_repository}${_Values_image_native}:${_Values_image_tag}
     restart: 'no'
@@ -55,7 +55,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
-      - callee-service
+      - application
 
 volumes:
     tmp:
