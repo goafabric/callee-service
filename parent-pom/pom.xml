@@ -30,9 +30,10 @@
         <spring.boot-3.version>3.0.0-RC2</spring.boot-3.version>
         <spring.cloud.version>2021.0.4</spring.cloud.version>
 
-        <spring.native.buildpack.version>gcr.io/paketo-buildpacks/bellsoft-liberica:9.10.0</spring.native.buildpack.version>
+        <native-maven-plugin.version>0.9.17</native-maven-plugin.version>
         <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
-
+        <arch.suffix></arch.suffix>
+        
         <!-- code generation -->
         <lombok.version>1.18.24</lombok.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
@@ -61,7 +62,7 @@
 
         <!-- Further Build Plugins -->
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
-        <jib-maven-plugin.version>3.3.0</jib-maven-plugin.version>
+        <jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
         <dependency-check-maven.version>7.1.1</dependency-check-maven.version>
 
         <!--   OWN   -->
@@ -341,12 +342,9 @@
                 </pluginManagement>
             </build>
         </profile>
-
+        
         <profile>
             <id>docker-image-native</id>
-            <properties>
-                <archSuffix></archSuffix>
-            </properties>
             <build>
                 <pluginManagement>
                     <plugins>
@@ -361,15 +359,17 @@
                                 </execution>
                                 <execution>
                                     <id>build-image</id>
+                                    <phase>install</phase>
                                     <goals><goal>build-image</goal></goals>
                                     <configuration>
                                         <image>
-                                            <name>${docker.registry}/${project.artifactId}-native${archSuffix}:${project.version}</name>
-                                            <builder>paketobuildpacks/builder:base</builder>
+                                            <name>${docker.registry}/${project.artifactId}-native${arch.suffix}:${project.version}</name>
+                                            <builder>dashaun/java-native-builder-multiarch:7.37.0</builder>
                                             <env>
                                                 <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
                                                 <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
                                                 <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-J-Xmx6000m</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                                                <BP_LOG_LEVEL>INFO</BP_LOG_LEVEL>
                                             </env>
                                             <pullPolicy>IF_NOT_PRESENT</pullPolicy>
                                         </image>
@@ -384,6 +384,26 @@
                             </executions>
                         </plugin>
                         <plugin>
+                            <groupId>org.graalvm.buildtools</groupId>
+                            <artifactId>native-maven-plugin</artifactId>
+                            <version>${native-maven-plugin.version}</version>
+                            <configuration>
+                                <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                                <metadataRepository>
+                                    <enabled>true</enabled>
+                                </metadataRepository>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <id>add-reachability-metadata</id>
+                                    <goals>
+                                        <goal>add-reachability-metadata</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+
+                        <plugin>
                             <!-- workaround for missing publish functionality, see: https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#build-image-example-publish -->
                             <groupId>org.codehaus.mojo</groupId>
                             <artifactId>exec-maven-plugin</artifactId>
@@ -391,7 +411,7 @@
                             <executions>
                                 <execution>
                                     <id>integrity</id>
-                                    <phase>integration-test</phase>
+                                    <phase>install</phase>
                                     <goals>
                                         <goal>exec</goal>
                                     </goals>
@@ -399,8 +419,9 @@
                                         <executable>docker</executable>
                                         <arguments>
                                             <argument>run</argument>
+                                            <argument>--rm</argument>
                                             <argument>${spring.native.check.integrity.argument}</argument>
-                                            <argument>${docker.registry}/${project.artifactId}-native${archSuffix}:${project.version}</argument>
+                                            <argument>${docker.registry}/${project.artifactId}-native${arch.suffix}:${project.version}</argument>
                                             <argument>-check-integrity</argument>
                                         </arguments>
                                     </configuration>
@@ -415,7 +436,7 @@
                                         <executable>docker</executable>
                                         <arguments>
                                             <argument>push</argument>
-                                            <argument>${docker.registry}/${project.artifactId}-native${archSuffix}:${project.version}</argument>
+                                            <argument>${docker.registry}/${project.artifactId}-native${arch.suffix}:${project.version}</argument>
                                         </arguments>
                                     </configuration>
                                 </execution>
@@ -425,6 +446,43 @@
                 </pluginManagement>
             </build>
         </profile>
+
+        <profile>
+            <id>set-architecture-arm64</id>
+            <activation>
+                <os><arch>aarch64</arch></os>
+            </activation>
+            <properties>
+                <arch.suffix>-arm64v8</arch.suffix>
+            </properties>
+        </profile>
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>snapshots-repo</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+            <releases><enabled>false</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>

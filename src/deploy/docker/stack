@@ -3,7 +3,8 @@ source .values
 export COMMAND=$1
 export _Values_image_native=$2
 
-[[ "$(uname -m)" == "arm64" || "$(uname -m)" == "aarch64" ]] && export _Values_server_arch="-arm64v8"
+[[ "$(uname -m)" == "arm64" || "$(uname -m)" == "aarch64" ]] && _Values_server_arch="-arm64v8"
+[[ "${_Values_image_native}" = "-native" ]] && _Values_image_native+=${_Values_server_arch}
 
 function func_compose {
     echo Going $1 ...

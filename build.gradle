@@ -2,7 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '3.0.0-RC2'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'org.graalvm.buildtools.native' version '0.9.17'
-	id 'com.google.cloud.tools.jib' version '3.3.0'
+	id 'com.google.cloud.tools.jib' version '3.3.1'
 	id 'jacoco'
 
 	//kotlin
@@ -89,15 +89,15 @@ jib {
 
 def archSuffix = (System.properties['os.arch'] == 'aarch64') ? "-arm64v8" : ""
 tasks.named('bootBuildImage') {
-	if (archSuffix == '-arm64v8') { builder = 'dashaun/java-native-builder-arm64:7.33.0' } else { buildpacks = ['gcr.io/paketo-buildpacks/bellsoft-liberica:9.10.0', 'gcr.io/paketo-buildpacks/java-native-image'] }
+	builder = 'dashaun/java-native-builder-multiarch:7.37.0'
 	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
 	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m']
 }
 
-task dockerRun(type:Exec) { dependsOn('bootBuildImage')
+task dockerImageNativeRun(type:Exec) { dependsOn('bootBuildImage')
 	commandLine 'docker', 'run', "--rm", "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}", '-check-integrity'
 }
-task dockerPush(type:Exec) { dependsOn(dockerRun)
+task dockerImageNative(type:Exec) { dependsOn(dockerImageNativeRun)
 	commandLine 'docker', 'push', "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
 }
 

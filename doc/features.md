@@ -23,3 +23,19 @@ Core
 # Github Paketo Liberica Build Times
 - Service with JPA: 16m
 - Service without JPA: 10m
+                              
+# Memory
+- Eclipse Temurin 17 Tomcat Application : 270MB 
+- Eclipse Temurin 17 JPA Application    : 450MB
+
+- IBM Semuru 17 Tomcat Application      : 140MB
+- IBM Semuru 17 JPA Application         : 250MB
+- => ~ 45% less than Temurin
+
+- Spring Native Tomcat Application      : 35MB
+- Spring Native JPA Application         : 55MB
+- => ~ 75% less than Semeru
+
+- Quarkus Native Tomcat Application     : 8MB
+- Quarkus Native JPA Application        : 15MB
+- => ~ 75% less than Spring Native
