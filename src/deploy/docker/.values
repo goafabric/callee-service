@@ -4,4 +4,4 @@ _Values_image_repository=goafabric/callee-service
 _Values_image_tag=3.0.0-console-RC2
 
 _Values_service_port=50900
-_Values_resources_requests_memory=128M
+_Values_resources_requests_memory=32M
