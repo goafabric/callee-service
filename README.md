@@ -1,5 +1,5 @@
 # docker compose
-go to /src/deploy/docker and do "./stack up"
+go to /src/deploy/docker and do "./stack up" or "./stack up -native"
 
 # run jvm multi image
 docker run --pull always --name callee-service --rm -p50900:50900 goafabric/callee-service:3.0.0-RC3
