@@ -21,6 +21,7 @@ springdoc.enable-native-support: "true"
 spring.application.name: callee-service
 management.zipkin.tracing.endpoint: "http://localhost:9411/api/v2/spans"
 management.tracing.sampling.probability: "1.0"
+management.tracing.propagation.type: "B3"
 
 #security
 security.authentication.enabled: true
