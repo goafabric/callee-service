@@ -26,9 +26,8 @@
         <kotlin.compiler.jvmTarget>${java.version}</kotlin.compiler.jvmTarget>
 
         <!-- Spring Boot -->
-        <spring.boot.version>2.7.5</spring.boot.version>
-        <spring.boot-3.version>3.0.0-RC2</spring.boot-3.version>
-        <spring.cloud.version>2021.0.4</spring.cloud.version>
+        <spring.boot.version>3.0.0-RC2</spring.boot.version>
+        <spring.cloud.version>2022.0.0-RC2</spring.cloud.version>
 
         <native-maven-plugin.version>0.9.17</native-maven-plugin.version>
         <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
