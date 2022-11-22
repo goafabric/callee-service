@@ -51,4 +51,12 @@ public class HttpInterceptor implements WebMvcConfigurer {
         else { http.authorizeHttpRequests().anyRequest().permitAll(); }
         return http.build();
     }
+    
+    /*
+    @Bean
+    ObservationPredicate disableHttpServerObservationsFromName() {
+        return (name, context) -> !name.startsWith("spring.security.");
+    }
+    */
+
 }
