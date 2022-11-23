@@ -17,11 +17,11 @@ import java.util.Collections;
 public class CalleeServiceAdapterConfiguration {
 
     @Bean
-    public RestTemplate restTemplate(
-            @Value("${adapter.calleeservice.user}") String user,
-            @Value("${adapter.calleeservice.password}") String password,
-            @Value("${adapter.timeout}") Integer timeout) {
-        final RestTemplate restTemplate = new RestTemplateBuilder()
+    public RestTemplate restTemplate(RestTemplateBuilder builder,
+                                     @Value("${adapter.calleeservice.user}") String user,
+                                     @Value("${adapter.calleeservice.password}") String password,
+                                     @Value("${adapter.timeout}") Integer timeout) {
+        RestTemplate restTemplate = builder
                 .setConnectTimeout(Duration.ofMillis(timeout))
                 .setReadTimeout(Duration.ofMillis(timeout))
                 .build();
