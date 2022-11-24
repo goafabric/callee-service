@@ -40,7 +40,7 @@
 
         <!-- 3rd party -->
         <springdoc-openapi-ui.version>1.6.12</springdoc-openapi-ui.version>
-        <springdoc-2-openapi-ui.version>2.0.0-RC1</springdoc-2-openapi-ui.version>
+        <springdoc-2-openapi-ui.version>2.0.0-RC2</springdoc-2-openapi-ui.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
         <joda-time.version>2.12.0</joda-time.version>
 
