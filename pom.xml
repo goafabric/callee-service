@@ -13,7 +13,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>callee-service</artifactId>
-    <version>3.0.0-console-RC2</version>
+    <version>3.0.1-console-SNAPSHOT</version>
 
     <properties>
         <spring.boot.version>${spring.boot-3.version}</spring.boot.version>
