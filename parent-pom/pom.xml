@@ -26,10 +26,10 @@
         <kotlin.compiler.jvmTarget>${java.version}</kotlin.compiler.jvmTarget>
 
         <!-- Spring Boot -->
-        <spring.boot.version>3.0.0-RC2</spring.boot.version>
+        <spring.boot.version>3.0.0</spring.boot.version>
         <spring.cloud.version>2022.0.0-RC2</spring.cloud.version>
 
-        <native-maven-plugin.version>0.9.17</native-maven-plugin.version>
+        <native-maven-plugin.version>0.9.18</native-maven-plugin.version>
         <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
         <arch.suffix></arch.suffix>
         
@@ -39,8 +39,8 @@
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
 
         <!-- 3rd party -->
-        <springdoc-openapi-ui.version>1.6.12</springdoc-openapi-ui.version>
-        <springdoc-2-openapi-ui.version>2.0.0-RC2</springdoc-2-openapi-ui.version>
+        <springdoc-openapi-ui.version>1.6.13</springdoc-openapi-ui.version>
+        <springdoc-2-openapi-ui.version>2.0.0</springdoc-2-openapi-ui.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
         <joda-time.version>2.12.0</joda-time.version>
 
