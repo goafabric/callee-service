@@ -1,3 +1,5 @@
+# 3.0.1
+
 # 3.0.0
 - upgrade to Spring Boot 3.0.0
 

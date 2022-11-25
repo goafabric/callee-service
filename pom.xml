@@ -7,19 +7,13 @@
     <parent>
         <groupId>org.goafabric</groupId>
         <artifactId>spring-parent</artifactId>
-        <version>2.7.30</version>
+        <version>3.0.1-SNAPSHOT</version>
         <relativePath>parent-pom/pom.xml</relativePath>
     </parent>
 
     <groupId>org.goafabric</groupId>
     <artifactId>callee-service</artifactId>
-    <version>3.0.0-kotlin-RC2</version>
-
-    <properties>
-        <spring.boot.version>${spring.boot-3.version}</spring.boot.version>
-        <spring.cloud.version>2022.0.0-RC1</spring.cloud.version>
-        <kotlin.version>1.7.20</kotlin.version>
-    </properties>
+    <version>3.0.1-SNAPSHOT</version>
 
     <dependencies>
         <!-- web -->

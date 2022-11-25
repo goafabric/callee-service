@@ -5,7 +5,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>spring-parent</artifactId>
-    <version>2.7.30</version>
+    <version>3.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
     <description>goa parent pom</description>
@@ -13,7 +13,8 @@
     <properties>
         <!-- Project -->
         <java.version>17</java.version>
-        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -26,11 +27,10 @@
         <kotlin.compiler.jvmTarget>${java.version}</kotlin.compiler.jvmTarget>
 
         <!-- Spring Boot -->
-        <spring.boot.version>2.7.5</spring.boot.version>
-        <spring.boot-3.version>3.0.0-RC2</spring.boot-3.version>
-        <spring.cloud.version>2021.0.4</spring.cloud.version>
+        <spring.boot.version>3.0.0</spring.boot.version>
+        <spring.cloud.version>2022.0.0-RC2</spring.cloud.version>
 
-        <native-maven-plugin.version>0.9.17</native-maven-plugin.version>
+        <native-maven-plugin.version>0.9.18</native-maven-plugin.version>
         <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
         <arch.suffix></arch.suffix>
         
@@ -40,8 +40,8 @@
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
 
         <!-- 3rd party -->
-        <springdoc-openapi-ui.version>1.6.12</springdoc-openapi-ui.version>
-        <springdoc-2-openapi-ui.version>2.0.0-RC1</springdoc-2-openapi-ui.version>
+        <springdoc-openapi-ui.version>1.6.13</springdoc-openapi-ui.version>
+        <springdoc-2-openapi-ui.version>2.0.0</springdoc-2-openapi-ui.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
         <joda-time.version>2.12.0</joda-time.version>
 
@@ -158,7 +158,6 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
-                        <release>${maven.compiler.release}</release>
                         <!-- mapstruct now needs mapstruct-binding configured like this, also order seems to be important first mapstruct than lombok -->
                         <annotationProcessorPaths>
                             <path>
