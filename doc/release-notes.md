@@ -1,5 +1,7 @@
-# 3.0.0
-- upgrade to Spring Boot 3.0.0
+# 3.0.1
+
+# 3.0.1-SNAPSHOT
+- upgrade to Spring Boot 3.0.1-SNAPSHOT
 
 # 2.0.1
 - upgrade to Spring Boot 2.7.5

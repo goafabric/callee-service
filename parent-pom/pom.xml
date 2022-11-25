@@ -5,7 +5,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>spring-parent</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
     <description>goa parent pom</description>
@@ -52,7 +52,7 @@
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
-        <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
+        <exec-maven-plugin.version>3.0.1-SNAPSHOT</exec-maven-plugin.version>
 
         <build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
 
