@@ -28,7 +28,7 @@ dependencies {
 }
 
 group = 'org.goafabric'
-version = '3.0.1-SNAPSHOT'
+version = '3.0.1-kotlin-SNAPSHOT'
 sourceCompatibility = '17'
 
 repositories {
