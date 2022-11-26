@@ -1,4 +1,4 @@
-#Working
+# Working
 Core
 - Web, ExceptionHandler
 - Lombok, Mapstruct
@@ -39,3 +39,8 @@ Core
 - Quarkus Native Tomcat Application     : 8MB
 - Quarkus Native JPA Application        : 15MB
 - => ~ 75% less than Spring Native
+        
+# CPU (JVM + Native)
+- 10 req/s : < 10%
+- 100 req/s : ~ 30%
+- 500 req/s : ~ 40%
