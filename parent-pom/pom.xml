@@ -5,7 +5,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>spring-parent</artifactId>
-    <version>3.0.1-kotlin-SNAPSHOT</version>
+    <version>3.0.0</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
     <description>goa parent pom</description>
