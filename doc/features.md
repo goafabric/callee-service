@@ -40,7 +40,7 @@ Core
 - Quarkus Native JPA Application        : 15MB
 - => ~ 75% less than Spring Native
         
-# CPU Simple REST App (JVM / Spring Native / GO)
+# CPU Usage Simple REST App (JVM / Spring Native / GO)
 - 10 req/s :  8%  / 8%  / 0,4%
 - 100 req/s : 30% / 30% / 4%
 - 500 req/s : 40% / 40% / 10%
