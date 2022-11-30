@@ -1,0 +1,47 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "application.fullname" . }}
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/x-forwarded-prefix: "{{- tpl (toYaml .Values.ingress.paths) . }}"
+
+    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+
+    # basic auth
+    {{ if eq .Values.ingress.authentication "basic" }}
+    nginx.ingress.kubernetes.io/auth-type: "basic"
+    nginx.ingress.kubernetes.io/auth-secret: "authentication-secret"
+    {{ end }}
+
+    # oidc auth
+    {{ if eq .Values.ingress.authentication "oidc" }}
+    nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/$http_x_tenantid/start?rd=$escaped_request_uri"
+    nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/$http_x_tenantid/auth"
+    nginx.ingress.kubernetes.io/auth-response-headers: "x-auth-request-preferred-username, x-auth-request-email"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($http_x_tenantid = '') { set $http_x_tenantid 0; }
+    {{ end }}
+
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - {{ .Values.ingress.hosts}}
+      secretName: server-certificate-secret
+  rules:
+    - host: {{ .Values.ingress.hosts}}
+      http:
+        paths:
+          - path: {{- tpl (toYaml .Values.ingress.paths) . | nindent 14 }}(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "application.fullname" . }}
+                port:
+                  name: http
+{{- end }}
