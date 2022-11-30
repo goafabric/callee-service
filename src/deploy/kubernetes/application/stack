@@ -2,8 +2,8 @@
 COMMAND=$1
 IMAGE_ARCH=$2
 
-[[ "$(uname -m)" == "arm64" || "$(uname -m)" == "aarch64" ]] && _Values_server_arch="-arm64v8"
-[[ "${IMAGE_ARCH}" = "-native" ]] && IMAGE_ARCH+=${_Values_server_arch}
+SERVER_ARCH=`kubectl version --output=json | grep "linux/arm64" > /dev/null && echo "-arm64v8"`
+[[ "${IMAGE_ARCH}" = "-native" ]] && IMAGE_ARCH+=${SERVER_ARCH}
 [[ `kubectl get configmaps authentication-config --ignore-not-found -o jsonpath='{.data.authentication}' -n default` = "oidc" ]] && INGRESS_AUTHENTICATION="--set ingress.authentication=oidc"
 
 function up() {
