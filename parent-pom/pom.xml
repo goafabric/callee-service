@@ -28,7 +28,7 @@
 
         <!-- Spring Boot -->
         <spring.boot.version>3.0.0</spring.boot.version>
-        <spring.cloud.version>2022.0.0-RC2</spring.cloud.version>
+        <spring.cloud.version>2022.0.0</spring.cloud.version>
 
         <native-maven-plugin.version>0.9.18</native-maven-plugin.version>
         <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
