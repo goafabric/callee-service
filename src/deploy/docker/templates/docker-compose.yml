@@ -57,6 +57,14 @@ services:
     depends_on:
       - application
 
+#  logger:
+#    image: grafana/grafana
+#    logging:
+#      driver: loki
+#      options:
+#        loki-url: "http://host.docker.internal:3100/loki/api/v1/push"
+
+
 volumes:
     tmp:
     applogs:
