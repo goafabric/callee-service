@@ -367,7 +367,7 @@
                                             <env>
                                                 <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
                                                 <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
-                                                <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-J-Xmx6000m</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                                                <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-J-Xmx4000m</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                                 <BP_LOG_LEVEL>INFO</BP_LOG_LEVEL>
                                             </env>
                                             <pullPolicy>IF_NOT_PRESENT</pullPolicy>
