@@ -50,7 +50,7 @@ services:
     restart: 'no'
     ports:
       - 8080:80
-      - 444:443
+#      - 444:443
     networks:
       - ${_Values_root_name}-net
     volumes:
