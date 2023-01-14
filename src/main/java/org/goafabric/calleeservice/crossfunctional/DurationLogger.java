@@ -21,7 +21,8 @@ import java.util.stream.Collectors;
 @ImportRuntimeHints(DurationLogger.ApplicationRuntimeHints.class)
 public class DurationLogger {
 
-    @Around("execution(public * org.goafabric.calleeservice.logic.CalleeLogic.*(..))")
+    //@Around("execution(public * org.goafabric.calleeservice.logic.CalleeLogic.*(..))")
+    @Around("@within(org.goafabric.calleeservice.crossfunctional.DurationLog)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         final long startTime = System.currentTimeMillis();
         try {
