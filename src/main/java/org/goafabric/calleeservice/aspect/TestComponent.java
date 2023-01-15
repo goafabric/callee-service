@@ -6,6 +6,5 @@ import org.springframework.stereotype.Component;
 @TestAnnotation
 public class TestComponent {
     public void callOnMe() {
-        System.err.println("inside method ...");
     }
 }

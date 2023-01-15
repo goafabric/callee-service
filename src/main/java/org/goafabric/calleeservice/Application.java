@@ -12,8 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.core.io.ClassPathResource;
 
-import java.io.IOException;
-
 
 /**
  * Created by amautsch on 26.06.2015.
@@ -23,13 +21,15 @@ import java.io.IOException;
 @ImportRuntimeHints({Application.ApplicationRuntimeHints.class})
 public class Application {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
 
-        System.err.println("Hello from Spring Boot");
+        final Class clazz = Class.forName("org.goafabric.calleeservice.Callee");
+        System.err.println("Testing reflection : " + clazz.getMethod("getMessage").invoke(clazz.getDeclaredConstructor().newInstance()));
 
-        doReflection();
-        readFile();
+
+        System.err.println("Testing file read : "
+                + new String(new ClassPathResource("secret/secret.txt").getInputStream().readAllBytes()));
 
         try { Thread.currentThread().join(5000);} catch (InterruptedException e) {}
     }
@@ -38,26 +38,6 @@ public class Application {
     public CommandLineRunner init(ApplicationContext context, TestComponent testComponent) {
         testComponent.callOnMe();
         return args -> {if ((args.length > 0) && ("-check-integrity".equals(args[0]))) {SpringApplication.exit(context, () -> 0);}};
-    }
-    
-    private static void doReflection() {
-        final Class clazz;
-        try {
-            clazz = Class.forName("org.goafabric.calleeservice.Callee");
-            System.err.println(clazz.getMethod("getMessage").invoke(
-                    clazz.getDeclaredConstructor().newInstance()));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static byte[] readFile() {
-        try {
-            System.err.println("Reading file ...");
-            return new ClassPathResource("secret/secret.txt").getInputStream().readAllBytes();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     static class ApplicationRuntimeHints implements RuntimeHintsRegistrar {

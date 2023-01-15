@@ -22,7 +22,7 @@ public class TestAspect {
             return joinPoint.proceed();
         } finally {
             final Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
-            System.err.println("aspects wrapped method : " + toString(method));
+            System.err.println("Testing aspect wrapping around : " + toString(method));
         }
     }
 
