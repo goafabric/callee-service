@@ -1,5 +1,6 @@
 package org.goafabric.calleeservice;
 
+import org.goafabric.calleeservice.aspect.TestComponent;
 import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
@@ -34,7 +35,8 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner init(ApplicationContext context) {
+    public CommandLineRunner init(ApplicationContext context, TestComponent testComponent) {
+        testComponent.callOnMe();
         return args -> {if ((args.length > 0) && ("-check-integrity".equals(args[0]))) {SpringApplication.exit(context, () -> 0);}};
     }
     
