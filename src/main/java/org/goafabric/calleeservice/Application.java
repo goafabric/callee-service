@@ -1,5 +1,6 @@
 package org.goafabric.calleeservice;
 
+import org.goafabric.calleeservice.aspect.TestAspect;
 import org.goafabric.calleeservice.aspect.TestComponent;
 import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;
@@ -48,6 +49,8 @@ public class Application {
                     MemberCategory.INVOKE_DECLARED_METHODS, MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
 
             hints.resources().registerPattern("secret/*");
+
+            hints.reflection().registerType(TestAspect.class, MemberCategory.INVOKE_DECLARED_METHODS);
         }
     }
 
