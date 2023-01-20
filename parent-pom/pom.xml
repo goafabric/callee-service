@@ -5,7 +5,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>spring-parent</artifactId>
-    <version>3.0.1</version>
+    <version>3.0.2</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
     <description>goa parent pom</description>
@@ -27,7 +27,7 @@
         <kotlin.compiler.jvmTarget>${java.version}</kotlin.compiler.jvmTarget>
 
         <!-- Spring Boot -->
-        <spring.boot.version>3.0.1</spring.boot.version>
+        <spring.boot.version>3.0.2</spring.boot.version>
         <spring.cloud.version>2022.0.0</spring.cloud.version>
 
         <native-maven-plugin.version>0.9.18</native-maven-plugin.version>
