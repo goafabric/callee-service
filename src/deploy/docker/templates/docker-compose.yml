@@ -22,27 +22,31 @@ services:
       - ${_Values_root_name}-net
     environment:
       #application
-      - TZ=Europe/Berlin
-      - server.port=${_Values_service_port}
-      - server.tomcat.threads.max=20
-      - security.authentication.enabled=false
-      #forwarding sub url
-      - server.forward-headers-strategy=FRAMEWORK
+      TZ: Europe/Berlin
+      server.port: "${_Values_service_port}"
+      server.tomcat.threads.max: "20"
+      server.forward-headers-strategy: FRAMEWORK
+
+      #security
+      security.authentication.enabled: "false"
+
       #monitoring
-      - management.endpoint.health.show-details=always
-      - management.endpoints.web.exposure.include=health,prometheus,heapdump
-      #zipkin / jaeger
-      - management.zipkin.tracing.endpoint=http://host.docker.internal:9411/api/v2/spans
-      - spring.application.name=callee-service
+      management.endpoint.health.show-details: always
+      management.endpoints.web.exposure.include: "health,heapdump,circuitbreakers,prometheus"
+
+      #zipkin/jaeger
+      spring.application.name: "callee-service"
+      management.zipkin.tracing.endpoint: "http://host.docker.internal:9411/api/v2/spans"
+      management.tracing.sampling.probability: "1.0"
+      management.tracing.enabled: "true"
+
       #log levels
-      - logging.level.root=WARN
-      - logging.level.org.springframework=INFO
-      - logging.level.org.goafabric=INFO
-      - logging.level.org.flywaydb.core="INFO"
-      - logging.level.org.hibernate.SQL="INFO"
-      #log file settings
-      - logging.file.max-size=10MB
-      - logging.file.name=/usr/share/logs/application.log
+      logging.level.root: "WARN"
+      logging.level.org.goafabric: "INFO"
+
+      logging.level.org.springframework: "INFO"
+      logging.level.org.flywaydb.core: "INFO"
+      logging.level.org.hibernate.SQL: "INFO"
 
   nginx:
     container_name: ${_Values_root_name}-nginx
@@ -57,7 +61,8 @@ services:
       - ./nginx/:/etc/nginx/
       - ./ssl:/etc/ssl/
     depends_on:
-      - application
+      application:
+        condition: service_started
 
 volumes:
     tmp:
