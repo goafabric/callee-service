@@ -36,7 +36,7 @@ services:
 
       #zipkin/jaeger
       spring.application.name: "callee-service"
-      management.zipkin.tracing.endpoint: "http://host.docker.internal:9411/api/v2/spans"
+      management.zipkin.tracing.endpoint: "http://${_Values_host_docker_internal}:9411/api/v2/spans"
       management.tracing.sampling.probability: "1.0"
       management.tracing.enabled: "true"
 
