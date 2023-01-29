@@ -5,7 +5,7 @@ export OPTION=$2
 
 [[ "$(uname -m)" == "arm64" || "$(uname -m)" == "aarch64" ]] && export _Values_server_arch="-arm64v8"
 export _Values_image_native="" && [[ "${OPTION}" = "-native" ]] && export _Values_image_native=-native${_Values_server_arch}
-export _Values_nginx_oauth2="" && [[ "${OPTION}" = "-oidc" ]] && export _Values_nginx_oauth2="_oidc"
+export _Values_nginx_oauth2="" && docker ps | grep oauth2-proxy > /dev/null && export _Values_nginx_oauth2="_oidc"
 docker ps | grep loki > /dev/null && LOKI_COMPOSE="-f ./templates/docker-compose-loki.yml"
 
 function func_compose {
