@@ -45,11 +45,6 @@ services:
       logging.level.org.goafabric: "INFO"
       logging.level.org.springframework: "INFO"
 
-#    logging:
-#      driver: loki
-#      options:
-#        loki-url: "http://host.docker.internal:3100/loki/api/v1/push"
-
   nginx:
     container_name: ${_Values_root_name}-nginx
     image: nginx:1.22.1
@@ -62,6 +57,7 @@ services:
     volumes:
       - ./nginx/:/etc/nginx/
       - ./ssl:/etc/ssl/
+      - ./nginx/nginx${_Values_nginx_oauth2}.conf:/etc/nginx/nginx.conf
     depends_on:
       application:
         condition: service_started
