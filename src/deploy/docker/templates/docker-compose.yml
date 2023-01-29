@@ -55,7 +55,7 @@ services:
     networks:
       - ${_Values_root_name}-net
     volumes:
-      - ./nginx/nginx${_Values_nginx_oauth2}.conf:/etc/nginx/nginx.conf
+      - ./nginx/nginx${_Values_nginx_oidc}.conf:/etc/nginx/nginx.conf
       - ./nginx/ssl:/etc/ssl/
     depends_on:
       application:
