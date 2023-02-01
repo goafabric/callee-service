@@ -39,12 +39,12 @@ services:
       management.zipkin.tracing.endpoint: "http://${_Values_host_docker_internal}:9411/api/v2/spans"
       management.tracing.sampling.probability: "1.0"
       management.tracing.enabled: "true"
+      logging.level.zipkin2.reporter: "ERROR"
 
       #log levels
       logging.level.root: "WARN"
       logging.level.org.goafabric: "INFO"
       logging.level.org.springframework: "INFO"
-      logging.level.zipkin2.reporter: "ERROR"
 
   nginx:
     container_name: ${_Values_root_name}-nginx
