@@ -32,7 +32,7 @@ public class Application {
         System.err.println("Testing file read : "
                 + new String(new ClassPathResource("secret/secret.txt").getInputStream().readAllBytes()));
 
-        try { Thread.currentThread().join(5000);} catch (InterruptedException e) {}
+        try { Thread.currentThread().join(10000);} catch (InterruptedException e) {}
     }
 
     @Bean

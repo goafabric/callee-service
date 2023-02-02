@@ -7,18 +7,14 @@
     <parent>
         <groupId>org.goafabric</groupId>
         <artifactId>spring-parent</artifactId>
-        <version>3.0.0</version>
+        <version>3.0.2</version>
         <relativePath>parent-pom/pom.xml</relativePath>
     </parent>
 
     <groupId>org.goafabric</groupId>
     <artifactId>callee-service</artifactId>
-    <version>3.0.1-console-SNAPSHOT</version>
+    <version>3.0.2-console-SNAPSHOT</version>
 
-    <properties>
-        <spring.boot.version>${spring.boot-3.version}</spring.boot.version>
-        <spring.cloud.version>2022.0.0-RC1</spring.cloud.version>
-    </properties>
 
     <dependencies>
         <!-- console -->
@@ -27,24 +23,10 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- web -->
-        <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
-        </dependency>
-        -->
 
         <!-- test *-->
         <dependency>
