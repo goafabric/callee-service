@@ -68,3 +68,11 @@ task dockerImageNativeRun(type:Exec) { dependsOn('bootBuildImage')
 task dockerImageNative(type:Exec) { dependsOn(dockerImageNativeRun)
 	commandLine 'docker', 'push', "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
 }
+
+graalvmNative {
+	binaries {
+		main {
+			buildArgs.add('-H:+PrintClassInitialization')
+		}
+	}
+}
