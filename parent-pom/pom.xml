@@ -28,7 +28,6 @@
 
         <!-- Spring Boot -->
         <spring.boot.version>3.0.2</spring.boot.version>
-        <spring.cloud.version>2022.0.0</spring.cloud.version>
 
         <native-maven-plugin.version>0.9.18</native-maven-plugin.version>
         <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
@@ -44,6 +43,7 @@
         <springdoc-2-openapi-ui.version>2.0.2</springdoc-2-openapi-ui.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
         <joda-time.version>2.12.0</joda-time.version>
+        <resilience4j-spring-boot3.version>2.0.2</resilience4j-spring-boot3.version>
 
         <!-- Test -->
         <equalsverifier.version>3.10.1</equalsverifier.version>
@@ -91,14 +91,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
@@ -133,6 +125,13 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc-2-openapi-ui.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>io.github.resilience4j</groupId>
+                <artifactId>resilience4j-spring-boot3</artifactId>
+                <version>${resilience4j-spring-boot3.version}</version>
             </dependency>
 
             <!-- Test -->
