@@ -28,11 +28,11 @@ jobs:
     - name: Multiarch Image
       uses: gradle/gradle-build-action@v2
       with:
-        gradle-version: 8.0
+        gradle-version: 7.4
         arguments: jib jib
     - name: Native Image
       uses: gradle/gradle-build-action@v2
       with:
-        gradle-version: 8.0
+        gradle-version: 7.4
         arguments: dockerImageNative 
   
