@@ -29,7 +29,7 @@ public class Application {
     public static void main(String[] args) throws Exception {
         var context = SpringApplication.run(Application.class, args);
 
-        doProxyStuff(context);
+        if (context.isActive()) { doProxyStuff(context); }
         doReflectionStuff();
 
         try { Thread.currentThread().join(10000);} catch (InterruptedException e) {}
