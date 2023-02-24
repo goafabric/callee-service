@@ -23,22 +23,20 @@ import org.springframework.core.io.ClassPathResource;
 public class Application {
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class, args);
+        var context = SpringApplication.run(Application.class, args);
 
         final Class clazz = Class.forName("org.goafabric.calleeservice.Callee");
         System.err.println("Testing reflection : " + clazz.getMethod("getMessage").invoke(clazz.getDeclaredConstructor().newInstance()));
+        System.err.println("Testing file read : " + new String(new ClassPathResource("secret/secret.txt").getInputStream().readAllBytes()));
 
-
-        System.err.println("Testing file read : "
-                + new String(new ClassPathResource("secret/secret.txt").getInputStream().readAllBytes()));
+        context.getBean(TestComponent.class).callOnMe("1");
+        context.getBean(TestComponent.class).callOnMe("1");
 
         try { Thread.currentThread().join(10000);} catch (InterruptedException e) {}
     }
 
     @Bean
     public CommandLineRunner init(ApplicationContext context, TestComponent testComponent) {
-        testComponent.callOnMe("1");
-        testComponent.callOnMe("1");
         return args -> {if ((args.length > 0) && ("-check-integrity".equals(args[0]))) {SpringApplication.exit(context, () -> 0);}};
     }
 

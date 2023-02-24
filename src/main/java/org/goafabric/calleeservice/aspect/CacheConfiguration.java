@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.lang.reflect.Method;
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
@@ -32,7 +31,6 @@ public class CacheConfiguration extends CachingConfigurerSupport {
         cacheManager.setCaffeine(Caffeine.newBuilder()
                 .maximumSize(cacheMaxSize)
                 .expireAfterAccess(cacheExpiry, TimeUnit.MINUTES));
-        cacheManager.setCacheNames(Collections.singleton("test"));
         return cacheManager;
     }
 

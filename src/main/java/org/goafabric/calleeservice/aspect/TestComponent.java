@@ -5,7 +5,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 @Component
-//@TestAnnotation
+@TestAnnotation
 @CacheConfig(cacheNames = "test")
 public class TestComponent {
     @Cacheable
