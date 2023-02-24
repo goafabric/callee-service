@@ -25,12 +25,12 @@ public class Application {
     public static void main(String[] args) throws Exception {
         var context = SpringApplication.run(Application.class, args);
 
-        final Class clazz = Class.forName("org.goafabric.calleeservice.Callee");
+        var clazz = Class.forName("org.goafabric.calleeservice.Callee");
         System.err.println("Testing reflection : " + clazz.getMethod("getMessage").invoke(clazz.getDeclaredConstructor().newInstance()));
         System.err.println("Testing file read : " + new String(new ClassPathResource("secret/secret.txt").getInputStream().readAllBytes()));
 
-        context.getBean(TestComponent.class).callOnMe("1");
-        context.getBean(TestComponent.class).callOnMe("1");
+        context.getBean(TestComponent.class).callOnMe();
+        context.getBean(TestComponent.class).callOnMe();
 
         try { Thread.currentThread().join(10000);} catch (InterruptedException e) {}
     }

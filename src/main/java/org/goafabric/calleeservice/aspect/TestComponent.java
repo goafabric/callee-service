@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @CacheConfig(cacheNames = "test")
 public class TestComponent {
     @Cacheable
-    public void callOnMe(String id) {
+    public void callOnMe() {
         System.err.println("inside method");
     }
 }
