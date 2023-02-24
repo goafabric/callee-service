@@ -11,7 +11,6 @@ import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
@@ -37,12 +36,9 @@ public class CacheConfiguration extends CachingConfigurerSupport {
     @Bean
     @Override
     public KeyGenerator keyGenerator() {
-        return new KeyGenerator() {
-            @Override
-            public Object generate(Object target, Method method, Object... params) {
-                final String tenantId = "0"; //HttpInterceptor.getTenantID()
-                return new SimpleKey(tenantId, method.getName(), params);
-            }
+        return (target, method, params) -> {
+            final String tenantId = "0"; //HttpInterceptor.getTenantID()
+            return new SimpleKey(tenantId, method.getName(), params);
         };
     }
 }
