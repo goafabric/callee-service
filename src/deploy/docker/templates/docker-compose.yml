@@ -9,12 +9,13 @@ services:
       - "${_Values_service_port}:${_Values_service_port}"
     command: ["-Xmx${_Values_resources_requests_memory}"]
 
-#    we cannot active the healthcheck because base native images does not have curl
-#    healthcheck:
-#      test: "curl -f http://localhost:${_Values_service_port}/actuator/health || exit 1"
-#      interval: 10s
-#      timeout: 10s
-#      retries: 5
+    healthcheck:
+      test: "curl -f http://localhost:${_Values_service_port}/actuator/health || exit 1"
+      disable: ${_Values_health_check_disabled} #disabled for native images because of no curl
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      
     volumes:
       - tmp:/tmp
       - applogs:/usr/share/logs

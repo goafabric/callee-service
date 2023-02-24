@@ -6,4 +6,5 @@ _Values_image_tag=3.0.3-SNAPSHOT
 _Values_service_port=50900
 _Values_resources_requests_memory=64M
 
+_Values_health_check_disabled=false
 _Values_host_docker_internal=host.docker.internal
