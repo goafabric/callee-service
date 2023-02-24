@@ -1,14 +1,13 @@
 package org.goafabric.calleeservice.aspect;
 
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 @Component
 @TestAnnotation
 @CacheConfig(cacheNames = "test")
 public class TestComponent {
-    @Cacheable
+    //@Cacheable
     public void callOnMe() {
         System.err.println("inside method");
     }

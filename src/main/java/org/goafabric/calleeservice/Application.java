@@ -30,7 +30,7 @@ public class Application {
         System.err.println("Testing file read : " + new String(new ClassPathResource("secret/secret.txt").getInputStream().readAllBytes()));
 
         context.getBean(TestComponent.class).callOnMe();
-        context.getBean(TestComponent.class).callOnMe();
+        context.getBean(TestComponent.class).callOnMe(); //when @Cachabele annotated only gets called once
 
         try { Thread.currentThread().join(10000);} catch (InterruptedException e) {}
     }
