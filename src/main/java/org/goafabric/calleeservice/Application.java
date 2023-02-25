@@ -51,7 +51,7 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner init(ApplicationContext context, TestComponent testComponent) {
+    public CommandLineRunner init(ApplicationContext context) {
         return args -> {if ((args.length > 0) && ("-check-integrity".equals(args[0]))) {SpringApplication.exit(context, () -> 0);}};
     }
 
