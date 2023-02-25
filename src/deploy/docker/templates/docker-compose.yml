@@ -57,7 +57,6 @@ services:
       - ${_Values_root_name}-net
     volumes:
       - ./nginx/nginx${_Values_nginx_oidc}.conf:/etc/nginx/nginx.conf
-      - ./nginx/ssl:/etc/ssl/
     depends_on:
       application:
         condition: service_started
