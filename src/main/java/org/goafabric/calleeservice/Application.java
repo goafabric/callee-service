@@ -65,6 +65,11 @@ public class Application {
             hints.resources().registerPattern("secret/*");
 
             hints.reflection().registerType(TestAspect.class, MemberCategory.INVOKE_DECLARED_METHODS);
+
+            try { //caffeine hints
+                hints.reflection().registerType(Class.forName("com.github.benmanes.caffeine.cache.SSMSA"), MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
+                hints.reflection().registerType(Class.forName("com.github.benmanes.caffeine.cache.PSAMS"), MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
+            } catch (ClassNotFoundException e) { throw new RuntimeException(e); }
         }
     }
 
