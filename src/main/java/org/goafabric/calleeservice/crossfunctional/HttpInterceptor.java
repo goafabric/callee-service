@@ -21,17 +21,14 @@ public class HttpInterceptor implements WebMvcConfigurer {
     private static final ThreadLocal<String> tenantId = new ThreadLocal<>();
     private static final ThreadLocal<String> userName = new ThreadLocal<>();
 
-    public static String getTenantId() { return tenantId.get(); }
-    public static String getUserName() { return userName.get(); }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HandlerInterceptor() {
             @Override
             public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-                tenantId.set(request.getHeader("X-TenantId") != null ? request.getHeader("X-TenantId") : "0"); //TODO
-                userName.set(request.getHeader("X-Auth-Request-Preferred-Username") != null ? request.getHeader("X-Auth-Request-Preferred-Username")
-                                                :  SecurityContextHolder.getContext().getAuthentication().getName());
+                tenantId.set(request.getHeader("X-TenantId"));
+                userName.set(request.getHeader("X-Auth-Request-Preferred-Username"));
                 return true;
             }
 
@@ -41,6 +38,15 @@ public class HttpInterceptor implements WebMvcConfigurer {
                 userName.remove();
             }
         });
+    }
+
+    public static String getTenantId() {
+        return tenantId.get() != null ? tenantId.get() : "0"; //tdo
+    }
+
+    public static String getUserName() {
+        return userName.get() != null ? userName.get()
+                : SecurityContextHolder.getContext().getAuthentication() != null ? SecurityContextHolder.getContext().getAuthentication().getName() : "";
     }
 
     @Value("${security.authentication.enabled:true}")
