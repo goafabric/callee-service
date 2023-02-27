@@ -54,13 +54,8 @@ class HttpInterceptor : WebMvcConfigurer {
             .and().csrf().disable().build() else http.authorizeHttpRequests().anyRequest().permitAll().and().build()
     }
 
-    /*
     @Bean
     fun disableHttpServerObservationsFromName(): ObservationPredicate {
         return ObservationPredicate { name: String, context: Observation.Context? -> !name.startsWith("spring.security.") }
     }
-
-     */
-
-
 }
