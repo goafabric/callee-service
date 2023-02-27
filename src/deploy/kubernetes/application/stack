@@ -1,0 +1,35 @@
+#!/bin/bash
+COMMAND=$1
+IMAGE_ARCH=$2
+
+SERVER_ARCH=`kubectl version --output=json | grep "linux/arm64" > /dev/null && echo "-arm64v8"`
+[[ "${IMAGE_ARCH}" = "-native" ]] && IMAGE_ARCH+=${SERVER_ARCH}
+[[ `kubectl get configmaps authentication-config --ignore-not-found -o jsonpath='{.data.authentication}' -n default` = "oidc" ]] && INGRESS_AUTHENTICATION="--set ingress.authentication=oidc"
+
+function up() {
+    helm install --create-namespace \
+    --set image.arch=$IMAGE_ARCH $INGRESS_AUTHENTICATION \
+    --set ingress.hosts=`kubectl get configmaps cluster-config -o jsonpath='{.data.hostname}' -n default` \
+    --namespace example-tenant-0 \
+    `cat ./Chart.yaml | grep "name" | cut -d':' -f2 | xargs` ./
+}
+
+function down() {
+    helm uninstall \
+    --namespace example-tenant-0 \
+    `cat ./Chart.yaml | grep "name" | cut -d':' -f2 | xargs`
+}
+
+function proxy() {
+    kubectl port-forward deployment/`cat ./Chart.yaml | grep "name" | cut -d':' -f2 | xargs` \
+    `cat ./values.yaml | grep "port" | cut -d':' -f2 | xargs`:`cat ./values.yaml | grep "port" | cut -d':' -f2 | xargs` \
+    -n `pwd | rev | cut -d '/' -f3 | rev`
+}
+
+if   [ "${COMMAND}" = "up" ]; then up;
+elif [ "${COMMAND}" = "down" ]; then down;
+elif [ "${COMMAND}" = "restart" ]; then down && up;
+elif [ "${COMMAND}" = "lint" ]; then helm lint ./;
+elif [ "${COMMAND}" = "proxy" ]; then proxy;
+
+else echo Doing nothing !; fi

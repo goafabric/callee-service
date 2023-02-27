@@ -7,14 +7,15 @@ services:
     restart: 'no'
     ports:
       - "${_Values_service_port}:${_Values_service_port}"
-    command: ["-Xmx${_Values_resources_requests_memory}"]
+    entrypoint: ${_Values_resources_entrypoint}
 
-#    we cannot active the healthcheck because base native images does not have curl
-#    healthcheck:
-#      test: "curl -f http://localhost:${_Values_service_port}/actuator/health || exit 1"
-#      interval: 10s
-#      timeout: 10s
-#      retries: 5
+    healthcheck:
+      test: "curl -f http://localhost:${_Values_service_port}/actuator/health || exit 1"
+      disable: ${_Values_health_check_disabled} #disabled for native images because of no curl
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      
     volumes:
       - tmp:/tmp
       - applogs:/usr/share/logs
@@ -22,40 +23,43 @@ services:
       - ${_Values_root_name}-net
     environment:
       #application
-      - TZ=Europe/Berlin
-      - server.port=${_Values_service_port}
-      - server.tomcat.threads.max=20
-      - security.authentication.enabled=false
-      #forwarding sub url
-      - server.forward-headers-strategy=FRAMEWORK
+      TZ: Europe/Berlin
+      server.port: "${_Values_service_port}"
+      server.tomcat.threads.max: "20"
+      server.forward-headers-strategy: FRAMEWORK
+
+      #security
+      security.authentication.enabled: "false"
+
       #monitoring
-      - management.endpoint.health.show-details=always
-      - management.endpoints.web.exposure.include=health,prometheus,heapdump
-      #zipkin / jaeger
-      - management.zipkin.tracing.endpoint=http://host.docker.internal:9411/api/v2/spans
-      - spring.application.name=callee-service
+      management.endpoint.health.show-details: always
+      management.endpoints.web.exposure.include: "health,heapdump,circuitbreakers,prometheus"
+
+      #zipkin/jaeger
+      spring.application.name: "callee-service"
+      management.zipkin.tracing.endpoint: "http://host.docker.internal:9411/api/v2/spans"
+      management.tracing.sampling.probability: "1.0"
+      management.tracing.enabled: "true"
+      logging.level.zipkin2.reporter: "ERROR"
+
       #log levels
-      - logging.level.root=WARN
-      - logging.level.org.springframework=INFO
-      - logging.level.org.goafabric=INFO
-      - logging.level.org.flywaydb.core="INFO"
-      - logging.level.org.hibernate.SQL="INFO"
-      #log file settings
-      - logging.file.max-size=10MB
-      - logging.file.name=/usr/share/logs/application.log
+      logging.level.root: "WARN"
+      logging.level.org.goafabric: "INFO"
+      logging.level.org.springframework: "INFO"
 
   nginx:
     container_name: ${_Values_root_name}-nginx
-    image: nginx:1.20.2
+    image: nginx:1.22.1
     restart: 'no'
     ports:
       - 8080:80
     networks:
       - ${_Values_root_name}-net
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/nginx${_Values_nginx_oidc}.conf:/etc/nginx/nginx.conf
     depends_on:
-      - application
+      application:
+        condition: service_started
 
 volumes:
     tmp:

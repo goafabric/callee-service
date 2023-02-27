@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "application.fullname" . }}-config
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+data:
+  #application
+  TZ: Europe/Berlin
+  server.port: "{{ .Values.service.port }}"
+  server.tomcat.threads.max: "20"
+  server.forward-headers-strategy: FRAMEWORK
+
+  #security
+  security.authentication.enabled: "false"
+
+  #monitoring
+  management.endpoint.health.show-details: always
+  management.endpoints.web.exposure.include: "health,heapdump,circuitbreakers,prometheus"
+
+  #zipkin/jaeger
+  spring.application.name: "{{ include "application.fullname" . }}-tenant-{{ .Values.tenantId }}"
+  management.zipkin.tracing.endpoint: "http://zipkin.monitoring:9411/api/v2/spans"
+  management.tracing.sampling.probability: "1.0"
+  management.tracing.enabled: "true"
