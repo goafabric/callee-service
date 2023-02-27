@@ -5,7 +5,7 @@
 
     <groupId>org.goafabric</groupId>
     <artifactId>spring-parent</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.2</version>
     <packaging>pom</packaging>
     <name>goa parent pom</name>
     <description>goa parent pom</description>
@@ -27,13 +27,12 @@
         <kotlin.compiler.jvmTarget>${java.version}</kotlin.compiler.jvmTarget>
 
         <!-- Spring Boot -->
-        <spring.boot.version>3.0.0</spring.boot.version>
-        <spring.cloud.version>2022.0.0-RC2</spring.cloud.version>
+        <spring.boot.version>3.0.2</spring.boot.version>
 
         <native-maven-plugin.version>0.9.18</native-maven-plugin.version>
         <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
         <arch.suffix></arch.suffix>
-        
+
         <!-- code generation -->
         <lombok.version>1.18.24</lombok.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
@@ -41,9 +40,10 @@
 
         <!-- 3rd party -->
         <springdoc-openapi-ui.version>1.6.13</springdoc-openapi-ui.version>
-        <springdoc-2-openapi-ui.version>2.0.0</springdoc-2-openapi-ui.version>
+        <springdoc-2-openapi-ui.version>2.0.2</springdoc-2-openapi-ui.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
         <joda-time.version>2.12.0</joda-time.version>
+        <resilience4j-spring-boot3.version>2.0.2</resilience4j-spring-boot3.version>
 
         <!-- Test -->
         <equalsverifier.version>3.10.1</equalsverifier.version>
@@ -91,14 +91,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
@@ -133,6 +125,13 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc-2-openapi-ui.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>io.github.resilience4j</groupId>
+                <artifactId>resilience4j-spring-boot3</artifactId>
+                <version>${resilience4j-spring-boot3.version}</version>
             </dependency>
 
             <!-- Test -->
@@ -341,7 +340,7 @@
                 </pluginManagement>
             </build>
         </profile>
-        
+
         <profile>
             <id>docker-image-native</id>
             <build>
@@ -363,11 +362,11 @@
                                     <configuration>
                                         <image>
                                             <name>${docker.registry}/${project.artifactId}-native${arch.suffix}:${project.version}</name>
-                                            <builder>dashaun/java-native-builder-multiarch:7.37.0</builder>
+                                            <builder>dashaun/builder:20230204</builder>
                                             <env>
                                                 <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
                                                 <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
-                                                <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-J-Xmx6000m</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                                                <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-J-Xmx4000m</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                                 <BP_LOG_LEVEL>INFO</BP_LOG_LEVEL>
                                             </env>
                                             <pullPolicy>IF_NOT_PRESENT</pullPolicy>
