@@ -49,19 +49,13 @@ public class HttpInterceptor implements WebMvcConfigurer {
                 : SecurityContextHolder.getContext().getAuthentication() != null ? SecurityContextHolder.getContext().getAuthentication().getName() : "";
     }
 
-    @Value("${security.authentication.enabled:true}")
-    private Boolean isAuthenticationEnabled;
-
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        if (isAuthenticationEnabled) { http.authorizeHttpRequests().anyRequest().authenticated().and().httpBasic().and().csrf().disable(); }
-        else { http.authorizeHttpRequests().anyRequest().permitAll(); }
-        return http.build();
+    public SecurityFilterChain filterChain(HttpSecurity http, @Value("${security.authentication.enabled:true}") Boolean isAuthenticationEnabled) throws Exception {
+        return isAuthenticationEnabled ? http.authorizeHttpRequests().anyRequest().authenticated().and().httpBasic().and().csrf().disable().build()
+                                        : http.authorizeHttpRequests().anyRequest().permitAll().and().build();
     }
     
     @Bean
-    ObservationPredicate disableHttpServerObservationsFromName() {
-        return (name, context) -> !name.startsWith("spring.security.");
-    }
+    ObservationPredicate disableHttpServerObservationsFromName() { return (name, context) -> !name.startsWith("spring.security."); }
 
 }
