@@ -29,7 +29,7 @@
         <!-- Spring Boot -->
         <spring.boot.version>3.0.3</spring.boot.version>
 
-        <native-maven-plugin.version>0.9.18</native-maven-plugin.version>
+        <native-maven-plugin.version>0.9.20</native-maven-plugin.version>
         <spring.native.check.integrity.argument></spring.native.check.integrity.argument>
         <arch.suffix></arch.suffix>
         
