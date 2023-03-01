@@ -1,10 +1,11 @@
 package org.goafabric.calleeservice.crossfunctional;
 
-import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
@@ -17,10 +18,9 @@ import java.util.stream.Collectors;
 
 @Component
 @Aspect
-@Slf4j
 @ImportRuntimeHints(DurationLogger.ApplicationRuntimeHints.class)
 public class DurationLogger {
-    //private static Logger log = LoggerFactory.getLogger(DurationLogger.class);
+    private static Logger log = LoggerFactory.getLogger(DurationLogger.class);
 
     @Around("@within(org.goafabric.calleeservice.crossfunctional.DurationLog)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
