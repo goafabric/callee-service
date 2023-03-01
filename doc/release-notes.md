@@ -1,4 +1,5 @@
 # 3.0.4
+- maven build (re) moved to doc/maven
 
 # 3.0.3
 - upgrade to Spring Boot 3.0.3
