@@ -1,15 +1,17 @@
 package org.goafabric.calleeservice.controller;
 
 import org.goafabric.calleeservice.logic.CalleeLogic;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "callees", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CalleeController {
-    @Autowired
-    CalleeLogic calleeLogic;
+    private final CalleeLogic calleeLogic;
+
+    public CalleeController(CalleeLogic calleeLogic) {
+        this.calleeLogic = calleeLogic;
+    }
 
     @GetMapping("sayMyName")
     public Callee sayMyName (@RequestParam("name") String name) {
