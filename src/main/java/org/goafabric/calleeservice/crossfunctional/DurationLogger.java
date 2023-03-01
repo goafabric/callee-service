@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @ImportRuntimeHints(DurationLogger.ApplicationRuntimeHints.class)
 public class DurationLogger {
+    //private static Logger log = LoggerFactory.getLogger(DurationLogger.class);
 
-    //@Around("execution(public * org.goafabric.calleeservice.logic.CalleeLogic.*(..))")
     @Around("@within(org.goafabric.calleeservice.crossfunctional.DurationLog)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         final long startTime = System.currentTimeMillis();
