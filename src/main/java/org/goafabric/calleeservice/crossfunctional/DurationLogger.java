@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Aspect
 @ImportRuntimeHints(DurationLogger.ApplicationRuntimeHints.class)
 public class DurationLogger {
-    private static Logger log = LoggerFactory.getLogger(DurationLogger.class);
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Around("@within(org.goafabric.calleeservice.crossfunctional.DurationLog)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
