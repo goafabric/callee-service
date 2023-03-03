@@ -26,10 +26,9 @@ jobs:
 #      run: mvn -B clean deploy -P docker-image-native --file pom.xml
    
     - name: Multiarch Image
-      #uses: gradle/gradle-build-action@v2
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+      uses: gradle/gradle-build-action@v2
       with:
-        gradle-version: 8.0
+        gradle-version: 7.4
         arguments: test jib jib
     - name: Native Image
       uses: gradle/gradle-build-action@v2
