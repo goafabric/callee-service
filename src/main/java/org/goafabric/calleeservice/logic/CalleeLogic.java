@@ -8,17 +8,14 @@ import org.springframework.stereotype.Component;
 @DurationLog
 public class CalleeLogic {
     public Callee sayMyName(String name) {
-        return Callee.builder()
-                .message("Your name is: " + name).build();
+        return new Callee("0", "Your name is: " + name);
     }
 
     public Callee sayMyOtherName(String name) {
-        return Callee.builder()
-                .message("Your name is: " + name).build();
+        return new Callee("0", "Your other name is: " + name);
     }
 
     public Callee save(Callee callee) {
-        return Callee.builder()
-                .message("Storing your message: " + callee.getMessage()).build();
+        return new Callee("0", "Storing your message: " + callee.message());
     }
 }

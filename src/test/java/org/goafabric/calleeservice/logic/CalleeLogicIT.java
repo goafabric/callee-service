@@ -14,20 +14,19 @@ class CalleeLogicIT {
 
     @Test
     void sayMyName() {
-        assertThat(calleeLogic.sayMyName("Heisenberg").getMessage())
+        assertThat(calleeLogic.sayMyName("Heisenberg").message())
                 .isNotNull().isEqualTo("Your name is: Heisenberg");
     }
 
     @Test
     void sayMyOtherName() {
-        assertThat(calleeLogic.sayMyOtherName("SlimShady").getMessage())
-                .isNotNull().isEqualTo("Your name is: SlimShady");
+        assertThat(calleeLogic.sayMyOtherName("SlimShady").message())
+                .isNotNull().isEqualTo("Your other name is: SlimShady");
     }
 
     @Test
     void save() {
-        assertThat(calleeLogic.save(
-                Callee.builder().message("Secret").build()).getMessage())
+        assertThat(calleeLogic.save(new Callee("0", "Secret")).message())
                 .isEqualTo("Storing your message: Secret");
     }
 
