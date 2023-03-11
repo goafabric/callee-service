@@ -19,7 +19,6 @@ public class HttpInterceptor implements WebMvcConfigurer {
     private static final ThreadLocal<String> tenantId = new ThreadLocal<>();
     private static final ThreadLocal<String> userName = new ThreadLocal<>();
 
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HandlerInterceptor() {
