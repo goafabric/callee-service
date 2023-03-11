@@ -1,5 +1,7 @@
 # 3.0.4
-- maven build (re) moved to doc/maven
+- upgrade to Spring Boot 3.0.4
+- maven build (re) moved to doc/maven in favour of gradle
+- kicked lombok in favour of java records
 
 # 3.0.3
 - upgrade to Spring Boot 3.0.3
