@@ -25,6 +25,7 @@ public class PojoTest {
                 .firstName("firstName")
                 .lastName("lastName")
                 .build();
+        System.out.println(person.getFirstName());
     }
 
     // Java 17 Records
@@ -41,6 +42,7 @@ public class PojoTest {
                 "firstname",
                 "lastname"
         );
+        System.out.println(person.firstName());
     }
 
     // Kotlin
@@ -56,5 +58,6 @@ public class PojoTest {
                 firstName = "firstName",
                 lastName = "lastName"
         )
+        System.out.println(person.firstName);
     }
 }
