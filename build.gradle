@@ -1,7 +1,7 @@
 plugins {
-	id 'org.springframework.boot' version '3.0.2'
+	id 'org.springframework.boot' version '3.0.4'
 	id 'io.spring.dependency-management' version '1.1.0'
-	id 'org.graalvm.buildtools.native' version '0.9.18'
+	id 'org.graalvm.buildtools.native' version '0.9.20'
 	id 'com.google.cloud.tools.jib' version '3.3.1'
 	id 'jacoco'
 
@@ -12,20 +12,20 @@ plugins {
 
 ext {
 	set('dockerRegistry', "goafabric")
-	set('baseImage', "ibm-semeru-runtimes:open-17.0.4.1_1-jre-focal@sha256:29d74ccd3e20aff9cca04df418ba6dca38cf86ea1dba42635c8d8ba89f2d25a5")
+	set('baseImage', "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1")
 }
 
 dependencies {
 	constraints {
-		implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-		implementation 'org.mapstruct:mapstruct:1.5.2.Final'
+		implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.3'
+		implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
 	}
 	
 }
 
 group = 'org.goafabric'
-version = '3.0.2-kotlin-SNAPSHOT'
+version = '3.0.4-kotlin-SNAPSHOT'
 sourceCompatibility = '17'
 
 repositories {
@@ -49,16 +49,9 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui'
 
 	//crosscuting
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
-
-	//code generation
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
-
-	implementation 'org.mapstruct:mapstruct'
-	annotationProcessor 'org.mapstruct:mapstruct-processor'
 
 	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -86,11 +79,10 @@ jib {
 
 def archSuffix = (System.properties['os.arch'] == 'aarch64') ? "-arm64v8" : ""
 tasks.named('bootBuildImage') {
-	builder = 'dashaun/java-native-builder-multiarch:7.37.0'
+	builder = 'dashaun/builder:20230204'
 	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
-	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx6000m']
+	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx4000m']
 }
-
 task dockerImageNativeRun(type:Exec) { dependsOn('bootBuildImage')
 	commandLine 'docker', 'run', "--rm", "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}", '-check-integrity'
 }
