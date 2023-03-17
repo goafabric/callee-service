@@ -1,14 +1,9 @@
 package org.goafabric.calleeservice.crossfunctional;
 
-import io.micrometer.observation.ObservationPredicate;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -45,14 +40,5 @@ public class HttpInterceptor implements WebMvcConfigurer {
         return userName.get() != null ? userName.get()
                 : SecurityContextHolder.getContext().getAuthentication() != null ? SecurityContextHolder.getContext().getAuthentication().getName() : "";
     }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, @Value("${security.authentication.enabled:true}") Boolean isAuthenticationEnabled) throws Exception {
-        return isAuthenticationEnabled ? http.authorizeHttpRequests().anyRequest().authenticated().and().httpBasic().and().csrf().disable().build()
-                                        : http.authorizeHttpRequests().anyRequest().permitAll().and().build();
-    }
-    
-    @Bean
-    ObservationPredicate disableHttpServerObservationsFromName() { return (name, context) -> !name.startsWith("spring.security."); }
 
 }
