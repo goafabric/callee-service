@@ -1,5 +1,6 @@
 package org.goafabric.calleeservice.controller;
 
+import jakarta.validation.Valid;
 import org.goafabric.calleeservice.logic.CalleeLogic;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class CalleeController {
     }
 
     @PostMapping(value = "save", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Callee save(@RequestBody Callee callee) {
+    public Callee save(@RequestBody @Valid Callee callee) {
         return calleeLogic.save(callee);
     }
 
