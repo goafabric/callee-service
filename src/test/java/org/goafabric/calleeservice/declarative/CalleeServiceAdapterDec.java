@@ -12,7 +12,7 @@ public interface CalleeServiceAdapterDec {
     @GetExchange("/callees/sayMyName")
     Callee sayMyName (@RequestParam("name") String name);
 
-    @GetExchange("sayMyOtherName/{name}")
+    @GetExchange("/callees/sayMyOtherName/{name}")
     Callee sayMyOtherName(@PathVariable("name") String name);
 
 }

@@ -17,10 +17,10 @@ public class CalleeServiceAdapterDecIT {
                 .isEqualTo("Your name is: Heisenberg");
     }
 
-    //@Test
+    @Test
     public void sayMyOtherName() {
         assertThat(calleeServiceAdapterDec.sayMyOtherName("SlimShady").message())
-                .isEqualTo("Your name is: SlimShady");
+                .isEqualTo("Your other name is: SlimShady");
     }
 }
 
