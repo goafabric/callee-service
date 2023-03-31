@@ -10,6 +10,11 @@ Core
 - Security
 
 - DurationLogger Aspect
+- Bean Validation
+
+# Adapter
+- REST Call
+- CircuitBreaker
 
 # Oracle GraalVM LOCAL Native Compile Times per Service Type
 
