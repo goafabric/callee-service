@@ -13,12 +13,14 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportRuntimeHints;
 
 import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableCaching
-public class CacheConfiguration extends CachingConfigurerSupport implements RuntimeHintsRegistrar {
+@ImportRuntimeHints(CacheConfiguration.CacheRuntimeHints.class)
+public class CacheConfiguration extends CachingConfigurerSupport {
 
     private Long cacheMaxSize = 1000l;
 
@@ -43,11 +45,15 @@ public class CacheConfiguration extends CachingConfigurerSupport implements Runt
         };
     }
 
-    @Override
-    public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
-        try { //caffeine hints
-            hints.reflection().registerType(Class.forName("com.github.benmanes.caffeine.cache.SSMSA"), MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
-            hints.reflection().registerType(Class.forName("com.github.benmanes.caffeine.cache.PSAMS"), MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
-        } catch (ClassNotFoundException e) { throw new RuntimeException(e); }
+    static class CacheRuntimeHints implements RuntimeHintsRegistrar {
+        @Override
+        public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
+            try { //caffeine hints
+                hints.reflection().registerType(Class.forName("com.github.benmanes.caffeine.cache.SSMSA"), MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
+                hints.reflection().registerType(Class.forName("com.github.benmanes.caffeine.cache.PSAMS"), MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

@@ -38,8 +38,8 @@ public class Application {
     private static void doProxyStuff(ConfigurableApplicationContext context) {
         var testComponent = context.getBean(TestComponent.class);
         testComponent.callOnMe();
-        testComponent.callOnMe(); //when @Cacheable annotated only gets called once
 
+        testComponent.callOnMe(); //when @Cacheable annotated only gets called once
         testComponent.getBar("1");
         testComponent.getFoo("1"); //will throw classcast without KeyGenerator
     }
