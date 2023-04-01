@@ -23,8 +23,8 @@ import java.util.stream.Collectors
 class DurationLogger {
     private val log = LoggerFactory.getLogger(this::class.java)
 
-    @Around("execution(public * org.goafabric.calleeservice.logic.CalleeLogic.*(..))")
-    //@Around("@within(org.goafabric.calleeservice.crossfunctional.DurationLog)")
+    //@Around("execution(public * org.goafabric.calleeservice.logic.CalleeLogic.*(..))")
+    @Around("@within(DurationLog)")
     @Throws(Throwable::class)
     fun around(joinPoint: ProceedingJoinPoint): Any {
         val startTime = System.currentTimeMillis()
