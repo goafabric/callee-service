@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
 @Aspect
 public class TestAspect {
 
-    //@Around("execution(public * org.goafabric.calleeservice.aspect.TestComponent.*(..))")
-    //@Around("execution(public * org.goafabric.calleeservice.aspect.*.*(..))")
     @Around("@within(org.goafabric.calleeservice.aspect.TestAnnotation)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         try {

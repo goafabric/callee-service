@@ -9,7 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.core.io.ClassPathResource;
@@ -29,17 +28,23 @@ public class Application {
     public static void main(String[] args) throws Exception {
         var context = SpringApplication.run(Application.class, args);
 
-        if (context.isActive()) { doProxyStuff(context); }
+        if (context.isActive()) {
+            doProxyStuff(context.getBean(TestComponent.class));
+            doCacheStuff(context.getBean(TestComponent.class));
+        }
+
         doReflectionStuff();
 
         try { Thread.currentThread().join(10000);} catch (InterruptedException e) {}
     }
 
-    private static void doProxyStuff(ConfigurableApplicationContext context) {
-        var testComponent = context.getBean(TestComponent.class);
+    private static void doProxyStuff(TestComponent testComponent) {
         testComponent.callOnMe();
+    }
 
+    private static void doCacheStuff(TestComponent testComponent) {
         testComponent.callOnMe(); //when @Cacheable annotated only gets called once
+
         testComponent.getBar("1");
         testComponent.getFoo("1"); //will throw classcast without KeyGenerator
     }
