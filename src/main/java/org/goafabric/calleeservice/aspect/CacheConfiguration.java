@@ -2,6 +2,9 @@ package org.goafabric.calleeservice.aspect;
 
 
 import com.github.benmanes.caffeine.cache.Caffeine;
+import org.springframework.aot.hint.MemberCategory;
+import org.springframework.aot.hint.RuntimeHints;
+import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -15,12 +18,10 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableCaching
-public class CacheConfiguration extends CachingConfigurerSupport {
+public class CacheConfiguration extends CachingConfigurerSupport implements RuntimeHintsRegistrar {
 
-    //@Value("${cache.maxsize}")
     private Long cacheMaxSize = 1000l;
 
-    //@Value("${cache.expiry}")
     private Long cacheExpiry = 10l;
 
     @Bean
@@ -40,5 +41,13 @@ public class CacheConfiguration extends CachingConfigurerSupport {
             final String tenantId = "0"; //HttpInterceptor.getTenantID()
             return new SimpleKey(tenantId, method.getName(), params);
         };
+    }
+
+    @Override
+    public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
+        try { //caffeine hints
+            hints.reflection().registerType(Class.forName("com.github.benmanes.caffeine.cache.SSMSA"), MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
+            hints.reflection().registerType(Class.forName("com.github.benmanes.caffeine.cache.PSAMS"), MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
+        } catch (ClassNotFoundException e) { throw new RuntimeException(e); }
     }
 }
