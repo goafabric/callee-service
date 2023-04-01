@@ -10,6 +10,7 @@ plugins {
 ext {
 	set('dockerRegistry', "goafabric")
 	set('baseImage', 'ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1')
+	set('nativeBuilderImage', 'dashaun/builder:20230204')
 }
 
 dependencies {
@@ -71,7 +72,7 @@ jib {
 
 def archSuffix = (System.properties['os.arch'] == 'aarch64') ? "-arm64v8" : ""
 tasks.named('bootBuildImage') {
-	builder = 'dashaun/builder:20230204'
+	builder = "${nativeBuilderImage}"
 	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
 	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx4000m']
 }
