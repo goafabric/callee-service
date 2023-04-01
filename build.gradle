@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '3.0.4'
+	id 'org.springframework.boot' version '3.0.5'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'org.graalvm.buildtools.native' version '0.9.20'
 	id 'com.google.cloud.tools.jib' version '3.3.1'
@@ -12,20 +12,22 @@ plugins {
 
 ext {
 	set('dockerRegistry', "goafabric")
-	set('baseImage', "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1")
+	set('baseImage', 'ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1')
+	set('nativeBuilderImage', 'dashaun/builder:20230225')
 }
 
 dependencies {
 	constraints {
-		implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.3'
+		implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
 		implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+		implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.0.2'
 	}
 	
 }
 
 group = 'org.goafabric'
-version = '3.0.4-kotlin-SNAPSHOT'
+version = '3.0.5-kotlin-SNAPSHOT'
 sourceCompatibility = '17'
 
 repositories {
@@ -79,7 +81,7 @@ jib {
 
 def archSuffix = (System.properties['os.arch'] == 'aarch64') ? "-arm64v8" : ""
 tasks.named('bootBuildImage') {
-	builder = 'dashaun/builder:20230204'
+	builder = "${nativeBuilderImage}"
 	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
 	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx4000m']
 }
