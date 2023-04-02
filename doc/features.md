@@ -18,17 +18,8 @@
 ## Persistence
 - JPA
 - Auditing, Multi Tenancy
-
-# Oracle GraalVM LOCAL Native Compile Times per Service Type
-
-- Service with JPA + Monitoring + Openapi: 2:45m
-- Service withOUT JPA + Monitoring + Openapi: 1:30m
-- Service naked Web Only: 1:10m
-- Service Console Only: 43sec
-- 
-- Service with JPA inside Liberica GraalVm : 4m+           
-                                                    
-# Local build Times
+ 
+# Local Graalvm build Times 
 - Service without JPA: 1m 40s 
 - Service with JPA: 3m 20s (2m on Pro)
 
