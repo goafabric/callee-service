@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 group = "org.goafabric"
 version = "3.0.5-kts-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
@@ -62,7 +64,29 @@ val nativeBuilderImage = "dashaun/builder:20230225"
 
 jib {
 	from.image = baseImage
-	to.image = "$dockerRegistry/$project.name:$project.version"
+	to.image = "$dockerRegistry/callee-service:3.0.5-kts-SNAPSHOT"
+	//to.image = "$dockerRegistry/$project.name:$project.version"
 	container.jvmFlags = listOf("-Xms256m", "-Xmx256m")
 	//from.platforms = [com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/amd64"), com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/arm64")]
+}
+
+/*
+tasks.bootBuildImage {
+	builder = "${nativeBuilderImage}"
+	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
+	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx4000m']
+}
+
+ */
+
+task<Exec>("dockerImageNativeRun") {
+	//dependsOn("bootBuildImage")
+	commandLine("echo", "test")
+	//commandLine 'docker', 'run', "--rm", "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}", '-check-integrity'
+}
+
+task<Exec>("dockerImageNative") {
+	dependsOn("dockerImageNativeRun")
+	commandLine("echo", "test")
+	//commandLine 'docker', 'push', "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
 }
