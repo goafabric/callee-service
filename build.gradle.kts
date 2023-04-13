@@ -61,6 +61,7 @@ tasks.withType<Test> {
 val dockerRegistry = "goafabric"
 val baseImage = "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1";
 val nativeBuilderImage = "dashaun/builder:20230225"
+val archSuffix = ""
 
 jib {
 	from.image = baseImage
@@ -70,14 +71,11 @@ jib {
 	//from.platforms = [com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/amd64"), com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/arm64")]
 }
 
-/*
-tasks.bootBuildImage {
-	builder = "${nativeBuilderImage}"
-	bootBuildImage.imageName = "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
-	environment = ['BP_NATIVE_IMAGE': 'true', 'BP_JVM_VERSION': '17', 'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-J-Xmx4000m']
+tasks.named<BootBuildImage>("bootBuildImage") {
+	builder.set(nativeBuilderImage)
+	imageName.set("${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}")
+	environment.set(mapOf("BP_NATIVE_IMAGE" to "true", "BP_JVM_VERSION" to "17", "BP_NATIVE_IMAGE_BUILD_ARGUMENTS" to "-J-Xmx4000m"))
 }
-
- */
 
 task<Exec>("dockerImageNativeRun") {
 	//dependsOn("bootBuildImage")
