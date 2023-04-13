@@ -10,3 +10,7 @@
 /*gradle/
 /gradlew*
 /build/
+
+/*.json
+/*.ts
+/frontend/generated/
