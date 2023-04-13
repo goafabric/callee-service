@@ -77,12 +77,10 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	environment.set(mapOf("BP_NATIVE_IMAGE" to "true", "BP_JVM_VERSION" to "17", "BP_NATIVE_IMAGE_BUILD_ARGUMENTS" to "-J-Xmx4000m"))
 }
 
-task<Exec>("dockerImageNativeRun") {
-	dependsOn("bootBuildImage")
+task<Exec>("dockerImageNativeRun") { dependsOn("bootBuildImage")
 	commandLine ("docker", "run", "--rm", "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}", "-check-integrity")
 }
 
-task<Exec>("dockerImageNative") {
-	dependsOn("dockerImageNativeRun")
+task<Exec>("dockerImageNative") { dependsOn("dockerImageNativeRun")
 	commandLine("docker", "push", "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}")
 }
