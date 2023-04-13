@@ -4,10 +4,6 @@ group = "org.goafabric"
 version = "3.0.5-kts-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-val dockerRegistry = "goafabric"
-val nativeBuilderImage = "dashaun/builder:20230225"
-val baseImage = "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1";
-
 plugins {
 	java
 	jacoco
@@ -61,6 +57,9 @@ tasks.withType<Test> {
 	finalizedBy("jacocoTestReport")
 }
 
+val dockerRegistry = "goafabric"
+val nativeBuilderImage = "dashaun/builder:20230225"
+val baseImage = "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1";
 val archSuffix = if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else ""
 
 jib {
