@@ -49,7 +49,6 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webflux")
 	testImplementation("io.github.resilience4j:resilience4j-spring-boot3")
-
 }
 
 tasks.withType<Test> {
@@ -61,12 +60,11 @@ tasks.withType<Test> {
 val dockerRegistry = "goafabric"
 val baseImage = "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1";
 val nativeBuilderImage = "dashaun/builder:20230225"
-val archSuffix = ""
+val archSuffix = if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else ""
 
 jib {
 	from.image = baseImage
-	to.image = "$dockerRegistry/callee-service:3.0.5-kts-SNAPSHOT"
-	//to.image = "$dockerRegistry/$project.name:$project.version"
+	to.image = "${dockerRegistry}/${project.name}:${project.version}"
 	container.jvmFlags = listOf("-Xms256m", "-Xmx256m")
 	//from.platforms = [com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/amd64"), com.google.cloud.tools.jib.gradle.PlatformParameters.of("linux/arm64")]
 }
@@ -78,13 +76,11 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 }
 
 task<Exec>("dockerImageNativeRun") {
-	//dependsOn("bootBuildImage")
-	commandLine("echo", "test")
-	//commandLine 'docker', 'run', "--rm", "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}", '-check-integrity'
+	dependsOn("bootBuildImage")
+	commandLine ("docker", "run", "--rm", "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}", "-check-integrity")
 }
 
 task<Exec>("dockerImageNative") {
 	dependsOn("dockerImageNativeRun")
-	commandLine("echo", "test")
-	//commandLine 'docker', 'push', "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}"
+	commandLine("docker", "push", "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}")
 }
