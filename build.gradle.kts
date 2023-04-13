@@ -1,5 +1,5 @@
 group = "org.goafabric"
-version = "3.0.5-SNAPSHOT"
+version = "3.0.5-kts-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 plugins {
