@@ -9,7 +9,7 @@ plugins {
 	jacoco
 	id("org.springframework.boot") version "3.0.5"
 	id("io.spring.dependency-management") version "1.1.0"
-	id("org.graalvm.buildtools.native") version "0.9.20"
+	id("org.graalvm.buildtools.native") version "0.9.21"
 	id("com.google.cloud.tools.jib") version "3.3.1"
 }
 
@@ -21,9 +21,9 @@ repositories {
 
 dependencies {
 	constraints {
-		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4")
-		implementation("org.mapstruct:mapstruct:1.5.3.Final")
-		annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
+		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
+		implementation("org.mapstruct:mapstruct:1.5.4.Final")
+		annotationProcessor("org.mapstruct:mapstruct-processor:1.5.4.Final")
 		implementation("io.github.resilience4j:resilience4j-spring-boot3:2.0.2")
 	}
 }

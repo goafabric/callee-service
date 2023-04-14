@@ -2,6 +2,11 @@
 - upgrade to Spring Boot 3.0.5
 - maven build (re) moved to doc/maven in favour of gradle
 - kicked lombok in favour of java records
+- converted gradle build file to kotlin dsl
+
+- upgrade to buildtools-native 0.9.21
+- upgrade to springdoc 2.1.0
+- upgrade to mapstruct 1.5.4
 
 # 3.0.3
 - upgrade to Spring Boot 3.0.3
