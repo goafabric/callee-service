@@ -54,6 +54,6 @@ class HttpInterceptor : WebMvcConfigurer {
 
     @Bean
     fun disableHttpServerObservationsFromName(): ObservationPredicate {
-        return ObservationPredicate { name: String, context: Observation.Context? -> !name.startsWith("spring.security.") }
+        return ObservationPredicate { name: String, _: Observation.Context? -> !name.startsWith("spring.security.") }
     }
 }
