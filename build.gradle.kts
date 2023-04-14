@@ -9,7 +9,7 @@ plugins {
 	jacoco
 	id("org.springframework.boot") version "3.0.5"
 	id("io.spring.dependency-management") version "1.1.0"
-	//id("org.graalvm.buildtools.native") version "0.9.20"
+	id("org.graalvm.buildtools.native") version "0.9.20"
 	id("com.google.cloud.tools.jib") version "3.3.1"
 
 	kotlin("jvm") version "1.7.22"
@@ -51,7 +51,11 @@ dependencies {
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webflux")
-	testImplementation("io.github.resilience4j:resilience4j-spring-boot3")
+
+	//kotlin
+	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
 
 tasks.withType<Test> {
