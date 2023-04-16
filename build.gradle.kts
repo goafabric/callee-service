@@ -87,3 +87,10 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 		exec { commandLine("docker", "push", nativeImageName) }
 	}
 }
+
+tasks.withType<KotlinCompile> {
+	kotlinOptions {
+		freeCompilerArgs = listOf("-Xjsr305=strict")
+		jvmTarget = "17"
+	}
+}
