@@ -35,7 +35,7 @@ public class Application {
 
         doReflectionStuff();
 
-        try { Thread.currentThread().join(10000);} catch (InterruptedException e) {}
+        try { Thread.currentThread().join(1000);} catch (InterruptedException e) {}
     }
 
     private static void doProxyStuff(TestComponent testComponent) {
