@@ -58,29 +58,25 @@ tasks.withType<Test> {
 }
 
 val dockerRegistry = "goafabric"
-val nativeBuilderImage = "dashaun/builder:20230225"
+val nativeBuilder = "dashaun/builder:20230225"
 val baseImage = "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1"
-val archSuffix = if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else ""
 
 jib {
-	val amd64 = com.google.cloud.tools.jib.gradle.PlatformParameters(); amd64.os = "linux"; amd64.architecture = "amd64"
-	val arm64 = com.google.cloud.tools.jib.gradle.PlatformParameters(); arm64.os = "linux"; arm64.architecture = "arm64"
+	val amd64 = com.google.cloud.tools.jib.gradle.PlatformParameters(); amd64.os = "linux"; amd64.architecture = "amd64"; val arm64 = com.google.cloud.tools.jib.gradle.PlatformParameters(); arm64.os = "linux"; arm64.architecture = "arm64"
 	from.image = baseImage
 	to.image = "${dockerRegistry}/${project.name}:${project.version}"
 	container.jvmFlags = listOf("-Xms256m", "-Xmx256m")
 	from.platforms.set(listOf(amd64, arm64))
 }
 
+tasks.register("dockerImageNative") { setGroup("build") ; dependsOn("bootBuildImage") }
 tasks.named<BootBuildImage>("bootBuildImage") {
-	builder.set(nativeBuilderImage)
-	imageName.set("${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}")
+	val nativeImageName = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
+	builder.set(nativeBuilder)
+	imageName.set(nativeImageName)
 	environment.set(mapOf("BP_NATIVE_IMAGE" to "true", "BP_JVM_VERSION" to "17", "BP_NATIVE_IMAGE_BUILD_ARGUMENTS" to "-J-Xmx4000m"))
-}
-
-task<Exec>("dockerImageNativeRun") { dependsOn("bootBuildImage")
-	commandLine ("docker", "run", "--rm", "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}", "-check-integrity")
-}
-
-task<Exec>("dockerImageNative") { dependsOn("dockerImageNativeRun")
-	commandLine("docker", "push", "${dockerRegistry}/${project.name}-native${archSuffix}:${project.version}")
+	doLast {
+		exec { commandLine("docker", "run", "--rm", nativeImageName, "-check-integrity") }
+		exec { commandLine("docker", "push", nativeImageName) }
+	}
 }
