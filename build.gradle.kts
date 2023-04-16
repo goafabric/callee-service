@@ -69,7 +69,7 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 }
 
 task<Exec>("dockerImageNativeRun") { dependsOn("bootBuildImage")
-	commandLine ("docker", "run", "--rm", "${nativeImageName}")
+	commandLine ("docker", "run", "--rm", "${nativeImageName}", "-check-integrity")
 }
 
 task<Exec>("dockerImageNative") { dependsOn("dockerImageNativeRun")
