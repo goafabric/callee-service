@@ -13,6 +13,8 @@ plugins {
 	id("com.google.cloud.tools.jib") version "3.3.1"
 }
 
+jacoco { toolVersion = "0.8.9" }
+
 repositories {
 	mavenCentral()
 	maven { url = uri("https://repo.spring.io/milestone") }
@@ -59,7 +61,7 @@ tasks.withType<Test> {
 
 val dockerRegistry = "goafabric"
 val nativeBuilder = "dashaun/builder:20230225"
-val baseImage = "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1"
+val baseImage = "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1" //"eclipse-temurin:20_36-jdk-ubi9-minimal"
 
 jib {
 	val amd64 = com.google.cloud.tools.jib.gradle.PlatformParameters(); amd64.os = "linux"; amd64.architecture = "amd64"; val arm64 = com.google.cloud.tools.jib.gradle.PlatformParameters(); arm64.os = "linux"; arm64.architecture = "arm64"
