@@ -1,0 +1,49 @@
+#application
+server:
+  port: 50900
+  tomcat.threads.max: 20
+
+#monitoring
+management:
+    endpoint:
+      health:
+        show-details: always
+    endpoints:
+      web:
+        exposure:
+          include: "health,prometheus,heapdump"
+
+#openapi
+springdoc.swagger-ui.path: /swagger-ui/index.html
+springdoc.enable-native-support: "true"
+
+#jaeger / zipkin
+spring.application.name: callee-service
+management.zipkin.tracing.endpoint: "http://localhost:9411/api/v2/spans"
+management.tracing.sampling.probability: "1.0"
+management.tracing.propagation.type: "B3"
+management.tracing.enabled: "true"
+logging.level.zipkin2.reporter: "ERROR"
+
+#security
+security.authentication.enabled: true
+spring.security.user.name: "admin"
+spring.security.user.password: "admin"
+
+#logging
+logging.level.root: "WARN"
+logging.level.org.springframework: "INFO"
+
+logging.level.org.goafabric: "INFO"
+logging.level.org.flywaydb.core: "INFO"
+logging.level.org.hibernate.SQL: "INFO"
+
+#vault
+spring.cloud.vault:
+  host: localhost
+  port: 8200
+  scheme: http
+  uri: http://localhost:8200
+  authentication: TOKEN
+  token: myroot
+  
