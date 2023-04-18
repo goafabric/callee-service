@@ -41,9 +41,6 @@ public class VaultConfiguration {
         log.info(response.getData().userName);
         log.info(response.getData().password());
     }
-
-    //implementation("org.springframework.cloud:spring-cloud-starter-vault-config:4.0.0")
-    //docker run --name vault --rm --cap-add=IPC_LOCK  -p8200:8200 -e 'VAULT_DEV_ROOT_TOKEN_ID=myroot' vault:1.13.1
 }
 
 
