@@ -2,10 +2,8 @@ package org.goafabric.calleeservice.loom;
 
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -63,7 +61,7 @@ public class LoomComponent implements ApplicationListener<ApplicationReadyEvent>
         for (int round = 0; round < rounds; round++) {
             try (var executor = virtual ? Executors.newVirtualThreadPerTaskExecutor() : Executors.newFixedThreadPool(threadCount)) {
                 IntStream.range(0, threadCount).forEach(i -> executor.submit(() -> {  // (1)
-                    var response = getURL("http://localhost:50900/callees/sayMyName");
+                    var response = getURL("http://localhost:50900/callees/sayMyName?name=yo");
                     System.out.println("iteration : " + i + ", active threads : " + Thread.activeCount()
                             + ", response: " + response);
                     return i;
@@ -96,17 +94,5 @@ public class LoomComponent implements ApplicationListener<ApplicationReadyEvent>
             throw new RuntimeException(e);
         }
     }
-
-    @GetMapping(value = "/callees/sayMyName", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String sayMyName () {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        return "Your name is Heisenberg";
-    }
-
-
 
 }
