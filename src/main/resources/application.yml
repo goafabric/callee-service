@@ -30,6 +30,12 @@ security.authentication.enabled: true
 spring.security.user.name: "admin"
 spring.security.user.password: "admin"
 
+#oidc
+spring.security.oauth2.client.registration.keycloak.scope: openid
+spring.security.oauth2.client.registration.keycloak.client-id: oauth2-proxy
+spring.security.oauth2.client.registration.keycloak.clientSecret: none
+spring.security.oauth2.client.provider.keycloak.issuerUri: http://127.0.0.1:30200 #http://localhost:30200/oidc/realms/tenant-0
+
 #logging
 logging.level.root: "WARN"
 logging.level.org.springframework: "INFO"
