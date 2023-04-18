@@ -15,6 +15,6 @@
 - Postgres: 4000ms (Hibernate makes single select per row)
 
 # Conclusion
-- Mongodb is the fast for insert + search
+- Mongodb is the fastest for insert + search
 - Elastic is the slowest for insert + equally fast for search than mongodb
 - Postgres + Hibernate is the slowest for insert + search, creating an index does not help
