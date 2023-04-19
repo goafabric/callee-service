@@ -1,6 +1,0 @@
-#vault
-spring.cloud.vault:
-  uri: http://localhost:8200
-  authentication: TOKEN
-  token: myroot
-  

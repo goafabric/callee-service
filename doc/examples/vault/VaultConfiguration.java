@@ -16,6 +16,12 @@ public class VaultConfiguration {
     @Autowired
     private VaultTemplate vaultTemplate;
 
+    public VaultConfiguration() {
+        System.setProperty("spring.cloud.vault.uri", "http://localhost:8200");
+        System.setProperty("spring.cloud.vault.authentication", "TOKEN");
+        System.setProperty("spring.cloud.vault.token", "myroot");
+    }
+
     @Bean
     public CommandLineRunner vault() {
         return args -> {
