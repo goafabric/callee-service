@@ -16,30 +16,31 @@ public class VaultConfiguration {
     @Autowired
     private VaultTemplate vaultTemplate;
 
-    record Credentials(String userName, String password) {}
-
     @Bean
     public CommandLineRunner vault() {
         return args -> {
-            //if (!((args.length > 0) && ("-create-creds".equals(args[0])))) { return; }
+            //if (!((args.length > 0) && ("-vault".equals(args[0])))) { return; }
             createCredentials();
         };
     }
 
     private void createCredentials() {
-        var credentials = new Credentials("homer simpson", "super-secret");
+        record MySecret(String myValue) {}
+
+        var mySecret = new MySecret("secret-key-12345");
+
+        //allocate
         var vaultKeyValueOperations = vaultTemplate.opsForKeyValue("secret",
                 VaultKeyValueOperationsSupport.KeyValueBackend.KV_2);
 
         //write
-        vaultKeyValueOperations.put(credentials.userName, credentials);
+        vaultKeyValueOperations.put("secretkey", mySecret);
 
         //read
-        var response = vaultKeyValueOperations.get(credentials.userName, Credentials.class);
+        var response = vaultKeyValueOperations.get("secretkey", MySecret.class);
 
-        assert response != null;
-        log.info(response.getData().userName);
-        log.info(response.getData().password());
+        assert response != null && response.getData() != null;
+        log.info(response.getData().myValue);
     }
 }
 

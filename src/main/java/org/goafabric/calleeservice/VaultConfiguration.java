@@ -1,4 +1,4 @@
-package org.goafabric.calleeservice.crossfunctional;
+package org.goafabric.calleeservice;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,22 +25,21 @@ public class VaultConfiguration {
     }
 
     private void createCredentials() {
-        record MySecret(String myKey, String myValue) {}
+        record MySecret(String myValue) {}
 
-        var mySecret = new MySecret("secretkey", "secret-key-12345");
+        var mySecret = new MySecret("secret-key-12345");
 
         //allocate
         var vaultKeyValueOperations = vaultTemplate.opsForKeyValue("secret",
                 VaultKeyValueOperationsSupport.KeyValueBackend.KV_2);
 
         //write
-        vaultKeyValueOperations.put(mySecret.myKey, mySecret);
+        vaultKeyValueOperations.put("secretkey", mySecret);
 
         //read
-        var response = vaultKeyValueOperations.get(mySecret.myKey, MySecret.class);
+        var response = vaultKeyValueOperations.get("secretkey", MySecret.class);
 
         assert response != null && response.getData() != null;
-        log.info(response.getData().myKey);
         log.info(response.getData().myValue);
     }
 }
