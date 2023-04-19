@@ -51,7 +51,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
 	//implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
-	//implementation("org.springframework.cloud:spring-cloud-starter-vault-config:4.0.0")
+	implementation("org.springframework.cloud:spring-cloud-starter-vault-config:4.0.0")
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
