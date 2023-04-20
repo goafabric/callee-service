@@ -2,7 +2,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "org.goafabric"
-version = "3.0.5-kotlinSNAPSHOT"
+version = "3.0.5-kotlin-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 plugins {
