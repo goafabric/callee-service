@@ -50,12 +50,16 @@ dependencies {
 	//crosscuting
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
-	//implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webflux")
 	testImplementation("io.github.resilience4j:resilience4j-spring-boot3")
+
+	//cloud
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+	implementation("org.springframework.cloud:spring-cloud-starter-vault-config:4.0.0")
+	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.1")
 }
 
 tasks.withType<Test> {
@@ -72,7 +76,7 @@ jib {
 	from.platforms.set(listOf(amd64, arm64))
 }
 
-tasks.register("dockerImageNative") { setGroup("build") ; dependsOn("bootBuildImage") }
+tasks.register("dockerImageNative") { group = "build"; dependsOn("bootBuildImage") }
 tasks.named<BootBuildImage>("bootBuildImage") {
 	val nativeImageName = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
 	builder.set(nativeBuilder)
