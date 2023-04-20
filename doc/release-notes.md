@@ -1,5 +1,5 @@
-# 3.0.5
-- upgrade to Spring Boot 3.0.5
+# 3.0.6
+- upgrade to Spring Boot 3.0.6
 - maven build (re) moved to doc/maven in favour of gradle
 - kicked lombok in favour of java records
 - converted gradle build file to kotlin dsl
