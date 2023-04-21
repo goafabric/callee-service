@@ -2,6 +2,7 @@ package org.goafabric.calleeservice;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.vault.core.VaultTemplate;
 import java.util.Objects;
 
 @Configuration
+@RegisterReflectionForBinding(VaultConfiguration.MySecret.class)
 public class VaultConfiguration {
     public record MySecret(String myValue) {}
 
@@ -35,7 +37,8 @@ public class VaultConfiguration {
     }
 
     //create a Bean so that we can access the value clean from everywhere spring
-    @Bean MySecret mySecret(VaultTemplate vaultTemplate) {
+    @Bean
+    public MySecret mySecret(VaultTemplate vaultTemplate) {
         //allocate
         var vaultKeyValueOperations = vaultTemplate.opsForKeyValue("secret",
                 VaultKeyValueOperationsSupport.KeyValueBackend.KV_2);
