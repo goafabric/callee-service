@@ -28,7 +28,7 @@ public class ConsulClient implements ApplicationListener<ApplicationReadyEvent> 
     private DiscoveryClient discoveryClient;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private RestTemplate consulRestTemplate;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -40,15 +40,14 @@ public class ConsulClient implements ApplicationListener<ApplicationReadyEvent> 
         return discoveryClient.getInstances("callee-service").get(0).getUri().toString();
     }
 
-
     public Callee sayMyName(String name) {
-        return restTemplate.getForObject(getServiceUrl() + "/callees/sayMyName?name={name}", Callee.class, name);
+        return consulRestTemplate.getForObject(getServiceUrl() + "/callees/sayMyName?name={name}", Callee.class, name);
     }
 
     @Configuration
     static class RestConfiguration {
         @Bean
-        public RestTemplate restTemplate(RestTemplateBuilder builder,
+        public RestTemplate consulRestTemplate(RestTemplateBuilder builder,
                                          @Value("${spring.security.user.name}") String user,
                                          @Value("${spring.security.user.password}") String password,
                                          @Value("${adapter.timeout:1000}") Integer timeout) {
