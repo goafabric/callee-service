@@ -48,8 +48,10 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
 
 	//crosscuting
-	implementation("org.springframework.boot:spring-boot-starter-security")
+	//crosscuting
 	implementation("org.springframework.boot:spring-boot-starter-aop")
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	//implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -57,7 +59,6 @@ dependencies {
 	testImplementation("io.github.resilience4j:resilience4j-spring-boot3")
 
 	//cloud
-	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("org.springframework.cloud:spring-cloud-starter-vault-config:4.0.0")
 
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.1")
