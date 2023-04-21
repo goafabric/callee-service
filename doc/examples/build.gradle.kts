@@ -57,12 +57,6 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webflux")
 	testImplementation("io.github.resilience4j:resilience4j-spring-boot3")
-
-	//cloud
-	implementation("org.springframework.cloud:spring-cloud-starter-vault-config:4.0.1")
-
-	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.1")
-	implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.0.1")
 }
 
 tasks.withType<Test> {
