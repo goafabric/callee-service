@@ -7,3 +7,6 @@ docker run --pull always --name eureka-server --rm -p8761:8761 goafabric/eureka-
 
 # spring native support
 spring.cloud.refresh.enabled: "false"
+                                
+# links
+https://medium.com/javarevisited/hands-on-consul-with-spring-boot-1ebf2918165c
