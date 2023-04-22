@@ -1,4 +1,4 @@
-package org.goafabric.calleeservice;
+package org.goafabric.calleeservice.reflection;
 
 public class Callee {
     private String message = "Hello from Callee";
