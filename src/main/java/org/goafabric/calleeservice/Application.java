@@ -19,8 +19,10 @@ public class Application {
     public static void main(String[] args) throws Exception {
         var context = SpringApplication.run(Application.class, args);
 
-        context.getBean(ReflectionComponent.class).run();
-        context.getBean(AspectComponent.class).run(context);
+        if (context.isActive()) {
+            context.getBean(ReflectionComponent.class).run();
+            context.getBean(AspectComponent.class).run(context);
+        }
 
         try { Thread.currentThread().join(1000);} catch (InterruptedException e) {}
     }
