@@ -33,7 +33,7 @@ public class Application {
     public SecurityFilterChain filterChain(HttpSecurity http, @Value("${security.authentication.enabled:true}") Boolean isAuthenticationEnabled) throws Exception {
         return isAuthenticationEnabled
                 ? http.authorizeHttpRequests(auth -> auth.requestMatchers("/actuator/**").permitAll().anyRequest().authenticated())
-                    .httpBasic().and().csrf().disable().build()
+                    .httpBasic(httpBasic -> {}).csrf(csrf -> csrf.disable()).build()
                 : http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll()).build();
     }
 
