@@ -31,8 +31,10 @@ public class Application {
     @Bean
     @ConditionalOnMissingClass("org.springframework.security.oauth2.client.OAuth2AuthorizationContext")
     public SecurityFilterChain filterChain(HttpSecurity http, @Value("${security.authentication.enabled:true}") Boolean isAuthenticationEnabled) throws Exception {
-        return isAuthenticationEnabled ? http.authorizeHttpRequests().requestMatchers("/actuator/**").permitAll().anyRequest().authenticated().and().httpBasic().and().csrf().disable().build()
-                : http.authorizeHttpRequests().anyRequest().permitAll().and().build();
+        return isAuthenticationEnabled
+                ? http.authorizeHttpRequests(registry -> registry.requestMatchers("/actuator/**").permitAll().anyRequest().authenticated())
+                    .httpBasic().and().csrf().disable().build()
+                : http.authorizeHttpRequests(registry -> registry.anyRequest().permitAll()).build();
     }
 
     @Bean
