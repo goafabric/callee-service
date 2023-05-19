@@ -11,7 +11,7 @@ val baseImage = "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.1.0-RC2"
+	id("org.springframework.boot") version "3.1.0"
 	id("io.spring.dependency-management") version "1.1.0"
 	id("org.graalvm.buildtools.native") version "0.9.20"
 	id("com.google.cloud.tools.jib") version "3.3.1"
