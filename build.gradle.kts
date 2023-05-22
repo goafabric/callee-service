@@ -2,14 +2,18 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "org.goafabric"
-version = "3.0.5-kotlin-SNAPSHOT"
+version = "3.1.0-kotlin-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
+
+val dockerRegistry = "goafabric"
+val nativeBuilder = "dashaun/builder:20230225"
+val baseImage = "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1" //"eclipse-temurin:20_36-jdk-ubi9-minimal"
 
 plugins {
 	jacoco
-	id("org.springframework.boot") version "3.0.5"
+	id("org.springframework.boot") version "3.1.0"
 	id("io.spring.dependency-management") version "1.1.0"
-	id("org.graalvm.buildtools.native") version "0.9.20"
+	id("org.graalvm.buildtools.native") version "0.9.22"
 	id("com.google.cloud.tools.jib") version "3.3.1"
 
 	kotlin("jvm") version "1.8.20"
@@ -64,10 +68,6 @@ tasks.withType<Test> {
 	finalizedBy("jacocoTestReport")
 }
 
-val dockerRegistry = "goafabric"
-val nativeBuilder = "dashaun/builder:20230225"
-val baseImage = "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1"
-
 jib {
 	val amd64 = com.google.cloud.tools.jib.gradle.PlatformParameters(); amd64.os = "linux"; amd64.architecture = "amd64"; val arm64 = com.google.cloud.tools.jib.gradle.PlatformParameters(); arm64.os = "linux"; arm64.architecture = "arm64"
 	from.image = baseImage
@@ -76,7 +76,7 @@ jib {
 	from.platforms.set(listOf(amd64, arm64))
 }
 
-tasks.register("dockerImageNative") { setGroup("build") ; dependsOn("bootBuildImage") }
+tasks.register("dockerImageNative") { group = "build"; dependsOn("bootBuildImage") }
 tasks.named<BootBuildImage>("bootBuildImage") {
 	val nativeImageName = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
 	builder.set(nativeBuilder)
