@@ -13,7 +13,7 @@ plugins {
 	jacoco
 	id("org.springframework.boot") version "3.1.0"
 	id("io.spring.dependency-management") version "1.1.0"
-	id("org.graalvm.buildtools.native") version "0.9.22"
+	id("org.graalvm.buildtools.native") version "0.9.20"
 	id("com.google.cloud.tools.jib") version "3.3.1"
 }
 
@@ -42,11 +42,12 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("io.micrometer:micrometer-registry-prometheus")
 
-	implementation("io.micrometer:micrometer-tracing-bridge-brave") //implementation("io.micrometer:micrometer-tracing-bridge-otel")
-	implementation("io.zipkin.reporter2:zipkin-reporter-brave") //implementation("io.opentelemetry:opentelemetry-exporter-zipkin")
+	implementation("io.micrometer:micrometer-tracing-bridge-brave")
+	implementation("io.zipkin.reporter2:zipkin-reporter-brave")
 
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
 
+	//crosscuting
 	//crosscuting
 	implementation("org.springframework.boot:spring-boot-starter-aop")
 	implementation("org.springframework.boot:spring-boot-starter-security")
