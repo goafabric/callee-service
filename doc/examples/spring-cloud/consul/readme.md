@@ -6,7 +6,6 @@ docker run --rm -p 8500:8500 -p 8600:8600/udp --name=consul consul:1.15.2 agent 
 
 # application.yaml
 spring.cloud.consul.config.enabled: "false"
-#spring.cloud.openfeign.client.config.callee-service.url: "http://localhost:50900"
 
 # links
 https://www.baeldung.com/spring-cloud-consul
