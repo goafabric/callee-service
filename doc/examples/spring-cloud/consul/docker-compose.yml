@@ -1,4 +1,14 @@
 services:
+  application:
+    environment:
+      # consul
+      spring.cloud.consul.enabled: "true"
+      spring.cloud.bus.enabled: "true"
+      spring.cloud.consul.host: "consul"
+    depends_on:
+      consul:
+        condition: service_started
+
   consul:
     container_name: consul
     image: consul:1.15.2
