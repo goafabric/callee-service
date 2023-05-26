@@ -7,6 +7,9 @@ docker run --rm -p 8500:8500 -p 8600:8600/udp --name=consul consul:1.15.2 agent 
 # application.yaml
 spring.cloud.consul.config.enabled: "false"
 
+spring.cloud.consul.enabled: true
+spring.cloud.bus.enabled: ${spring.cloud.consul.enabled}
+
 # links
 https://www.baeldung.com/spring-cloud-consul
 https://medium.com/javarevisited/hands-on-consul-with-spring-boot-1ebf2918165c
