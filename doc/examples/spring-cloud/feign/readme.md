@@ -1,6 +1,6 @@
 # dependency
 implementation("org.springframework.cloud:spring-cloud-starter-consul-all:4.0.2")
-implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.0.2")
+implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.0.3")
 
 # application.yaml
 spring.cloud.consul.config.enabled: "false"
