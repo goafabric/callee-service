@@ -1,4 +1,4 @@
-package org.goafabric.calleeservice.client;
+package org.goafabric.calleeservice.feign;
 
 import org.goafabric.calleeservice.controller.Callee;
 import org.slf4j.Logger;

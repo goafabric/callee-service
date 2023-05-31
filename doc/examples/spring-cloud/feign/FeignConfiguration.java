@@ -1,4 +1,4 @@
-package org.goafabric.calleeservice.client;
+package org.goafabric.calleeservice.feign;
 
 import feign.auth.BasicAuthRequestInterceptor;
 import org.springframework.context.annotation.Bean;
