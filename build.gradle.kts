@@ -56,6 +56,8 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webflux")
 	testImplementation("io.github.resilience4j:resilience4j-spring-boot3")
+
+	//implementation("org.springframework.cloud:spring-cloud-starter-consul-all:4.0.2")
 }
 
 tasks.withType<Test> {
