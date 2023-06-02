@@ -25,7 +25,9 @@ management.zipkin.tracing.endpoint: "http://localhost:9411/api/v2/spans"
 management.tracing.sampling.probability: "1.0"
 management.tracing.propagation.type: "B3"
 management.tracing.enabled: "true"
+
 logging.level.zipkin2.reporter: "ERROR"
+logging.level.io.opentelemetry.exporter: "ERROR"
 
 #security
 security.authentication.enabled: true
