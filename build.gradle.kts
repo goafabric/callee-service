@@ -43,8 +43,11 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("io.micrometer:micrometer-registry-prometheus")
 
-	implementation("io.micrometer:micrometer-tracing-bridge-brave") //implementation("io.micrometer:micrometer-tracing-bridge-otel")
-	implementation("io.zipkin.reporter2:zipkin-reporter-brave") //implementation("io.opentelemetry:opentelemetry-exporter-zipkin") //-otlp
+	implementation("io.micrometer:micrometer-tracing-bridge-brave")
+	implementation("io.zipkin.reporter2:zipkin-reporter-brave")
+
+	//implementation("io.micrometer:micrometer-tracing-bridge-otel")
+	//implementation("io.opentelemetry:opentelemetry-exporter-otlp")
 
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
 
