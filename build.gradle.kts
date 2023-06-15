@@ -1,3 +1,4 @@
+import org.graalvm.buildtools.gradle.dsl.NativeImageOptions
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 group = "org.goafabric"
@@ -84,4 +85,8 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 		exec { commandLine("docker", "run", "--rm", nativeImageName, "-check-integrity") }
 		exec { commandLine("docker", "push", nativeImageName) }
 	}
+}
+
+graalvmNative {
+	nativeBuild.buildArgs("-Ob")
 }
