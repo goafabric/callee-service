@@ -1,9 +1,12 @@
 package org.goafabric.calleeservice.crossfunctional;
 
+import io.micrometer.common.KeyValue;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.ServerHttpObservationFilter;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -21,6 +24,7 @@ public class HttpInterceptor implements WebMvcConfigurer {
             public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
                 tenantId.set(request.getHeader("X-TenantId"));
                 userName.set(request.getHeader("X-Auth-Request-Preferred-Username"));
+                configureLogsAndTracing(request, tenantId.get());
                 return true;
             }
 
@@ -28,6 +32,14 @@ public class HttpInterceptor implements WebMvcConfigurer {
             public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
                 tenantId.remove();
                 userName.remove();
+                MDC.remove("tenantId");
+            }
+
+            private static void configureLogsAndTracing(HttpServletRequest request, String tenantId) {
+                if (tenantId != null) {
+                    MDC.put("tenantId", tenantId);
+                    ServerHttpObservationFilter.findObservationContext(request).ifPresent(context -> context.addHighCardinalityKeyValue(KeyValue.of("tenant.id", tenantId)));
+                }
             }
         });
     }
