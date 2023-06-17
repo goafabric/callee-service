@@ -21,7 +21,8 @@ public class HttpInterceptor implements WebMvcConfigurer {
         registry.addInterceptor(new HandlerInterceptor() {
             @Override
             public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-                setTenantId(request.getHeader("X-TenantId"), request);
+                tenantId.set(request.getHeader("X-TenantId"));
+                configureLogsAndTracing(getTenantId(), request);
                 return true;
             }
 
@@ -31,16 +32,15 @@ public class HttpInterceptor implements WebMvcConfigurer {
                 MDC.remove("tenantId");
             }
 
-        });
-    }
+            private static void configureLogsAndTracing(String tenantId, HttpServletRequest request) {
+                if (tenantId != null && request != null) {
+                    MDC.put("tenantId", tenantId);
+                    ServerHttpObservationFilter.findObservationContext(request).ifPresent(
+                            context -> context.addHighCardinalityKeyValue(KeyValue.of("tenantId.id", tenantId)));
+                }
+            }
 
-    private static void setTenantId(String tenant, HttpServletRequest request) {
-        tenantId.set(tenant);
-        MDC.put("tenantId", tenant);
-        if (tenant != null && request != null) {
-            ServerHttpObservationFilter.findObservationContext(request).ifPresent(
-                    context -> context.addHighCardinalityKeyValue(KeyValue.of("tenant.id", tenant)));
-        }
+        });
     }
 
     public static String getTenantId() {
