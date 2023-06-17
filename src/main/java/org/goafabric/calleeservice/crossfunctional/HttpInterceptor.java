@@ -15,33 +15,30 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class HttpInterceptor implements WebMvcConfigurer {
     private static final ThreadLocal<String> tenantId = new ThreadLocal<>();
-    private static final ThreadLocal<String> userName = new ThreadLocal<>();
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HandlerInterceptor() {
             @Override
             public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-                tenantId.set(request.getHeader("X-TenantId"));
-                userName.set(request.getHeader("X-Auth-Request-Preferred-Username"));
-                configureLogsAndTracing(request, tenantId.get());
+                setTenantId(request.getHeader("X-TenantId"), request);
                 return true;
             }
 
             @Override
             public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
                 tenantId.remove();
-                userName.remove();
                 MDC.remove("tenantId");
             }
 
-            private static void configureLogsAndTracing(HttpServletRequest request, String tenantId) {
-                if (tenantId != null) {
-                    MDC.put("tenantId", tenantId);
-                    ServerHttpObservationFilter.findObservationContext(request).ifPresent(context -> context.addHighCardinalityKeyValue(KeyValue.of("tenant.id", tenantId)));
-                }
-            }
         });
+    }
+
+    private static void setTenantId(String tenant, HttpServletRequest request) {
+        tenantId.set(tenant);
+        MDC.put("tenantId", getTenantId());
+        ServerHttpObservationFilter.findObservationContext(request).ifPresent(
+                context -> context.addHighCardinalityKeyValue(KeyValue.of("tenant.id", getTenantId())));
     }
 
     public static String getTenantId() {
@@ -49,8 +46,7 @@ public class HttpInterceptor implements WebMvcConfigurer {
     }
 
     public static String getUserName() {
-        return userName.get() != null ? userName.get()
-                : SecurityContextHolder.getContext().getAuthentication() != null ? SecurityContextHolder.getContext().getAuthentication().getName() : "";
+        return SecurityContextHolder.getContext().getAuthentication() != null ? SecurityContextHolder.getContext().getAuthentication().getName() : "";
     }
 
 }
