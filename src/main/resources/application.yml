@@ -42,8 +42,7 @@ spring.security.oauth2.client.registration.keycloak.clientSecret: none
 spring.security.oauth2.client.provider.keycloak.issuerUri: http://127.0.0.1:30200 #http://localhost:30200/oidc/realms/tenant-0
 
 #logging
-logging.pattern.level: "%5p tenantId=%X{tenantId:-}"
-#logging.pattern.level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}] tenantId=%X{tenantId:-}"
+logging.pattern.level: "%5p tenantId=%X{tenantId:-}" #"%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}] tenantId=%X{tenantId:-}"
 
 logging.level.root: "WARN"
 logging.level.org.springframework: "INFO"
