@@ -36,9 +36,11 @@ public class HttpInterceptor implements WebMvcConfigurer {
 
     private static void setTenantId(String tenant, HttpServletRequest request) {
         tenantId.set(tenant);
-        MDC.put("tenantId", getTenantId());
-        ServerHttpObservationFilter.findObservationContext(request).ifPresent(
-                context -> context.addHighCardinalityKeyValue(KeyValue.of("tenant.id", getTenantId())));
+        MDC.put("tenantId", tenant);
+        if (tenant != null && request != null) {
+            ServerHttpObservationFilter.findObservationContext(request).ifPresent(
+                    context -> context.addHighCardinalityKeyValue(KeyValue.of("tenant.id", tenant)));
+        }
     }
 
     public static String getTenantId() {
