@@ -17,10 +17,10 @@ management:
 springdoc.swagger-ui.path: /swagger-ui/index.html
 springdoc.enable-native-support: "true"
 
-#jaeger / zipkin
+#tracing
 spring.application.name: callee-service
 management.tracing.sampling.probability: "1.0"
-logging.level.io.opentelemetry.exporter: "ERROR"
+logging.level.io.opentelemetry.exporter: "OFF"
 management.otlp.tracing.endpoint: "http://localhost:4318/v1/traces"
 
 #security
