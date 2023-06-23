@@ -36,7 +36,7 @@ public class HttpInterceptor implements WebMvcConfigurer {
                 if (tenantId != null && request != null) {
                     MDC.put("tenantId", tenantId);
                     ServerHttpObservationFilter.findObservationContext(request).ifPresent(
-                            context -> context.addHighCardinalityKeyValue(KeyValue.of("tenantId.id", tenantId)));
+                            context -> context.addHighCardinalityKeyValue(KeyValue.of("tenant.id", tenantId)));
                 }
             }
 
