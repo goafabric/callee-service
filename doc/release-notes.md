@@ -1,5 +1,6 @@
 # 3.1.1
 - upgrade to Spring Boot 3.1.1
+- support for Opentelemetry
 - maven build (re) moved to doc/maven in favour of gradle
 - kicked lombok in favour of java records
 - converted gradle build file to kotlin dsl

@@ -37,10 +37,9 @@ services:
 
       #zipkin/jaeger
       spring.application.name: "callee-service"
-      management.zipkin.tracing.endpoint: "http://host.docker.internal:9411/api/v2/spans"
       management.tracing.sampling.probability: "1.0"
-      management.tracing.enabled: "true"
-      logging.level.zipkin2.reporter: "ERROR"
+      logging.level.io.opentelemetry.exporter: "ERROR"
+      management.otlp.tracing.endpoint: "http://host.docker.internal:4318/v1/traces"
 
       #log levels
       logging.level.root: "WARN"
