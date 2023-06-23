@@ -28,12 +28,6 @@ security.authentication.enabled: true
 spring.security.user.name: "admin"
 spring.security.user.password: "admin"
 
-#oidc
-spring.security.oauth2.client.registration.oidc.scope: openid
-spring.security.oauth2.client.registration.oidc.client-id: oauth2-proxy
-spring.security.oauth2.client.registration.oidc.clientSecret: none
-spring.security.oauth2.client.provider.keycloak.issuerUri: http://127.0.0.1:30200 #http://localhost:30200/oidc/realms/tenant-0
-
 #logging
 logging.pattern.level: "%5p tenantId=%X{tenantId:-}" #"%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}] tenantId=%X{tenantId:-}"
 
@@ -43,4 +37,3 @@ logging.level.org.springframework: "INFO"
 logging.level.org.goafabric: "INFO"
 logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
-
