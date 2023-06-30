@@ -2,6 +2,7 @@
 server:
   port: 50900
   tomcat.threads.max: 20
+  forward-headers-strategy: FRAMEWORK
 
 #monitoring
 management:
