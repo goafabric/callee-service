@@ -18,18 +18,18 @@ import java.util.stream.Collectors;
 
 @Component
 @Aspect
-@ImportRuntimeHints(DurationLogger.ApplicationRuntimeHints.class)
-public class DurationLogger {
+@ImportRuntimeHints(AuditLogger.ApplicationRuntimeHints.class)
+public class AuditLogger {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Around("@within(DurationLog)") //("within(*..*Logic)")
+    @Around("within(*..*Logic)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         var startTime = System.currentTimeMillis();
         try {
             return joinPoint.proceed();
         } finally {
             final Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
-            log.info("{} took {}ms for user: {} , tenant: {}", toString(method), System.currentTimeMillis() - startTime, HttpInterceptor.getUserName(), HttpInterceptor.getTenantId());
+            log.info("{} took {}ms for user: {} , tenant: {}", toString(method), System.currentTimeMillis() - startTime, TenantInterceptor.getUserName(), TenantInterceptor.getTenantId());
         }
     }
 
@@ -43,7 +43,7 @@ public class DurationLogger {
     static class ApplicationRuntimeHints implements RuntimeHintsRegistrar {
         @Override
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
-            hints.reflection().registerType(DurationLogger.class, MemberCategory.INVOKE_DECLARED_METHODS);
+            hints.reflection().registerType(AuditLogger.class, MemberCategory.INVOKE_DECLARED_METHODS);
         }
     }
 
