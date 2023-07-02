@@ -1,4 +1,4 @@
-package org.goafabric.calleeservice.crossfunctional;
+package org.goafabric.calleeservice.extensions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,7 @@
 package org.goafabric.calleeservice.declarative;
 
 
-import org.goafabric.calleeservice.crossfunctional.HttpInterceptor;
+import org.goafabric.calleeservice.extensions.TenantInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,8 +27,8 @@ public class CalleeServiceAdapterDecConfiguration {
                 .baseUrl(url)
                 .defaultHeaders(header -> header.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                 .defaultHeaders(header -> header.setBasicAuth(new String(Base64.getDecoder().decode(user)), new String(Base64.getDecoder().decode(password))))
-                .defaultHeaders(header -> header.set("X-TenantId", HttpInterceptor.getTenantId()))
-                .defaultHeaders(header -> header.set("X-Auth-Request-Preferred-Username", HttpInterceptor.getUserName()))
+                .defaultHeaders(header -> header.set("X-TenantId", TenantInterceptor.getTenantId()))
+                .defaultHeaders(header -> header.set("X-Auth-Request-Preferred-Username", TenantInterceptor.getUserName()))
                 .build();
 
         final HttpServiceProxyFactory proxyFactory = HttpServiceProxyFactory.builder(WebClientAdapter.forClient(client)).build();
