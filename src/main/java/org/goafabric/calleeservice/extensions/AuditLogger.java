@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class AuditLogger {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Around("within(*..*Logic)")
+    @Around("@within(AuditLog)")//("within(*..*Logic)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         var startTime = System.currentTimeMillis();
         try {
