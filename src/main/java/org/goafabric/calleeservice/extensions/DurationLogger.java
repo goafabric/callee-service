@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 
 @Component
 @Aspect
-@ImportRuntimeHints(AuditLogger.ApplicationRuntimeHints.class)
-public class AuditLogger {
+@ImportRuntimeHints(DurationLogger.ApplicationRuntimeHints.class)
+public class DurationLogger {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Around("@within(AuditLog)")//("within(*..*Logic)")
+    @Around("@within(DurationLog)")//("within(*..*Logic)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         var startTime = System.currentTimeMillis();
         try {
@@ -43,7 +43,7 @@ public class AuditLogger {
     static class ApplicationRuntimeHints implements RuntimeHintsRegistrar {
         @Override
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
-            hints.reflection().registerType(AuditLogger.class, MemberCategory.INVOKE_DECLARED_METHODS);
+            hints.reflection().registerType(DurationLogger.class, MemberCategory.INVOKE_DECLARED_METHODS);
         }
     }
 
