@@ -1,4 +1,4 @@
-package org.goafabric.calleeservice.extensions;
+package org.goafabric.calleeservice.crossfunctional;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

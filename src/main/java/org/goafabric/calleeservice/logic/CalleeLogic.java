@@ -1,7 +1,7 @@
 package org.goafabric.calleeservice.logic;
 
 import org.goafabric.calleeservice.controller.Callee;
-import org.goafabric.calleeservice.extensions.DurationLog;
+import org.goafabric.calleeservice.crossfunctional.DurationLog;
 import org.springframework.stereotype.Component;
 
 @Component
