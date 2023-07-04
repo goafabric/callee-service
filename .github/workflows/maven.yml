@@ -39,9 +39,9 @@ jobs:
         gradle-version: 8.1
         arguments: test jib jib
                 
-#    - name: Native Image
-#      uses: gradle/gradle-build-action@v2
-#      with:
-#        gradle-version: 8.1
-#        arguments: dockerImageNative 
+    - name: Native Image
+      uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: 8.1
+        arguments: dockerImageNative 
   
