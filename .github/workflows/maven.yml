@@ -14,20 +14,34 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}   
     - uses: actions/checkout@v3
+    
     - name: Set up JDK 
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
         java-version: '17'
-
-    - name: Multiarch Image
+        
+    - name: Test
+      uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: 8.1
+        arguments: test
+        
+    - name: Analysis
+      uses: cicirello/jacoco-badge-generator@v2
+      with:
+        generate-branches-badge: true
+        jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv             
+        
+    - name: JVM Image
       uses: gradle/gradle-build-action@v2
       with:
         gradle-version: 8.1
         arguments: test jib jib
-    - name: Native Image
-      uses: gradle/gradle-build-action@v2
-      with:
-        gradle-version: 8.1
-        arguments: dockerImageNative 
+                
+#    - name: Native Image
+#      uses: gradle/gradle-build-action@v2
+#      with:
+#        gradle-version: 8.1
+#        arguments: dockerImageNative 
   
