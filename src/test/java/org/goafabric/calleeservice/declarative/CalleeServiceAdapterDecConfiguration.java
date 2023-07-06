@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
-import org.goafabric.calleeservice.controller.extensions.HttpInterceptor;
+import org.goafabric.calleeservice.extensions.HttpInterceptor;
 
 import java.util.Base64;
 
