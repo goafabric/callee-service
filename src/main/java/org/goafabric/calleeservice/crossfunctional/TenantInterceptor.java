@@ -44,7 +44,6 @@ public class TenantInterceptor implements WebMvcConfigurer {
                 ServerHttpObservationFilter.findObservationContext(request).ifPresent(
                         context -> context.addHighCardinalityKeyValue(KeyValue.of("tenant.id", getTenantId())));
             }
-
         });
     }
 
