@@ -1,11 +1,10 @@
 package org.goafabric.calleeservice.logic;
 
 import org.goafabric.calleeservice.controller.Callee;
-import org.goafabric.calleeservice.crossfunctional.DurationLog;
 import org.springframework.stereotype.Component;
 
 @Component
-@DurationLog
+//@DurationLog
 public class CalleeLogic {
     public Callee sayMyName(String name) {
         return new Callee("0", "Your name is: " + name);
