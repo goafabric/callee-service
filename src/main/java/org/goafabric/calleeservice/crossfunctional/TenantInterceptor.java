@@ -28,7 +28,7 @@ public class TenantInterceptor implements WebMvcConfigurer {
                 tenantId.set(request.getHeader("X-TenantId"));
                 configureLogsAndTracing(request);
                 if (handler instanceof HandlerMethod) {
-                    log.info(" {} method called for user {} ",  ((HandlerMethod) handler).getMethod().getName(), getUserName());
+                    log.info(" {} method called for user {} ", ((HandlerMethod) handler).getShortLogMessage(), getUserName());
                 }
                 return true;
             }
