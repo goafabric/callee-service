@@ -15,36 +15,38 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
-@Configuration
-public class HttpInterceptor implements WebMvcConfigurer {
+public class HttpInterceptor implements HandlerInterceptor {
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
     private static final ThreadLocal<String> tenantId = new ThreadLocal<>();
 
+    @Configuration
+    static class Configurer implements WebMvcConfigurer {
+        @Override
+        public void addInterceptors(InterceptorRegistry registry) {
+            registry.addInterceptor(new HttpInterceptor());
+        }
+    }
+
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new HandlerInterceptor() {
-            @Override
-            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-                tenantId.set(request.getHeader("X-TenantId"));
-                configureLogsAndTracing(request);
-                if (handler instanceof HandlerMethod) {
-                    log.info(" {} method called for user {} ", ((HandlerMethod) handler).getShortLogMessage(), getUserName());
-                }
-                return true;
-            }
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        tenantId.set(request.getHeader("X-TenantId"));
+        configureLogsAndTracing(request);
+        if (handler instanceof HandlerMethod) {
+            log.info(" {} method called for user {} ", ((HandlerMethod) handler).getShortLogMessage(), getUserName());
+        }
+        return true;
+    }
 
-            @Override
-            public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-                tenantId.remove();
-                MDC.remove("tenantId");
-            }
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        tenantId.remove();
+        MDC.remove("tenantId");
+    }
 
-            private static void configureLogsAndTracing(HttpServletRequest request) {
-                MDC.put("tenantId", getTenantId());
-                ServerHttpObservationFilter.findObservationContext(request).ifPresent(
-                        context -> context.addHighCardinalityKeyValue(KeyValue.of("tenant.id", getTenantId())));
-            }
-        });
+    private static void configureLogsAndTracing(HttpServletRequest request) {
+        MDC.put("tenantId", getTenantId());
+        ServerHttpObservationFilter.findObservationContext(request).ifPresent(
+                context -> context.addHighCardinalityKeyValue(KeyValue.of("tenant.id", getTenantId())));
     }
 
     public static String getTenantId() {
