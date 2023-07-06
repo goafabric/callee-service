@@ -60,5 +60,4 @@ public class HttpInterceptor implements HandlerInterceptor {
     public static void setTenantId(String tenant) {
         tenantId.set(tenant);
     }
-
 }
