@@ -4,7 +4,6 @@ import org.goafabric.calleeservice.controller.Callee;
 import org.springframework.stereotype.Component;
 
 @Component
-//@DurationLog
 public class CalleeLogic {
     public Callee sayMyName(String name) {
         return new Callee("0", "Your name is: " + name);

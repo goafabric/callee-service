@@ -1,4 +1,4 @@
-package org.goafabric.calleeservice.crossfunctional;
+package org.goafabric.calleeservice.controller.extensions;
 
 import io.micrometer.common.KeyValue;
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,6 +53,10 @@ public class HttpInterceptor implements WebMvcConfigurer {
 
     public static String getUserName() {
         return SecurityContextHolder.getContext().getAuthentication() != null ? SecurityContextHolder.getContext().getAuthentication().getName() : "";
+    }
+
+    public static void setTenantId(String tenant) {
+        tenantId.set(tenant);
     }
 
 }
