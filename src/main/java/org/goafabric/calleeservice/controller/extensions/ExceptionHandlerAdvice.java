@@ -1,28 +1,29 @@
-package org.goafabric.calleeservice.crossfunctional;
+package org.goafabric.calleeservice.controller.extensions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class ExceptionHandler {
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+public class ExceptionHandlerAdvice {
+    private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
         log.warn(ex.getMessage(), ex);
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.PRECONDITION_FAILED);
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(IllegalStateException.class)
+    @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalStateException ex) {
         log.warn(ex.getMessage(), ex);
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.PRECONDITION_FAILED);
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(Exception ex) {
         log.error(ex.getMessage(), ex);
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
