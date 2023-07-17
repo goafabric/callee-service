@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class HttpInterceptor implements HandlerInterceptor {
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
     private static final ThreadLocal<String> tenantId = new ThreadLocal<>();
+    private static final ThreadLocal<String> userName = new ThreadLocal<>();
 
     @Configuration
     static class Configurer implements WebMvcConfigurer {
@@ -30,6 +31,7 @@ public class HttpInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         tenantId.set(request.getHeader("X-TenantId"));
+        userName.set(request.getHeader("X-Auth-Request-Preferred-Username"));
         configureLogsAndTracing(request);
 
         if (handler instanceof HandlerMethod) {
@@ -55,7 +57,8 @@ public class HttpInterceptor implements HandlerInterceptor {
     }
 
     public static String getUserName() {
-        return SecurityContextHolder.getContext().getAuthentication() != null ? SecurityContextHolder.getContext().getAuthentication().getName() : "";
+        return userName.get() != null ? userName.get()
+                : SecurityContextHolder.getContext().getAuthentication() != null ? SecurityContextHolder.getContext().getAuthentication().getName() : "";
     }
 
     public static void setTenantId(String tenant) {

@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClas
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 
@@ -33,7 +34,7 @@ public class Application {
     public SecurityFilterChain filterChain(HttpSecurity http, @Value("${security.authentication.enabled:true}") Boolean isAuthenticationEnabled) throws Exception {
         return isAuthenticationEnabled
                 ? http.authorizeHttpRequests(auth -> auth.requestMatchers("/actuator/**").permitAll().anyRequest().authenticated())
-                    .httpBasic(httpBasic -> {}).csrf(csrf -> csrf.disable()).build()
+                    .httpBasic(httpBasic -> {}).csrf(AbstractHttpConfigurer::disable).build()
                 : http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll()).build();
     }
 
