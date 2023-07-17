@@ -1,4 +1,4 @@
-package org.goafabric.calleeservice.extensions;
+package org.goafabric.core.data.extensions;
 
 import io.micrometer.common.KeyValue;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.filter.ServerHttpObservationFilter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -31,8 +32,6 @@ public class HttpInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         tenantId.set(request.getHeader("X-TenantId"));
         configureLogsAndTracing(request);
-        System.out.println("##" + request.getHeader("authorization"));
-
         if (handler instanceof HandlerMethod) {
             log.info(" {} method called for user {} ", ((HandlerMethod) handler).getShortLogMessage(), getUserName());
         }
@@ -52,7 +51,9 @@ public class HttpInterceptor implements HandlerInterceptor {
     }
 
     public static String getTenantId() {
-        return tenantId.get() != null ? tenantId.get() : "0"; //tdo
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth instanceof OAuth2AuthenticationToken ? ((OAuth2AuthenticationToken)auth).getAuthorizedClientRegistrationId()
+                : "0";
     }
 
     public static String getUserName() {
