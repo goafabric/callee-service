@@ -57,12 +57,12 @@ class HttpInterceptor : HandlerInterceptor {
                 }
         }
 
-        fun getTenantId(): String? {
-            return if (tenantId.get() != null) tenantId.get() else "0" //tdo
+        fun getTenantId(): String {
+            return if (tenantId.get() != null) tenantId.get()!! else "0" //tdo
         }
 
-        fun getUserName(): String? {
-            return if (userName.get() != null) userName.get() else if (SecurityContextHolder.getContext().authentication != null) SecurityContextHolder.getContext().authentication.name else ""
+        fun getUserName(): String {
+            return if (userName.get() != null) userName.get()!! else if (SecurityContextHolder.getContext().authentication != null) SecurityContextHolder.getContext().authentication.name else ""
         }
 
         fun setTenantId(tenant: String?) {
