@@ -31,7 +31,6 @@ public class HttpInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         tenantId.set(request.getHeader("X-TenantId"));
         configureLogsAndTracing(request);
-        System.out.println("##" + request.getHeader("authorization"));
 
         if (handler instanceof HandlerMethod) {
             log.info(" {} method called for user {} ", ((HandlerMethod) handler).getShortLogMessage(), getUserName());
