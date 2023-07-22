@@ -1,0 +1,16 @@
+tasks.register("jibNativeImage") {
+	doFirst {
+		val imageVersion = if (nativeImageVersionType == "RELEASE") version.replace("-SNAPSHOT", "") else version
+		jib.from.image = nativeBaseImage
+		jib.to.image = "${artifactoryDockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${imageVersion}"
+		jib.container.jvmFlags = listOf("-J-Xmx4500m")
+
+		jib.pluginExtensions {
+			pluginExtension {
+				implementation = "com.google.cloud.tools.jib.gradle.extension.nativeimage.JibNativeImageExtension"
+				properties = mapOf("imageName" to project.name)
+			}
+		}
+	}
+	finalizedBy("jib")
+}
