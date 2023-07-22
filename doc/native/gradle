@@ -1,14 +1,19 @@
+buildscript {
+	dependencies {
+		classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0")
+	}
+}
+
 tasks.register("jibNativeImage") {
 	doFirst {
-		val imageVersion = if (nativeImageVersionType == "RELEASE") version.replace("-SNAPSHOT", "") else version
-		jib.from.image = nativeBaseImage
-		jib.to.image = "${artifactoryDockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${imageVersion}"
+		jib.from.image = "ubuntu:22.04"
+		jib.to.image = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
 		jib.container.jvmFlags = listOf("-J-Xmx4500m")
 
 		jib.pluginExtensions {
 			pluginExtension {
 				implementation = "com.google.cloud.tools.jib.gradle.extension.nativeimage.JibNativeImageExtension"
-				properties = mapOf("imageName" to project.name)
+				properties = mapOf("imageName" to "myapplication")
 			}
 		}
 	}
