@@ -1,5 +1,6 @@
 package org.goafabric.calleeservice.logic;
 
+import org.goafabric.calleeservice.controller.Callee;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +22,7 @@ class CalleeLogicTest {
 
     @Test
     void save() {
-        assertThat(new CalleeLogic().sayMyOtherName("saved by the bell").message())
+        assertThat(new CalleeLogic().save(new Callee("0", "saved by the bell")).message())
                 .isEqualTo("Storing your message: saved by the bell");
     }
 }
