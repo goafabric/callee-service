@@ -7,22 +7,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CalleeLogicTest {
+    private CalleeLogic calleeLogic = new CalleeLogic();
 
     @Test
     void sayMyName() {
-        assertThat(new CalleeLogic().sayMyName("Heisenberg").message())
+        assertThat(calleeLogic.sayMyName("Heisenberg").message())
                 .isEqualTo("Your name is: Heisenberg");
     }
 
     @Test
     void sayMyOtherName() {
-        assertThat(new CalleeLogic().sayMyOtherName("Slim Shady").message())
+        assertThat(calleeLogic.sayMyOtherName("Slim Shady").message())
                 .isEqualTo("Your other name is: Slim Shady");
     }
 
     @Test
     void save() {
-        assertThat(new CalleeLogic().save(new Callee("0", "saved by the bell")).message())
+        assertThat(calleeLogic.save(new Callee("0", "saved by the bell")).message())
                 .isEqualTo("Storing your message: saved by the bell");
     }
 }
