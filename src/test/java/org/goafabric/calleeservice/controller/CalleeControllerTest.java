@@ -5,23 +5,33 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 
 class CalleeControllerTest {
-    private CalleeLogic logic = Mockito.mock(CalleeLogic.class);
-    private CalleeController controller = new CalleeController(logic);
+    private CalleeLogic calleeLogic = Mockito.mock(CalleeLogic.class);
+    private CalleeController calleController = new CalleeController(calleeLogic);
 
     @Test
     void sayMyName() {
-        assertThat(controller.sayMyName("")).isNull();
+        when(calleeLogic.sayMyName(eq("Heisenberg"))).thenReturn(new Callee("", "Heisenberg"));
+        assertThat(calleController.sayMyName("Heisenberg").message())
+                .isEqualTo("Heisenberg");
     }
 
     @Test
     void sayMyOtherName() {
-        assertThat(controller.sayMyOtherName("")).isNull();
+        when(calleeLogic.sayMyOtherName(eq("Slim Shady"))).thenReturn(new Callee("", "Slim Shady"));
+        assertThat(calleController.sayMyOtherName("Slim Shady").message())
+                .isEqualTo("Slim Shady");
     }
 
     @Test
+
     void save() {
-        assertThat(controller.save(new Callee("", ""))).isNull();
+        when(calleeLogic.save(any(Callee.class))).thenReturn(new Callee("", "saved"));
+        assertThat(calleController.save(new Callee("", "saved")).message())
+                .isEqualTo("saved");
     }
 }
