@@ -27,13 +27,13 @@ jobs:
         gradle-version: 8.1
         arguments: test
         
-    - name: Analysis
+    - name: Analysis of Coverage
       uses: cicirello/jacoco-badge-generator@v2
       with:
         generate-branches-badge: true
         jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
 
-    - name: Commit the badge (if it changed)
+    - name: Analysis Badges Commit
       run: |
         if [[ `git status --porcelain` ]]; then
           git config --global user.name 'goafabric' && git config --global user.email 'goafabric@users.noreply.github.com'
