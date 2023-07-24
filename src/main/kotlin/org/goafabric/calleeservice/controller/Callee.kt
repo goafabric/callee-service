@@ -1,3 +1,3 @@
 package org.goafabric.calleeservice.controller
 
-data class Callee(val id: String, val message: String)
+data class Callee(val id: String? = null, val message: String)
