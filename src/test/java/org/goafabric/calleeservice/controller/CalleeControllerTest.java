@@ -7,7 +7,7 @@ import org.mockito.Mockito;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class CalleeControllerTest {
     private CalleeLogic calleeLogic = Mockito.mock(CalleeLogic.class);
@@ -33,5 +33,6 @@ class CalleeControllerTest {
         when(calleeLogic.save(any(Callee.class))).thenReturn(new Callee("", "saved"));
         assertThat(calleController.save(new Callee("", "saved")).message())
                 .isEqualTo("saved");
+        verify(calleeLogic, times(1)).save(new Callee("", "saved"));
     }
 }
