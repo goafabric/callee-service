@@ -1,32 +1,31 @@
-package org.goafabric.calleeservice.logic;
+package org.goafabric.calleeservice.controller;
 
-import org.goafabric.calleeservice.controller.Callee;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class CalleeLogicIT {
+class CalleeControllerIT {
     @Autowired
-    private CalleeLogic calleeLogic;
+    private CalleeController calleeController;
 
     @Test
     void sayMyName() {
-        assertThat(calleeLogic.sayMyName("Heisenberg").message())
+        assertThat(calleeController.sayMyName("Heisenberg").message())
                 .isNotNull().isEqualTo("Your name is: Heisenberg");
     }
 
     @Test
     void sayMyOtherName() {
-        assertThat(calleeLogic.sayMyOtherName("SlimShady").message())
+        assertThat(calleeController.sayMyOtherName("SlimShady").message())
                 .isNotNull().isEqualTo("Your other name is: SlimShady");
     }
 
     @Test
     void save() {
-        assertThat(calleeLogic.save(new Callee("0", "Secret")).message())
+        assertThat(calleeController.save(new Callee("0", "Secret")).message())
                 .isEqualTo("Storing your message: Secret");
     }
 
