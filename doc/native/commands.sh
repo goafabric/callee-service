@@ -7,7 +7,7 @@ docker build -t native-image-builder ./doc/native
 
 docker run --rm --name native-image-builder --mount type=bind,source=$(pwd)/build,target=/build \
 native-image-builder /bin/bash -c 'mkdir -p /build/native/nativeCompile && cp /build/libs/*-SNAPSHOT.jar /build/native/nativeCompile && cd /build/native/nativeCompile && jar -xvf *-SNAPSHOT.jar \
-&& [[ -f @META-INF/native-image/argfile ]] && ARGFILE=@META-INF/native-image/argfile; native-image -H:Name=application -Ob $ARGFILE -cp .:BOOT-INF/classes:$(find BOOT-INF/lib | tr "\n" ":")'
+&& [[ -f META-INF/native-image/argfile ]] && echo !!using ARGFILE && ARGFILE=@META-INF/native-image/argfile; native-image -H:Name=application -Ob $ARGFILE -cp .:BOOT-INF/classes:$(find BOOT-INF/lib | tr "\n" ":")'
 
 
 gradle jibNativeImage
