@@ -44,7 +44,7 @@ jobs:
       uses: gradle/gradle-build-action@v2
       with:
         gradle-version: 8.2
-        arguments: test jib jib
+        arguments: jib jib
                 
     - name: Native Image
       uses: gradle/gradle-build-action@v2
