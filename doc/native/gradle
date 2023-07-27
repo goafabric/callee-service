@@ -13,7 +13,7 @@ tasks.register("jibNativeImage") {
 		jib.pluginExtensions {
 			pluginExtension {
 				implementation = "com.google.cloud.tools.jib.gradle.extension.nativeimage.JibNativeImageExtension"
-				properties = mapOf("imageName" to "myapplication")
+				properties = mapOf("imageName" to "application")
 			}
 		}
 	}
