@@ -4,3 +4,10 @@ logging.level.org.springframework: "INFO"
 logging.level.org.goafabric: "INFO"
 
 
+#s3
+spring.cloud.aws.s3.enabled: "false"
+spring.cloud.aws.s3.path-style-access-enabled: "true"
+spring.cloud.aws.s3.endpoint: "http://localhost:9100"
+spring.cloud.aws.credentials.access-key: "minioadmin"
+spring.cloud.aws.credentials.secret-key: "minioadmin"
+spring.cloud.aws.region.static: "eu"
