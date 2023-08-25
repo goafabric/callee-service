@@ -43,6 +43,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-cache")
 	implementation("com.github.ben-manes.caffeine:caffeine")
 
+	//s3
+	//implementation("io.awspring.cloud:spring-cloud-aws-starter-s3:3.0.1")
+
+
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
