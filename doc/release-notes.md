@@ -1,5 +1,6 @@
-# 3.1.2
+# 3.1.3
 - java 20 compatibility + jvm baseimage updated to java 20
+- upgrade to Spring Boot 3.1.3
 
 # 3.1.1
 - upgrade to Spring Boot 3.1.1
