@@ -94,7 +94,7 @@ tasks.register("buildNativeImage") {group = "build"; dependsOn("bootJar")
 tasks.register("jibNativeImage") {group = "build"; //dependsOn("buildNativeImage")
 	val nativeImageName = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
 	doFirst {
-		jib.from.image = "ubuntu:22.04@sha256:0bced47fffa3361afa981854fcabcd4577cd43cebbb808cea2b1f33a3dd7f508" //nativeImage
+		jib.from.image = "ghcr.io/graalvm/native-image-community:17.0.8"
 		jib.to.image = nativeImageName
 		jib.pluginExtensions {
 			pluginExtension {
@@ -104,7 +104,7 @@ tasks.register("jibNativeImage") {group = "build"; //dependsOn("buildNativeImage
 		}
 	}
 	doLast {
-		exec { commandLine("docker", "run", "--rm", nativeImageName, "-check-integrity") }
+		exec { commandLine("docker", "run", "--rm", "--pull", "always" ,nativeImageName, "-check-integrity") }
 	}
 	finalizedBy("jib")
 }
