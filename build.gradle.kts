@@ -85,16 +85,28 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	}
 }
 
-tasks.register("buildNativeImage") {group = "build"; dependsOn("clean", "bootJar")
+tasks.register("buildNativeImage") {group = "build"; dependsOn("bootJar")
 	doLast {
-		exec {commandLine("./container-compile.sh") }
+		//exec {commandLine("./container-compile.sh") }
+		exec {
+			commandLine(
+				"docker", "run", "--rm", "--name", "native-image-builder", "--mount", "type=bind,source=${projectDir}/build,target=/build",
+				"--entrypoint", "/bin/bash", "ghcr.io/graalvm/native-image-community:17.0.8", "-c", """
+				mkdir -p /build/native/nativeCompile &&
+				cp /build/libs/*-SNAPSHOT.jar /build/native/nativeCompile &&
+				cd /build/native/nativeCompile &&
+				jar -xvf *.jar &&
+				native-image -H:Name=application -J-Xmx5000m -Ob -march=compatibility $([[ -f META-INF/native-image/argfile ]] && echo @META-INF/native-image/argfile) -cp .:BOOT-INF/classes:$(ls -d -1 "/build/native/nativeCompile/BOOT-INF/lib/"*.* | tr "\n" ":")
+				"""
+			)
+		}
 	}
 }
 
-tasks.register("jibNativeImage") {group = "build"; dependsOn("buildNativeImage")
+tasks.register("jibNativeImage") {group = "build"; //dependsOn("buildNativeImage")
 	val nativeImageName = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
 	doFirst {
-		jib.from.image = "ghcr.io/graalvm/native-image-community:17.0.8"
+		jib.from.image = "ubuntu:22.04" //"ghcr.io/graalvm/native-image-community:17.0.8"
 		jib.to.image = nativeImageName
 		jib.pluginExtensions {
 			pluginExtension {
