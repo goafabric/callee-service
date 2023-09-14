@@ -10,7 +10,7 @@ jacoco.toolVersion = "0.8.9"
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.1.2"
+	id("org.springframework.boot") version "3.1.3"
 	id("io.spring.dependency-management") version "1.1.0"
 	id("org.graalvm.buildtools.native") version "0.9.23"
 	id("com.google.cloud.tools.jib") version "3.3.1"
@@ -64,7 +64,7 @@ jib {
 	from.platforms.set(listOf(amd64, arm64))
 }
 
-val graalvmBuilderImage = "ghcr.io/graalvm/native-image-community:17.0.8"
+val graalvmBuilderImage = "ghcr.io/graalvm/native-image-community:20.0.2" //"ghcr.io/graalvm/native-image-community:17.0.8"
 buildscript { dependencies { classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0") }}
 tasks.register("dockerImageNativeNoTest") {group = "build"; dependsOn("bootJar")
 	doFirst {exec { commandLine(
