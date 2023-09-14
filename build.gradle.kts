@@ -85,19 +85,16 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 val graalvmImage = "ghcr.io/graalvm/native-image-community:17.0.8"
 tasks.register("buildNativeImage") {group = "build"; dependsOn("bootJar")
 	val graalvmOptions = "-J-Xmx5000m -Ob -march=compatibility -H:Name=application"
-	doLast {
-		exec {
-			commandLine(
-				"docker", "run", "--rm", "--name", "native-builder", "--mount", "type=bind,source=${projectDir}/build,target=/build", "--entrypoint", "/bin/bash", graalvmImage, "-c", """
-				mkdir -p /build/native/nativeCompile && cp /build/libs/*-SNAPSHOT.jar /build/native/nativeCompile && cd /build/native/nativeCompile && jar -xvf *.jar &&
-				native-image $graalvmOptions $([[ -f META-INF/native-image/argfile ]] && echo @META-INF/native-image/argfile) -cp .:BOOT-INF/classes:$(ls -d -1 "/build/native/nativeCompile/BOOT-INF/lib/"*.* | tr "\n" ":") """
-			)
-		}
+	doLast {exec { commandLine(
+			"docker", "run", "--rm", "--name", "native-builder", "--mount", "type=bind,source=${projectDir}/build,target=/build", "--entrypoint", "/bin/bash", graalvmImage, "-c", """
+			mkdir -p /build/native/nativeCompile && cp /build/libs/*-SNAPSHOT.jar /build/native/nativeCompile && cd /build/native/nativeCompile && jar -xvf *.jar &&
+			native-image $graalvmOptions $([[ -f META-INF/native-image/argfile ]] && echo @META-INF/native-image/argfile) -cp .:BOOT-INF/classes:$(ls -d -1 "/build/native/nativeCompile/BOOT-INF/lib/"*.* | tr "\n" ":") """
+		)}
 	}
 }
 
 buildscript { dependencies { classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0") }}
-tasks.register("dockerImageNative") {group = "build"; //dependsOn("buildNativeImage")
+tasks.register("dockerImageNativeGraal") {group = "build"; //dependsOn("buildNativeImage")
 	doLast {
 		jib.from.image = "ubuntu:22.04"
 		jib.to.image = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
