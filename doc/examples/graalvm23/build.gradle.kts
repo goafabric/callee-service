@@ -33,12 +33,6 @@ dependencies {
 	}
 }
 
-buildscript {
-	dependencies {
-		classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0")
-	}
-}
-
 dependencies {
 	//web
 	implementation("org.springframework.boot:spring-boot-starter")
@@ -85,16 +79,26 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	}
 }
 
+val graalvmImage = "ghcr.io/graalvm/native-image-community:17.0.8"
 tasks.register("buildNativeImage") {group = "build"; dependsOn("bootJar")
-	exec {
-		commandLine("./commands.sh")
+	val graalvmOptions = "-J-Xmx5000m -Ob -march=compatibility -H:Name=application"
+	doLast {
+		exec {
+			commandLine(
+				"docker", "run", "--rm", "--name", "native-builder", "--mount", "type=bind,source=${projectDir}/build,target=/build", "--entrypoint", "/bin/bash", graalvmImage, "-c", """
+				mkdir -p /build/native/nativeCompile && cp /build/libs/*-SNAPSHOT.jar /build/native/nativeCompile && cd /build/native/nativeCompile && jar -xvf *.jar &&
+				native-image $graalvmOptions $([[ -f META-INF/native-image/argfile ]] && echo @META-INF/native-image/argfile) -cp .:BOOT-INF/classes:$(ls -d -1 "/build/native/nativeCompile/BOOT-INF/lib/"*.* | tr "\n" ":") """
+			)
+		}
+		//exec {commandLine("./container-compile.sh") }
 	}
 }
 
+buildscript { dependencies { classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0") }}
 tasks.register("jibNativeImage") {group = "build"; //dependsOn("buildNativeImage")
 	val nativeImageName = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
 	doFirst {
-		jib.from.image = "ubuntu:22.04@sha256:0bced47fffa3361afa981854fcabcd4577cd43cebbb808cea2b1f33a3dd7f508" //nativeImage
+		jib.from.image = "ubuntu:22.04" //"ghcr.io/graalvm/native-image-community:17.0.8"
 		jib.to.image = nativeImageName
 		jib.pluginExtensions {
 			pluginExtension {
@@ -102,9 +106,24 @@ tasks.register("jibNativeImage") {group = "build"; //dependsOn("buildNativeImage
 				properties = mapOf("imageName" to "application")
 			}
 		}
+		/*
+		jib.extraDirectories {
+			paths {
+				path {
+					setFrom("build/native/nativeCompile")
+					into = "/app"
+					permissions.set(mutableMapOf("/app/application" to "755"))
+					includes.set(mutableListOf("application"))
+				}
+			}
+			
+		}
+		jib.container.entrypoint = mutableListOf("/app/application")
+
+		 */
 	}
 	doLast {
-		exec { commandLine("docker", "run", "--rm", nativeImageName, "-check-integrity") }
+		exec { commandLine("docker", "run", "--rm", "--pull", "always" ,nativeImageName, "-check-integrity") }
 	}
 	finalizedBy("jib")
 }
