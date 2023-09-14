@@ -106,6 +106,21 @@ tasks.register("jibNativeImage") {group = "build"; //dependsOn("buildNativeImage
 				properties = mapOf("imageName" to "application")
 			}
 		}
+		/*
+		jib.extraDirectories {
+			paths {
+				path {
+					setFrom("build/native/nativeCompile")
+					into = "/app"
+					permissions.set(mutableMapOf("/app/application" to "755"))
+					includes.set(mutableListOf("application"))
+				}
+			}
+			
+		}
+		jib.container.entrypoint = mutableListOf("/app/application")
+
+		 */
 	}
 	doLast {
 		exec { commandLine("docker", "run", "--rm", "--pull", "always" ,nativeImageName, "-check-integrity") }
