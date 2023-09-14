@@ -85,15 +85,15 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	}
 }
 
+val graalvmImage = "ghcr.io/graalvm/native-image-community:17.0.8"
 tasks.register("buildNativeImage") {group = "build"; dependsOn("bootJar")
+	val graalvmOptions = "-J-Xmx5000m -Ob -march=compatibility -H:Name=application"
 	doLast {
 		exec {
 			commandLine(
-				"docker", "run", "--rm", "--name", "native-builder", "--mount", "type=bind,source=${projectDir}/build,target=/build",
-				"--entrypoint", "/bin/bash", "ghcr.io/graalvm/native-image-community:17.0.8", "-c", """
+				"docker", "run", "--rm", "--name", "native-builder", "--mount", "type=bind,source=${projectDir}/build,target=/build", "--entrypoint", "/bin/bash", graalvmImage, "-c", """
 				mkdir -p /build/native/nativeCompile && cp /build/libs/*-SNAPSHOT.jar /build/native/nativeCompile && cd /build/native/nativeCompile && jar -xvf *.jar &&
-				native-image -H:Name=application -J-Xmx5000m -Ob -march=compatibility $([[ -f META-INF/native-image/argfile ]] && echo @META-INF/native-image/argfile) -cp .:BOOT-INF/classes:$(ls -d -1 "/build/native/nativeCompile/BOOT-INF/lib/"*.* | tr "\n" ":")
-				"""
+				native-image $graalvmOptions $([[ -f META-INF/native-image/argfile ]] && echo @META-INF/native-image/argfile) -cp .:BOOT-INF/classes:$(ls -d -1 "/build/native/nativeCompile/BOOT-INF/lib/"*.* | tr "\n" ":") """
 			)
 		}
 		//exec {commandLine("./container-compile.sh") }
