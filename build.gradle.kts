@@ -33,6 +33,12 @@ dependencies {
 	}
 }
 
+buildscript {
+	dependencies {
+		classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0")
+	}
+}
+
 dependencies {
 	//web
 	implementation("org.springframework.boot:spring-boot-starter")
@@ -77,6 +83,33 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 		exec { commandLine("docker", "run", "--rm", nativeImageName, "-check-integrity") }
 		exec { commandLine("docker", "push", nativeImageName) }
 	}
+}
+
+tasks.register("buildNativeImage") {group = "build"; dependsOn("clean", "bootJar")
+	doLast {
+		exec {commandLine("./container-compile.sh") }
+	}
+}
+
+tasks.register("jibNativeImage") {group = "build"; dependsOn("buildNativeImage")
+	val nativeImageName = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
+	doFirst {
+		jib.from.image = "ghcr.io/graalvm/native-image-community:17.0.8"
+		jib.to.image = nativeImageName
+		jib.pluginExtensions {
+			pluginExtension {
+				implementation = "com.google.cloud.tools.jib.gradle.extension.nativeimage.JibNativeImageExtension"
+				properties = mapOf("imageName" to "application")
+			}
+		}
+	}
+	/*
+	doLast {
+		exec { commandLine("docker", "run", "--rm", "--pull", "always" ,nativeImageName, "-check-integrity") }
+	}
+
+	 */
+	finalizedBy("jib")
 }
 
 graalvmNative { //https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html#configuration-options
