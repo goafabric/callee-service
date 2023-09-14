@@ -66,6 +66,7 @@ jib {
 	from.platforms.set(listOf(amd64, arm64))
 }
 
+/*
 tasks.register("dockerImageNative") { group = "build"; dependsOn("bootBuildImage") }
 tasks.named<BootBuildImage>("bootBuildImage") {
 	val nativeImageName = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
@@ -79,6 +80,8 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	}
 }
 
+ */
+
 val graalvmImage = "ghcr.io/graalvm/native-image-community:17.0.8"
 tasks.register("buildNativeImage") {group = "build"; dependsOn("bootJar")
 	val graalvmOptions = "-J-Xmx5000m -Ob -march=compatibility -H:Name=application"
@@ -90,40 +93,18 @@ tasks.register("buildNativeImage") {group = "build"; dependsOn("bootJar")
 				native-image $graalvmOptions $([[ -f META-INF/native-image/argfile ]] && echo @META-INF/native-image/argfile) -cp .:BOOT-INF/classes:$(ls -d -1 "/build/native/nativeCompile/BOOT-INF/lib/"*.* | tr "\n" ":") """
 			)
 		}
-		//exec {commandLine("./container-compile.sh") }
 	}
 }
 
 buildscript { dependencies { classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0") }}
-tasks.register("jibNativeImage") {group = "build"; //dependsOn("buildNativeImage")
-	val nativeImageName = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
-	doFirst {
-		jib.from.image = "ubuntu:22.04" //"ghcr.io/graalvm/native-image-community:17.0.8"
-		jib.to.image = nativeImageName
-		jib.pluginExtensions {
-			pluginExtension {
-				implementation = "com.google.cloud.tools.jib.gradle.extension.nativeimage.JibNativeImageExtension"
-				properties = mapOf("imageName" to "application")
-			}
-		}
-		/*
-		jib.extraDirectories {
-			paths {
-				path {
-					setFrom("build/native/nativeCompile")
-					into = "/app"
-					permissions.set(mutableMapOf("/app/application" to "755"))
-					includes.set(mutableListOf("application"))
-				}
-			}
-			
-		}
-		jib.container.entrypoint = mutableListOf("/app/application")
-
-		 */
-	}
+tasks.register("dockerImageNative") {group = "build"; //dependsOn("buildNativeImage")
 	doLast {
-		exec { commandLine("docker", "run", "--rm", "--pull", "always" ,nativeImageName, "-check-integrity") }
+		jib.from.image = "ubuntu:22.04"
+		jib.to.image = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
+		jib.pluginExtensions { pluginExtension {
+			implementation = "com.google.cloud.tools.jib.gradle.extension.nativeimage.JibNativeImageExtension"
+			properties = mapOf("imageName" to "application")
+		}}
 	}
 	finalizedBy("jib")
 }
