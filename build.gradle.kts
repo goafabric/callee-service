@@ -33,12 +33,6 @@ dependencies {
 	}
 }
 
-buildscript {
-	dependencies {
-		classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0")
-	}
-}
-
 dependencies {
 	//web
 	implementation("org.springframework.boot:spring-boot-starter")
@@ -100,6 +94,7 @@ tasks.register("buildNativeImage") {group = "build"; dependsOn("bootJar")
 	}
 }
 
+buildscript { dependencies { classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0") }}
 tasks.register("jibNativeImage") {group = "build"; //dependsOn("buildNativeImage")
 	val nativeImageName = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
 	doFirst {
