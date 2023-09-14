@@ -72,7 +72,7 @@ jib {
 	from.platforms.set(listOf(amd64, arm64))
 }
 
-val graalvmBuilderImage = "ghcr.io/graalvm/native-image-community:17.0.8"
+val graalvmBuilderImage = "ghcr.io/graalvm/native-image-community:20.0.2" //"ghcr.io/graalvm/native-image-community:17.0.8"
 buildscript { dependencies { classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0") }}
 tasks.register("dockerImageNativeNoTest") {group = "build"; dependsOn("bootJar")
 	doFirst {exec { commandLine(
