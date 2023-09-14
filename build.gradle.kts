@@ -94,7 +94,7 @@ tasks.register("buildNativeImage") {group = "build"; dependsOn("bootJar")
 }
 
 buildscript { dependencies { classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0") }}
-tasks.register("dockerImageNative") {group = "build"; //dependsOn("buildNativeImage")
+tasks.register("dockerImageNative") {group = "build"; dependsOn("buildNativeImage")
 	doLast {
 		jib.from.image = "ubuntu:22.04"
 		jib.to.image = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
