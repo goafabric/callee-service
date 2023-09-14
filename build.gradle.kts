@@ -74,7 +74,7 @@ jib {
 
 val graalvmBuilderImage = "ghcr.io/graalvm/native-image-community:17.0.8"
 buildscript { dependencies { classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0") }}
-tasks.register("dockerImageNative") {group = "build"; dependsOn("bootJar")
+tasks.register("dockerImageNativeNoTest") {group = "build"; dependsOn("bootJar")
 	doFirst {exec { commandLine(
 		"docker", "run", "--rm", "--mount", "type=bind,source=${projectDir}/build,target=/build", "--entrypoint", "/bin/bash", graalvmBuilderImage, "-c", """
 		mkdir -p /build/native/nativeCompile && cp /build/libs/*-SNAPSHOT.jar /build/native/nativeCompile && cd /build/native/nativeCompile && jar -xvf *.jar &&
@@ -89,8 +89,7 @@ tasks.register("dockerImageNative") {group = "build"; dependsOn("bootJar")
 	}
 	finalizedBy("jib")
 }
-tasks.register("dockerImageNativeTest") {group = "build"; dependsOn("dockerImageNative"); exec { commandLine("docker", "run", "--rm", "--pull", "always", "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}", "-check-integrity") } }
-
+tasks.register("dockerImageNative") {group = "build"; dependsOn("dockerImageNativeNoTest"); doLast { exec { commandLine("docker", "run", "--rm", "--pull", "always", "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}", "-check-integrity") } } }
 
 graalvmNative { //https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html#configuration-options
 	binaries.named("main") { quickBuild.set(true) }
