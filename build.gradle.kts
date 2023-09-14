@@ -112,12 +112,9 @@ tasks.register("jibNativeImage") {group = "build"; //dependsOn("buildNativeImage
 			}
 		}
 	}
-	/*
 	doLast {
 		exec { commandLine("docker", "run", "--rm", "--pull", "always" ,nativeImageName, "-check-integrity") }
 	}
-
-	 */
 	finalizedBy("jib")
 }
 
