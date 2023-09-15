@@ -7,6 +7,7 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 
 val dockerRegistry = "goafabric"
 val nativeBuilder = "dashaun/builder:20230225"
+val graalvmBuilderImage = "ghcr.io/graalvm/native-image-community:20.0.2" //"ghcr.io/graalvm/native-image-community:17.0.8"
 val baseImage = "ibm-semeru-runtimes:open-20.0.1_9-jre-focal@sha256:f1a10da50d02f51e79e3c9604ed078a39c19cd2711789cab7aa5d11071482a7e"
 jacoco.toolVersion = "0.8.9"
 
@@ -72,7 +73,6 @@ jib {
 	from.platforms.set(listOf(amd64, arm64))
 }
 
-val graalvmBuilderImage = "ghcr.io/graalvm/native-image-community:20.0.2" //"ghcr.io/graalvm/native-image-community:17.0.8"
 buildscript { dependencies { classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0") }}
 tasks.register("dockerImageNativeNoTest") {group = "build"; dependsOn("bootJar")
 	doFirst {exec { commandLine(
@@ -83,9 +83,7 @@ tasks.register("dockerImageNativeNoTest") {group = "build"; dependsOn("bootJar")
 	doLast {
 		jib.from.image = "ubuntu:22.04"
 		jib.to.image = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
-		jib.pluginExtensions { pluginExtension {
-			implementation = "com.google.cloud.tools.jib.gradle.extension.nativeimage.JibNativeImageExtension"; properties = mapOf("imageName" to "application")
-		}}
+		jib.pluginExtensions { pluginExtension {properties = mapOf("imageName" to "application"); implementation = "com.google.cloud.tools.jib.gradle.extension.nativeimage.JibNativeImageExtension" }}
 	}
 	finalizedBy("jib")
 }
