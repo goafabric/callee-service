@@ -6,7 +6,7 @@ version = "3.1.3-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 val dockerRegistry = "goafabric"
-val graalvmBuilderImage = "ghcr.io/graalvm/native-image-community:21.0.0" //"ghcr.io/graalvm/native-image-community:17.0.8"
+val graalvmBuilderImage = "ghcr.io/graalvm/native-image-community:21.0.0"
 val baseImage = "ibm-semeru-runtimes:open-20.0.1_9-jre-focal@sha256:f1a10da50d02f51e79e3c9604ed078a39c19cd2711789cab7aa5d11071482a7e"
 jacoco.toolVersion = "0.8.10"
 

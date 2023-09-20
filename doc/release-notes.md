@@ -1,5 +1,5 @@
 # 3.1.3
-- java 20 compatibility + jvm baseimage updated to java 20
+- java 21 upgrade
 - upgrade to Spring Boot 3.1.3
 - various dependency upgrades
 - spring aop removed
