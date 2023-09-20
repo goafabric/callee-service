@@ -17,18 +17,12 @@ jobs:
     - name: Set up JDK 
       uses: actions/setup-java@v3
       with:
-        distribution: 'temurin'
-        java-version: '17'
-
-#    - name: JVM Build
-#      run: mvn -B clean deploy -P docker-image --file pom.xml
-#    - name: Native Build
-#      run: mvn -B clean deploy -P docker-image-native --file pom.xml
-   
+        distribution: 'zulu'
+        java-version: '21'
 
     - name: Native Image
       uses: gradle/gradle-build-action@v2
       with:
-        gradle-version: 8.2
+        gradle-version: 8.3
         arguments: dockerImageNative
   
