@@ -7,7 +7,7 @@ services:
     restart: 'no'
     ports:
       - "${_Values_service_port}:${_Values_service_port}"
-#    entrypoint: ${_Values_resources_entrypoint}
+    entrypoint: ${_Values_resources_entrypoint}
 
     healthcheck:
       test: "curl -f http://localhost:${_Values_service_port}/actuator/health || exit 1"
