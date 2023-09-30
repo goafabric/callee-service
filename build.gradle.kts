@@ -8,14 +8,14 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 val dockerRegistry = "goafabric"
 val nativeBuilder = "dashaun/builder:20230225"
 val baseImage = "ibm-semeru-runtimes:open-20.0.1_9-jre-focal@sha256:f1a10da50d02f51e79e3c9604ed078a39c19cd2711789cab7aa5d11071482a7e"
-jacoco.toolVersion = "0.8.9"
+jacoco.toolVersion = "0.8.10"
 
 plugins {
 	jacoco
-	id("org.springframework.boot") version "3.1.1"
+	id("org.springframework.boot") version "3.1.4"
 	id("io.spring.dependency-management") version "1.1.0"
-	id("org.graalvm.buildtools.native") version "0.9.23"
-	id("com.google.cloud.tools.jib") version "3.3.1"
+	id("org.graalvm.buildtools.native") version "0.9.24"
+	id("com.google.cloud.tools.jib") version "3.3.2"
 
 	kotlin("jvm") version "1.8.20"
 	kotlin("plugin.spring") version "1.8.20"
@@ -30,8 +30,8 @@ repositories {
 dependencies {
 	constraints {
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
-		implementation("org.mapstruct:mapstruct:1.5.4.Final")
-		annotationProcessor("org.mapstruct:mapstruct-processor:1.5.4.Final")
+		implementation("org.mapstruct:mapstruct:1.5.5.Final")
+		annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
 		implementation("io.github.resilience4j:resilience4j-spring-boot3:2.0.2")
 	}
 }
