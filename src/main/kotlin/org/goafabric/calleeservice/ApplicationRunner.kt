@@ -37,7 +37,7 @@ class ApplicationRunner {
         return if (isAuthenticationEnabled) http.authorizeHttpRequests { auth ->
             auth.requestMatchers("/actuator/**").permitAll().anyRequest().authenticated()
         }
-            .httpBasic { httpBasic: HttpBasicConfigurer<HttpSecurity?>? -> }
+            .httpBasic { }
             .csrf { csrf: CsrfConfigurer<HttpSecurity> -> csrf.disable() }
             .build()
         else http.authorizeHttpRequests { auth ->
@@ -48,7 +48,7 @@ class ApplicationRunner {
 
     @Bean
     fun disableHttpServerObservationsFromName(): ObservationPredicate? {
-        return ObservationPredicate { name: String, context: Observation.Context? -> !name.startsWith("spring.security.") }
+        return ObservationPredicate { name: String, _: Observation.Context? -> !name.startsWith("spring.security.") }
     }
 
 
