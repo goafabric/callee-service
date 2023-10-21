@@ -12,7 +12,7 @@ plugins {
 	jacoco
 	id("org.springframework.boot") version "3.2.0-RC1"
 	id("io.spring.dependency-management") version "1.1.0"
-	id("org.graalvm.buildtools.native") version "0.9.24"
+	id("org.graalvm.buildtools.native") version "0.9.27"
 	id("com.google.cloud.tools.jib") version "3.3.2"
 }
 
