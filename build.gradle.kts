@@ -1,5 +1,5 @@
 group = "org.goafabric"
-version = "3.1.5-SNAPSHOT"
+version = "3.2.0-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 val dockerRegistry = "goafabric"
@@ -10,7 +10,7 @@ jacoco.toolVersion = "0.8.10"
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.1.4"
+	id("org.springframework.boot") version "3.2.0-RC1"
 	id("io.spring.dependency-management") version "1.1.0"
 	id("org.graalvm.buildtools.native") version "0.9.24"
 	id("com.google.cloud.tools.jib") version "3.3.2"
