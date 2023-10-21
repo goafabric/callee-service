@@ -4,7 +4,7 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 
 val dockerRegistry = "goafabric"
 val graalvmBuilderImage = "ghcr.io/graalvm/native-image-community:21.0.0"
-val baseImage = "ibm-semeru-runtimes:open-20.0.1_9-jre-focal@sha256:f1a10da50d02f51e79e3c9604ed078a39c19cd2711789cab7aa5d11071482a7e"
+val baseImage = "ibm-semeru-runtimes:open-20.0.1_9-jre-focal@sha256:f1a10da50d02f51e79e3c9604ed078a39c19cd2711789cab7aa5d11071482a7e" //"azul/zulu-openjdk:21.0.0-jre"
 jacoco.toolVersion = "0.8.10"
 
 plugins {
@@ -73,6 +73,7 @@ tasks.register("dockerImageNativeNoTest") {group = "build"; dependsOn("bootJar")
 	jib.to.image = ""
 	doFirst {
 		exec { commandLine(
+			//(if (System.getProperty("os.name").contains("Mac OS")) "/usr/local/bin/docker" else "docker"), //java21 gradle 8.3 mac docker hack
 			"docker", "run", "--rm", "--mount", "type=bind,source=${projectDir}/build,target=/build", "--entrypoint", "/bin/bash", graalvmBuilderImage, "-c", """ mkdir -p /build/native/nativeCompile && cp /build/libs/*.jar /build/native/nativeCompile && cd /build/native/nativeCompile && jar -xvf *.jar &&
 			native-image -J-Xmx5000m -march=compatibility -H:Name=application $([[ -f META-INF/native-image/argfile ]] && echo @META-INF/native-image/argfile) -cp .:BOOT-INF/classes:$(ls -d -1 "/build/native/nativeCompile/BOOT-INF/lib/"*.* | tr "\n" ":") && /build/native/nativeCompile/application -check-integrity """
 		)}
