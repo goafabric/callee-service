@@ -49,5 +49,5 @@ jobs:
     - name: Native Image
       uses: gradle/gradle-build-action@v2
       with:
-        gradle-version: 8.3
+        gradle-version: 8.4
         arguments: dockerImageNative
