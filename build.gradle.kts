@@ -65,7 +65,7 @@ jib {
 	from.image = baseImage
 	to.image = "${dockerRegistry}/${project.name}:${project.version}"
 	container.jvmFlags = listOf("-Xms256m", "-Xmx256m")
-	from.platforms.set(listOf(amd64, arm64))
+	//from.platforms.set(listOf(amd64, arm64))
 }
 
 buildscript { dependencies { classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0") }}
