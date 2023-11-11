@@ -65,7 +65,7 @@ jib {
 	from.image = baseImage
 	to.image = "${dockerRegistry}/${project.name}:${project.version}"
 	container.jvmFlags = listOf("-Xms256m", "-Xmx256m")
-	//from.platforms.set(listOf(amd64, arm64))
+	from.platforms.set(listOf(amd64, arm64))
 }
 
 buildscript { dependencies { classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0") }}
@@ -79,6 +79,7 @@ tasks.register("dockerImageNativeNoTest") {group = "build"; dependsOn("bootJar")
 		jib.from.image = "ubuntu:22.04"
 		jib.to.image = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
 		jib.pluginExtensions { pluginExtension {properties = mapOf("imageName" to "application"); implementation = "com.google.cloud.tools.jib.gradle.extension.nativeimage.JibNativeImageExtension" }}
+		jib.from.platforms.set(null)
 	}
 	finalizedBy("jib")
 }
