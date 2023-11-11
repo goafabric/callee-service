@@ -71,7 +71,6 @@ jib {
 buildscript { dependencies { classpath("com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0") }}
 tasks.register("dockerImageNativeNoTest") {group = "build"; dependsOn("bootJar")
 	jib.to.image = ""
-	jib.from.platforms.set(listOf())
 	doFirst {
 		exec { commandLine(
 			"docker", "run", "--rm", "--mount", "type=bind,source=${projectDir}/build,target=/build", "--entrypoint", "/bin/bash", graalvmBuilderImage, "-c", """ mkdir -p /build/native/nativeCompile && cp /build/libs/*.jar /build/native/nativeCompile && cd /build/native/nativeCompile && jar -xvf *.jar &&
