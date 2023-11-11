@@ -87,4 +87,4 @@ tasks.register("dockerImageNative") {group = "build"; dependsOn("clean", "docker
 
 graalvmNative { //https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html#configuration-options
 	binaries.named("main") { quickBuild.set(true) }
-}
+}1
