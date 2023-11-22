@@ -1,4 +1,4 @@
-val nativeBuilder = "dashaun/builder:20230922"
+val nativeBuilder = "dashaun/builder:20231114"
 tasks.register("dockerImageNative") { group = "build"; dependsOn("bootBuildImage") }
 tasks.named<BootBuildImage>("bootBuildImage") {
     val nativeImageName = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
