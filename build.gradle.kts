@@ -3,16 +3,16 @@ version = "3.2.0-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 val dockerRegistry = "goafabric"
-val graalvmBuilderImage = "ghcr.io/graalvm/native-image-community:21.0.0"
-val baseImage = "ibm-semeru-runtimes:open-20.0.1_9-jre-focal@sha256:f1a10da50d02f51e79e3c9604ed078a39c19cd2711789cab7aa5d11071482a7e" //"azul/zulu-openjdk:21.0.0-jre"
+val graalvmBuilderImage = "ghcr.io/graalvm/native-image-community:21.0.1"
+val baseImage = "ibm-semeru-runtimes:open-20.0.1_9-jre-focal@sha256:f1a10da50d02f51e79e3c9604ed078a39c19cd2711789cab7aa5d11071482a7e" //eclipse-temurin:21.0.1_12-jre
 jacoco.toolVersion = "0.8.10"
 
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.2.0-RC1"
-	id("io.spring.dependency-management") version "1.1.0"
-	id("org.graalvm.buildtools.native") version "0.9.27"
+	id("org.springframework.boot") version "3.2.0"
+	id("io.spring.dependency-management") version "1.1.4"
+	id("org.graalvm.buildtools.native") version "0.9.28"
 	id("com.google.cloud.tools.jib") version "3.3.2"
 }
 
