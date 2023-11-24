@@ -1,9 +1,27 @@
-# 3.1.0
-- upgrade to Spring Boot 3.1.0
+# 3.2.0
+- upgrade to Spring Boot 3.2.0
+
+# 3.1.4
+- upgrade to Spring Boot 3.1.4
+
+# 3.1.3
+- java 21 build upgrade
+- upgrade to Spring Boot 3.1.3
+- various dependency upgrades
+- spring aop removed
+
+# 3.1.1
+- upgrade to Spring Boot 3.1.1
+- support for Opentelemetry
 - maven build (re) moved to doc/maven in favour of gradle
 - kicked lombok in favour of java records
+- converted gradle build file to kotlin dsl
+
+- upgrade to springdoc 2.1.0
+- upgrade to mapstruct 1.5.4
 
 # 3.0.3
+- upgrade to Spring Boot 3.0.3
 - spring cloud kicked out
 
 # 3.0.2
