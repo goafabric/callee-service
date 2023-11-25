@@ -1,5 +1,7 @@
 # 3.2.0
 - upgrade to Spring Boot 3.2.0
+- upgrade to jib 3.4.0
+- virtual threads enabled
 
 # 3.1.4
 - upgrade to Spring Boot 3.1.4
