@@ -1,4 +1,4 @@
-/*
+
 package org.goafabric.calleeservice.s3;
 
 import io.awspring.cloud.autoconfigure.config.parameterstore.ParameterStorePropertySources;
@@ -40,6 +40,7 @@ public class ObjectStorageLogic {
         save(
                 new ObjectEntry("hello_world.txt", "text/plain",
                         Long.valueOf("hello world".length()), "hello world".getBytes()));
+        System.err.println(new String((getById("hello_world.txt").data())));
     }
 
     public void save(ObjectEntry objectEntry) {
@@ -121,4 +122,3 @@ public class ObjectStorageLogic {
 }
 
 
- */
