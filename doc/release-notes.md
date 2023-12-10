@@ -1,3 +1,5 @@
+# 3.2.1
+
 # 3.2.0
 - upgrade to Spring Boot 3.2.0
 - upgrade to jib 3.4.0
