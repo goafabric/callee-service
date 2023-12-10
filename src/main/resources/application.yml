@@ -8,7 +8,7 @@ server:
 management:
     endpoint:
       health:
-        show-details: always
+        show-details: never
     endpoints:
       web:
         exposure:
@@ -34,3 +34,6 @@ logging.level.org.springframework: "INFO"
 logging.level.org.goafabric: "INFO"
 logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
+
+#vthreads
+spring.threads.virtual.enabled: "true"

@@ -9,15 +9,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class CalleeServiceAdapterIT {
     @Autowired
-    CalleeServiceAdapter calleeServiceAdapter;
+    CalleeServiceAdapter calleeServiceAdapterDec;
 
     @Test
     public void sayMyName() {
-        assertThat(calleeServiceAdapter.sayMyName("Heisenberg").message()).isEqualTo("Your name is: Heisenberg");
+        assertThat(calleeServiceAdapterDec.sayMyName("Heisenberg").message())
+                .isEqualTo("Your name is: Heisenberg");
     }
 
     @Test
     public void sayMyOtherName() {
-        assertThat(calleeServiceAdapter.sayMyOtherName("SlimShady").message()).isEqualTo("Your other name is: SlimShady");
+        assertThat(calleeServiceAdapterDec.sayMyOtherName("SlimShady").message())
+                .isEqualTo("Your other name is: SlimShady");
     }
 }
+
