@@ -1,5 +1,5 @@
 group = "org.goafabric"
-version = "3.2.0-SNAPSHOT"
+version = "3.2.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 val dockerRegistry = "goafabric"
