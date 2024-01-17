@@ -5,7 +5,7 @@ _Values_image_tag=3.2.1-SNAPSHOT
 
 _Values_service_port=50900
 _Values_resources_entrypoint="java -Xms128M -Xmx128M -cp /app/resources:/app/classes:/app/libs/* org.goafabric.calleeservice.Application"
-_Values_resources_entrypoint_native="/app/application -Xmx32m"
+_Values_resources_entrypoint_native="/workspace/org.goafabric.calleeservice.Application -Xmx32m"
 
 _Values_health_check_disabled=false
 
