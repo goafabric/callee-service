@@ -16,8 +16,6 @@ docker run --pull always --name callee-service-native --rm -p50900:50900 goafabr
 # loki logger
 docker run --pull always --name callee-service --rm -p50900:50900 --log-driver=loki --log-opt loki-url="http://host.docker.internal:3100/loki/api/v1/push" goafabric/callee-service:3.2.3-SNAPSHOT
 
-
-
 # multiarch native
 docker manifest create goafabric/callee-service-native-multi:3.2.3-SNAPSHOT \
 --amend goafabric/callee-service-native:3.2.3-SNAPSHOT --amend goafabric/callee-service-native-arm64v8:3.2.3-SNAPSHOT 
