@@ -19,10 +19,7 @@
 //import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 //import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 //import org.springframework.core.io.Resource;
-//import org.springframework.http.HttpHeaders;
-//import org.springframework.http.HttpMethod;
-//import org.springframework.http.MediaType;
-//import org.springframework.http.RequestEntity;
+//import org.springframework.http.*;
 //import org.springframework.web.client.RestTemplate;
 //import org.springframework.web.util.UriComponentsBuilder;
 //
@@ -113,6 +110,13 @@
 //		RequestEntity<Void> request = this.requestEntity(HttpMethod.GET,
 //				"/%s/%s".formatted(bucketName, encodePath(key)), "");
 //		return this.restTemplate.exchange(request, byte[].class).getBody();
+//	}
+//
+//	public ResponseEntity<byte[]> getObjectAndMetadata(String bucketName, String key) {
+//		RequestEntity<Void> request = this.requestEntity(HttpMethod.GET,
+//				"/%s/%s".formatted(bucketName, encodePath(key)), "");
+//		return restTemplate.exchange(request, byte[].class);
+//		//var contentType = response.getHeaders().get("Content-Type").getFirst();
 //	}
 //
 //	public void deleteObject(String bucketName, String key) {
@@ -304,13 +308,13 @@
 //								   @JacksonXmlProperty(localName = "Prefix") String prefix,
 //								   @JacksonXmlProperty(localName = "Marker") String marker, @JacksonXmlProperty(localName = "MaxKeys") int maxKeys,
 //								   @JacksonXmlProperty(localName = "IsTruncated") boolean isTruncated, @JacksonXmlProperty(
-//			localName = "Contents") @JacksonXmlElementWrapper(useWrapping = false) List<am.ik.s3.Content> contents) {
+//			localName = "Contents") @JacksonXmlElementWrapper(useWrapping = false) List<Content> contents) {
 //	}
 //
 //
 //	@JacksonXmlRootElement(localName = "ListAllMyBucketsResult")
 //	private record ListBucketsResult(@JacksonXmlProperty(localName = "Owner") Owner owner,
-//									@JacksonXmlProperty(localName = "Buckets") List<am.ik.s3.Bucket> buckets) {
+//									@JacksonXmlProperty(localName = "Buckets") List<Bucket> buckets) {
 //	}
 //
 //	private record Owner(@JacksonXmlProperty(localName = "ID") String id,
