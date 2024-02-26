@@ -11,7 +11,7 @@ val baseImage = "ibm-semeru-runtimes:open-21.0.1_12-jre-focal@sha256:24d43669156
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.2.0"
+	id("org.springframework.boot") version "3.2.3"
 	id("io.spring.dependency-management") version "1.1.4"
 	id("org.graalvm.buildtools.native") version "0.9.28"
 	id("com.google.cloud.tools.jib") version "3.4.0"
@@ -43,6 +43,7 @@ dependencies {
 	//implementation("com.github.ben-manes.caffeine:caffeine")
 
 	//s3
+	//implementation("am.ik.s3:simple-s3-client:0.1.1") {exclude("org.springframework", "spring-web")}; implementation("org.springframework.boot:spring-boot-starter-web");
 	//implementation("io.awspring.cloud:spring-cloud-aws-starter-s3:3.1.0")
 
 
