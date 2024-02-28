@@ -1,6 +1,7 @@
 package org.goafabric.calleeservice.controller
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -22,7 +23,8 @@ internal class CalleeControllerIT (
             .isNotNull().isEqualTo("Your other name is: SlimShady")
     }
 
-    //@Test
+    @Test
+    @Disabled //todo
     fun save() {
         assertThat(calleeController.save(Callee("0", "Secret"))!!.message)
             .isEqualTo("Storing your message: Secret")

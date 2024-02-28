@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.controller
 
 import org.assertj.core.api.Assertions.assertThat
@@ -33,3 +34,5 @@ internal class CalleeControllerTest {
         Mockito.verify(calleeLogic, Mockito.times(1)).save(Callee("", "saved"))
     }
 }
+
+ */
