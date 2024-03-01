@@ -18,8 +18,7 @@ import org.springframework.context.annotation.ImportRuntimeHints;
 
 import java.util.concurrent.TimeUnit;
 
-//implementation("org.springframework.boot:spring-boot-starter-cache")
-//implementation("com.github.ben-manes.caffeine:caffeine")
+//implementation("com.github.ben-manes.caffeine:caffeine"); implementation("org.springframework.boot:spring-boot-starter-cache");
 
 @Configuration
 @EnableCaching
@@ -63,4 +62,5 @@ public class CaffeineCacheConfiguration extends CachingConfigurerSupport {
     }
 }
 
-*/
+ */
+
