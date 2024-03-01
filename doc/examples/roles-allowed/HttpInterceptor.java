@@ -38,20 +38,20 @@ public class HttpInterceptor implements HandlerInterceptor {
     }
 
     private static void checkOrganizations(String organizationId, String userName) {
-        List<String> userOrganizationIds = Arrays.asList("5", "7"); //TODO: getRoles(userName, type = "organization") => read roles via DB or REST with every call if not cached
+        var userOrganizationIds = Arrays.asList("5", "7"); //TODO: getRoles(userName, type = "organization") => read roles via DB or REST with every call if not cached
         userOrganizationIds.stream().filter(oid -> !userOrganizationIds.contains(oid)).findAny().ifPresent(oid -> {
             throw new IllegalStateException("not eligable for organization");
         });
     }
 
     private static void checkRoles(HandlerMethod handler, String userName) {
-        List<String> methodRoles = Arrays.asList(handler.getMethodAnnotation(RolesAllowed.class).value());
-        List<String> userRoles = Arrays.asList("READ", "WRITE", "ADDRESS_DELETE"); //TODO: getRoles(userName, type = "backend") => read roles via DB or REST with every call if not cached
+        var methodRoles = Arrays.asList(handler.getMethodAnnotation(RolesAllowed.class).value());
+        var userRoles = Arrays.asList("READ", "WRITE", "ADDRESS_DELETE"); //TODO: getRoles(userName, type = "backend") => read roles via DB or REST with every call if not cached
         methodRoles.stream().filter(role -> !userRoles.contains(role)).findAny().ifPresent(role -> {
             throw new IllegalStateException("not allowed");
         });
     }
-
+    
 }
 
 
