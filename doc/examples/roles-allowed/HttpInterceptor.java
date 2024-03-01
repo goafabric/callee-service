@@ -18,37 +18,40 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.Arrays;
 import java.util.List;
 
-
 //add to existing HttpInterceptor
-@Override
-public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-    tenantId.set(request.getHeader("X-TenantId"));
-    userName.set(request.getHeader("X-Auth-Request-Preferred-Username"));
-    configureLogsAndTracing(request);
+public class HttpInterceptor implements HandlerInterceptor {
 
-    if (handler instanceof HandlerMethod) {
-        log.info(" {} method called for user {} ", ((HandlerMethod) handler).getShortLogMessage(), getUserName());
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        tenantId.set(request.getHeader("X-TenantId"));
+        userName.set(request.getHeader("X-Auth-Request-Preferred-Username"));
+        configureLogsAndTracing(request);
 
-        checkOrganizations(request.getHeader("X-OrganizationId"), getUserName());
-        checkRoles((HandlerMethod) handler, getUserName());
-        //the 2 calls could be merged into one for optimization, as its basically just 2 groups of roles
+        if (handler instanceof HandlerMethod) {
+            log.info(" {} method called for user {} ", ((HandlerMethod) handler).getShortLogMessage(), getUserName());
+
+            checkOrganizations(request.getHeader("X-OrganizationId"), getUserName());
+            checkRoles((HandlerMethod) handler, getUserName());
+            //the 2 calls could be merged into one for optimization, as its basically just 2 groups of roles
+        }
+        return true;
     }
-    return true;
-}
 
-private static void checkOrganizations(String organizationId, String userName) {
-    List<String> userOrganizationIds = Arrays.asList("5", "7"); //TODO: getRoles(userName, type = "organization") => read roles via DB or REST with every call if not cached
-    userOrganizationIds.stream().filter(oid -> !userOrganizationIds.contains(oid)).findAny().ifPresent(oid -> {
-        throw new IllegalStateException("not eligable for organization");
-    });
-}
+    private static void checkOrganizations(String organizationId, String userName) {
+        List<String> userOrganizationIds = Arrays.asList("5", "7"); //TODO: getRoles(userName, type = "organization") => read roles via DB or REST with every call if not cached
+        userOrganizationIds.stream().filter(oid -> !userOrganizationIds.contains(oid)).findAny().ifPresent(oid -> {
+            throw new IllegalStateException("not eligable for organization");
+        });
+    }
 
-private static void checkRoles(HandlerMethod handler, String userName) {
-    List<String> methodRoles = Arrays.asList(handler.getMethodAnnotation(RolesAllowed.class).value());
-    List<String> userRoles = Arrays.asList("READ", "WRITE", "ADDRESS_DELETE"); //TODO: getRoles(userName, type = "backend") => read roles via DB or REST with every call if not cached
-    methodRoles.stream().filter(role -> !userRoles.contains(role)).findAny().ifPresent(role -> {
-        throw new IllegalStateException("not allowed");
-    });
+    private static void checkRoles(HandlerMethod handler, String userName) {
+        List<String> methodRoles = Arrays.asList(handler.getMethodAnnotation(RolesAllowed.class).value());
+        List<String> userRoles = Arrays.asList("READ", "WRITE", "ADDRESS_DELETE"); //TODO: getRoles(userName, type = "backend") => read roles via DB or REST with every call if not cached
+        methodRoles.stream().filter(role -> !userRoles.contains(role)).findAny().ifPresent(role -> {
+            throw new IllegalStateException("not allowed");
+        });
+    }
+
 }
 
 
