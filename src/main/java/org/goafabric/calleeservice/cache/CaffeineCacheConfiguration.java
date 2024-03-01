@@ -22,8 +22,8 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableCaching
-@ImportRuntimeHints(CacheConfiguration.CacheRuntimeHints.class)
-public class CacheConfiguration extends CachingConfigurerSupport {
+@ImportRuntimeHints(CaffeineCacheConfiguration.CacheRuntimeHints.class)
+public class CaffeineCacheConfiguration extends CachingConfigurerSupport {
 
     private Long cacheMaxSize = 1000l;
 
