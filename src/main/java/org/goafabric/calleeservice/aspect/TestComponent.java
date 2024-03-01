@@ -9,21 +9,23 @@ import org.springframework.stereotype.Component;
 @CacheConfig(cacheNames = "test")
 public class TestComponent {
     @Cacheable
-    public void callOnMe() {
+    public Call callOnMe(String id) {
         System.err.println("inside callOnMe");
+        return new Call("0");
     }
 
     @Cacheable
     public Foo getFoo(String id) {
-        return new Foo();
+        return new Foo("1");
     }
 
     @Cacheable
     public Bar getBar(String id) {
-        return new Bar();
+        return new Bar("2");
     }
 
 
-    private static class Foo {}
-    private static class Bar {}
+    private record Call(String id) {}
+    private record Foo(String id) {}
+    private record Bar(String id) {}
 }

@@ -19,11 +19,11 @@ public class AspectComponent {
     }
 
     private void doAspect(TestComponent testComponent) {
-        testComponent.callOnMe();
+        testComponent.callOnMe("0");
     }
 
     private void doCache(TestComponent testComponent) {
-        testComponent.callOnMe(); //when @Cacheable annotated only gets called once
+        testComponent.callOnMe("0"); //when @Cacheable annotated only gets called once
 
         testComponent.getBar("1");
         testComponent.getFoo("1"); //will throw classcast without KeyGenerator
