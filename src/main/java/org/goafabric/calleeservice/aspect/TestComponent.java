@@ -13,17 +13,17 @@ public class TestComponent {
     @Cacheable
     public Call callOnMe(String id) {
         System.err.println("cache missed, inside callOnMe");
-        return new Call("0");
+        return new Call(id);
     }
 
     @Cacheable
     public Foo getFoo(String id) {
-        return new Foo("1");
+        return new Foo(id);
     }
 
     @Cacheable
     public Bar getBar(String id) {
-        return new Bar("2");
+        return new Bar(id);
     }
 
 

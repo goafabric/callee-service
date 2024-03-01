@@ -32,7 +32,7 @@ public class Application {
     private static void doCachingStuff(ConfigurableApplicationContext context) {
         System.err.println(context.getBean(TestComponent.class).callOnMe("0"));
         System.err.println(context.getBean(TestComponent.class).callOnMe("0")); //when @Cachabele annotated only gets called once
-        System.err.println(context.getBean(TestComponent.class).getFoo("0")); //will class cast excpetion without KeyGenerator
+        System.err.println(context.getBean(TestComponent.class).getFoo("1")); //will class cast excpetion without KeyGenerator
     }
 
     @Bean
