@@ -1,6 +1,7 @@
 package org.goafabric.calleeservice;
 
 import org.goafabric.calleeservice.aspect.AspectComponent;
+import org.goafabric.calleeservice.aspect.TestComponent;
 import org.goafabric.calleeservice.reflection.ReflectionComponent;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,7 +23,11 @@ public class Application {
         if (context.isActive()) {
             context.getBean(ReflectionComponent.class).run();
             context.getBean(AspectComponent.class).run(context);
+
+            context.getBean(TestComponent.class).callOnMe();
+            context.getBean(TestComponent.class).callOnMe(); //when @Cachabele annotated only gets called once
         }
+
 
         try { Thread.currentThread().join(1000);} catch (InterruptedException e) {}
     }

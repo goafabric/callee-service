@@ -1,4 +1,3 @@
-/*
 package org.goafabric.calleeservice.cache;
 
 
@@ -18,9 +17,12 @@ import org.springframework.context.annotation.ImportRuntimeHints;
 
 import java.util.concurrent.TimeUnit;
 
+//implementation("org.springframework.boot:spring-boot-starter-cache")
+//implementation("com.github.ben-manes.caffeine:caffeine")
+
 @Configuration
 @EnableCaching
-@ImportRuntimeHints(CacheConfiguration.CacheRuntimeHints.class) //implementation("com.github.ben-manes.caffeine:caffeine")
+@ImportRuntimeHints(CacheConfiguration.CacheRuntimeHints.class)
 public class CacheConfiguration extends CachingConfigurerSupport {
 
     private Long cacheMaxSize = 1000l;
@@ -59,5 +61,3 @@ public class CacheConfiguration extends CachingConfigurerSupport {
     }
 }
 
-
- */
