@@ -1,4 +1,3 @@
-/*
 package org.goafabric.calleeservice.cache;
 
 
@@ -22,8 +21,8 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableCaching
-@ImportRuntimeHints(CaffeineCacheConfiguration.CacheRuntimeHints.class)
-public class CaffeineCacheConfiguration extends CachingConfigurerSupport {
+@ImportRuntimeHints(CaffeineCachingConfiguration.CacheRuntimeHints.class)
+public class CaffeineCachingConfiguration extends CachingConfigurerSupport {
 
     private Long cacheMaxSize = 1000l;
 
@@ -62,5 +61,5 @@ public class CaffeineCacheConfiguration extends CachingConfigurerSupport {
     }
 }
 
- */
+
 
