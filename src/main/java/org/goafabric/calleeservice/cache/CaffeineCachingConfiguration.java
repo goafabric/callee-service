@@ -30,7 +30,6 @@ public class CaffeineCachingConfiguration implements CachingConfigurer {
     private Long cacheExpiry = 10l;
 
     @Bean
-    @Override
     public CacheManager cacheManager() {
         final CaffeineCacheManager cacheManager = new CaffeineCacheManager();
         cacheManager.setCaffeine(Caffeine.newBuilder()
@@ -40,7 +39,6 @@ public class CaffeineCachingConfiguration implements CachingConfigurer {
     }
 
     @Bean
-    @Override
     public KeyGenerator keyGenerator() {
         return (target, method, params) -> {
             var tenantId = "0"; //HttpInterceptor.getTenantID()

@@ -2,7 +2,7 @@
 package org.goafabric.calleeservice.cache;
 
 
-import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.interceptor.SimpleKey;
@@ -20,7 +20,7 @@ import java.time.Duration;
 @Configuration
 @EnableCaching
 //@RegisterReflectionForBinding({TestComponent.Foo.class, TestComponent.Call.class, TestComponent.Bar.class}) //classes that are cached need to be registered for Reflection
-public class RedisCachingConfiguration extends CachingConfigurerSupport {
+public class RedisCachingConfiguration implements CachingConfigurer {
 
     private Long cacheMaxSize = 1000l;
 
@@ -35,7 +35,6 @@ public class RedisCachingConfiguration extends CachingConfigurerSupport {
     }
 
     @Bean
-    @Override
     public KeyGenerator keyGenerator() {
         return (target, method, params) -> {
             var tenantId = "0"; //HttpInterceptor.getTenantID()
@@ -43,7 +42,6 @@ public class RedisCachingConfiguration extends CachingConfigurerSupport {
             return new SimpleKey(tenantId, organizationId, method.getName(), params);
         };
     }
-
 }
-
 */
+
