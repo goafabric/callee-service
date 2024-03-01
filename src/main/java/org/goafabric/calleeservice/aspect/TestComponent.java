@@ -6,13 +6,13 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 @Component
-@TestAnnotation
+//@TestAnnotation
 @CacheConfig(cacheNames = "test")
 @RegisterReflectionForBinding({TestComponent.Foo.class, TestComponent.Call.class, TestComponent.Bar.class})
 public class TestComponent {
     @Cacheable
     public Call callOnMe(String id) {
-        System.err.println("inside callOnMe");
+        System.err.println("cache missed, inside callOnMe");
         return new Call("0");
     }
 

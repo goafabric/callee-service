@@ -1,7 +1,6 @@
 package org.goafabric.calleeservice;
 
 import org.goafabric.calleeservice.aspect.TestComponent;
-import org.goafabric.calleeservice.reflection.ReflectionComponent;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,7 +20,7 @@ public class Application {
         var context = SpringApplication.run(Application.class, args);
 
         if (context.isActive()) {
-            context.getBean(ReflectionComponent.class).run();
+            //context.getBean(ReflectionComponent.class).run();
 
             //caching stuff
             doCachingStuff(context);

@@ -1,6 +1,5 @@
 package org.goafabric.calleeservice.aspect;
 
-import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -33,7 +32,7 @@ public class AspectComponent {
 
         @Override
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
-            hints.reflection().registerType(TestAspect.class, MemberCategory.INVOKE_DECLARED_METHODS);
+            //hints.reflection().registerType(TestAspect.class, MemberCategory.INVOKE_DECLARED_METHODS);
         }
     }
 
