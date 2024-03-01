@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.cache;
 
 
@@ -6,7 +7,7 @@ import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.cache.interceptor.KeyGenerator;
@@ -22,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @EnableCaching
 @ImportRuntimeHints(CaffeineCachingConfiguration.CacheRuntimeHints.class)
-public class CaffeineCachingConfiguration extends CachingConfigurerSupport {
+public class CaffeineCachingConfiguration implements CachingConfigurer {
 
     private Long cacheMaxSize = 1000l;
 
@@ -60,3 +61,4 @@ public class CaffeineCachingConfiguration extends CachingConfigurerSupport {
         }
     }
 }
+*/
