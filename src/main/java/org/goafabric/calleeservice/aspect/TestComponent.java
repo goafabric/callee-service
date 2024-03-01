@@ -1,5 +1,6 @@
 package org.goafabric.calleeservice.aspect;
 
+import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @TestAnnotation
 @CacheConfig(cacheNames = "test")
+@RegisterReflectionForBinding({TestComponent.Foo.class, TestComponent.Call.class, TestComponent.Bar.class})
 public class TestComponent {
     @Cacheable
     public Call callOnMe(String id) {
@@ -25,7 +27,7 @@ public class TestComponent {
     }
 
 
-    private record Call(String id) {}
-    private record Foo(String id) {}
-    private record Bar(String id) {}
+    record Call(String id) {}
+    record Foo(String id) {}
+    record Bar(String id) {}
 }

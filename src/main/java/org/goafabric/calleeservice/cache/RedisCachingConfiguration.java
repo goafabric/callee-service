@@ -13,11 +13,12 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 import java.time.Duration;
 
-//implementation("org.springframework.boot:spring-boot-starter-data-redis"); implementation("org.springframework.boot:spring-boot-starter-cache");
+//implementation("org.springframework.boot:spring-boot-starter-data-redis"); implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml"); implementation("org.springframework.boot:spring-boot-starter-cache");
 
 @Configuration
 @EnableCaching
-public class MyRedisCacheConfiguration extends CachingConfigurerSupport {
+//@RegisterReflectionForBinding({TestComponent.Foo.class, TestComponent.Call.class, TestComponent.Bar.class}) //classes that are cached need to be registered for Reflection
+public class RedisCachingConfiguration extends CachingConfigurerSupport {
 
     private Long cacheMaxSize = 1000l;
 
@@ -27,7 +28,7 @@ public class MyRedisCacheConfiguration extends CachingConfigurerSupport {
     public RedisCacheConfiguration cacheConfiguration() {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofMinutes(cacheExpiry))
-                //.disableCachingNullValues()
+                .disableCachingNullValues()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
     }
 
