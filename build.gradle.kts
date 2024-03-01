@@ -40,12 +40,12 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-aop")
 
 	//implementation("com.github.ben-manes.caffeine:caffeine"); implementation("org.springframework.boot:spring-boot-starter-cache");
-	implementation("org.springframework.boot:spring-boot-starter-data-redis"); implementation("org.springframework.boot:spring-boot-starter-cache");
+	implementation("org.springframework.boot:spring-boot-starter-data-redis"); implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml"); implementation("org.springframework.boot:spring-boot-starter-cache");
 
 	//s3
 	//implementation("am.ik.s3:simple-s3-client:0.1.1") {exclude("org.springframework", "spring-web")}; implementation("org.springframework.boot:spring-boot-starter-web");
 	//implementation("io.awspring.cloud:spring-cloud-aws-starter-s3:3.1.0")
-	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
+
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
