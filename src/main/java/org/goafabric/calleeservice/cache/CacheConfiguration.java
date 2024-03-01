@@ -43,8 +43,9 @@ public class CacheConfiguration extends CachingConfigurerSupport {
     @Override
     public KeyGenerator keyGenerator() {
         return (target, method, params) -> {
-            final String tenantId = "0"; //HttpInterceptor.getTenantID()
-            return new SimpleKey(tenantId, method.getName(), params);
+            var tenantId = "0"; //HttpInterceptor.getTenantID()
+            var organizationId = "1"; //HttpInterceptor.getOrganizationId()
+            return new SimpleKey(tenantId, organizationId, method.getName(), params);
         };
     }
 
