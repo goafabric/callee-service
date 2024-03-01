@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 
@@ -23,13 +24,16 @@ public class Application {
             context.getBean(ReflectionComponent.class).run();
 
             //caching stuff
-            System.err.println(context.getBean(TestComponent.class).callOnMe("0"));
-            System.err.println(context.getBean(TestComponent.class).callOnMe("0")); //when @Cachabele annotated only gets called once
-            System.err.println(context.getBean(TestComponent.class).getFoo("0")); //will class cast excpetion without KeyGenerator
+            doCachingStuff(context);
         }
 
-
         try { Thread.currentThread().join(1000);} catch (InterruptedException e) {}
+    }
+
+    private static void doCachingStuff(ConfigurableApplicationContext context) {
+        System.err.println(context.getBean(TestComponent.class).callOnMe("0"));
+        System.err.println(context.getBean(TestComponent.class).callOnMe("0")); //when @Cachabele annotated only gets called once
+        System.err.println(context.getBean(TestComponent.class).getFoo("0")); //will class cast excpetion without KeyGenerator
     }
 
     @Bean
