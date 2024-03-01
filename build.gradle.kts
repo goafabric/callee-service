@@ -39,8 +39,7 @@ dependencies {
 	//crosscuting
 	implementation("org.springframework.boot:spring-boot-starter-aop")
 
-	implementation("org.springframework.boot:spring-boot-starter-cache")
-	implementation("com.github.ben-manes.caffeine:caffeine")
+	//implementation("org.springframework.boot:spring-boot-starter-cache"); implementation("com.github.ben-manes.caffeine:caffeine")
 
 	//s3
 	//implementation("am.ik.s3:simple-s3-client:0.1.1") {exclude("org.springframework", "spring-web")}; implementation("org.springframework.boot:spring-boot-starter-web");
