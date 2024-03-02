@@ -1,6 +1,9 @@
-/*
+package org.goafabric.calleeservice.s3;/*
 package org.goafabric.calleeservice.s3;
 
+import am.ik.s3.ListBucketResult;
+import am.ik.s3.ListBucketsResult;
+import am.ik.s3.S3Client;
 import jakarta.annotation.PostConstruct;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,20 +15,30 @@ import java.net.URI;
 import java.util.List;
 
 @Component
-@RegisterReflectionForBinding({AmIkS3Client.ListBucketResult.class, AmIkS3Client.ListBucketsResult.class})
-public class ObjectStorageLogicNative {
+@RegisterReflectionForBinding({ListBucketResult.class, ListBucketsResult.class}) //implementation("am.ik.s3:simple-s3-client:0.1.1") {exclude("org.springframework", "spring-web")}
+public class ObjectStorageLogicNativeHack {
 
-    private final AmIkS3Client s3Client;
+    private final S3Client s3Client;
     
     private String schemaPrefix;
-    
-    public ObjectStorageLogicNative(@Value("${multi-tenancy.schema-prefix:}") String schemaPrefix,
-                                    @Value("${spring.cloud.aws.s3.endpoint}") String endPoint,
-                                    @Value("${spring.cloud.aws.region.static}") String region,
-                                    @Value("${spring.cloud.aws.credentials.access-key}") String accessKey,
-                                    @Value("${spring.cloud.aws.credentials.secret-key}") String secretKey) {
-        this.s3Client = new AmIkS3Client(new RestTemplate(), URI.create(endPoint), region, accessKey, secretKey);
+
+    private ThreadLocal<String> contentType = new ThreadLocal<>();
+
+    public ObjectStorageLogicNativeHack(@Value("${multi-tenancy.schema-prefix:}") String schemaPrefix,
+                                        @Value("${spring.cloud.aws.s3.endpoint}") String endPoint,
+                                        @Value("${spring.cloud.aws.region.static}") String region,
+                                        @Value("${spring.cloud.aws.credentials.access-key}") String accessKey,
+                                        @Value("${spring.cloud.aws.credentials.secret-key}") String secretKey) {
+        var restTemplate = new RestTemplate();
+        this.s3Client = new S3Client(restTemplate, URI.create(endPoint), region, accessKey, secretKey);
         this.schemaPrefix = schemaPrefix;
+
+        restTemplate.getInterceptors().add((request, body, execution) -> {
+            var response = execution.execute(request, body);
+            contentType.set(response.getHeaders().getFirst("Content-Type"));
+            return response;
+        });
+
     }
 
     @PostConstruct
@@ -33,9 +46,10 @@ public class ObjectStorageLogicNative {
         save(
                 new ObjectEntry("hello_world.txt", "text/plain",
                         Long.valueOf("hello world".length()), "hello world".getBytes()));
-        var objectEntry = getById("hello_world.txt");
-        System.err.println("getById : " + objectEntry);
-        search("hello").stream().forEach(s -> System.err.println("fromlist : " + s.toString()));
+        System.err.println("getById : " + getById("hello_world.txt"));
+        System.err.println("getById2 : " + getById("hello_world.txt"));
+        //search("hello").stream().forEach(s -> System.err.println("fromlist : " + s.toString()));
+
     }
 
     public void save(ObjectEntry objectEntry) {
@@ -45,10 +59,8 @@ public class ObjectStorageLogicNative {
     }
 
     public ObjectEntry getById(String id) {
-        //var data = s3Client.getObject(getBucketName(), id);
-        var response = s3Client.getObjectAndMetadata(getBucketName(), id);
-        var data = response.getBody();
-        return new ObjectEntry(id, response.getHeaders().getFirst("Content-Type"), (long) data.length, data);
+        var data = s3Client.getObject(getBucketName(), id);
+        return new ObjectEntry(id, contentType.get(), (long) data.length, data);
     }
 
     public List<ObjectEntry> search(String search) {
@@ -77,5 +89,7 @@ public class ObjectStorageLogicNative {
             byte[] data)
     {}
 }
-*/
+
+ */
+
 

@@ -1,4 +1,4 @@
-/*
+package org.goafabric.calleeservice.s3;/*
 package org.goafabric.calleeservice.s3;
 
 import io.awspring.cloud.autoconfigure.config.parameterstore.ParameterStorePropertySources;
