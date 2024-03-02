@@ -23,7 +23,7 @@ public class Application {
             //context.getBean(ReflectionComponent.class).run();
 
             //caching stuff
-            doCachingStuff(context);
+            //doCachingStuff(context);
         }
 
         try { Thread.currentThread().join(1000);} catch (InterruptedException e) {}
