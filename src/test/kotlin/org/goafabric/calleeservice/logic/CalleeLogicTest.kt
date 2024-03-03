@@ -22,6 +22,6 @@ internal class CalleeLogicTest {
     @Test
     fun save() {
         assertThat(calleeLogic.save(Callee("0", "saved by the bell"))!!.message)
-            .isEqualTo("Storing your message: saved by the bell")
+            .isEqualTo("Storing your message: Callee(id=0, message=saved by the bell).message")
     }
 }
