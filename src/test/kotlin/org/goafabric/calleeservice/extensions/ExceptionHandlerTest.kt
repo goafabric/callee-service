@@ -15,7 +15,7 @@ internal class ExceptionHandlerTest {
 
     @Test
     fun handleIllegalStateException() {
-        assertThat(exceptionHandler.handleIllegalStateException(IllegalStateException("illegal state")).getStatusCode())
+        assertThat(exceptionHandler.handleIllegalStateException(IllegalStateException("illegal state")).statusCode)
             .isEqualTo(HttpStatus.PRECONDITION_FAILED)
     }
 
