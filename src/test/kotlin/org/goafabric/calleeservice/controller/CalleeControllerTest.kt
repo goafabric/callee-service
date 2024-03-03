@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.goafabric.calleeservice.logic.CalleeLogic
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
+import org.mockito.Mockito.*
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
 
@@ -33,6 +33,6 @@ internal class CalleeControllerTest {
         `when`(calleeLogic.save(any())).thenReturn(Callee("", "saved"))
         assertThat(calleController.save(Callee("", "saved"))!!.message)
             .isEqualTo("saved")
-        Mockito.verify(calleeLogic, Mockito.times(1)).save(Callee("", "saved"))
+        verify(calleeLogic, times(1)).save(Callee("", "saved"))
     }
 }
