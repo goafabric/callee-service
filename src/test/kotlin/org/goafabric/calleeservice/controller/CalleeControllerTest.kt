@@ -10,7 +10,7 @@ import org.mockito.kotlin.whenever
 
 
 internal class CalleeControllerTest {
-    private val calleeLogic: CalleeLogic = mock(CalleeLogic::class.java)
+    private val calleeLogic: CalleeLogic = mock()
     private val calleController = CalleeController(calleeLogic)
 
     @Test

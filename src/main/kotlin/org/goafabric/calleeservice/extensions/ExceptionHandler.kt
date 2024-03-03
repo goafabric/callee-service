@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 
 @ControllerAdvice
 class ExceptionHandler {
-    private val log = LoggerFactory.getLogger(this.javaClass)
+    private val log = LoggerFactory.getLogger(this.javaClass.name)
 
     @org.springframework.web.bind.annotation.ExceptionHandler(IllegalArgumentException::class)
     fun handleIllegalArgumentException(ex: IllegalArgumentException): ResponseEntity<String?> {

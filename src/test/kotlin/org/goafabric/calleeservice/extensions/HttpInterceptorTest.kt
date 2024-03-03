@@ -13,8 +13,8 @@ internal class HttpInterceptorTest {
     fun preHandle() {
         assertThat(
             httpInterceptor.preHandle(
-                mock(HttpServletRequest::class.java),
-                mock(HttpServletResponse::class.java), Any()
+                mock(),
+                mock(), Any()
             )
         ).isTrue()
     }
