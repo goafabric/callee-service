@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.goafabric.calleeservice.logic.CalleeLogic
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
 
@@ -14,14 +15,14 @@ internal class CalleeControllerTest {
 
     @Test
     fun sayMyName() {
-        Mockito.`when`(calleeLogic.sayMyName(eq("Heisenberg"))).thenReturn(Callee("", "Heisenberg"))
+        `when`(calleeLogic.sayMyName(eq("Heisenberg"))).thenReturn(Callee("", "Heisenberg"))
         assertThat(calleController.sayMyName("Heisenberg").message)
             .isEqualTo("Heisenberg")
     }
 
     @Test
     fun sayMyOtherName() {
-        Mockito.`when`(calleeLogic.sayMyOtherName(eq("Slim Shady")))
+        `when`(calleeLogic.sayMyOtherName(eq("Slim Shady")))
             .thenReturn(Callee("", "Slim Shady"))
         assertThat(calleController.sayMyOtherName("Slim Shady").message)
             .isEqualTo("Slim Shady")
@@ -29,7 +30,7 @@ internal class CalleeControllerTest {
 
     @Test
     fun save() {
-        Mockito.`when`(calleeLogic.save(any())).thenReturn(Callee("", "saved"))
+        `when`(calleeLogic.save(any())).thenReturn(Callee("", "saved"))
         assertThat(calleController.save(Callee("", "saved"))!!.message)
             .isEqualTo("saved")
         Mockito.verify(calleeLogic, Mockito.times(1)).save(Callee("", "saved"))
