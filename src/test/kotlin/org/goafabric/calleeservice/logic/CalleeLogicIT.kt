@@ -18,7 +18,7 @@ internal class CalleeLogicIT(
     @Test
     fun sayMyOtherName() {
         assertThat(calleeLogic.sayMyOtherName("SlimShady").message)
-            .isNotNull.isEqualTo("Your name is: SlimShady");
+            .isNotNull.isEqualTo("Your other name is: SlimShady");
     }
 
 }

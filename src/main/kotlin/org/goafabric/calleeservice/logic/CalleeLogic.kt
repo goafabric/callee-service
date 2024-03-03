@@ -10,7 +10,7 @@ class CalleeLogic {
     }
 
     fun sayMyOtherName (name : String) : Callee {
-        return Callee(id = "0", message = "Your name is: $name")
+        return Callee(id = "0", message = "Your other name is: $name")
     }
 
 

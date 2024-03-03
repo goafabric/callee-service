@@ -16,7 +16,7 @@ import java.time.Duration
 import java.util.*
 
 @Configuration
-class CalleeServiceAdapterConfiguration {
+class AdapterConfiguration {
     @Bean
     fun restTemplate(
         @Value("\${adapter.calleeservice.user}") user: String?,
