@@ -9,11 +9,9 @@ import org.springframework.boot.SpringApplication
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.Customizer
+import org.springframework.http.server.observation.ServerRequestObservationContext
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer.AuthorizationManagerRequestMatcherRegistry
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
-import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer
 import org.springframework.security.web.SecurityFilterChain
 
 
@@ -47,9 +45,10 @@ class ApplicationRunner {
 
 
     @Bean
-    fun disableHttpServerObservationsFromName(): ObservationPredicate? {
-        return ObservationPredicate { name: String, _: Observation.Context? -> !name.startsWith("spring.security.") }
+    fun disableHttpServerObservationsFromName(): ObservationPredicate {
+        return ObservationPredicate { name: String, context: Observation.Context? ->
+            !(name.startsWith("spring.security.") || (context is ServerRequestObservationContext && context.carrier.requestURI.startsWith("/actuator")))
+        }
     }
-
 
 }
