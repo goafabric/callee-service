@@ -19,4 +19,7 @@ public class MapReduceTest {
     }
 
 
+    //persons.filter { p -> p.lastName == "Simpson" }
+    //persons.stream().filter(p -> p.getLastName().equals("Simpson")).toList();
+
 }
