@@ -66,6 +66,10 @@ public class HttpInterceptor implements HandlerInterceptor {
         return tenantContext.get().tenantId != null ? tenantContext.get().tenantId() : "0"; //tdo
     }
 
+    public static String getOrganizationId() {
+        return tenantContext.get().organizationId != null ? tenantContext.get().organizationId() : "1"; //tdo
+    }
+
     public static String getUserName() {
         return tenantContext.get().userName != null ? tenantContext.get().userName
                 : SecurityContextHolder.getContext().getAuthentication() != null ? SecurityContextHolder.getContext().getAuthentication().getName() : "";
