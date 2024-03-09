@@ -20,7 +20,7 @@
 - Auditing, Multi Tenancy
  
 # Local Graalvm build Times 
-- Service without JPA: 1m 40s 
+- Service without JPA: 1m 20s 
 - Service with JPA: 3m 20s (2m on Pro)
 
 # Github Paketo Liberica Build Times
