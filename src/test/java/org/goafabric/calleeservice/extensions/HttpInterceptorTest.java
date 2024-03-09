@@ -20,11 +20,11 @@ class HttpInterceptorTest {
 
     @Test
     void getTenantId() {
-        assertThat(HttpInterceptor.getTenantId()).isEqualTo("0");
+        assertThat(TenantContext.getTenantId()).isEqualTo("0");
     }
 
     @Test
     void getUserName() {
-        assertThat(HttpInterceptor.getUserName()).isEqualTo("");
+        assertThat(TenantContext.getUserName()).isEqualTo("");
     }
 }
