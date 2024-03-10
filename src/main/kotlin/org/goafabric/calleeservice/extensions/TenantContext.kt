@@ -5,6 +5,16 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 
 object TenantContext {
+    data class TenantContextRecord(val tenantId: String?, val organizationId: String?, val userName: String?) {
+        fun toAdapterHeaderMap(): Map<String, String?> {
+            return java.util.Map.of(
+                "X-TenantId", tenantId,
+                "X-OrganizationId", organizationId,
+                "X-Auth-Request-Preferred-Username", userName
+            )
+        }
+    }
+
     private val tenantContext: ThreadLocal<TenantContextRecord> =
         ThreadLocal.withInitial { TenantContextRecord(null, null, null) }
 
@@ -50,18 +60,4 @@ object TenantContext {
 
     private val authentication: Authentication?
         get() = SecurityContextHolder.getContext().authentication
-
-
-    data class TenantContextRecord(val tenantId: String?, val organizationId: String?, val userName: String?) {
-        fun toAdapterHeaderMap(): Map<String, String?> {
-            return java.util.Map.of(
-                "X-TenantId",
-                tenantId,
-                "X-OrganizationId",
-                organizationId,
-                "X-Auth-Request-Preferred-Username",
-                userName
-            )
-        }
-    }
 }
