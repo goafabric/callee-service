@@ -35,11 +35,11 @@ public class TenantContext {
     }
 
     public static String getTenantId() {
-        return tenantContext.get().tenantId() != null ? tenantContext.get().tenantId() : "0"; //we should throw an exception here
+        return tenantContext.get().tenantId() != null ? tenantContext.get().tenantId() : "0";
     }
 
     public static String getOrganizationId() {
-        return tenantContext.get().organizationId() != null ? tenantContext.get().organizationId() : "0"; //we should throw an exception here
+        return tenantContext.get().organizationId() != null ? tenantContext.get().organizationId() : "0";
     }
 
     public static Map<String, String> getAdapterHeaderMap() {
