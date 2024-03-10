@@ -42,13 +42,13 @@ public class TenantContext {
         return tenantContext.get().organizationId() != null ? tenantContext.get().organizationId() : "0";
     }
 
-    public static Map<String, String> getAdapterHeaderMap() {
-        return tenantContext.get().toAdapterHeaderMap();
-    }
-
     public static String getUserName() {
         return (getAuthentication() != null) && !(getAuthentication().getName().equals("anonymousUser")) ? getAuthentication().getName()
                 : tenantContext.get().userName != null ? tenantContext.get().userName : "anonymous";
+    }
+
+    public static Map<String, String> getAdapterHeaderMap() {
+        return tenantContext.get().toAdapterHeaderMap();
     }
 
     private static Authentication getAuthentication() {
