@@ -1,6 +1,7 @@
 package org.goafabric.calleeservice.extensions;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Map;
@@ -9,16 +10,20 @@ public class TenantContext {
     private static final ThreadLocal<TenantContextRecord> tenantContext = ThreadLocal.withInitial(() -> new TenantContextRecord(null, null, null));
 
     record TenantContextRecord(String tenantId, String organizationId, String userName) {
-        public TenantContextRecord(HttpServletRequest request) {
-            this(request.getHeader("X-TenantId"), request.getHeader("X-OrganizationId"), request.getHeader("X-Auth-Request-Preferred-Username"));
-        }
-        public Map<String, String> toMap() {
+        public Map<String, String> toAdapterHeaderMap() {
             return Map.of("X-TenantId", tenantId, "X-OrganizationId", organizationId, "X-Auth-Request-Preferred-Username", userName);
         }
     }
 
     public static void setContext(HttpServletRequest request) {
-        tenantContext.set(new TenantContextRecord(request));
+        tenantContext.set(new TenantContextRecord(
+                request.getHeader("X-TenantId"),
+                request.getHeader("X-OrganizationId"),
+                request.getHeader("X-Auth-Request-Preferred-Username")));
+    }
+
+    static void setContext(TenantContextRecord tenantContextRecord) {
+        tenantContext.set(tenantContextRecord);
     }
 
     public static void removeContext() {
@@ -38,12 +43,17 @@ public class TenantContext {
     }
 
     public static Map<String, String> getMap() {
-        return tenantContext.get().toMap();
+        return tenantContext.get().toAdapterHeaderMap();
     }
 
     public static String getUserName() {
-        return tenantContext.get().userName != null ? tenantContext.get().userName
-                : SecurityContextHolder.getContext().getAuthentication() != null ? SecurityContextHolder.getContext().getAuthentication().getName() : "";
+        return (getAuthentication() != null) && !(getAuthentication().getName().equals("anonymousUser")) ? getAuthentication().getName()
+                : tenantContext.get().userName != null ? tenantContext.get().userName : "anonymous";
     }
+
+    private static Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
+
 
 }
