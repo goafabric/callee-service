@@ -42,7 +42,7 @@ public class TenantContext {
         return tenantContext.get().organizationId() != null ? tenantContext.get().organizationId() : "1";
     }
 
-    public static Map<String, String> getMap() {
+    public static Map<String, String> getAdapterHeaderMap() {
         return tenantContext.get().toAdapterHeaderMap();
     }
 

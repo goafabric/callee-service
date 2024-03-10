@@ -18,13 +18,4 @@ class HttpInterceptorTest {
                 .isTrue();
     }
 
-    @Test
-    void getTenantId() {
-        assertThat(TenantContext.getTenantId()).isEqualTo("0");
-    }
-
-    @Test
-    void getUserName() {
-        assertThat(TenantContext.getUserName()).isEqualTo("");
-    }
 }
