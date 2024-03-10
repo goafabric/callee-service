@@ -15,7 +15,7 @@ class TenantContextTest {
     @Test
     void getOrganizationId() {
         TenantContext.setContext(new TenantContext.TenantContextRecord(null, null, null));
-        assertThat(TenantContext.getOrganizationId()).isEqualTo("1");
+        assertThat(TenantContext.getOrganizationId()).isEqualTo("0");
     }
 
     @Test
