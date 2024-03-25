@@ -28,5 +28,10 @@ public class CalleeController {
         return calleeLogic.save(callee);
     }
 
+    @GetMapping("setSleepTime")
+    public Callee setSleepTime(@RequestParam("sleepTime") Long sleepTime) {
+        return calleeLogic.setSleepTime(sleepTime);
+    }
+
 }
 
