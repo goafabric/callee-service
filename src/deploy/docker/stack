@@ -2,6 +2,7 @@
 source .values
 export COMMAND=$1
 export OPTION=$2
+export _Values_image_tag=$(grep '^version=' ../../../gradle.properties | cut -d'=' -f2)
 
 [[ "$(uname -m)" == "arm64" || "$(uname -m)" == "aarch64" ]] && export _Values_server_arch="-arm64v8"
 export _Values_image_native="" && [[ "${OPTION}" = "-native" ]] && export _Values_image_native=-native${_Values_server_arch} && export _Values_resources_entrypoint=${_Values_resources_entrypoint_native} && export _Values_health_check_disabled=true
