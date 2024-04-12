@@ -41,11 +41,11 @@ public class ObjectStorageLogicNew {
                                  @Value("${spring.cloud.aws.credentials.secret-key}") String secretKey) {
         this.s3Enabled = s3Enabled;
         this.schemaPrefix = schemaPrefix;
-        this.restClient = RestClient.builder().messageConverters(httpMessageConverters -> httpMessageConverters.add(new MappingJackson2XmlHttpMessageConverter())).build();
         this.endPoint = endPoint;
         this.region = region;
         this.accessKey = accessKey;
         this.secretKey = secretKey;
+        this.restClient = RestClient.builder().messageConverters(httpMessageConverters -> httpMessageConverters.add(new MappingJackson2XmlHttpMessageConverter())).build();
     }
 
     public ObjectEntry getById(String id) {
