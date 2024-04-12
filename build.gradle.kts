@@ -14,6 +14,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.4"
 	id("org.graalvm.buildtools.native") version "0.9.28"
 	id("com.google.cloud.tools.jib") version "3.4.2"
+	id("net.researchgate.release") version "3.0.2"
 
 	kotlin("jvm") version "1.9.23"
 	kotlin("plugin.spring") version "1.9.23"
@@ -88,6 +89,9 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	}
 }
 
-graalvmNative { //https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html#configuration-options
-	binaries.named("main") { quickBuild.set(true) }
+graalvmNative { binaries.named("main") { quickBuild.set(true) } }
+
+configure<net.researchgate.release.ReleaseExtension> {
+	buildTasks.set(listOf("build", "test", "jib", "dockerImageNative"))
+	tagTemplate.set("v${version}".replace("-SNAPSHOT", ""))
 }
