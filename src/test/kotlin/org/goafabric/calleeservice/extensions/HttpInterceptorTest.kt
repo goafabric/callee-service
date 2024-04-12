@@ -21,12 +21,12 @@ internal class HttpInterceptorTest {
 
     @Test
     fun getTenantId() {
-        assertThat(HttpInterceptor.getTenantId()).isEqualTo("0")
+        assertThat(TenantContext.tenantId).isEqualTo("0")
     }
 
     @Test
     fun getUserName() {
-        assertThat(HttpInterceptor.getUserName()).isEqualTo("")
+        assertThat(TenantContext.userName).isEqualTo("anonymous")
     }
 
 }
