@@ -77,3 +77,17 @@ jobs:
         with:
           gradle-version: 8.7
           arguments: release -Prelease.useAutomaticVersion=true
+
+      - name: Get Latest Tag
+        id: latest_tag
+        run: echo "tag=$(git describe --abbrev=0 --tags)" >> $GITHUB_OUTPUT
+
+      - name: Github Release
+        id: create_release
+        uses: ncipollo/release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag: ${{ steps.latest_tag.outputs.tag }}
+          body: |
+            [Release Notes](doc/release-notes.md)
