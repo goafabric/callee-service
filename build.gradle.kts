@@ -15,8 +15,8 @@ plugins {
 	id("org.graalvm.buildtools.native") version "0.9.28"
 	id("com.google.cloud.tools.jib") version "3.4.2"
 
-	kotlin("jvm") version "1.9.22"
-	kotlin("plugin.spring") version "1.9.22"
+	kotlin("jvm") version "1.9.23"
+	kotlin("plugin.spring") version "1.9.23"
 }
 
 repositories {
