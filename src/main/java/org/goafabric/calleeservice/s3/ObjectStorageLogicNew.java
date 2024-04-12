@@ -53,9 +53,7 @@ public class ObjectStorageLogicNew {
         if (!s3Enabled) { return objectEntriesInMem.stream().filter(o -> o.objectName().equals(id)).findFirst().get(); }
 
         var request = s3RequestPath(HttpMethod.GET, id).build();
-        var response = restClient.get().uri(request.uri()).headers(request.headers()).retrieve()
-                .toEntity(byte[].class);
-
+        var response = restClient.get().uri(request.uri()).headers(request.headers()).retrieve().toEntity(byte[].class);
         return new ObjectEntry(id, response.getHeaders().getFirst("Content-Type"), (long) response.getBody().length, response.getBody());
     }
 
@@ -88,7 +86,7 @@ public class ObjectStorageLogicNew {
     }
 
     private void createBucketIfNotExists(String bucket) {
-        var request = s3RequestPathNone(HttpMethod.GET).build();
+        var request = s3Path(HttpMethod.GET).path(b -> b).build();
 
         var response = restClient.get().uri(request.uri()).headers(request.headers()).retrieve()
                 .toEntity(ListBucketsResult.class).getBody();
@@ -100,26 +98,16 @@ public class ObjectStorageLogicNew {
     }
 
     private S3RequestBuilders.Optionals s3RequestPath(HttpMethod httpMethod, String key) {
-        try {
-            return s3Request().endpoint(new URI(endPoint))
-                    .region(region)
-                    .accessKeyId(accessKey)
-                    .secretAccessKey(secretKey)
-                    .method(httpMethod)
-                    .path(b -> b.bucket(getBucketName()).key(key));
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+        return s3Path(httpMethod).path(b -> b.bucket(getBucketName()).key(key));
     }
 
-    private S3RequestBuilders.Optionals s3RequestPathNone(HttpMethod httpMethod) {
+    private S3RequestBuilders.Path s3Path(HttpMethod httpMethod) {
         try {
             return s3Request().endpoint(new URI(endPoint))
                     .region(region)
                     .accessKeyId(accessKey)
                     .secretAccessKey(secretKey)
-                    .method(httpMethod)
-                    .path(b -> b);
+                    .method(httpMethod);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
