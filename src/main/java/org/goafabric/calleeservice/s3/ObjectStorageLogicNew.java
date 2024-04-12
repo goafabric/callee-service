@@ -41,8 +41,7 @@ public class ObjectStorageLogicNew {
                                  @Value("${spring.cloud.aws.credentials.secret-key}") String secretKey) {
         this.s3Enabled = s3Enabled;
         this.schemaPrefix = schemaPrefix;
-        this.restClient = RestClient.builder().messageConverters(httpMessageConverters
-                -> httpMessageConverters.add(new MappingJackson2XmlHttpMessageConverter())).build();
+        this.restClient = RestClient.builder().messageConverters(httpMessageConverters -> httpMessageConverters.add(new MappingJackson2XmlHttpMessageConverter())).build();
         this.endPoint = endPoint;
         this.region = region;
         this.accessKey = accessKey;
@@ -63,7 +62,7 @@ public class ObjectStorageLogicNew {
     public List<ObjectEntry> search(String search) {
         if (!s3Enabled) { return objectEntriesInMem.stream().filter(o -> o.objectName().startsWith(search)).toList(); }
 
-        var request = s3RequestPath(HttpMethod.GET, getBucketName()).build();
+        var request = s3RequestPath(HttpMethod.GET, null).build();
         var response = restClient.get().uri(request.uri()).headers(request.headers()).retrieve()
                 .toEntity(ListBucketResult.class).getBody();
 
@@ -95,13 +94,9 @@ public class ObjectStorageLogicNew {
                 .toEntity(ListBucketsResult.class).getBody();
 
         if (response.buckets().stream().noneMatch(b -> b.name().equals(bucket))) { //this could be slow
-            var request2 = s3RequestPath(HttpMethod.PUT).build();
+            var request2 = s3RequestPath(HttpMethod.PUT, null).build();
             restClient.put().uri(request2.uri()).headers(request2.headers()).retrieve().toBodilessEntity();
         }
-    }
-
-    private S3RequestBuilders.Optionals s3RequestPath(HttpMethod httpMethod) {
-        return s3RequestPath(httpMethod, null);
     }
 
     private S3RequestBuilders.Optionals s3RequestPath(HttpMethod httpMethod, String key) {
