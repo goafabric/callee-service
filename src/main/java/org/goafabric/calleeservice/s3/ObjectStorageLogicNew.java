@@ -48,7 +48,6 @@ public class ObjectStorageLogicNew {
         this.secretKey = secretKey;
     }
 
-
     public ObjectEntry getById(String id) {
         if (!s3Enabled) { return objectEntriesInMem.stream().filter(o -> o.objectName().equals(id)).findFirst().get(); }
 
@@ -87,7 +86,6 @@ public class ObjectStorageLogicNew {
 
     private void createBucketIfNotExists(String bucket) {
         var request = s3Path(HttpMethod.GET).path(b -> b).build();
-
         var response = restClient.get().uri(request.uri()).headers(request.headers()).retrieve()
                 .toEntity(ListBucketsResult.class).getBody();
 
