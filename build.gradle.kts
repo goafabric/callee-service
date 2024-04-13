@@ -17,6 +17,7 @@ plugins {
 	id("com.google.cloud.tools.jib") version "3.4.2"
 	id("net.researchgate.release") version "3.0.2"
 	id("org.sonarqube") version "5.0.0.4638"
+	id("org.owasp.dependencycheck") version "9.1.0"
 }
 
 repositories {
@@ -86,3 +87,5 @@ configure<net.researchgate.release.ReleaseExtension> {
 	buildTasks.set(listOf("build", "test", "jib", "dockerImageNative"))
 	tagTemplate.set("v${version}".replace("-SNAPSHOT", ""))
 }
+
+//dependencyCheck  { nvd.apiKey = "39f39129-6810-4f41-a2d7-701f926da325" }
