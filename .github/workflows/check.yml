@@ -27,4 +27,3 @@ jobs:
         with:
           gradle-version: 8.7
           arguments: dependencyCheckAnalyze
-
