@@ -18,7 +18,7 @@ jobs:
           java-version: '21'
 
       - name: Test
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.7
           arguments: build test
@@ -42,7 +42,7 @@ jobs:
           java-version: '21'
           
       - name: Container Images
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.7
           arguments: jib dockerImageNative
@@ -73,7 +73,7 @@ jobs:
           git config user.email "<>"
 
       - name: Release
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.7
           arguments: release -Prelease.useAutomaticVersion=true
