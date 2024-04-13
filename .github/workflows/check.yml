@@ -16,14 +16,15 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Sonar
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: 8.7
-          arguments: clean test sonar -Dsonar.host.url=https://v2202402203466256255.megasrv.de/sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.login=admin -Dsonar.password=admin1
-
       - name: Owasp
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.7
-          arguments: dependencyCheckAnalyze
+          arguments: test dependencyCheckAnalyze
+
+      - name: Sonar
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.7
+          arguments: test sonar -Dsonar.host.url=https://v2202402203466256255.megasrv.de/sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.login=admin -Dsonar.password=admin1
+
