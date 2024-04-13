@@ -6,7 +6,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: true == false
+    if: true == true
     steps:
       - uses: actions/checkout@v4
 
