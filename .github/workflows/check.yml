@@ -20,5 +20,5 @@ jobs:
         uses: gradle/gradle-build-action@v3
         with:
           gradle-version: 8.7
-          arguments: clean test sonar -Dsonar.host.url=http://v2202402203466256255.megasrv.de:9000 -Dsonar.login=admin -Dsonar.password=admin1
+          arguments: clean test sonar -Dsonar.host.url=https://v2202402203466256255.megasrv.de/sonar -Dsonar.login=admin -Dsonar.password=admin1
           #-Dsonar.login=squ_b2e14d8bcdd91f65e98b2e674ef9e3102375238d
