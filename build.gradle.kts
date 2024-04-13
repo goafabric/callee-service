@@ -16,7 +16,6 @@ plugins {
 	id("org.graalvm.buildtools.native") version "0.9.28"
 	id("com.google.cloud.tools.jib") version "3.4.2"
 	id("net.researchgate.release") version "3.0.2"
-
 	id("org.sonarqube") version "5.0.0.4638"
 }
 
@@ -82,9 +81,6 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 		exec { commandLine("/bin/sh", "-c", "docker push $nativeImageName") }
 	}
 }
-
-
-//./gradlew clean test sonar -Dsonar.host.url=http://v2202402203466256255.megasrv.de:9000 -Dsonar.login=squ_b2e14d8bcdd91f65e98b2e674ef9e3102375238d
 
 configure<net.researchgate.release.ReleaseExtension> {
 	buildTasks.set(listOf("build", "test", "jib", "dockerImageNative"))
