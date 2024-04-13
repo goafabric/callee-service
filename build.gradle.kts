@@ -88,4 +88,4 @@ configure<net.researchgate.release.ReleaseExtension> {
 	tagTemplate.set("v${version}".replace("-SNAPSHOT", ""))
 }
 
-//dependencyCheck  { nvd.apiKey = "39f39129-6810-4f41-a2d7-701f926da325" }
+dependencyCheck  { nvd.apiKey = "39f39129-6810-4f41-a2d7-701f926da325" }
