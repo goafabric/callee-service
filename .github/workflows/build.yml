@@ -91,10 +91,7 @@ jobs:
         run: echo "tag=$(git describe --abbrev=0 --tags)" >> $GITHUB_OUTPUT
 
       - name: Github Release
-        id: create_release
         uses: ncipollo/release-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag: ${{ steps.latest_tag.outputs.tag }}
           body: |
