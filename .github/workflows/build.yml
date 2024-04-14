@@ -27,7 +27,7 @@ jobs:
 
       - name: Sonar
         continue-on-error: true
-        run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.host.url=https://v2202402203466256255.megasrv.de/sonar -Dsonar.login=admin -Dsonar.password=admin1
+        run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.skipProject=true -Dsonar.host.url=https://v2202402203466256255.megasrv.de/sonar -Dsonar.login=admin -Dsonar.password=admin1
 
   snapshot:
     runs-on: ubuntu-latest
