@@ -15,6 +15,8 @@ plugins {
 	id("org.graalvm.buildtools.native") version "0.9.28"
 	id("com.google.cloud.tools.jib") version "3.4.2"
 	id("net.researchgate.release") version "3.0.2"
+	id("org.sonarqube") version "5.0.0.4638"
+	id("org.owasp.dependencycheck") version "9.1.0"
 
 	kotlin("jvm") version "1.9.23"
 	kotlin("plugin.spring") version "1.9.23"
@@ -88,6 +90,8 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 		exec { commandLine("/bin/sh", "-c", "docker push $nativeImageName") }
 	}
 }
+
+dependencyCheck  { nvd.apiKey = "39f39129-6810-4f41-a2d7-701f926da325"; format = "ALL"}
 
 configure<net.researchgate.release.ReleaseExtension> {
 	buildTasks.set(listOf("build", "test", "jib", "dockerImageNative"))
