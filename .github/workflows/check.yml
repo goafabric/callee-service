@@ -28,7 +28,7 @@ jobs:
             ~/.gradle/caches          
 
       - name: Owasp
-        run: gradle test dependencyCheckAnalyze
+        run: gradle dependencyCheckAnalyze
 
       - name: Sonar
         run: gradle test sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.dependencyCheck.htmlReportPath=build/reports/dependency-check-report.html -D-Dsonar.dependencyCheck.jsonReportPath=build/reports/dependency-check-report.json -Dsonar.dependencyCheck.securityHotspot=true -Dsonar.host.url=https://v2202402203466256255.megasrv.de/sonar  -Dsonar.login=admin -Dsonar.password=admin1
