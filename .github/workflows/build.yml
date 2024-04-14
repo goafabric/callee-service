@@ -27,7 +27,7 @@ jobs:
 
       - name: Sonar
         continue-on-error: true
-        run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.skipProject=true -Dsonar.host.url=https://v2202402203466256255.megasrv.de/sonar -Dsonar.login=admin -Dsonar.password=admin1
+        run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.host.url=https://v2202402203466256255.megasrv.de/sonar -Dsonar.login=admin -Dsonar.password=admin1
 
   snapshot:
     runs-on: ubuntu-latest
@@ -38,7 +38,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-
+      
       - uses: actions/checkout@v4
 
       - name: Set up JDK
@@ -47,12 +47,14 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Container Images
+      - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.7
-          arguments: jib dockerImageNative
-
+          
+      - name: Container Images
+        run: gradle jib dockerImageNative
+          
   release:
     runs-on: ubuntu-latest
     needs: snapshot
@@ -64,7 +66,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-
+      
       - uses: actions/checkout@v4
 
       - name: Set up JDK
@@ -91,10 +93,7 @@ jobs:
         run: echo "tag=$(git describe --abbrev=0 --tags)" >> $GITHUB_OUTPUT
 
       - name: Github Release
-        id: create_release
         uses: ncipollo/release-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag: ${{ steps.latest_tag.outputs.tag }}
           body: |
