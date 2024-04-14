@@ -83,8 +83,6 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	}
 }
 
-dependencyCheck  { nvd.apiKey = "39f39129-6810-4f41-a2d7-701f926da325"; format = "ALL"}
-
 configure<net.researchgate.release.ReleaseExtension> {
 	buildTasks.set(listOf("build", "test", "jib", "dockerImageNative"))
 	tagTemplate.set("v${version}".replace("-SNAPSHOT", ""))
