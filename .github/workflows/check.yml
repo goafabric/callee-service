@@ -6,7 +6,6 @@ jobs:
   check:
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: true == true
     steps:
       - uses: actions/checkout@v4
 
@@ -21,10 +20,11 @@ jobs:
         with:
           gradle-version: 8.7
           arguments: test dependencyCheckAnalyze
+        run: ./gradlew test dependencyCheckAnalyze
 
       - name: Sonar
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.7
-          arguments: test sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.dependencyCheck.htmlReportPath=build/reports/dependency-check-report.html -D-Dsonar.dependencyCheck.jsonReportPath=build/reports/dependency-check-report.json -Dsonar.dependencyCheck.securityHotspot=true -Dsonar.host.url=https://v2202402203466256255.megasrv.de/sonar  -Dsonar.login=admin -Dsonar.password=admin1
+        run: ./gradlew test sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.dependencyCheck.htmlReportPath=build/reports/dependency-check-report.html -D-Dsonar.dependencyCheck.jsonReportPath=build/reports/dependency-check-report.json -Dsonar.dependencyCheck.securityHotspot=true -Dsonar.host.url=https://v2202402203466256255.megasrv.de/sonar  -Dsonar.login=admin -Dsonar.password=admin1
 
