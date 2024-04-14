@@ -21,8 +21,8 @@ jobs:
           gradle-version: 8.7
 
       - name: Owasp
-        run: ./gradle test dependencyCheckAnalyze
+        run: gradle test dependencyCheckAnalyze
 
       - name: Sonar
-        run: ./gradle test sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.dependencyCheck.htmlReportPath=build/reports/dependency-check-report.html -D-Dsonar.dependencyCheck.jsonReportPath=build/reports/dependency-check-report.json -Dsonar.dependencyCheck.securityHotspot=true -Dsonar.host.url=https://v2202402203466256255.megasrv.de/sonar  -Dsonar.login=admin -Dsonar.password=admin1
+        run: gradle test sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.dependencyCheck.htmlReportPath=build/reports/dependency-check-report.html -D-Dsonar.dependencyCheck.jsonReportPath=build/reports/dependency-check-report.json -Dsonar.dependencyCheck.securityHotspot=true -Dsonar.host.url=https://v2202402203466256255.megasrv.de/sonar  -Dsonar.login=admin -Dsonar.password=admin1
 
