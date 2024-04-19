@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   application:
     container_name: ${_Values_root_name}-application
