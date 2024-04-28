@@ -1,8 +1,3 @@
-[![Quality Gate Status](https://v2202402203466256255.megasrv.de/sonar/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=alert_status&token=squ_f45ed9890db5d713f582f7cf8aebca065f521938)](https://v2202402203466256255.megasrv.de/sonar/dashboard?id=org.goafabric%3Acallee-service)
-[![Maintainability Rating](https://v2202402203466256255.megasrv.de/sonar/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=sqale_rating&token=squ_f45ed9890db5d713f582f7cf8aebca065f521938)](https://v2202402203466256255.megasrv.de/sonar/dashboard?id=org.goafabric%3Acallee-service)
-[![Reliability Rating](https://v2202402203466256255.megasrv.de/sonar/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=reliability_rating&token=squ_f45ed9890db5d713f582f7cf8aebca065f521938)](https://v2202402203466256255.megasrv.de/sonar/dashboard?id=org.goafabric%3Acallee-service)
-[![Security Rating](https://v2202402203466256255.megasrv.de/sonar/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=security_rating&token=squ_f45ed9890db5d713f582f7cf8aebca065f521938)](https://v2202402203466256255.megasrv.de/sonar/dashboard?id=org.goafabric%3Acallee-service)
-[![Coverage](https://v2202402203466256255.megasrv.de/sonar/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=coverage&token=squ_f45ed9890db5d713f582f7cf8aebca065f521938)](https://v2202402203466256255.megasrv.de/sonar/dashboard?id=org.goafabric%3Acallee-service)
 # docker compose
 go to /src/deploy/docker and do "./stack up" or "./stack up -native"
 
