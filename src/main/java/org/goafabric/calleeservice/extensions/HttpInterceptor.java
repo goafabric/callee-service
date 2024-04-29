@@ -31,8 +31,8 @@ public class HttpInterceptor implements HandlerInterceptor {
         TenantContext.setContext(request);
         configureLogsAndTracing(request);
 
-        if (handler instanceof HandlerMethod) {
-            log.info(" {} method called for user {} ", ((HandlerMethod) handler).getShortLogMessage(), TenantContext.getUserName());
+        if (handler instanceof HandlerMethod handlerMethod) {
+            log.info(" {} method called for user {} ", handlerMethod.getShortLogMessage(), TenantContext.getUserName());
         }
         return true;
     }
