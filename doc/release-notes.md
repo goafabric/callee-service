@@ -1,5 +1,6 @@
 # 3.2.5
 - release plugin added
+- spring security removed
 - upgrade to Spring Boot 3.2.5
 
 # 3.2.4
