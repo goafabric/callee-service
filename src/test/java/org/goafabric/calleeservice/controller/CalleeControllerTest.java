@@ -6,7 +6,6 @@ import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 class CalleeControllerTest {
@@ -15,14 +14,14 @@ class CalleeControllerTest {
 
     @Test
     void sayMyName() {
-        when(calleeLogic.sayMyName(eq("Heisenberg"))).thenReturn(new Callee("", "Heisenberg"));
+        when(calleeLogic.sayMyName("Heisenberg")).thenReturn(new Callee("", "Heisenberg"));
         assertThat(calleController.sayMyName("Heisenberg").message())
                 .isEqualTo("Heisenberg");
     }
 
     @Test
     void sayMyOtherName() {
-        when(calleeLogic.sayMyOtherName(eq("Slim Shady"))).thenReturn(new Callee("", "Slim Shady"));
+        when(calleeLogic.sayMyOtherName("Slim Shady")).thenReturn(new Callee("", "Slim Shady"));
         assertThat(calleController.sayMyOtherName("Slim Shady").message())
                 .isEqualTo("Slim Shady");
     }

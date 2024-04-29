@@ -12,13 +12,13 @@ public class CalleeServiceAdapterIT {
     CalleeServiceAdapter calleeServiceAdapterDec;
 
     @Test
-    public void sayMyName() {
+    void sayMyName() {
         assertThat(calleeServiceAdapterDec.sayMyName("Heisenberg").message())
                 .isEqualTo("Your name is: Heisenberg");
     }
 
     @Test
-    public void sayMyOtherName() {
+    void sayMyOtherName() {
         assertThat(calleeServiceAdapterDec.sayMyOtherName("SlimShady").message())
                 .isEqualTo("Your other name is: SlimShady");
     }
