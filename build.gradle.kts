@@ -48,9 +48,6 @@ dependencies {
 	//openapi
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
 
-	//crosscuting
-	implementation("org.springframework.boot:spring-boot-starter-security")
-
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.github.resilience4j:resilience4j-spring-boot3")
