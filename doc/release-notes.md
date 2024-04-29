@@ -1,3 +1,5 @@
+# 3.2.6
+
 # 3.2.5
 - release plugin added
 - spring security removed
