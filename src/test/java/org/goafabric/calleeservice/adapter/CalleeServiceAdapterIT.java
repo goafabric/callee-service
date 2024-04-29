@@ -7,18 +7,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class CalleeServiceAdapterIT {
+class CalleeServiceAdapterIT {
     @Autowired
     CalleeServiceAdapter calleeServiceAdapterDec;
 
     @Test
-    public void sayMyName() {
+    void sayMyName() {
         assertThat(calleeServiceAdapterDec.sayMyName("Heisenberg").message())
                 .isEqualTo("Your name is: Heisenberg");
     }
 
     @Test
-    public void sayMyOtherName() {
+    void sayMyOtherName() {
         assertThat(calleeServiceAdapterDec.sayMyOtherName("SlimShady").message())
                 .isEqualTo("Your other name is: SlimShady");
     }

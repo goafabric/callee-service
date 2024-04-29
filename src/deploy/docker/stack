@@ -1,5 +1,8 @@
 #!/bin/bash
 source .values
+source ../../../gradle.properties
+
+export _Values_image_tag=${version}
 export COMMAND=$1
 export OPTION=$2
 

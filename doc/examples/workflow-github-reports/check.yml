@@ -1,0 +1,44 @@
+name: Check
+
+on: [push]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.7
+
+      - name: Test
+        run: gradle test
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: build/reports/jacoco/test/html
+
+      - name: Owasp
+        run: gradle dependencyCheckAnalyze
+
+      - name: Sonar
+        run: gradle test sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.host.url=https://v2202402203466256255.megasrv.de/sonar -Dsonar.login=admin -Dsonar.password=admin1 -Dsonar.dependencyCheck.htmlReportPath=build/reports/dependency-check-report.html -Dsonar.dependencyCheck.jsonReportPath=build/reports/dependency-check-report.json -Dsonar.dependencyCheck.securityHotspot=true
+
+      - name: Archive Owasp
+        uses: actions/upload-artifact@v4
+        with:
+          name: owasp-report
+          path: build/reports/dependency-check-report.html
+
+      #dependencyCheck  { nvd.apiKey = "39f39129-6810-4f41-a2d7-701f926da325"; format = "ALL"}

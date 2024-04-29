@@ -1,3 +1,8 @@
+# 3.2.5
+- release plugin added
+- spring security removed
+- upgrade to Spring Boot 3.2.5
+
 # 3.2.4
 - upgrade to Spring Boot 3.2.4
 - upgrade to springdoc 2.3.0

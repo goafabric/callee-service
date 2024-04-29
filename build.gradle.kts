@@ -1,7 +1,7 @@
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
-group = "org.goafabric"
-version = "3.2.4-SNAPSHOT"
+val group: String by project
+val version: String by project
 java.sourceCompatibility = JavaVersion.VERSION_21
 
 val dockerRegistry = "goafabric"
@@ -11,10 +11,13 @@ val baseImage = "ibm-semeru-runtimes:open-21.0.1_12-jre-focal@sha256:24d43669156
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.2.4"
+	id("org.springframework.boot") version "3.2.5"
 	id("io.spring.dependency-management") version "1.1.4"
 	id("org.graalvm.buildtools.native") version "0.9.28"
-	id("com.google.cloud.tools.jib") version "3.4.0"
+	id("com.google.cloud.tools.jib") version "3.4.2"
+	id("net.researchgate.release") version "3.0.2"
+	id("org.sonarqube") version "5.0.0.4638"
+	id("org.owasp.dependencycheck") version "9.1.0"
 }
 
 repositories {
@@ -25,10 +28,11 @@ repositories {
 
 dependencies {
 	constraints {
-		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
-		implementation("org.mapstruct:mapstruct:1.5.5.Final")
 		annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
+		implementation("org.mapstruct:mapstruct:1.5.5.Final")
+		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 		implementation("io.github.resilience4j:resilience4j-spring-boot3:2.1.0")
+		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:1.0.3")
 	}
 }
 
@@ -45,12 +49,8 @@ dependencies {
 	//openapi
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
 
-	//crosscuting
-	implementation("org.springframework.boot:spring-boot-starter-security")
-
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	//testImplementation("org.springframework.boot:spring-boot-starter-webflux")
 	testImplementation("io.github.resilience4j:resilience4j-spring-boot3")
 }
 
@@ -59,7 +59,7 @@ tasks.withType<Test> {
 	exclude("**/*NRIT*")
 	finalizedBy("jacocoTestReport")
 }
-tasks.jacocoTestReport { reports {csv.required.set(true) } }
+tasks.jacocoTestReport { reports {csv.required.set(true); xml.required.set(true) } }
 
 jib {
 	val amd64 = com.google.cloud.tools.jib.gradle.PlatformParameters(); amd64.os = "linux"; amd64.architecture = "amd64"; val arm64 = com.google.cloud.tools.jib.gradle.PlatformParameters(); arm64.os = "linux"; arm64.architecture = "arm64"
@@ -69,7 +69,7 @@ jib {
 	from.platforms.set(listOf(amd64, arm64))
 }
 
-tasks.register("dockerImageNative") { group = "build"; dependsOn("bootBuildImage") }
+tasks.register("dockerImageNative") { description= "Native Image"; group = "build"; dependsOn("bootBuildImage") }
 tasks.named<BootBuildImage>("bootBuildImage") {
 	val nativeImageName = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
 	builder.set(nativeBuilder)
@@ -81,6 +81,7 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	}
 }
 
-graalvmNative { //https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html#configuration-options
-	binaries.named("main") { quickBuild.set(true) }
+configure<net.researchgate.release.ReleaseExtension> {
+	buildTasks.set(listOf("build", "test", "jib", "dockerImageNative"))
+	tagTemplate.set("v${version}".replace("-SNAPSHOT", ""))
 }
