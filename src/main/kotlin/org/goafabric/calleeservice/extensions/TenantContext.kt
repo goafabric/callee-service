@@ -61,8 +61,7 @@ object TenantContext {
 
     private fun getUserNameFromUserInfo(userInfo: String?): String? {
         return if (userInfo != null) {
-            val bytes = Base64.getUrlDecoder().decode(userInfo)
-            val map: Map<String, Any>? = jacksonObjectMapper().readValue(bytes)
+            val map: Map<String, Any>? = jacksonObjectMapper().readValue(Base64.getUrlDecoder().decode(userInfo))
             map?.get("preferred_username") as? String
         } else { null }
     }
