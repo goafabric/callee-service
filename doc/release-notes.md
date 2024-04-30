@@ -1,4 +1,4 @@
-# 3.2.6
+# 3.2.10
 
 # 3.2.5
 - release plugin added
