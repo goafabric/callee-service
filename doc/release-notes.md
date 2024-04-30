@@ -1,6 +1,18 @@
-# 3.2.3
-- upgrade to Spring Boot 3.2.3
-- upgrade to Kotlin 1.9.2
+# 3.2.10
+
+# 3.2.5
+- release plugin added
+- spring security removed
+- upgrade to Spring Boot 3.2.5
+
+# 3.2.4
+- upgrade to Spring Boot 3.2.4
+- upgrade to springdoc 2.3.0
+
+# 3.2.0
+- upgrade to Spring Boot 3.2.0
+- upgrade to jib 3.4.0
+- virtual threads enabled
 
 # 3.1.4
 - upgrade to Spring Boot 3.1.4
