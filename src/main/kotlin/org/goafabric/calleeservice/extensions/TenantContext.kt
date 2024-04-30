@@ -1,12 +1,13 @@
 package org.goafabric.calleeservice.extensions
 
 import jakarta.servlet.http.HttpServletRequest
-import org.springframework.security.core.Authentication
-import org.springframework.security.core.context.SecurityContextHolder
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import java.util.*
 
 object TenantContext {
-    data class TenantContextRecord(val tenantId: String?, val organizationId: String?, val userName: String?) {
-        fun toAdapterHeaderMap(): Map<String, String?> {
+    data class TenantContextRecord(val tenantId: String, val organizationId: String, val userName: String) {
+        fun toAdapterHeaderMap(): Map<String, String> {
             return java.util.Map.of(
                 "X-TenantId", tenantId,
                 "X-OrganizationId", organizationId,
@@ -15,49 +16,54 @@ object TenantContext {
         }
     }
 
-    private val tenantContext: ThreadLocal<TenantContextRecord> =
-        ThreadLocal.withInitial { TenantContextRecord(null, null, null) }
+    private val CONTEXT: ThreadLocal<TenantContextRecord> =
+        ThreadLocal.withInitial { TenantContextRecord("0", "0", "anonymous") }
 
     fun setContext(request: HttpServletRequest) {
-        tenantContext.set(
+        setContext(
+            request.getHeader("X-TenantId"), request.getHeader("X-OrganizationId"),
+            request.getHeader("X-Auth-Request-Preferred-Username"), request.getHeader("X-UserInfo")
+        )
+    }
+
+    fun setContext(tenantId: String?, organizationId: String?, userName: String?, userInfo: String?) {
+        CONTEXT.set(
             TenantContextRecord(
-                request.getHeader("X-TenantId"),
-                request.getHeader("X-OrganizationId"),
-                request.getHeader("X-Auth-Request-Preferred-Username")
+                getValue(tenantId, "0"),
+                getValue(organizationId, "0"),
+                getValue(getUserNameFromUserInfo(userInfo), getValue(userName, "anonymous"))
             )
         )
     }
 
-    fun setContext(tenantContextRecord: TenantContextRecord) {
-        tenantContext.set(tenantContextRecord)
+    fun removeContext() {
+        CONTEXT.remove()
     }
 
-    fun removeContext() {
-        tenantContext.remove()
+    private fun getValue(value: String?, defaultValue: String): String {
+        return value ?: defaultValue
     }
 
     var tenantId: String
-        get() = if (tenantContext.get().tenantId != null) tenantContext.get().tenantId!! else "0"
+        get() = CONTEXT.get().tenantId
         set(tenant) {
-            tenantContext.set(
-                TenantContextRecord(
-                    tenant,
-                    tenantContext.get().organizationId,
-                    tenantContext.get().userName
-                )
-            )
+            CONTEXT.set(TenantContextRecord(tenant, CONTEXT.get().organizationId, CONTEXT.get().userName))
         }
 
     val organizationId: String
-        get() = if (tenantContext.get().organizationId != null) tenantContext.get().organizationId!! else "0"
+        get() = CONTEXT.get().organizationId
 
     val userName: String
-        get() = if ((authentication != null) && authentication!!.name != "anonymousUser") authentication!!.name
-        else (if (tenantContext.get().userName != null) tenantContext.get().userName else "anonymous")!!
+        get() = CONTEXT.get().userName
 
-    val adapterHeaderMap: Map<String, String?>
-        get() = tenantContext.get().toAdapterHeaderMap()
+    val adapterHeaderMap: Map<String, String>
+        get() = CONTEXT.get().toAdapterHeaderMap()
 
-    private val authentication: Authentication?
-        get() = SecurityContextHolder.getContext().authentication
+    private fun getUserNameFromUserInfo(userInfo: String?): String? {
+        return if (userInfo != null) {
+            val bytes = Base64.getUrlDecoder().decode(userInfo)
+            val map: Map<String, Any>? = jacksonObjectMapper().readValue(bytes)
+            map?.get("preferred_username") as? String
+        } else { null }
+    }
 }
