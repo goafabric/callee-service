@@ -18,8 +18,8 @@ plugins {
 	id("org.sonarqube") version "5.0.0.4638"
 	id("org.owasp.dependencycheck") version "9.1.0"
 
-	kotlin("jvm") version "1.9.23"
-	kotlin("plugin.spring") version "1.9.23"
+	kotlin("jvm") version "2.0.0-RC2"
+	kotlin("plugin.spring") version "2.0.0-RC2"
 }
 
 repositories {
@@ -50,11 +50,11 @@ dependencies {
 	implementation("io.micrometer:micrometer-tracing-bridge-otel")
 	implementation("io.opentelemetry:opentelemetry-exporter-otlp")
 
+	//openapi
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
 
 	//crosscuting
 	implementation("org.springframework.boot:spring-boot-starter-aop")
-	implementation("org.springframework.boot:spring-boot-starter-security")
 
 	//kotlin
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
