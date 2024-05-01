@@ -1,3 +1,6 @@
+# sonarqube
+[dashboard](https://v2202402203466256255.megasrv.de/sonar/dashboard?id=org.goafabric%3Acallee-service)
+
 # docker compose
 go to /src/deploy/docker and do "./stack up" or "./stack up -native"
 
