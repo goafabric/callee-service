@@ -27,7 +27,7 @@ public class Application {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, @Value("${security.authentication.enabled:true}") Boolean isAuthenticationEnabled, HandlerMappingIntrospector introspector) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, @Value("${security.authentication.enabled:true}") boolean isAuthenticationEnabled, HandlerMappingIntrospector introspector) throws Exception {
         return isAuthenticationEnabled
                 ? http.authorizeHttpRequests(auth -> auth.requestMatchers(new MvcRequestMatcher(introspector, "/actuator/**")).permitAll().anyRequest().authenticated())
                 .httpBasic(httpBasic -> {}).csrf(AbstractHttpConfigurer::disable).build()
@@ -35,6 +35,6 @@ public class Application {
     }
 
     @Bean
-    ObservationPredicate disableHttpServerObservationsFromName() { return (name, context) -> !(name.startsWith("spring.security.") || (context instanceof ServerRequestObservationContext && ((ServerRequestObservationContext) context).getCarrier().getRequestURI().startsWith("/actuator"))); }
+    ObservationPredicate disableHttpServerObservationsFromName() { return (name, context) -> !(name.startsWith("spring.security.") || (context instanceof ServerRequestObservationContext serverContext && (serverContext).getCarrier().getRequestURI().startsWith("/actuator"))); }
 
 }
