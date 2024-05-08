@@ -2,20 +2,20 @@
 server:
   port: 50900
   tomcat.threads.max: 20
+  forward-headers-strategy: FRAMEWORK
+
+#vthreads
+spring.threads.virtual.enabled: "true"
 
 #monitoring
 management:
-    endpoint:
-      health:
-        show-details: always
-    endpoints:
-      web:
-        exposure:
-          include: "health,prometheus,heapdump"
-
-#openapi
-springdoc.swagger-ui.path: /swagger-ui/index.html
-springdoc.enable-native-support: "true"
+  endpoint:
+    health:
+      show-details: never
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus,heapdump"
 
 #tracing
 spring.application.name: callee-service
@@ -24,6 +24,9 @@ logging.level.io.opentelemetry.exporter: "OFF"
 management.otlp.tracing.endpoint: "http://localhost:4318/v1/traces"
 
 #security
+security.authentication.enabled: false
+spring.security.user.name: "admin"
+spring.security.user.password: "admin"
 
 #logging
 logging.pattern.level: "%5p tenantId=%X{tenantId:-}" #"%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}] tenantId=%X{tenantId:-}"
