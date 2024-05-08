@@ -1,4 +1,5 @@
 # 3.2.10
+- spring security readded
 
 # 3.2.5
 - release plugin added
