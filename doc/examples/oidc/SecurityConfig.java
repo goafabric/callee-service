@@ -1,3 +1,4 @@
+//not required for testing, only for production to toggle actuator endpoints and security on/off
 @Bean
 public SecurityFilterChain filterChain(HttpSecurity http, @Value("${security.authentication.enabled:true}") Boolean isAuthenticationEnabled, HandlerMappingIntrospector introspector) throws Exception {
     return isAuthenticationEnabled
