@@ -13,18 +13,17 @@ import org.springframework.security.oauth2.client.web.reactive.function.client.S
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.web.reactive.function.client.WebClient;
 
+//testImplementation("org.springframework.boot:spring-boot-starter-webflux")
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class OidcRemoteIT {
-    //@Autowired
-    //private WebClient webClient;
-
     @Test
     void callMe() {
         Callee callee = webClient(clientRegistrations()).get() //normally beans inside configuration class and then webclient injected
                 .uri("http://localhost:50900/callees/sayMyName?name=Heisenberg")
                 .retrieve()
                 .bodyToMono(Callee.class).block();
-        //System.out.println(calle); //currently returns null
+        //System.out.println(callee); //currently returns null
     }
 
 
@@ -51,6 +50,6 @@ class OidcRemoteIT {
                 .build();
 
     }
-
-
 }
+
+
