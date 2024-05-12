@@ -14,7 +14,8 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 
-//Example with Webclient, cannot be used for prudction because we need RestClient here, also returns null
+//Example with reactive Webclient, cannot be used for prudction because we need non reactive RestClient here, also returns null
+//for an endless discussion if Restclient will be supported see: https://github.com/spring-projects/spring-security/issues/13588
 //testImplementation("org.springframework.boot:spring-boot-starter-webflux")
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
