@@ -13,6 +13,8 @@ import org.springframework.security.oauth2.client.web.reactive.function.client.S
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.web.reactive.function.client.WebClient;
 
+
+//Example with Webclient, cannot be used for prudction because we need RestClient here, also returns null
 //testImplementation("org.springframework.boot:spring-boot-starter-webflux")
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
