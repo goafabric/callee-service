@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.server.observation.ServerRequestObservationContext
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
+import org.springframework.security.crypto.password.NoOpPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
@@ -40,10 +42,11 @@ class ApplicationRunner {
         else http.authorizeHttpRequests { auth -> auth.anyRequest().permitAll() }.build()
     }
 
+    @Bean
+    fun passwordEncoder(): PasswordEncoder? { return NoOpPasswordEncoder.getInstance() }
 
     @Bean
     fun disableHttpServerObservationsFromName(): ObservationPredicate? {
         return ObservationPredicate { name: String, context: Observation.Context? -> !name.startsWith("spring.security.") || (context is ServerRequestObservationContext  && (context).carrier.requestURI.startsWith("/actuator")) }
     }
-
 }
