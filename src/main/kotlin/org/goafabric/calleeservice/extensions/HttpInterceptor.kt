@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.server.observation.ServerRequestObservationContext
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
-import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.stereotype.Component
@@ -72,8 +71,13 @@ class HttpInterceptor : HandlerInterceptor {
         else http.authorizeHttpRequests { auth -> auth.anyRequest().permitAll() }.build()
     }
 
-    @Bean @SuppressWarnings("java:S1874")
-    fun passwordEncoder(): PasswordEncoder? { return NoOpPasswordEncoder.getInstance() }
+    @Bean
+    fun passwordEncoder(): PasswordEncoder {
+        return object : PasswordEncoder {
+            override fun encode(rawPassword: CharSequence): String { return rawPassword.toString() }
+            override fun matches(rawPassword: CharSequence, encodedPassword: String): Boolean { return rawPassword.toString() == encodedPassword }
+        }
+    }
 
     @Bean
     fun disableHttpServerObservationsFromName(): ObservationPredicate? {
