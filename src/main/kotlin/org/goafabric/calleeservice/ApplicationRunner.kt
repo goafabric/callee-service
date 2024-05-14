@@ -26,27 +26,4 @@ class ApplicationRunner {
             }
         }
     }
-
-    @Bean
-    @Throws(Exception::class)
-    fun filterChain(
-        http: HttpSecurity,
-        @Value("\${security.authentication.enabled:true}") isAuthenticationEnabled: Boolean
-    ): SecurityFilterChain? {
-        return if (isAuthenticationEnabled) http.authorizeHttpRequests { auth ->
-            auth.requestMatchers("/actuator/**").permitAll().anyRequest().authenticated()
-        }
-            .httpBasic { }
-            .csrf { csrf: CsrfConfigurer<HttpSecurity> -> csrf.disable() }
-            .build()
-        else http.authorizeHttpRequests { auth -> auth.anyRequest().permitAll() }.build()
-    }
-
-    @Bean
-    fun passwordEncoder(): PasswordEncoder? { return NoOpPasswordEncoder.getInstance() }
-
-    @Bean
-    fun disableHttpServerObservationsFromName(): ObservationPredicate? {
-        return ObservationPredicate { name: String, context: Observation.Context? -> !name.startsWith("spring.security.") || (context is ServerRequestObservationContext  && (context).carrier.requestURI.startsWith("/actuator")) }
-    }
 }
