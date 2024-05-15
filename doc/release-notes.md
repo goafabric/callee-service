@@ -1,3 +1,6 @@
+# 3.2.11
+- version increase
+
 # 3.2.10
 - spring security readded
 
