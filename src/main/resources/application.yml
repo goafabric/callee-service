@@ -4,6 +4,9 @@ server:
   tomcat.threads.max: 20
   forward-headers-strategy: FRAMEWORK
 
+#vthreads
+spring.threads.virtual.enabled: "true"
+
 #monitoring
 management:
     endpoint:
@@ -20,6 +23,11 @@ management.tracing.sampling.probability: "1.0"
 logging.level.io.opentelemetry.exporter: "OFF"
 management.otlp.tracing.endpoint: "http://localhost:4318/v1/traces"
 
+#security
+security.authentication.enabled: false
+spring.security.user.name: "admin"
+spring.security.user.password: "admin"
+
 #logging
 logging.pattern.level: "%5p tenantId=%X{tenantId:-}" #"%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}] tenantId=%X{tenantId:-}"
 
@@ -29,6 +37,3 @@ logging.level.org.springframework: "INFO"
 logging.level.org.goafabric: "INFO"
 logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
-
-#vthreads
-spring.threads.virtual.enabled: "true"
