@@ -1,20 +1,21 @@
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
-group = "org.goafabric"
-version = "3.2.3-console-s3-SNAPSHOT"
+val group: String by project
+val version: String by project
 java.sourceCompatibility = JavaVersion.VERSION_21
 
 val dockerRegistry = "goafabric"
-val nativeBuilder = "dashaun/builder:20240205"
+val nativeBuilder = "dashaun/builder:20240403"
 val baseImage = "ibm-semeru-runtimes:open-21.0.1_12-jre-focal@sha256:24d43669156684f7bc28536b22537a7533ab100bf0a5a89702b987ebb53215be"
 
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.2.3"
-	id("io.spring.dependency-management") version "1.1.4"
-	id("org.graalvm.buildtools.native") version "0.9.28"
-	id("com.google.cloud.tools.jib") version "3.4.0"
+	id("org.springframework.boot") version "3.3.0"
+	id("io.spring.dependency-management") version "1.1.5"
+	id("org.graalvm.buildtools.native") version "0.10.2"
+
+	id("com.google.cloud.tools.jib") version "3.4.2"
 }
 
 repositories {
@@ -25,10 +26,10 @@ repositories {
 
 dependencies {
 	constraints {
+		annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
+		implementation("org.mapstruct:mapstruct:1.5.5.Final")
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 		implementation("org.mapstruct:mapstruct:1.5.5.Final")
-		annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
-		implementation("io.github.resilience4j:resilience4j-spring-boot3:2.1.0")
 	}
 }
 
@@ -46,7 +47,6 @@ dependencies {
 	//implementation("io.awspring.cloud:spring-cloud-aws-starter-s3:3.1.0")
 	//implementation("org.springframework.boot:spring-boot-starter-web"); implementation("am.ik.s3:simple-s3-client:0.2.1") {exclude("org.springframework", "spring-web")}; implementation("org.springframework.boot:spring-boot-starter-web");
 	//implementation("org.springframework.boot:spring-boot-starter-web"); implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
-
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
