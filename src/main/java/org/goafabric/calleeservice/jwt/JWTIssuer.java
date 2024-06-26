@@ -22,41 +22,33 @@ import java.util.Base64;
 public class JWTIssuer {
 
     public static void main(String[] args) {
+        var claimsSet = new JWTClaimsSet.Builder()
+                .subject("username123")
+                .claim("permissions", Arrays.asList("read", "write", "delete"))
+                .issuer("your-application")
+                //.expirationTime(new Date(new Date().getTime() + 6000 * 1000)) // 100 minute expiration
+                .build();
+
+        var token = createToken(claimsSet);
+        System.out.println("Generated Token:\n" + token);
+    }
+
+    private static String createToken(JWTClaimsSet claimsSet)  {
         try {
-            // Prepare JWT with claims set
-            var claimsSet = new JWTClaimsSet.Builder()
-                    .subject("username123")
-                    .claim("permissions", Arrays.asList("read", "write", "delete"))
-                    .issuer("your-application")
-                    //.expirationTime(new Date(new Date().getTime() + 6000 * 1000)) // 100 minute expiration
-                    .build();
-
-            var token = createToken(claimsSet);
-            System.out.println("Generated Token:\n" + token);
-
+            var signedJWT = new SignedJWT(
+                    new JWSHeader.Builder(JWSAlgorithm.RS256).type(JOSEObjectType.JWT).build(), claimsSet);
+            signedJWT.sign(new RSASSASigner(readAndParsePrivateKey()));
+            return signedJWT.serialize();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    private static String createToken(JWTClaimsSet claimsSet) throws Exception {
-        var signer = new RSASSASigner(readAndParsePrivateKey());
-        var signedJWT = new SignedJWT(
-                new JWSHeader.Builder(JWSAlgorithm.RS256).type(JOSEObjectType.JWT).build(),
-                claimsSet);
-
-        signedJWT.sign(signer);
-        return signedJWT.serialize();
-    }
-
     private static RSAPrivateKey readAndParsePrivateKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        var publicKey  = new String(Files.readAllBytes(new ClassPathResource("keys/private-key.pem").getFile().toPath()))
+        var privateKey  = new String(Files.readAllBytes(new ClassPathResource("keys/private-key.pem").getFile().toPath()))
                 .replace("-----BEGIN PRIVATE KEY-----", "").replace("-----END PRIVATE KEY-----", "").replaceAll("\\s", "");
-
-        byte[] encoded = Base64.getDecoder().decode(publicKey);
-        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encoded);
+        var keySpec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey));
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
     }
-
 }
