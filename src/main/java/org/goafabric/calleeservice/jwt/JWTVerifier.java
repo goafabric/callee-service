@@ -1,6 +1,5 @@
 package org.goafabric.calleeservice.jwt;
 
-import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.SignedJWT;
 import org.springframework.core.io.ClassPathResource;
@@ -22,13 +21,12 @@ public class JWTVerifier {
             String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJ5b3VyLWFwcGxpY2F0aW9uIiwic3ViIjoidXNlcm5hbWUxMjMiLCJwZXJtaXNzaW9ucyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXX0.nREQQYU0CdCIPpfeQJlVfGlHS2eevYtOJc5m8MMBi7JWv6zAJHzP6SkVqEyo0260po0TaK_hyt-Ox1JUK1IL_VqTHuMo6Q1qz4-_JBnvqgsJQQv3gH3Jqhf07WXdoYbr8wr6Gfky0AxTnJ4VEjbIhlj1kb6sunLYGREgZ3L55vUEyBl4ivJJ7V5fHZVv3hBu1Dojmr4lVmd-ZfBUtZj5MLuVRBtH9eiA4wMXxcp6_WNuEUkH9t1RD-gds4gm7biu7ifnZc26FyR9zE4SCXd0niGDpAxHt_k4AGNfYPfQbtMaZR_-uLqZ13X1vSBuw0RGNlumNSmbYNmIQI1MZTjezA";
             var signedJWT = parseToken(token);
             logClaims(signedJWT);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static SignedJWT parseToken(String token) throws ParseException, IOException, NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
+    private static SignedJWT parseToken(String token) throws Exception {
         var signedJWT = SignedJWT.parse(token);
         var verifier = new RSASSAVerifier(readAndParsePublicKey());
 
@@ -45,12 +43,10 @@ public class JWTVerifier {
     }
 
     private static RSAPublicKey readAndParsePublicKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        var publicKeyPEM  =
-                new String(Files.readAllBytes(new ClassPathResource("keys/public-key.pem").getFile().toPath()))
+        var publicKey = new String(Files.readAllBytes(new ClassPathResource("keys/public-key.pem").getFile().toPath()))
                         .replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", "").replaceAll("\\s", "");
 
-        var decoded = Base64.getDecoder().decode(publicKeyPEM);
-        var keySpec = new X509EncodedKeySpec(decoded);
+        var keySpec = new X509EncodedKeySpec(Base64.getDecoder().decode(publicKey));
         var keyFactory = KeyFactory.getInstance("RSA");
         return (RSAPublicKey) keyFactory.generatePublic(keySpec);
     }

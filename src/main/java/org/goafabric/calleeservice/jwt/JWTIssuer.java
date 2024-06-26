@@ -23,9 +23,6 @@ public class JWTIssuer {
 
     public static void main(String[] args) {
         try {
-            // Create a new RSA signer
-            var signer = new RSASSASigner(readAndParsePrivateKey());
-
             // Prepare JWT with claims set
             var claimsSet = new JWTClaimsSet.Builder()
                     .subject("username123")
@@ -34,15 +31,7 @@ public class JWTIssuer {
                     //.expirationTime(new Date(new Date().getTime() + 6000 * 1000)) // 100 minute expiration
                     .build();
 
-            var signedJWT = new SignedJWT(
-                    new JWSHeader.Builder(JWSAlgorithm.RS256).type(JOSEObjectType.JWT).build(),
-                    claimsSet);
-
-            // Apply the RSA signature
-            signedJWT.sign(signer);
-
-            // Serialize the JWT to a compact form
-            String token = signedJWT.serialize();
+            var token = createToken(claimsSet);
             System.out.println("Generated Token:\n" + token);
 
         } catch (Exception e) {
@@ -50,15 +39,21 @@ public class JWTIssuer {
         }
     }
 
+    private static String createToken(JWTClaimsSet claimsSet) throws Exception {
+        var signer = new RSASSASigner(readAndParsePrivateKey());
+        var signedJWT = new SignedJWT(
+                new JWSHeader.Builder(JWSAlgorithm.RS256).type(JOSEObjectType.JWT).build(),
+                claimsSet);
 
+        signedJWT.sign(signer);
+        return signedJWT.serialize();
+    }
 
     private static RSAPrivateKey readAndParsePrivateKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        var publicKeyPEM  = new String(Files.readAllBytes(new ClassPathResource("keys/private-key.pem").getFile().toPath()));
+        var publicKey  = new String(Files.readAllBytes(new ClassPathResource("keys/private-key.pem").getFile().toPath()))
+                .replace("-----BEGIN PRIVATE KEY-----", "").replace("-----END PRIVATE KEY-----", "").replaceAll("\\s", "");
 
-        // Remove the first and last lines
-        publicKeyPEM = publicKeyPEM.replace("-----BEGIN PRIVATE KEY-----", "").replace("-----END PRIVATE KEY-----", "").replaceAll("\\s", "");
-
-        byte[] encoded = Base64.getDecoder().decode(publicKeyPEM.toString());
+        byte[] encoded = Base64.getDecoder().decode(publicKey);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encoded);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
