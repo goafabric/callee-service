@@ -20,12 +20,15 @@ import java.util.Arrays;
 import java.util.Base64;
 
 public class JWTIssuer {
+    //openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048 && openssl rsa -pubout -in private_key.pem -out public_key.pem
 
     public static void main(String[] args) {
         var claimsSet = new JWTClaimsSet.Builder()
-                .subject("username123")
+                .subject("john@doe.org")
+                .claim("preferred_username", "john@doe.org")
+                .claim("tenant", "5")
                 .claim("permissions", Arrays.asList("read", "write", "delete"))
-                .issuer("your-application")
+                .issuer("secret-application")
                 //.expirationTime(new Date(new Date().getTime() + 6000 * 1000)) // 100 minute expiration
                 .build();
 
@@ -37,15 +40,15 @@ public class JWTIssuer {
         try {
             var signedJWT = new SignedJWT(
                     new JWSHeader.Builder(JWSAlgorithm.RS256).type(JOSEObjectType.JWT).build(), claimsSet);
-            signedJWT.sign(new RSASSASigner(readAndParsePrivateKey()));
+            signedJWT.sign(new RSASSASigner(getPrivateKey()));
             return signedJWT.serialize();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static RSAPrivateKey readAndParsePrivateKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        var privateKey  = new String(Files.readAllBytes(new ClassPathResource("keys/private-key.pem").getFile().toPath()))
+    private static RSAPrivateKey getPrivateKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        var privateKey  = new String(Files.readAllBytes(new ClassPathResource("keys/private_key.pem").getFile().toPath()))
                 .replace("-----BEGIN PRIVATE KEY-----", "").replace("-----END PRIVATE KEY-----", "").replaceAll("\\s", "");
         var keySpec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey));
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
