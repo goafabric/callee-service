@@ -14,6 +14,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.text.ParseException;
 import java.util.Base64;
+import java.util.stream.Collectors;
 
 public class TokenVerifier {
 
@@ -37,9 +38,8 @@ public class TokenVerifier {
     }
 
     private static RSAPublicKey getPublicKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        var publicKey = new String(Files.readAllBytes(new ClassPathResource("keys/public_key.pem").getFile().toPath()))
-                        .replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", "").replaceAll("\\s", "");
-
+        var publicKey = Files.readAllLines(new ClassPathResource("keys/public_key.pem").getFile().toPath())
+                .stream().filter(line -> !line.contains("-----")).collect(Collectors.joining());
         var keySpec = new X509EncodedKeySpec(Base64.getDecoder().decode(publicKey));
         var keyFactory = KeyFactory.getInstance("RSA");
         return (RSAPublicKey) keyFactory.generatePublic(keySpec);

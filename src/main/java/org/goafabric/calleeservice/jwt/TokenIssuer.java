@@ -18,6 +18,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.stream.Collectors;
 
 public class TokenIssuer {
     //openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048 && openssl rsa -pubout -in private_key.pem -out public_key.pem
@@ -48,8 +49,8 @@ public class TokenIssuer {
     }
 
     private static RSAPrivateKey getPrivateKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        var privateKey  = new String(Files.readAllBytes(new ClassPathResource("keys/private_key.pem").getFile().toPath()))
-                .replace("-----BEGIN PRIVATE KEY-----", "").replace("-----END PRIVATE KEY-----", "").replaceAll("\\s", "");
+        var privateKey = Files.readAllLines(new ClassPathResource("keys/private_key.pem").getFile().toPath())
+                .stream().filter(line -> !line.contains("-----")).collect(Collectors.joining());
         var keySpec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey));
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
