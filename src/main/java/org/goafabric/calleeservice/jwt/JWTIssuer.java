@@ -4,7 +4,6 @@ package org.goafabric.calleeservice.jwt;
 import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
@@ -24,20 +23,18 @@ public class JWTIssuer {
 
     public static void main(String[] args) {
         try {
-            RSAPrivateKey privateKey = readAndParsePrivateKey();
-
             // Create a new RSA signer
-            JWSSigner signer = new RSASSASigner(privateKey);
+            var signer = new RSASSASigner(readAndParsePrivateKey());
 
             // Prepare JWT with claims set
-            JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
+            var claimsSet = new JWTClaimsSet.Builder()
                     .subject("username123")
                     .claim("permissions", Arrays.asList("read", "write", "delete"))
                     .issuer("your-application")
                     //.expirationTime(new Date(new Date().getTime() + 6000 * 1000)) // 100 minute expiration
                     .build();
 
-            SignedJWT signedJWT = new SignedJWT(
+            var signedJWT = new SignedJWT(
                     new JWSHeader.Builder(JWSAlgorithm.RS256).type(JOSEObjectType.JWT).build(),
                     claimsSet);
 
