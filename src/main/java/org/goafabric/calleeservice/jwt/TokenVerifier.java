@@ -21,12 +21,12 @@ public class TokenVerifier {
 
     public static void main(String[] args) {
         String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWNyZXQtYXBwbGljYXRpb24iLCJzdWIiOiJqb2huQGRvZS5vcmciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJqb2huQGRvZS5vcmciLCJwZXJtaXNzaW9ucyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXSwidGVuYW50IjoiNSJ9.ltsAQWMvusBwGS8Y0Gg2wE6cj74L21iC6fDy81yElxypMNmPS1nKknEWpMI8jD5t5-epYc-hnMefmFODmgvjilENgcBbu2zf6n_1rsuczTkTzTjqY7Xw5g0zbo-JJz1zgrmdnUATBvumTZuy5fNMMTb2LshRmqNLOKCzF7H-cF7sv2boSqitfdnAwrrfOKBGhVdlEuD9OE8iarJqbACBo9-ccsW1Cr77J7eoOLzXf7DwGXWNqCyXjbs1n5lZlPKo74ozMF7WCmYaoA92to9SaiDTvM39EIRBjM6oxkP9kFTc2QXaL0w-72kYQqtAilEQczl7DTMuLhtYZK5xlPC5Rw";
-        var claims = parsSignedToken(token);
+        var claims = parseSignedToken(token);
 
         logClaims(claims);
     }
 
-    private static JWTClaimsSet parsSignedToken(String token) {
+    private static JWTClaimsSet parseSignedToken(String token) {
         try {
             var signedJWT = SignedJWT.parse(token);
             if (!signedJWT.verify(new RSASSAVerifier(getPublicKey()))) {
@@ -38,7 +38,7 @@ public class TokenVerifier {
         }
     }
 
-    private JWTClaimsSet parseUnsignedToken(String token) {
+    private static JWTClaimsSet parseUnsignedToken(String token) {
         try {
             return PlainJWT.parse(token).getJWTClaimsSet();
         } catch (ParseException e) {
