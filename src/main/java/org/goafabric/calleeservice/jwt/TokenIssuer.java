@@ -6,6 +6,7 @@ import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.PlainJWT;
 import com.nimbusds.jwt.SignedJWT;
 import org.springframework.core.io.ClassPathResource;
 
@@ -34,11 +35,11 @@ public class TokenIssuer {
                 //.expirationTime(new Date(new Date().getTime() + 6000 * 1000)) // 100 minute expiration
                 .build();
 
-        var token = createToken(claimsSet);
+        var token = creageSignedToken(claimsSet);
         System.out.println("Generated Token:\n" + token);
     }
 
-    private static String createToken(JWTClaimsSet claimsSet)  {
+    private static String creageSignedToken(JWTClaimsSet claimsSet)  {
         try {
             var signedJWT = new SignedJWT(
                     new JWSHeader.Builder(JWSAlgorithm.RS256).type(JOSEObjectType.JWT).build(), claimsSet);
@@ -47,6 +48,10 @@ public class TokenIssuer {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static String createUnsignedToken(JWTClaimsSet claimsSet) {
+        return new PlainJWT(claimsSet).serialize();
     }
 
     private static RSAPrivateKey getPrivateKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
