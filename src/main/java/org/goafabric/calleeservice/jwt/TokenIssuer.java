@@ -35,11 +35,11 @@ public class TokenIssuer {
                 //.expirationTime(new Date(new Date().getTime() + 6000 * 1000)) // 100 minute expiration
                 .build();
 
-        var token = creageSignedToken(claimsSet);
+        var token = createSignedToken(claimsSet);
         System.out.println("Generated Token:\n" + token);
     }
 
-    private static String creageSignedToken(JWTClaimsSet claimsSet)  {
+    private static String createSignedToken(JWTClaimsSet claimsSet)  {
         try {
             var signedJWT = new SignedJWT(
                     new JWSHeader.Builder(JWSAlgorithm.RS256).type(JOSEObjectType.JWT).build(), claimsSet);
