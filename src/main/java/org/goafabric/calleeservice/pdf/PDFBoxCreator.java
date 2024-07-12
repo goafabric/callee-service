@@ -72,6 +72,13 @@ graalvmNative {
 		buildArgs.add("--initialize-at-run-time=org.apache.pdfbox.text.LegacyPDFStreamEngine")
 		buildArgs.add("--initialize-at-run-time=org.apache.pdfbox.pdmodel.encryption.PublicKeySecurityHandler")
 		buildArgs.add("--initialize-at-run-time=sun.java2d.Disposer")
+
+        buildArgs.add("--initialize-at-run-time=com.sun.imageio")
+        buildArgs.add("--initialize-at-run-time=java.awt")
+        buildArgs.add("--initialize-at-run-time=javax.imageio")
+        buildArgs.add("--initialize-at-run-time=sun.awt")
+        buildArgs.add("--initialize-at-run-time=sun.font")
+        buildArgs.add("--initialize-at-run-time=sun.java2d")
 	}
 }
 */
