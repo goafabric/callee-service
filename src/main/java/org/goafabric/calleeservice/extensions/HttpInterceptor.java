@@ -62,7 +62,7 @@ public class HttpInterceptor implements HandlerInterceptor {
     }
 
     @Bean @ConditionalOnMissingClass("org.springframework.security.oauth2.client.OAuth2AuthorizationContext")
-    SecurityFilterChain filterChain(HttpSecurity http, @Value("${security.authentication.enabled:true}") boolean isAuthenticationEnabled, HandlerMappingIntrospector introspector) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http, @Value("${security.authentication.enabled:false}") boolean isAuthenticationEnabled, HandlerMappingIntrospector introspector) throws Exception {
         return isAuthenticationEnabled
                 ? http.authorizeHttpRequests(auth -> auth.requestMatchers(new MvcRequestMatcher(introspector, "/actuator/**")).permitAll().anyRequest().authenticated())
                 .httpBasic(httpBasic -> {}).csrf(AbstractHttpConfigurer::disable).build()
