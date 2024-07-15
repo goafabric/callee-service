@@ -29,6 +29,12 @@ jobs:
         continue-on-error: true
         run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.host.url=http://v2202402203466256255.megasrv.de/sonar -Dsonar.token=${{ secrets.SONAR_USER_TOKEN }}
 
+      - name: Archive SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: SBOM
+          path: build/resources/main/META-INF/sbom/application.cdx.json
+
   snapshot:
     runs-on: ubuntu-latest
     needs: test
