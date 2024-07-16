@@ -35,7 +35,7 @@ public class TokenIssuer {
                 //.expirationTime(new Date(new Date().getTime() + 6000 * 1000)) // 100 minute expiration
                 .build();
 
-        var token = createUnsignedToken(claimsSet);
+        var token = createSignedToken(claimsSet);
         System.out.println("Generated Token:\n" + token);
     }
 

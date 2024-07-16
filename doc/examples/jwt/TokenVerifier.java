@@ -26,6 +26,7 @@ public class TokenVerifier {
         logClaims(claims);
     }
 
+    //a signed token can be verified with the public key
     private static JWTClaimsSet parseSignedToken(String token) {
         try {
             var signedJWT = SignedJWT.parse(token);
@@ -38,6 +39,7 @@ public class TokenVerifier {
         }
     }
 
+    //an unsigned token cannot be verified, it just holds the data
     private static JWTClaimsSet parseUnsignedToken(String token) {
         try {
             return PlainJWT.parse(token).getJWTClaimsSet();
