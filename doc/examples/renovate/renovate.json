@@ -1,0 +1,10 @@
+{
+  "repositories": ["goafabric/callee-service"],
+  "extends": ["config:base"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["org.springframework.boot"],
+      "groupName": "spring-boot"
+    }
+  ]
+}
