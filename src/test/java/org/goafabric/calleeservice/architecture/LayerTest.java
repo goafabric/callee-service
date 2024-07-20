@@ -22,7 +22,7 @@ class LayerTest {
 
         .whereLayer("Controller").mayNotBeAccessedByAnyLayer()
         .whereLayer("Logic").mayOnlyBeAccessedByLayers("Controller");
-        //.whereLayer("Persistence").mayOnlyBeAccessedByLayers("Logic");
+        //.whereLayer("Persistence").mayOnlyBeAccessedByLayers("Logic")
 
     @ArchTest
     static final ArchRule controllerNaming = classes()
