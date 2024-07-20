@@ -5,7 +5,9 @@ import com.tngtech.archunit.core.importer.Location;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
+import org.springframework.context.annotation.ImportRuntimeHints;
 
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 @AnalyzeClasses(packages = "org.goafabric", importOptions = {ImportOption.DoNotIncludeTests.class, ReflectionCodingRulesTest.IgnoreCglib.class})
@@ -35,4 +37,13 @@ public class ReflectionCodingRulesTest {
                     .dependOnClassesThat()
                     .haveFullyQualifiedName("jakarta.validation.ConstraintValidator")
                     .because("Reflection breaks native image support");
+
+    @ArchTest
+    static final ArchRule aspect =
+            classes()
+                    .that()
+                    .areAnnotatedWith("org.aspectj.lang.annotation.Aspect").should()
+                    .beAnnotatedWith(ImportRuntimeHints.class)
+                    .allowEmptyShould(true)
+                    .because("Aspects need a Reflection RuntimeHint with MemberCategory.INVOKE_DECLARED_METHODS");
 }
