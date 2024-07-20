@@ -1,5 +1,6 @@
 package org.goafabric.calleeservice.controller;
 
+import org.goafabric.calleeservice.controller.dto.Callee;
 import org.goafabric.calleeservice.logic.CalleeLogic;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

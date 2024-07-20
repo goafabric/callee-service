@@ -35,6 +35,7 @@ dependencies {
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
 		implementation("io.github.resilience4j:resilience4j-spring-boot3:2.1.0")
 		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:1.0.3")
+		testImplementation("com.tngtech.archunit:archunit-junit5:1.2.1")
 	}
 }
 
@@ -57,6 +58,7 @@ dependencies {
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.github.resilience4j:resilience4j-spring-boot3")
+	testImplementation("com.tngtech.archunit:archunit-junit5")
 }
 
 tasks.withType<Test> {

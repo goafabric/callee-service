@@ -1,4 +1,4 @@
-package org.goafabric.calleeservice.controller;
+package org.goafabric.calleeservice.controller.dto;
 
 public record Callee(
         String id,
