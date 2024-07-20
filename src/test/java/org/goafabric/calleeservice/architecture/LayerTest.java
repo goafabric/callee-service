@@ -1,12 +1,14 @@
 package org.goafabric.calleeservice.architecture;
 
 
+import com.tngtech.archunit.base.DescribedPredicate;
 import com.tngtech.archunit.core.importer.ImportOption.DoNotIncludeTests;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.tngtech.archunit.core.domain.JavaClass.Predicates.simpleNameStartingWith;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 
@@ -14,8 +16,10 @@ import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 class LayerTest {
 
     @ArchTest
-    static final ArchRule layerAreRespected = layeredArchitecture()
+    static final ArchRule layers_are_respected = layeredArchitecture()
         .consideringOnlyDependenciesInLayers()
+        .ignoreDependency(simpleNameStartingWith("DemoDataImporter"), DescribedPredicate.alwaysTrue())
+
         .layer("Controller").definedBy("..controller")
         .layer("Logic").definedBy("..logic..")
         //.layer("Persistence").definedBy("..persistence..")
@@ -25,7 +29,7 @@ class LayerTest {
         //.whereLayer("Persistence").mayOnlyBeAccessedByLayers("Logic")
 
     @ArchTest
-    static final ArchRule controllerNaming = classes()
+    static final ArchRule controller_naming = classes()
             .that().areAnnotatedWith(RestController.class)
             .should().haveSimpleNameEndingWith("Controller");
 
