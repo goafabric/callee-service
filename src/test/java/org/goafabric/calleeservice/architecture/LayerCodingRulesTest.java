@@ -35,7 +35,7 @@ class LayerCodingRulesTest {
 
     @ArchTest
     static final ArchRule records = classes()
-            .that().resideInAPackage("..dto..")
+            .that().resideInAPackage("..dto")
             .should().beRecords()
             .because("Classes in the dto package should be records");
 }
