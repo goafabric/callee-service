@@ -8,8 +8,8 @@ import com.tngtech.archunit.lang.ArchRule;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
-@AnalyzeClasses(packages = "org.goafabric", importOptions = {ImportOption.DoNotIncludeTests.class, ReflectionTest.IgnoreCglib.class})
-public class ReflectionTest {
+@AnalyzeClasses(packages = "org.goafabric", importOptions = {ImportOption.DoNotIncludeTests.class, ReflectionCodingRulesTest.IgnoreCglib.class})
+public class ReflectionCodingRulesTest {
     static class IgnoreCglib implements ImportOption {
         @Override
         public boolean includes(Location location) {
@@ -33,5 +33,6 @@ public class ReflectionTest {
                     .haveFullyQualifiedName("org.springframework.beans.BeanWrapperImpl")
                     .orShould()
                     .dependOnClassesThat()
-                    .haveFullyQualifiedName("jakarta.validation.ConstraintValidator");
+                    .haveFullyQualifiedName("jakarta.validation.ConstraintValidator")
+                    .because("Reflection breaks native image support");
 }

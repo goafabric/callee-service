@@ -13,7 +13,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 
 @AnalyzeClasses(packages = "org.goafabric", importOptions = DoNotIncludeTests.class)
-class LayerTest {
+class LayerCodingRulesTest {
 
     @ArchTest
     static final ArchRule layers_are_respected = layeredArchitecture()

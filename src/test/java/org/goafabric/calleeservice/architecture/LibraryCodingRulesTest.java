@@ -8,7 +8,7 @@ import com.tngtech.archunit.lang.ArchRule;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 @AnalyzeClasses(packages = "org.goafabric", importOptions = ImportOption.DoNotIncludeTests.class)
-public class LibraryTest {
+public class LibraryCodingRulesTest {
     @ArchTest
     static final ArchRule libraries =
             noClasses()
@@ -17,5 +17,6 @@ public class LibraryTest {
                     .resideInAPackage("com.google.common..")
                     .orShould()
                     .dependOnClassesThat()
-                    .resideInAPackage("org.apache.commons..");
+                    .resideInAPackage("org.apache.commons..")
+                    .because("Java 21+ and Spring cover the functionality already, managing extra libraries with transient dependencies should be avoided");
 }
