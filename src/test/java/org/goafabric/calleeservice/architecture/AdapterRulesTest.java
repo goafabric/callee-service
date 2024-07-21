@@ -32,7 +32,7 @@ class AdapterRulesTest {
             .orShould().dependOnClassesThat()
             .haveFullyQualifiedName("org.springframework.web.reactive.function.client.WebClient")
             .as("Only use the declarative REST Client, as otherwise native image support is broken")
-            .allowEmptyShould(true);
+            .allowEmptyShould(false);
 
 
     @ArchTest
