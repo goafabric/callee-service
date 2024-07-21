@@ -5,6 +5,7 @@ import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
+import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 import org.goafabric.calleeservice.Application;
 
 import static com.tngtech.archunit.core.domain.JavaClass.Predicates.simpleNameStartingWith;
@@ -25,5 +26,12 @@ public class PersistenceRulesTest {
             .whereLayer("Controller").mayNotBeAccessedByAnyLayer()
             .whereLayer("Logic").mayOnlyBeAccessedByLayers("Controller")
             .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Logic")
+            .allowEmptyShould(true);
+
+    @ArchTest
+    public static final ArchRule classesExtendingRepositoryShouldEndWithRepository = ArchRuleDefinition.classes()
+            .that().areAssignableTo("org.springframework.data.repository.Repository")
+            .should().haveSimpleNameEndingWith("Repository")
+            .because("all classes extending Repository should end with 'Repository' in their name")
             .allowEmptyShould(true);
 }

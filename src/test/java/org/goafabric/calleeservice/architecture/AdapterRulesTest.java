@@ -21,7 +21,7 @@ class AdapterRulesTest {
                     .allowEmptyShould(true);
 
     @ArchTest
-    static final ArchRule declarativeClient =
+    static final ArchRule declarativeClientShouldBeUsed =
         noClasses().that()
             .areNotAnnotatedWith(Configuration.class)
             .should()

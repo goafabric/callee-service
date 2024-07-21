@@ -22,7 +22,7 @@ public class ApplicationRulesTest {
     }
 
     @ArchTest
-    static final ArchRule reflection =
+    static final ArchRule reflectionShouldBeAvoided =
             noClasses()
                     .should()
                     .dependOnClassesThat()
@@ -41,7 +41,7 @@ public class ApplicationRulesTest {
                     .because("Reflection breaks native image support");
 
     @ArchTest
-    static final ArchRule aspect =
+    static final ArchRule aspectsNeedRuntimeHint =
             classes()
                     .that()
                     .areAnnotatedWith("org.aspectj.lang.annotation.Aspect").should()
@@ -50,7 +50,7 @@ public class ApplicationRulesTest {
                     .because("Aspects need a Reflection RuntimeHint with MemberCategory.INVOKE_DECLARED_METHODS");
 
     @ArchTest
-    static final ArchRule libraries =
+    static final ArchRule librariesThatAreBanished =
             noClasses()
                     .should()
                     .dependOnClassesThat()
@@ -61,7 +61,7 @@ public class ApplicationRulesTest {
                     .because("Java 21+ and Spring cover the functionality already, managing extra libraries with transient dependencies should be avoided");
 
     @ArchTest
-    static final ArchRule component_naming2 = noClasses()
+    static final ArchRule componentNamesThatAreBanished = noClasses()
             .that().haveSimpleNameNotContaining("Mapper")
             .should()
             .haveSimpleNameEndingWith("Impl")

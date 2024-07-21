@@ -36,14 +36,14 @@ class ControllerRulesTest {
             .should().haveSimpleNameEndingWith("Controller");
 
     @ArchTest
-    static final ArchRule records = classes()
+    static final ArchRule recordsShouldBeUsedForDtos = classes()
             .that().resideInAPackage("..dto")
             .should().beRecords()
             .because("Classes in the dto package should be records");
 
 
     @ArchTest
-    static final ArchRule controllerReturn = methods()
+    static final ArchRule controllerShouldNotReturnResponseEntity = methods()
             .that().areDeclaredInClassesThat().areAnnotatedWith(RestController.class)
             .should(new ArchCondition<>("ResponseEntity check") {
                 @Override
