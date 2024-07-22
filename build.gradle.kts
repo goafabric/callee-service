@@ -19,7 +19,7 @@ plugins {
 	id("net.researchgate.release") version "3.0.2"
 	id("org.sonarqube") version "5.0.0.4638"
 
-	//id("org.cyclonedx.bom") version "1.8.2"
+	id("org.cyclonedx.bom") version "1.8.2"
 
 	kotlin("jvm") version "2.0.0"
 	kotlin("plugin.spring") version "2.0.0"
@@ -106,3 +106,5 @@ configure<net.researchgate.release.ReleaseExtension> {
 	buildTasks.set(listOf("build", "test", "jib", "dockerImageNative"))
 	tagTemplate.set("v${version}".replace("-SNAPSHOT", ""))
 }
+
+tasks.cyclonedxBom {  setIncludeConfigs(listOf("compileClasspath")) }
