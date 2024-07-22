@@ -1,6 +1,6 @@
 package org.goafabric.calleeservice.logic
 
-import org.goafabric.calleeservice.controller.Callee
+import org.goafabric.calleeservice.controller.dto.Callee
 import org.springframework.stereotype.Component
 
 @Component

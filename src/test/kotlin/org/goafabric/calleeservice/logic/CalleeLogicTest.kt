@@ -1,7 +1,7 @@
 package org.goafabric.calleeservice.logic
 
 import org.assertj.core.api.Assertions.assertThat
-import org.goafabric.calleeservice.controller.Callee
+import org.goafabric.calleeservice.controller.dto.Callee
 import org.junit.jupiter.api.Test
 
 internal class CalleeLogicTest {

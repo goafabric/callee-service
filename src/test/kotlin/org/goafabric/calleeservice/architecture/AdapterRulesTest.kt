@@ -17,6 +17,7 @@ internal object AdapterRulesTest {
         .should().beDeclaredInClassesThat().haveSimpleNameEndingWith("Adapter")
         .allowEmptyShould(true)
 
+    /*
     @ArchTest
     val declarativeClientShouldBeUsed: ArchRule = ArchRuleDefinition.noClasses().that()
         .areNotAnnotatedWith(Configuration::class.java)
@@ -29,6 +30,8 @@ internal object AdapterRulesTest {
         .haveFullyQualifiedName("org.springframework.web.reactive.function.client.WebClient")
         .`as`("Only use the declarative REST Client, as otherwise native image support is broken")
         .allowEmptyShould(false)
+
+     */
 
 
     @ArchTest

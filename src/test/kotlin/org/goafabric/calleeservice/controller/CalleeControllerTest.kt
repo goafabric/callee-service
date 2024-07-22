@@ -1,6 +1,7 @@
 package org.goafabric.calleeservice.controller
 
 import org.assertj.core.api.Assertions.assertThat
+import org.goafabric.calleeservice.controller.dto.Callee
 import org.goafabric.calleeservice.logic.CalleeLogic
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
