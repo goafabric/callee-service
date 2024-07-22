@@ -11,6 +11,7 @@ import com.tngtech.archunit.lang.ConditionEvents;
 import com.tngtech.archunit.lang.SimpleConditionEvent;
 import org.goafabric.calleeservice.Application;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
@@ -41,6 +42,9 @@ class ControllerRulesTest {
             .should().beRecords()
             .because("Classes in the dto package should be records");
 
+    @ArchTest
+    static final ArchRule controllerShouldNotUseCrossOrigin = classes()
+            .should().notBeAnnotatedWith(CrossOrigin.class);
 
     @ArchTest
     static final ArchRule controllerShouldNotReturnResponseEntity = methods()
