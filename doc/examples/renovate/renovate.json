@@ -1,5 +1,6 @@
 {
   "repositories": ["goafabric/callee-service"],
+  "baseBranches": ["refactoring"],
   "extends": ["config:base"],
   "packageRules": [
     {
