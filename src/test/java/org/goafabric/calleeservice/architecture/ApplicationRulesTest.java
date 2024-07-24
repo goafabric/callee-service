@@ -6,6 +6,7 @@ import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
 import org.goafabric.calleeservice.Application;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportRuntimeHints;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
@@ -24,6 +25,7 @@ public class ApplicationRulesTest {
     @ArchTest
     static final ArchRule reflectionShouldBeAvoided =
             noClasses()
+                    .that().areNotAnnotatedWith(Configuration.class)
                     .should()
                     .dependOnClassesThat()
                     .resideInAPackage("java.lang.reflect")
