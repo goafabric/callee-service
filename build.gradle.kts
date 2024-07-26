@@ -50,8 +50,11 @@ dependencies {
 	//implementation("org.springframework.boot:spring-boot-starter-web"); implementation("am.ik.s3:simple-s3-client:0.2.1") {exclude("org.springframework", "spring-web")}; implementation("org.springframework.boot:spring-boot-starter-web");
 	//implementation("org.springframework.boot:spring-boot-starter-web"); implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
 
+	//implementation("com.itextpdf:itext-core:8.0.2")
+
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
 }
 
 tasks.withType<Test> {
