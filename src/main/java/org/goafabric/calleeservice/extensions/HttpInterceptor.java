@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
@@ -88,8 +87,4 @@ public class HttpInterceptor implements HandlerInterceptor {
 
     @Bean
     ObservationPredicate disableHttpServerObservationsFromName() { return (name, context) -> !(name.startsWith("spring.security.") || (context instanceof ServerRequestObservationContext serverContext && (serverContext).getCarrier().getRequestURI().startsWith("/actuator"))); }
-
-    @Value("${multi-tenancy.schema-prefix}") private String schemaPrefix;
-    @RegisterReflectionForBinding(HttpInterceptor.class)
-    public String getPrefix() { return schemaPrefix + TenantContext.getTenantId() + "_"; }
 }
