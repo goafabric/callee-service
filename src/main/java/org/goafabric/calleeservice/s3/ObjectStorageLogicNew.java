@@ -34,7 +34,7 @@
 //    private final List<ObjectEntry> objectEntriesInMem = new ArrayList<>();
 //
 //    public ObjectStorageLogicNew(@Value("${spring.cloud.aws.s3.enabled}") Boolean s3Enabled,
-//                                 @Value("${multi-tenancy.schema-prefix:}") String schemaPrefix,
+//                                 @Value("${multi-tenancy.schema-prefix:core}") String schemaPrefix,
 //                                 @Value("${spring.cloud.aws.s3.endpoint}") String endPoint,
 //                                 @Value("${spring.cloud.aws.region.static}") String region,
 //                                 @Value("${spring.cloud.aws.credentials.access-key}") String accessKey,
@@ -48,12 +48,12 @@
 //        this.restClient = RestClient.builder().messageConverters(httpMessageConverters -> httpMessageConverters.add(new MappingJackson2XmlHttpMessageConverter())).build();
 //    }
 //
-//    public ObjectEntry getById(String id) {
-//        if (!s3Enabled) { return objectEntriesInMem.stream().filter(o -> o.objectName().equals(id)).findFirst().get(); }
+//    public ObjectEntry getById(String key) {
+//        if (!s3Enabled) { return objectEntriesInMem.stream().filter(o -> o.objectName().equals(key)).findFirst().get(); }
 //
-//        var request = s3RequestPath(HttpMethod.GET, id).build();
+//        var request = s3RequestPath(HttpMethod.GET, schemaPrefix + "/" + key).build();
 //        var response = restClient.get().uri(request.uri()).headers(request.headers()).retrieve().toEntity(byte[].class);
-//        return new ObjectEntry(id, response.getHeaders().getFirst("Content-Type"), (long) response.getBody().length, response.getBody());
+//        return new ObjectEntry(key, response.getHeaders().getFirst("Content-Type"), (long) response.getBody().length, response.getBody());
 //    }
 //
 //    public List<ObjectEntry> search(String search) {
@@ -74,7 +74,7 @@
 //
 //        createBucketIfNotExists(getBucketName());
 //
-//        var request = s3RequestPath(HttpMethod.PUT, objectEntry.objectName())
+//        var request = s3RequestPath(HttpMethod.PUT, schemaPrefix + "/" + objectEntry.objectName())
 //                .content(S3Content.of(objectEntry.data(), MediaType.valueOf(objectEntry.contentType())))
 //                .build();
 //
@@ -112,8 +112,7 @@
 //    }
 //
 //    private String getBucketName() {
-//        return "console";
-//        //return schemaPrefix.replaceAll("_", "-") + TenantContext.getTenantId();
+//        return "tenant-5"; //return schemaPrefix.replaceAll("_", "-") + TenantContext.getTenantId();
 //    }
 //
 //    @PostConstruct
