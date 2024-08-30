@@ -1,3 +1,7 @@
+# 3.3.3
+- upgrade to Spring Boot 3.3.3
+- doc folder: spring cloud, github flows removed, roles-allowed updated
+
 # 3.3.0
 - upgrade to Spring Boot 3.3.0
 

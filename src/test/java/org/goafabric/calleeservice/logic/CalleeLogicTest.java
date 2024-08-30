@@ -1,10 +1,9 @@
 package org.goafabric.calleeservice.logic;
 
-import org.goafabric.calleeservice.controller.Callee;
+import org.goafabric.calleeservice.controller.dto.Callee;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class CalleeLogicTest {
     private CalleeLogic calleeLogic = new CalleeLogic();

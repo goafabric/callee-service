@@ -20,14 +20,20 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: 8.7
+          gradle-version: 8.9
 
       - name: Test
         run: gradle build test
 
-      - name: Sonar
-        continue-on-error: true
-        run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.host.url=http://v2202402203466256255.megasrv.de/sonar -Dsonar.token=${{ secrets.SONAR_USER_TOKEN }}
+#      - name: Sonar
+#        continue-on-error: true
+#        run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.host.url=http://v2202402203466256255.megasrv.de/sonar -Dsonar.token=${{ secrets.SONAR_USER_TOKEN }}
+
+      - name: Archive SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: SBOM
+          path: build/resources/main/META-INF/sbom/application.cdx.json
 
   snapshot:
     runs-on: ubuntu-latest
@@ -50,7 +56,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: 8.7
+          gradle-version: 8.9
           
       - name: Container Images
         run: gradle jib dockerImageNative
@@ -78,7 +84,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: 8.7
+          gradle-version: 8.9
 
       - name: Setup git config
         run: |
