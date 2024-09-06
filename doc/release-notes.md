@@ -1,4 +1,15 @@
+# 3.3.4
+- spring security removed agian
+
+# 3.3.3
+- upgrade to Spring Boot 3.3.3
+- doc folder: spring cloud, github flows removed, roles-allowed updated
+
+# 3.3.0
+- upgrade to Spring Boot 3.3.0
+
 # 3.2.10
+- spring security readded
 
 # 3.2.5
 - release plugin added

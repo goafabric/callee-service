@@ -28,9 +28,6 @@ services:
       server.tomcat.threads.max: "20"
       server.forward-headers-strategy: FRAMEWORK
 
-      #security
-      security.authentication.enabled: "false"
-
       #monitoring
       management.endpoint.health.show-details: always
       management.endpoints.web.exposure.include: "health,heapdump,circuitbreakers,prometheus"
