@@ -5,7 +5,7 @@ val version: String by project
 java.sourceCompatibility = JavaVersion.VERSION_21
 
 val dockerRegistry = "goafabric"
-val nativeBuilder = "paketobuildpacks/java-native-image:9.5.0"
+val nativeBuilder = "paketobuildpacks/java-native-image:9.8.0"
 val baseImage = "ibm-semeru-runtimes:open-21.0.3_9-jre-focal@sha256:5cb19afa9ee0daeecb7c31be8253fecbbf6b5f6dcfb06883c41f045cb893bcec"
 
 plugins {
