@@ -46,9 +46,9 @@ dependencies {
 	//implementation("org.springframework.boot:spring-boot-starter-data-redis"); implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml"); implementation("org.springframework.boot:spring-boot-starter-cache");
 
 	//s3
-	//implementation("io.awspring.cloud:spring-cloud-aws-starter-s3:3.1.0")
-	implementation("org.springframework.boot:spring-boot-starter-web"); implementation("am.ik.s3:simple-s3-client:0.2.1") {exclude("org.springframework", "spring-web")}; implementation("org.springframework.boot:spring-boot-starter-web");
-	implementation("com.azure:azure-storage-blob:12.28.1")
+	//implementation("io.awspring.cloud:spring-cloud-aws-starter-s3:3.2.0"); implementation("am.ik.s3:simple-s3-client:0.2.2")
+	//implementation("org.springframework.boot:spring-boot-starter-web"); implementation("am.ik.s3:simple-s3-client:0.2.1") {exclude("org.springframework", "spring-web")}; implementation("org.springframework.boot:spring-boot-starter-web");
+	//implementation("com.azure:azure-storage-blob:12.28.1")
 
 	//implementation("com.itextpdf:itext-core:8.0.2")
 
