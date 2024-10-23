@@ -38,7 +38,7 @@ public class ObjectStorageLogicAzure implements ObjectStorageLogic{
     }
 
     public void save(ObjectEntry objectEntry) {
-        blobServiceClient.createBlobContainerIfNotExists(getBucketName());
+        try { blobServiceClient.createBlobContainer(getBucketName()); } catch (Exception e) {} //ifnotexists does not work in native mode
         blobServiceClient.getBlobContainerClient(getBucketName()).getBlobClient(objectEntry.objectName())
             .upload(new ByteArrayInputStream(objectEntry.data()), true);
     }

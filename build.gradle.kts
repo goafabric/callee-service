@@ -11,7 +11,7 @@ val baseImage = "ibm-semeru-runtimes:open-21.0.3_9-jre-focal@sha256:5cb19afa9ee0
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.3.2"
+	id("org.springframework.boot") version "3.3.4"
 	id("io.spring.dependency-management") version "1.1.6"
 	id("org.graalvm.buildtools.native") version "0.10.2"
 
@@ -80,9 +80,15 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	builder.set("paketobuildpacks/builder-jammy-buildpackless-tiny")
 	buildpacks.add(nativeBuilder)
 	imageName.set(nativeImageName)
-	environment.set(mapOf("BP_NATIVE_IMAGE" to "true", "BP_JVM_VERSION" to "21", "BP_NATIVE_IMAGE_BUILD_ARGUMENTS" to "-J-Xmx5000m -march=compatibility"))
+	environment.set(mapOf("BP_NATIVE_IMAGE" to "true", "BP_JVM_VERSION" to "21", "BP_NATIVE_IMAGE_BUILD_ARGUMENTS" to "-J-Xmx5000m -march=compatibility --initialize-at-build-time=org.slf4j.helpers.Reporter"))
 	doLast {
 		exec { commandLine("/bin/sh", "-c", "docker run --rm $nativeImageName -check-integrity") }
 		exec { commandLine("/bin/sh", "-c", "docker push $nativeImageName") }
+	}
+}
+
+graalvmNative {
+	binaries.named("main") {
+		buildArgs.add("--initialize-at-build-time=org.slf4j.helpers.Reporter") //required for azure blob from boot 3.3.3+
 	}
 }
