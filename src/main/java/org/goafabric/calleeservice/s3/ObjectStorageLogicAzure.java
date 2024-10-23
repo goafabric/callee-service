@@ -1,13 +1,10 @@
-/*
 package org.goafabric.calleeservice.s3;
 
 
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.common.StorageSharedKeyCredential;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -15,20 +12,25 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 @Component
-@Profile("azure") //wont be switchable with native images
-public class ObjectStorageLogicAzure implements ObjectStorageLogic{
+public class ObjectStorageLogicAzure {
 
-    private final BlobServiceClient blobServiceClient;
+    private BlobServiceClient blobServiceClient;
+    private final String schemaPrefix;
 
     public ObjectStorageLogicAzure(
+            @Value("${blob.storage.implementation}") String blobStorageImplementation,
+            @Value("${multi-tenancy.schema-prefix:}") String schemaPrefix,
             @Value("${azure.storage.url}") String url,
             @Value("${azure.storage.account-name}") String accountName,
             @Value("${azure.storage.account-key}") String accountKey) {
 
-        blobServiceClient = new BlobServiceClientBuilder()
-                .endpoint(String.format(url, accountName))
-                .credential(new StorageSharedKeyCredential(accountName, accountKey))
-                .buildClient();
+        this.schemaPrefix = schemaPrefix;
+        if (blobStorageImplementation.equals("azure")) {
+            blobServiceClient = new BlobServiceClientBuilder()
+                    .endpoint(String.format(url, accountName))
+                    .credential(new StorageSharedKeyCredential(accountName, accountKey))
+                    .buildClient();
+        }
     }
 
     public ObjectEntry getById(String key) {
@@ -51,15 +53,8 @@ public class ObjectStorageLogicAzure implements ObjectStorageLogic{
                 .toList();
     }
 
-    public String getBucketName() {
-        return "tenant-5";
-    }
-
-    @PostConstruct
-    public void demo() {
-        save(new ObjectEntry("hello_world.txt", "text/plain", Long.valueOf("hello world".length()), "hello world".getBytes()));
-        System.err.println("getById : " + getById("hello_world.txt"));
-        search("hello").stream().forEach(s -> System.err.println("fromlist : " + s.toString()));
+    private String getBucketName() {
+        return schemaPrefix.replaceAll("_", "-") + "0"; //TenantContext.getTenantId();
     }
 }
-*/
+

@@ -1,14 +1,11 @@
-/*
 package org.goafabric.calleeservice.s3;
 
 import am.ik.s3.ListBucketResult;
 import am.ik.s3.ListBucketsResult;
 import am.ik.s3.S3Content;
 import am.ik.s3.S3RequestBuilders;
-import jakarta.annotation.PostConstruct;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
@@ -24,8 +21,7 @@ import static am.ik.s3.S3RequestBuilder.s3Request;
 
 @Component
 @RegisterReflectionForBinding({ListBucketResult.class, ListBucketsResult.class}) //implementation("am.ik.s3:simple-s3-client:0.1.1") {exclude("org.springframework", "spring-web")}
-@Profile("aws") //wont be switchable with native images
-public class ObjectStorageLogicAWSSpring implements ObjectStorageLogic {
+public class ObjectStorageLogicAWSSpring {
 
     private final Boolean    s3Enabled;
     private final String     schemaPrefix;
@@ -37,7 +33,7 @@ public class ObjectStorageLogicAWSSpring implements ObjectStorageLogic {
     private final List<ObjectEntry> objectEntriesInMem = new ArrayList<>();
 
     public ObjectStorageLogicAWSSpring(@Value("${spring.cloud.aws.s3.enabled}") Boolean s3Enabled,
-                                       @Value("${multi-tenancy.schema-prefix:core}") String schemaPrefix,
+                                       @Value("${multi-tenancy.schema-prefix:}") String schemaPrefix,
                                        @Value("${spring.cloud.aws.s3.endpoint}") String endPoint,
                                        @Value("${spring.cloud.aws.region.static}") String region,
                                        @Value("${spring.cloud.aws.credentials.access-key}") String accessKey,
@@ -115,16 +111,7 @@ public class ObjectStorageLogicAWSSpring implements ObjectStorageLogic {
     }
 
     private String getBucketName() {
-        return "tenant-5"; //return schemaPrefix.replaceAll("_", "-") + TenantContext.getTenantId();
-    }
-
-    @PostConstruct
-    public void demo() {
-        save(new ObjectEntry("hello_world.txt", "text/plain", Long.valueOf("hello world".length()), "hello world".getBytes()));
-        System.err.println("getById : " + getById("hello_world.txt"));
-        search("hello").stream().forEach(s -> System.err.println("fromlist : " + s.toString()));
+        return schemaPrefix.replaceAll("_", "-") + "5"; //TenantContext.getTenantId();
     }
 
 }
-
-*/

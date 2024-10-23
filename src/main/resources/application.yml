@@ -19,4 +19,7 @@ azure:
     account-name: <your-storage-account-name>
     account-key: <your-storage-account-key>
 
-spring.profiles.active: "azure"
+
+multi-tenancy.schema-prefix: "callee"
+
+blob.storage.implementation: "memory"
