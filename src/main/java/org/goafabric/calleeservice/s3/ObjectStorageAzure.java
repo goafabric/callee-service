@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.s3;
 
 
@@ -50,4 +51,6 @@ public class ObjectStorageAzure {
         return "mybucket";
     }
 }
+
+ */
 
