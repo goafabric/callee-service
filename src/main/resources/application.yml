@@ -20,6 +20,5 @@ azure:
     account-key: <your-storage-account-key>
 
 
-multi-tenancy.schema-prefix: "callee"
-
-blob.storage.implementation: "memory"
+multi-tenancy.schema-prefix: "callee_"
+blob.storage.implementation: "azure"

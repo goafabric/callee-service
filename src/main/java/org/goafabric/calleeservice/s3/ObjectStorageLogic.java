@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.s3;
 
 import jakarta.annotation.PostConstruct;
@@ -62,3 +63,4 @@ public class ObjectStorageLogic {
 
 }
 
+*/
