@@ -86,7 +86,3 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 		exec { commandLine("/bin/sh", "-c", "docker push $nativeImageName") }
 	}
 }
-
-graalvmNative { //https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html#configuration-options
-	binaries.named("main") { quickBuild.set(true) }
-}
