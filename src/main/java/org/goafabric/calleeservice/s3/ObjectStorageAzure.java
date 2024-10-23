@@ -1,4 +1,3 @@
-/*
 package org.goafabric.calleeservice.s3;
 
 
@@ -27,30 +26,36 @@ public class ObjectStorageAzure {
                 .buildClient();
     }
 
-    public void uploadFile(String fileName, byte[] fileData) {
-        blobContainerClient.getBlobClient(fileName)
-            .upload(new ByteArrayInputStream(fileData), fileData.length);
-    }
-
-    public byte[] downloadFile(String fileName) {
+    public ObjectEntry getById(String key) {
         var outputStream = new ByteArrayOutputStream();
-        blobContainerClient.getBlobClient(fileName).download(outputStream);
-        return outputStream.toByteArray();
+        blobContainerClient.getBlobClient(key).downloadStream(outputStream);
+        return new ObjectEntry(key, "TODO", (long) outputStream.toByteArray().length, outputStream.toByteArray());
     }
 
-    public void deleteFile(String fileName) {
-        blobContainerClient.getBlobClient(fileName).delete();
+    public void save(ObjectEntry objectEntry) {
+        blobContainerClient.getServiceClient().createBlobContainerIfNotExists(getBucketName());
+        blobContainerClient.getBlobClient(objectEntry.objectName())
+            .upload(new ByteArrayInputStream(objectEntry.data()), objectEntry.objectSize());
     }
 
     @PostConstruct
     public void demo() {
-        System.out.println(downloadFile("Cletus.png"));
+        System.out.println(getById("Cletus.png"));
     }
+
+    //    @PostConstruct
+//    public void demo() {
+//        save(
+//                new ObjectEntry("hello_world.txt", "text/plain",
+//                        Long.valueOf("hello world".length()), "hello world".getBytes()));
+//        var objectEntry = getById("hello_world.txt");
+//        System.err.println("getById : " + objectEntry);
+//        search("hello").stream().forEach(s -> System.err.println("fromlist : " + s.toString()));
+//    }
+
 
     public String getBucketName() {
         return "mybucket";
     }
 }
-
- */
 
