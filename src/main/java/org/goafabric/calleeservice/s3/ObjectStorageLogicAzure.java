@@ -6,18 +6,20 @@ import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.common.StorageSharedKeyCredential;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-@Service
-public class ObjectStorageAzure {
+@Component
+@Profile("azure") //wont be switchable with native images
+public class ObjectStorageLogicAzure implements ObjectStorageLogic{
 
     private final BlobServiceClient blobServiceClient;
 
-    public ObjectStorageAzure(
+    public ObjectStorageLogicAzure(
             @Value("${azure.storage.url}") String url,
             @Value("${azure.storage.account-name}") String accountName,
             @Value("${azure.storage.account-key}") String accountKey) {
@@ -47,7 +49,6 @@ public class ObjectStorageAzure {
                 .map(item -> getById(item.getName()))
                 .toList();
     }
-
 
     public String getBucketName() {
         return "tenant-5";

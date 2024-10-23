@@ -18,3 +18,5 @@ azure:
     url: https://%s.blob.core.windows.net
     account-name: <your-storage-account-name>
     account-key: <your-storage-account-key>
+
+spring.profiles.active: "azure"
