@@ -33,7 +33,7 @@ public class ObjectStorageAzure {
     public void save(ObjectEntry objectEntry) {
         getBobClient().getServiceClient().createBlobContainerIfNotExists(getBucketName());
         getBobClient().getBlobClient(objectEntry.objectName())
-            .upload(new ByteArrayInputStream(objectEntry.data()), objectEntry.objectSize());
+            .upload(new ByteArrayInputStream(objectEntry.data()), true);
     }
 
     public List<ObjectEntry> search(String search) {
@@ -43,21 +43,11 @@ public class ObjectStorageAzure {
                 .toList();
     }
 
-    /*
-    @PostConstruct
-    public void demo() {
-        System.out.println(getById("Cletus.png"));
-    }
-
-     */
 
     @PostConstruct
     public void demo() {
-        save(
-                new ObjectEntry("hello_world.txt", "text/plain",
-                        Long.valueOf("hello world".length()), "hello world".getBytes()));
-        var objectEntry = getById("hello_world.txt");
-        System.err.println("getById : " + objectEntry);
+        save(new ObjectEntry("hello_world.txt", "text/plain", Long.valueOf("hello world".length()), "hello world".getBytes()));
+        System.err.println("getById : " + getById("hello_world.txt"));
         search("hello").stream().forEach(s -> System.err.println("fromlist : " + s.toString()));
     }
 
