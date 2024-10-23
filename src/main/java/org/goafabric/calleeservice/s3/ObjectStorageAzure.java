@@ -26,32 +26,25 @@ public class ObjectStorageAzure {
 
     public ObjectEntry getById(String key) {
         var outputStream = new ByteArrayOutputStream();
-        getBobClient().getBlobClient(key).downloadStream(outputStream);
-        return new ObjectEntry(key, "TODO", (long) outputStream.toByteArray().length, outputStream.toByteArray());
+        var client = getBobContainerClient().getBlobClient(key);
+        client.downloadStream(outputStream);
+        return new ObjectEntry(key, client.getProperties().getContentType(), (long) outputStream.toByteArray().length, outputStream.toByteArray());
     }
 
     public void save(ObjectEntry objectEntry) {
-        getBobClient().getServiceClient().createBlobContainerIfNotExists(getBucketName());
-        getBobClient().getBlobClient(objectEntry.objectName())
+        getBobContainerClient().getServiceClient().createBlobContainerIfNotExists(getBucketName());
+        getBobContainerClient().getBlobClient(objectEntry.objectName())
             .upload(new ByteArrayInputStream(objectEntry.data()), true);
     }
 
     public List<ObjectEntry> search(String search) {
-        return getBobClient().listBlobs().stream()
+        return getBobContainerClient().listBlobs().stream()
                 .filter(item -> item.getName().toLowerCase().startsWith(search))
                 .map(item -> getById(item.getName()))
                 .toList();
     }
 
-
-    @PostConstruct
-    public void demo() {
-        save(new ObjectEntry("hello_world.txt", "text/plain", Long.valueOf("hello world".length()), "hello world".getBytes()));
-        System.err.println("getById : " + getById("hello_world.txt"));
-        search("hello").stream().forEach(s -> System.err.println("fromlist : " + s.toString()));
-    }
-
-    public BlobContainerClient getBobClient() {
+    public BlobContainerClient getBobContainerClient() {
         return new BlobContainerClientBuilder()
                 .endpoint(String.format("https://%s.blob.core.windows.net", accountName))
                 .credential(new StorageSharedKeyCredential(accountName, accountKey))
@@ -61,6 +54,14 @@ public class ObjectStorageAzure {
 
     public String getBucketName() {
         return "tenant-5";
+    }
+
+
+    @PostConstruct
+    public void demo() {
+        save(new ObjectEntry("hello_world.txt", "text/plain", Long.valueOf("hello world".length()), "hello world".getBytes()));
+        System.err.println("getById : " + getById("hello_world.txt"));
+        search("hello").stream().forEach(s -> System.err.println("fromlist : " + s.toString()));
     }
 }
 
