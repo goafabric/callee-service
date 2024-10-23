@@ -1,8 +1,8 @@
 package org.goafabric.calleeservice.s3;
 
 
-import com.azure.storage.blob.BlobContainerClient;
-import com.azure.storage.blob.BlobContainerClientBuilder;
+import com.azure.storage.blob.BlobServiceClient;
+import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.common.StorageSharedKeyCredential;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,47 +15,43 @@ import java.util.List;
 @Service
 public class ObjectStorageAzure {
 
-    private final String accountName;
-    private final String accountKey;
+    private final BlobServiceClient blobServiceClient;
 
-    public ObjectStorageAzure(@Value("${azure.storage.account-name}") String accountName,
-                              @Value("${azure.storage.account-key}") String accountKey) {
-        this.accountName = accountName;
-        this.accountKey = accountKey;
+    public ObjectStorageAzure(
+            @Value("${azure.storage.url}") String url,
+            @Value("${azure.storage.account-name}") String accountName,
+            @Value("${azure.storage.account-key}") String accountKey) {
+
+        blobServiceClient = new BlobServiceClientBuilder()
+                .endpoint(String.format(url, accountName))
+                .credential(new StorageSharedKeyCredential(accountName, accountKey))
+                .buildClient();
     }
 
     public ObjectEntry getById(String key) {
         var outputStream = new ByteArrayOutputStream();
-        var client = getBobContainerClient().getBlobClient(key);
+        var client = blobServiceClient.getBlobContainerClient(getBucketName()).getBlobClient(key);
         client.downloadStream(outputStream);
         return new ObjectEntry(key, client.getProperties().getContentType(), (long) outputStream.toByteArray().length, outputStream.toByteArray());
     }
 
     public void save(ObjectEntry objectEntry) {
-        getBobContainerClient().getServiceClient().createBlobContainerIfNotExists(getBucketName());
-        getBobContainerClient().getBlobClient(objectEntry.objectName())
+        blobServiceClient.createBlobContainerIfNotExists(getBucketName());
+        blobServiceClient.getBlobContainerClient(getBucketName()).getBlobClient(objectEntry.objectName())
             .upload(new ByteArrayInputStream(objectEntry.data()), true);
     }
 
     public List<ObjectEntry> search(String search) {
-        return getBobContainerClient().listBlobs().stream()
+        return blobServiceClient.getBlobContainerClient(getBucketName()).listBlobs().stream()
                 .filter(item -> item.getName().toLowerCase().startsWith(search))
                 .map(item -> getById(item.getName()))
                 .toList();
     }
 
-    public BlobContainerClient getBobContainerClient() {
-        return new BlobContainerClientBuilder()
-                .endpoint(String.format("https://%s.blob.core.windows.net", accountName))
-                .credential(new StorageSharedKeyCredential(accountName, accountKey))
-                .containerName(getBucketName())
-                .buildClient();
-    }
 
     public String getBucketName() {
         return "tenant-5";
     }
-
 
     @PostConstruct
     public void demo() {
