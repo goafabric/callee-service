@@ -12,9 +12,9 @@ spring.cloud.aws.credentials.access-key: "minioadmin"
 spring.cloud.aws.credentials.secret-key: "minioadmin"
 spring.cloud.aws.region.static: "eu-central-1" #"us-east-1" //for localstack s3 + native client us-east seems to be needed
 
-
 #azure
 azure:
   storage:
+    url: https://%s.blob.core.windows.net
     account-name: <your-storage-account-name>
     account-key: <your-storage-account-key>
