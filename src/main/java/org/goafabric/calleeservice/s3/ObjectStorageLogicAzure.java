@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.s3;
 
 
@@ -61,4 +62,4 @@ public class ObjectStorageLogicAzure implements ObjectStorageLogic{
         search("hello").stream().forEach(s -> System.err.println("fromlist : " + s.toString()));
     }
 }
-
+*/

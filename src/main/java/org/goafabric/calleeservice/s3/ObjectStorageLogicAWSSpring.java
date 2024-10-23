@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.s3;
 
 import am.ik.s3.ListBucketResult;
@@ -126,3 +127,4 @@ public class ObjectStorageLogicAWSSpring implements ObjectStorageLogic {
 
 }
 
+*/
