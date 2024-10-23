@@ -11,8 +11,8 @@ val baseImage = "ibm-semeru-runtimes:open-21.0.3_9-jre-focal@sha256:5cb19afa9ee0
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.3.1"
-	id("io.spring.dependency-management") version "1.1.5"
+	id("org.springframework.boot") version "3.3.2"
+	id("io.spring.dependency-management") version "1.1.6"
 	id("org.graalvm.buildtools.native") version "0.10.2"
 
 	id("com.google.cloud.tools.jib") version "3.4.2"
@@ -51,6 +51,7 @@ dependencies {
 	//implementation("org.springframework.boot:spring-boot-starter-web"); implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
 
 	//implementation("com.itextpdf:itext-core:8.0.2")
+	implementation("com.azure:azure-storage-blob:12.28.1")
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

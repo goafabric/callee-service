@@ -11,3 +11,10 @@ spring.cloud.aws.s3.endpoint: "http://localhost:9100" #"http://s3.localhost.loca
 spring.cloud.aws.credentials.access-key: "minioadmin"
 spring.cloud.aws.credentials.secret-key: "minioadmin"
 spring.cloud.aws.region.static: "eu-central-1" #"us-east-1" //for localstack s3 + native client us-east seems to be needed
+
+
+#azure
+azure:
+  storage:
+    account-name: <your-storage-account-name>
+    account-key: <your-storage-account-key>
