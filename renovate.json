@@ -1,15 +1,25 @@
 {
-  "repositories": ["goafabric/callee-service"],
-  "baseBranches": ["update"],
-  "extends": ["config:base"],
+  "repositories": [
+    "goafabric/callee-service"
+  ],
+  "baseBranches": [
+    "update"
+  ],
+  "extends": [
+    "config:recommended"
+  ],
   "prConcurrentLimit": 0,
   "prHourlyLimit": 0,
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "matchCurrentVersion": "!/^0/",
       "automerge": true,
       "automergeType": "pr",
-      "requiredStatusChecks": null
+      "ignoreTests": true
     }
-  ]}
+  ]
+}
