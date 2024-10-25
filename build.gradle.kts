@@ -5,21 +5,21 @@ val version: String by project
 java.sourceCompatibility = JavaVersion.VERSION_21
 
 val dockerRegistry = "goafabric"
-val nativeBuilder = "paketobuildpacks/java-native-image:9.8.0"
-val baseImage = "ibm-semeru-runtimes:open-21.0.3_9-jre-focal@sha256:5cb19afa9ee0daeecb7c31be8253fecbbf6b5f6dcfb06883c41f045cb893bcec"
+val nativeBuilder = "paketobuildpacks/java-native-image:10.1.0"
+val baseImage = "ibm-semeru-runtimes:open-21.0.4.1_7-jre-focal@sha256:8b94f8b14fd1d4660f9dc777b1ad3630f847b8e3dc371203bcb857a5e74d6c39"
 
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.3.4"
+	id("org.springframework.boot") version "3.3.5"
 	id("io.spring.dependency-management") version "1.1.6"
-	id("org.graalvm.buildtools.native") version "0.10.2"
+	id("org.graalvm.buildtools.native") version "0.10.3"
 
-	id("com.google.cloud.tools.jib") version "3.4.3"
+	id("com.google.cloud.tools.jib") version "3.4.4"
 	id("net.researchgate.release") version "3.0.2"
 	id("org.sonarqube") version "5.0.0.4638"
 
-	id("org.cyclonedx.bom") version "1.8.2"
+	id("org.cyclonedx.bom") version "1.10.0"
 }
 
 repositories {
