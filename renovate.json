@@ -2,6 +2,7 @@
   "repositories": ["goafabric/callee-service"],
   "baseBranches": ["refactoring"],
   "extends": ["config:base"],
+  "prConcurrentLimit": 0,
   "packageRules": [
     {
       "matchPackagePatterns": ["org.springframework.boot"],
