@@ -21,5 +21,3 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
         env:
           LOG_LEVEL: 'debug'
-
-#git branch -D renovate/configure
