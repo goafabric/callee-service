@@ -1,4 +1,5 @@
 {
+  "repositories": ["goafabric/callee-service"],
   "baseBranches": ["update"],
   "extends": ["config:base"],
   "prConcurrentLimit": 2,
