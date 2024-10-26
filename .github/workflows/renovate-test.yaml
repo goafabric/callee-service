@@ -6,7 +6,7 @@ on:
 
 jobs:
   renovate-test:
-    if: github.actor == 'Renovate Bot'
+#    if: github.actor == 'Renovate Bot'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
