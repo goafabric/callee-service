@@ -19,3 +19,6 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.10.1
+
+      - name: Test
+          run: gradle build test
