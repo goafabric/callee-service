@@ -1,8 +1,8 @@
 name: Renovate Test
 on:
   push:
-#    branches:
-#      - autoupdate
+    branches:
+      - autoupdate
 
 jobs:
   renovate-test:
