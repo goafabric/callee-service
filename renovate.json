@@ -6,7 +6,7 @@
     "autoupdate"
   ],
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "prConcurrentLimit": 0,
   "prHourlyLimit": 0,
