@@ -3,7 +3,7 @@
     "goafabric/callee-service"
   ],
   "baseBranches": [
-    "update"
+    "autoupdate"
   ],
   "extends": [
     "config:recommended"
