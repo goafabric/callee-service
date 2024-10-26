@@ -31,4 +31,4 @@ jobs:
           gradle-version: 8.10.1
 
       - name: Test
-        run: gradle build test
+        run: gradle build test dockerImageNative
