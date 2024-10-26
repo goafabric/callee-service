@@ -12,3 +12,5 @@ docker run --pull always --name callee-service-native --rm -p50900:50900 goafabr
 
 # run native image arm
 docker run --pull always --name callee-service-native --rm -p50900:50900 goafabric/callee-service-native-arm64v8:$(grep '^version=' gradle.properties | cut -d'=' -f2) -Xmx32m
+
+# yo
