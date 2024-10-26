@@ -18,6 +18,7 @@
       ],
       "automerge": true,
       "automergeType": "branch",
+      "groupName": "all-updates",
       "ignoreTests": true
     }
   ]
