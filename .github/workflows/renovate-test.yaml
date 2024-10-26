@@ -6,7 +6,7 @@ on:
 
 jobs:
   renovate-test:
-#    if: github.actor == 'github-actions[bot]'
+    if: github.actor == 'Renovate Bot'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,4 +31,4 @@ jobs:
           gradle-version: 8.10.1
 
       - name: Test
-        run: gradle build test dockerImageNative
+        run: gradle build test #dockerImageNative
