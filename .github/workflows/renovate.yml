@@ -7,14 +7,12 @@ on:
 jobs:
   renovate:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Run Renovate
-        if: github.ref == 'refs/heads/main'
         uses: renovatebot/github-action@v40.3.4
         with:
           configurationFile: renovate.json
@@ -22,9 +20,19 @@ jobs:
         env:
           LOG_LEVEL: 'info'
 
+  merge:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/autoupdate'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Merge main
-        if: github.ref == 'refs/heads/autoupdate'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git merge -X ours origin/main -m "Merged origin/main" && git push
+          
+
