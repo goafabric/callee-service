@@ -20,7 +20,7 @@ jobs:
         env:
           LOG_LEVEL: 'info'
 
-  merge:
+  merge-main:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/autoupdate'
     steps:
