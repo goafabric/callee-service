@@ -85,7 +85,7 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	environment.set(mapOf("BP_NATIVE_IMAGE" to "true", "BP_JVM_VERSION" to "21", "BP_NATIVE_IMAGE_BUILD_ARGUMENTS" to "-J-Xmx5000m -march=compatibility"))
 	doLast {
 		exec { commandLine("/bin/sh", "-c", "docker run --rm $nativeImageName -check-integrity") }
-		if (!project.hasProperty("noPush")) { exec { commandLine("/bin/sh", "-c", "docker push $nativeImageName") } }
+		exec { commandLine("/bin/sh", "-c", "docker push $nativeImageName") }
 	}
 }
 
