@@ -1,6 +1,5 @@
 {
   "autodiscover": true,
-  "repositories": [],
   "baseBranches": [
     "autoupdate"
   ],
