@@ -5,8 +5,8 @@ val version: String by project
 java.sourceCompatibility = JavaVersion.VERSION_21
 
 val dockerRegistry = "goafabric"
-val nativeBuilder = "paketobuildpacks/java-native-image:10.1.0"
-val baseImage = "ibm-semeru-runtimes:open-21.0.4.1_7-jre-focal@sha256:8b94f8b14fd1d4660f9dc777b1ad3630f847b8e3dc371203bcb857a5e74d6c39"
+val nativeBuilder = "paketobuildpacks/java-native-image:9.5.0"
+val baseImage = "ibm-semeru-runtimes:open-21.0.3_9-jre-focal@sha256:5cb19afa9ee0daeecb7c31be8253fecbbf6b5f6dcfb06883c41f045cb893bcec"
 
 plugins {
 	java
@@ -17,7 +17,7 @@ plugins {
 
 	id("com.google.cloud.tools.jib") version "3.4.4"
 	id("net.researchgate.release") version "3.0.2"
-	id("org.sonarqube") version "5.0.0.4638"
+	id("org.sonarqube") version "5.1.0.4882"
 
 	id("org.cyclonedx.bom") version "1.10.0"
 }
@@ -32,17 +32,20 @@ dependencies {
 	constraints {
 		annotationProcessor("org.mapstruct:mapstruct-processor:1.6.2")
 		implementation("org.mapstruct:mapstruct:1.6.2")
-		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
-		implementation("io.github.resilience4j:resilience4j-spring-boot3:2.1.0")
-		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:1.0.3")
-		testImplementation("com.tngtech.archunit:archunit-junit5:1.2.1")
+		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
+		implementation("io.github.resilience4j:resilience4j-spring-boot3:2.2.0")
+		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:1.0.5")
+		testImplementation("com.tngtech.archunit:archunit-junit5:1.3.0")
 	}
 }
 
 dependencies {
 	//web
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	
+
+	//security
+	implementation("org.springframework.boot:spring-boot-starter-security")
+
 	//monitoring
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("io.micrometer:micrometer-registry-prometheus")
