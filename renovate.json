@@ -10,12 +10,9 @@
   ],
   "prConcurrentLimit": 0,
   "prHourlyLimit": 0,
+  "enabledManagers": ["gradle"],
   "packageRules": [
     {
-      "managers": [
-        "docker-compose",
-        "github-actions"
-      ], "enabled": false,
       "matchUpdateTypes": [
         "minor",
         "patch"
