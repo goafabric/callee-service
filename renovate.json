@@ -1,4 +1,7 @@
 {
+  "repositories": [
+    "goafabric/callee-service"
+  ],
   "baseBranches": [
     "autoupdate"
   ],
