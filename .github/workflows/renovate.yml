@@ -27,4 +27,4 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git merge origin/main && git push
+          git merge -X ours origin/main -m "Merged origin/main" && git push
