@@ -1,5 +1,17 @@
 {
   "extends": [
     "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true,
+      "automergeType": "branch",
+      "groupName": "all-updates",
+      "ignoreTests": true
+    }
   ]
 }
