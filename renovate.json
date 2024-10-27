@@ -8,6 +8,8 @@
   "extends": [
     "config:recommended"
   ],
+  "dependencyDashboard": false,
+
   "prConcurrentLimit": 0,
   "prHourlyLimit": 0,
   "enabledManagers": ["gradle"],
