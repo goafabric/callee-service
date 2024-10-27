@@ -4,7 +4,6 @@
 - upgrade of openjdk, paketo,
 - upgrade of jib, cylconedx
 
-
 # 3.3.3
 - upgrade to Spring Boot 3.3.3
 - doc folder: spring cloud, github flows removed, roles-allowed updated
