@@ -24,5 +24,14 @@
       "groupName": "all-updates",
       "ignoreTests": true
     }
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": ["^build\\.gradle\\.kts$"],
+      "matchStrings": [
+        "val baseImage = \"(?<depName>[^:]+):(?<currentValue>[^@]+)"
+      ],
+      "datasourceTemplate": "docker"
+    }
   ]
 }
