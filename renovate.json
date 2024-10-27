@@ -12,7 +12,7 @@
 
   "prConcurrentLimit": 0,
   "prHourlyLimit": 0,
-  "enabledManagers": ["gradle","docker"],
+  "enabledManagers": ["gradle","dockerfile"],
   "packageRules": [
     {
       "matchUpdateTypes": [
