@@ -8,10 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CalleeLogicTest {
     private CalleeLogic calleeLogic = new CalleeLogic();
 
-    @Test
-    public void testFalse() {
-        assertThat(true).isFalse();
-    }
+
     @Test
     void sayMyName() {
         assertThat(calleeLogic.sayMyName("Heisenberg").message())
