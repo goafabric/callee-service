@@ -1,4 +1,8 @@
 {
+  "baseBranches": [
+    "refactoring",
+    "kotlin"
+  ],
   "extends": [
     "github>goafabric/renovate-bot"
   ]
