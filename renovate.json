@@ -1,5 +1,5 @@
 {
   "extends": [
-    "gitlab>goafabric/renovate-bot"
+    "github>goafabric/renovate-bot"
   ]
 }
