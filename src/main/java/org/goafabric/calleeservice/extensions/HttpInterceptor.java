@@ -32,7 +32,8 @@ public class HttpInterceptor implements HandlerInterceptor {
 
         @Override
         public void addCorsMappings(CorsRegistry registry) {
-            if (!corsEnabled) { registry.addMapping("/**").allowedOrigins("*").allowedMethods("*"); }
+            if (!corsEnabled) { registry.addMapping("/**").allowedOrigins("*")
+                    .allowedMethods("GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS", "HEAD"); }
         }
     }
 
