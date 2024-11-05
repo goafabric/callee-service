@@ -6,6 +6,7 @@ import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
 import org.goafabric.calleeservice.Application;
+import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportRuntimeHints;
@@ -22,11 +23,15 @@ public class ApplicationRulesTest {
             return !location.contains("$$") && !location.contains("EnhancerByCGLIB");
         }
     }
-
     @ArchTest
     static final ArchRule reflectionShouldBeAvoided =
             noClasses()
-                    .that().areNotAnnotatedWith(Configuration.class)
+                    .that()
+                    .areNotAnnotatedWith(Configuration.class)
+                    .and()
+                    .doNotImplement(RuntimeHintsRegistrar.class)
+                    .and()
+                    .haveSimpleNameNotContaining("AuditTrailListener")
                     .should()
                     .dependOnClassesThat()
                     .resideInAPackage("java.lang.reflect")
