@@ -1,4 +1,4 @@
-package org.goafabric.calleeservice.adapter;
+package org.goafabric.calleeservice.remote;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.goafabric.calleeservice.controller.dto.Callee;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
 
 @CircuitBreaker(name = "calleeservice")
-public interface CalleeServiceAdapter {
+public interface CalleeControllerRemote {
 
     @GetExchange("/callees/sayMyName")
     Callee sayMyName(@RequestParam("name") String name);
