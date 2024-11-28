@@ -17,12 +17,12 @@ plugins {
 
 	id("com.google.cloud.tools.jib") version "3.4.4"
 	id("net.researchgate.release") version "3.0.2"
-	id("org.sonarqube") version "6.0.0.5145"
+	id("org.sonarqube") version "6.0.1.5171"
 
 	id("org.cyclonedx.bom") version "1.10.0"
 
-	kotlin("jvm") version "2.0.21"
-	kotlin("plugin.spring") version "2.0.21"
+	kotlin("jvm") version "2.1.0"
+	kotlin("plugin.spring") version "2.1.0"
 }
 
 repositories {
