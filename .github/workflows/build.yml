@@ -20,7 +20,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 8.10.1
+          gradle-version: 8.12
 
       - name: Test
         run: gradle build test
@@ -56,7 +56,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 8.10.1
+          gradle-version: 8.12
           
       - name: Container Images
         run: gradle jib dockerImageNative
@@ -84,7 +84,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 8.10.1
+          gradle-version: 8.12
 
       - name: Setup git config
         run: |
