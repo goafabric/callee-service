@@ -40,6 +40,8 @@ dependencies {
 	//crosscuting
 	implementation("org.springframework.boot:spring-boot-starter-aop")
 
+	implementation("org.springframework.boot:spring-boot-starter-mail")
+
 	//implementation("com.nimbusds:nimbus-jose-jwt:9.22")
 	
 	//implementation("com.github.ben-manes.caffeine:caffeine"); implementation("org.springframework.boot:spring-boot-starter-cache");
