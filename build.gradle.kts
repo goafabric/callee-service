@@ -40,8 +40,6 @@ dependencies {
 	//crosscuting
 	implementation("org.springframework.boot:spring-boot-starter-aop")
 
-	implementation("org.springframework.boot:spring-boot-starter-mail")
-
 	//implementation("com.nimbusds:nimbus-jose-jwt:9.22")
 	
 	//implementation("com.github.ben-manes.caffeine:caffeine"); implementation("org.springframework.boot:spring-boot-starter-cache");
@@ -54,6 +52,9 @@ dependencies {
 
 	//pdf
 	//implementation("com.github.librepdf:openpdf:2.0.3")
+
+	//mail
+	//implementation("org.springframework.boot:spring-boot-starter-mail")
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
