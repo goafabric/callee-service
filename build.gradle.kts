@@ -11,11 +11,11 @@ val baseImage = "ibm-semeru-runtimes:open-21.0.3_9-jre-focal@sha256:5cb19afa9ee0
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.3.4"
-	id("io.spring.dependency-management") version "1.1.6"
-	id("org.graalvm.buildtools.native") version "0.10.2"
+	id("org.springframework.boot") version "3.4.1"
+	id("io.spring.dependency-management") version "1.1.7"
+	id("org.graalvm.buildtools.native") version "0.10.4"
 
-	id("com.google.cloud.tools.jib") version "3.4.2"
+	id("com.google.cloud.tools.jib") version "3.4.4"
 }
 
 repositories {
@@ -40,7 +40,7 @@ dependencies {
 	//crosscuting
 	implementation("org.springframework.boot:spring-boot-starter-aop")
 
-	implementation("com.nimbusds:nimbus-jose-jwt:9.22")
+	//implementation("com.nimbusds:nimbus-jose-jwt:9.22")
 	
 	//implementation("com.github.ben-manes.caffeine:caffeine"); implementation("org.springframework.boot:spring-boot-starter-cache");
 	//implementation("org.springframework.boot:spring-boot-starter-data-redis"); implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml"); implementation("org.springframework.boot:spring-boot-starter-cache");
