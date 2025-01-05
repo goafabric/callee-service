@@ -9,15 +9,32 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyMailSender {
     @Autowired
-    private JavaMailSender emailSender;
+    private EmailAdapter emailAdapter;
     
     @PostConstruct
     public void init() {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("noreply@baeldung.com");
-        message.setTo("amautsch@gmail.com");
-        message.setSubject("test subject");
-        message.setText("hello world");
-        emailSender.send(message);
+        emailAdapter.sendMail(
+                "amautsch@gmx.de", "amautsch@gmx.de",
+                "test subject " + System.currentTimeMillis(), "hello world");
+    }
+
+    @Component
+    //Todo: Use @Circuitbreaker from resilience4j here, to enable background sending and timeouts
+    static class EmailAdapter {
+        private final JavaMailSender mailSender;
+
+        public EmailAdapter(JavaMailSender mailSender) {
+            this.mailSender = mailSender;
+        }
+
+        public void sendMail(String from, String to, String subject, String text) {
+            var message = new SimpleMailMessage();
+            message.setFrom(from);
+            message.setTo(to);
+            message.setSubject(subject + System.currentTimeMillis());
+            message.setText("hello world");
+
+            mailSender.send(message);
+        }
     }
 }
