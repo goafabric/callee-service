@@ -1,7 +1,6 @@
 package org.goafabric.calleeservice.controller
 
 import org.goafabric.calleeservice.controller.dto.Callee
-import org.goafabric.calleeservice.controller.dto.Suffix
 import org.goafabric.calleeservice.logic.CalleeLogic
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.bind.annotation.*
@@ -24,11 +23,6 @@ class CalleeController (
     @PostMapping(value = ["save"], consumes = [APPLICATION_JSON_VALUE])
     fun save(@RequestBody callee: Callee): Callee? {
         return calleeLogic.save(callee)
-    }
-
-    @GetMapping("/suffix")
-    fun getSuffixList(): List<Suffix> {
-        return Suffix.entries
     }
 
 }
