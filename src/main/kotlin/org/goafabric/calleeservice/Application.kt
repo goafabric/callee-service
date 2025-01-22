@@ -9,6 +9,10 @@ import org.springframework.boot.runApplication
 import org.springframework.context.ApplicationContext
 
 @SpringBootApplication
+@org.springframework.aot.hint.annotation.RegisterReflection(
+    classes = [Schema31Mixin.TypeSerializer::class, io.swagger.v3.oas.models.media.JsonSchema::class, com.fasterxml.jackson.databind.BeanDescription::class],
+    memberCategories = [org.springframework.aot.hint.MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, org.springframework.aot.hint.MemberCategory.INVOKE_PUBLIC_METHODS]
+)
 class Application(@Autowired private val applicationContext: ApplicationContext):
     CommandLineRunner {
     override fun run(vararg args: String?) {
