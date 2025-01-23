@@ -17,11 +17,11 @@ import org.springframework.context.ApplicationListener
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.web.client.RestClient
 
-@SpringBootApplication
 @RegisterReflection(
     classes = [Schema31Mixin.TypeSerializer::class, JsonSchema::class, BeanDescription::class],
     memberCategories = [MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, INVOKE_PUBLIC_METHODS]
 )
+@SpringBootApplication
 class Application(@Autowired private val context: ConfigurableApplicationContext):
     CommandLineRunner {
     override fun run(vararg args: String?) {
