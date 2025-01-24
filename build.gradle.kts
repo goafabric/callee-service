@@ -68,6 +68,7 @@ dependencies {
 	//test
 	testImplementation("org.mockito.kotlin:mockito-kotlin")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("io.github.resilience4j:resilience4j-spring-boot3")
 }
 
 tasks.withType<Test> {
