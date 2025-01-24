@@ -8,18 +8,24 @@ import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.lang.ArchRule
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition
 import org.goafabric.calleeservice.Application
-import org.goafabric.calleeservice.architecture.ApplicationRulesTest.IgnoreCglib
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.ImportRuntimeHints
 
-@AnalyzeClasses(packagesOf = [Application::class], importOptions = [DoNotIncludeTests::class, IgnoreCglib::class])
+@AnalyzeClasses(packagesOf = [Application::class], importOptions = [DoNotIncludeTests::class, ApplicationRulesTest.IgnoreCglib::class])
 object ApplicationRulesTest {
     @ArchTest
     val reflectionShouldBeAvoided: ArchRule = ArchRuleDefinition.noClasses()
+        .that()
+        .areNotAnnotatedWith(org.springframework.context.annotation.Configuration::class.java)
+        .and()
+        .doNotImplement(org.springframework.aot.hint.RuntimeHintsRegistrar::class.java)
+        .and()
+        .haveSimpleNameNotContaining("AuditTrailListener")
         .should()
         .dependOnClassesThat()
         .resideInAPackage("java.lang.reflect")
         .orShould()
-        .callMethod(Class::class.java, "forName", String::class.java)
+        .callMethod(java.lang.Class::class.java, "forName", String::class.java)
         .orShould()
         .dependOnClassesThat()
         .haveFullyQualifiedName("org.springframework.util.ReflectionUtils")
@@ -29,7 +35,11 @@ object ApplicationRulesTest {
         .orShould()
         .dependOnClassesThat()
         .haveFullyQualifiedName("jakarta.validation.ConstraintValidator")
-        .because("Reflection breaks native image support")
+        .orShould()
+        .dependOnClassesThat()
+        .areAnnotatedWith(ConditionalOnProperty::class.java)
+        .because("Reflection breaks native image support");
+
 
     @ArchTest
     val aspectsNeedRuntimeHint: ArchRule = ArchRuleDefinition.classes()

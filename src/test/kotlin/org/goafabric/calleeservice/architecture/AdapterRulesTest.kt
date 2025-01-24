@@ -6,6 +6,7 @@ import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.lang.ArchRule
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition
 import org.goafabric.calleeservice.Application
+import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.service.annotation.HttpExchange
 
@@ -17,10 +18,10 @@ internal object AdapterRulesTest {
         .should().beDeclaredInClassesThat().haveSimpleNameEndingWith("Adapter")
         .allowEmptyShould(true)
 
-    /*
     @ArchTest
     val declarativeClientShouldBeUsed: ArchRule = ArchRuleDefinition.noClasses().that()
         .areNotAnnotatedWith(Configuration::class.java)
+            .and().areNotAnnotatedWith(SpringBootApplication::class.java)
         .should()
         .dependOnClassesThat()
         .haveFullyQualifiedName("org.springframework.web.client.RestClient")
@@ -30,8 +31,6 @@ internal object AdapterRulesTest {
         .haveFullyQualifiedName("org.springframework.web.reactive.function.client.WebClient")
         .`as`("Only use the declarative REST Client, as otherwise native image support is broken")
         .allowEmptyShould(false)
-
-     */
 
 
     @ArchTest
