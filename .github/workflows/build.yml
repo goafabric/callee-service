@@ -130,6 +130,3 @@ jobs:
           tag: ${{ steps.latest_tag.outputs.tag }}
           body: |
             [Release Notes](doc/release-notes.md)
-            
-
-  #ubuntu-24.04-arm
