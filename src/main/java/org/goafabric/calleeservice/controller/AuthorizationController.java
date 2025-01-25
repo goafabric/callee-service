@@ -1,5 +1,6 @@
 package org.goafabric.calleeservice.controller;
 
+import org.goafabric.calleeservice.extensions.TenantContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +20,15 @@ public class AuthorizationController {
         headers.entrySet().stream()
                 .filter(entry -> entry.getKey().toLowerCase().contains("x-"))
                 .forEach(entry -> logger.info("{}: {}", entry.getKey(), entry.getValue()));
-        return "42";
+
+        var subject = TenantContext.getSubject();
+
+        if (subject.length() > 1 ) {
+            logger.info("subject is " + subject);
+            return "42";
+        } else {
+            throw new IllegalStateException("subject not found");
+        }
     }
 
 }
