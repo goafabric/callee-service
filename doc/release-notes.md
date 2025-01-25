@@ -1,5 +1,5 @@
 # 3.4.2
-upgrade to Spring Boot 3.4
+- upgrade to Spring Boot 3.4
 
 # 3.3.4
 - spring security removed agian
