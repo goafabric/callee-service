@@ -12,13 +12,13 @@ plugins {
 	jacoco
 	id("org.springframework.boot") version "3.4.2"
 	id("io.spring.dependency-management") version "1.1.7"
-	id("org.graalvm.buildtools.native") version "0.10.4"
+	id("org.graalvm.buildtools.native") version "0.10.5"
 
 	id("com.google.cloud.tools.jib") version "3.4.4"
 	id("net.researchgate.release") version "3.1.0"
 	id("org.sonarqube") version "6.0.1.5171"
 
-	id("org.cyclonedx.bom") version "2.0.0"
+	id("org.cyclonedx.bom") version "2.1.0"
 
 	kotlin("jvm") version "2.1.10"
 	kotlin("plugin.spring") version "2.1.10"
