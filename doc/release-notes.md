@@ -1,8 +1,13 @@
-# 3.4.2
-- upgrade to Spring Boot 3.4
+# 3.4.4
 
-# 3.3.4
-- spring security removed agian
+# 3.4.3
+- upgrade of Spring Boot
+
+# 3.3.5
+- spring security removed again
+- upgrade to Spring Boot 3.3.5
+- upgrade of openjdk, paketo,
+- upgrade of jib, cylconedx
 
 # 3.3.3
 - upgrade to Spring Boot 3.3.3
