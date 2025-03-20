@@ -20,8 +20,8 @@ plugins {
 
 	id("org.cyclonedx.bom") version "2.2.0"
 
-	kotlin("jvm") version "2.1.10"
-	kotlin("plugin.spring") version "2.1.10"
+	kotlin("jvm") version "2.1.20"
+	kotlin("plugin.spring") version "2.1.20"
 }
 
 repositories {
