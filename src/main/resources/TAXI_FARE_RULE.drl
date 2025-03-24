@@ -10,3 +10,11 @@ rule "Calculate Taxi Fare - Scenario 1"
       	rideFare.setNightSurcharge(0);
        	rideFare.setRideFare(70);
 end
+
+rule "Calculate Taxi Fare - Scenario 2"
+    when
+        taxiRideInstance:TaxiRide(nightSurcharge == false && distanceInMile > 10);
+    then
+      	rideFare.setNightSurcharge(0);
+       	rideFare.setRideFare(300);
+end
