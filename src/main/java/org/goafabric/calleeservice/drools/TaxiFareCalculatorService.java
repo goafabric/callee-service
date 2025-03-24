@@ -25,10 +25,9 @@ public class TaxiFareCalculatorService {
     public CommandLineRunner init2(TaxiFareCalculatorService taxiFareCalculatorService) {
         return args -> {
             Long totalCharge = taxiFareCalculatorService.calculateFare(
-                    new TaxiRide(false, 70l), new Fare());
+                    new TaxiRide(false, 5l), new Fare());
 
             System.out.println(totalCharge);
-
         };
     }
 
