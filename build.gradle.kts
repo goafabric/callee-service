@@ -63,8 +63,7 @@ dependencies {
 	//mail
 	//implementation("org.springframework.boot:spring-boot-starter-mail")
 
-	implementation("org.springframework.statemachine:spring-statemachine-starter:4.0.0")
-	implementation("io.micrometer:micrometer-registry-prometheus")
+	//implementation("org.springframework.statemachine:spring-statemachine-starter:4.0.0")
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -104,5 +103,4 @@ graalvmNative {
 		buildArgs.add("--initialize-at-build-time=org.slf4j.helpers.Reporter") //required for azure blob from boot 3.3.3+
 	}
 }
-
- */
+*/
