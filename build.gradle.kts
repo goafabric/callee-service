@@ -12,7 +12,7 @@ plugins {
 	jacoco
 	id("org.springframework.boot") version "3.4.3"
 	id("io.spring.dependency-management") version "1.1.7"
-	id("org.graalvm.buildtools.native") version "0.10.5"
+	//id("org.graalvm.buildtools.native") version "0.10.5"
 
 	id("com.google.cloud.tools.jib") version "3.4.4"
 }
@@ -31,6 +31,14 @@ dependencies {
 		implementation("org.mapstruct:mapstruct:1.5.5.Final")
 	}
 }
+/*
+dependencyManagement {
+	imports {
+		mavenBom("org.springframework.statemachine:spring-statemachine-bom:4.0.0")
+	}
+}
+
+ */
 
 dependencies {
 	//web
@@ -54,6 +62,8 @@ dependencies {
 
 	//mail
 	//implementation("org.springframework.boot:spring-boot-starter-mail")
+
+	//implementation("org.springframework.statemachine:spring-statemachine-starter:4.0.0")
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -87,8 +97,10 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	}
 }
 
+/*
 graalvmNative {
 	binaries.named("main") {
 		buildArgs.add("--initialize-at-build-time=org.slf4j.helpers.Reporter") //required for azure blob from boot 3.3.3+
 	}
 }
+*/
