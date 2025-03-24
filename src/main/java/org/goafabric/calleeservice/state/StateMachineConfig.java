@@ -21,11 +21,11 @@ public class StateMachineConfig
         extends EnumStateMachineConfigurerAdapter<StateMachineConfig.States, StateMachineConfig.Events> {
 
     public enum States {
-        SI, S1, S2
+        NEW, PROCESSING, COMPLETED,
     }
 
     public enum Events {
-        E1, E2
+        START, FINISH
     }
 
     @Override
@@ -42,7 +42,7 @@ public class StateMachineConfig
             throws Exception {
         states
                 .withStates()
-                .initial(States.SI)
+                .initial(States.NEW)
                 .states(EnumSet.allOf(States.class));
     }
 
@@ -51,10 +51,10 @@ public class StateMachineConfig
             throws Exception {
         transitions
                 .withExternal()
-                .source(States.SI).target(States.S1).event(Events.E1)
+                .source(States.NEW).target(States.PROCESSING).event(Events.START)
                 .and()
                 .withExternal()
-                .source(States.S1).target(States.S2).event(Events.E2);
+                .source(States.PROCESSING).target(States.COMPLETED).event(Events.FINISH);
     }
 
     @Bean
@@ -71,8 +71,8 @@ public class StateMachineConfig
     @Bean
     public CommandLineRunner init2(StateMachine<States, Events> stateMachine) {
         return args -> {
-            stateMachine.sendEvent(Events.E1);
-            stateMachine.sendEvent(Events.E2);
+            stateMachine.sendEvent(Events.START);
+            stateMachine.sendEvent(Events.FINISH);
         };
     }
 }
