@@ -27,7 +27,10 @@ public class TaxiFareCalculatorService {
             Long totalCharge = taxiFareCalculatorService.calculateFare(
                     new TaxiRide(false, 5l), new Fare());
 
-            System.out.println(totalCharge);
+            if (totalCharge == null) {
+                throw new IllegalStateException("drools failed");
+            }
+            System.err.println(totalCharge);
         };
     }
 
