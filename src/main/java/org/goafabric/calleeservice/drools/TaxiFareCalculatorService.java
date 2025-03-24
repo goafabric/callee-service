@@ -2,12 +2,16 @@ package org.goafabric.calleeservice.drools;
 
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.springframework.aot.hint.RuntimeHints;
+import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.stereotype.Component;
 
 @Component
+@ImportRuntimeHints(TaxiFareCalculatorService.DroolsRuntimeHints.class)
 public class TaxiFareCalculatorService {
     @Autowired
     private KieContainer kieContainer;
@@ -32,6 +36,14 @@ public class TaxiFareCalculatorService {
             }
             System.err.println(totalCharge);
         };
+    }
+
+    static class DroolsRuntimeHints implements RuntimeHintsRegistrar {
+
+        @Override
+        public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
+            hints.resources().registerPattern("TAXI_FARE_RULE.drl");
+        }
     }
 
 }
