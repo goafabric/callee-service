@@ -1,9 +1,6 @@
 package org.goafabric.calleeservice.drools;
 
 import org.kie.api.KieServices;
-import org.kie.api.builder.KieBuilder;
-import org.kie.api.builder.KieFileSystem;
-import org.kie.api.builder.KieModule;
 import org.kie.api.runtime.KieContainer;
 import org.kie.internal.io.ResourceFactory;
 import org.springframework.context.annotation.Bean;
@@ -15,13 +12,14 @@ public class TaxiFareConfiguration {
 
     @Bean
     public KieContainer kieContainer() {
-        KieServices kieServices = KieServices.Factory.get();
+        var kieServices = KieServices.Factory.get();
 
-        KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
+        var kieFileSystem = kieServices.newKieFileSystem();
         kieFileSystem.write(ResourceFactory.newClassPathResource(drlFile));
-        KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
+        var kieBuilder = kieServices.newKieBuilder(kieFileSystem);
+
         kieBuilder.buildAll();
-        KieModule kieModule = kieBuilder.getKieModule();
+        var kieModule = kieBuilder.getKieModule();
 
         return kieServices.newKieContainer(kieModule.getReleaseId());
     }
