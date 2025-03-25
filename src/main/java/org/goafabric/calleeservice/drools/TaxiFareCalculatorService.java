@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.drools;
 
 import org.kie.api.KieServices;
@@ -27,7 +28,7 @@ public class TaxiFareCalculatorService {
     public KieContainer kieContainer() {
         var kieServices = KieServices.Factory.get();
         var kieFileSystem = kieServices.newKieFileSystem();
-        kieFileSystem.write(ResourceFactory.newClassPathResource("TAXI_FARE_RULE.drl"));
+        kieFileSystem.write(ResourceFactory.newClassPathResource("drools/TAXI_FARE_RULE.drl"));
         var kieBuilder = kieServices.newKieBuilder(kieFileSystem);
 
         kieBuilder.buildAll();
@@ -51,3 +52,4 @@ public class TaxiFareCalculatorService {
     }
 
 }
+*/

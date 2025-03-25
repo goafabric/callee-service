@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.drools;
 
 public class Fare {
@@ -28,3 +29,4 @@ public class Fare {
         this.rideFare = rideFare;
     }
 }
+*/

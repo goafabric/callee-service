@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.drools;
 
 public class TaxiRide {
@@ -28,3 +29,4 @@ public class TaxiRide {
         this.distanceInMile = distanceInMile;
     }
 }
+*/
