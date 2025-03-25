@@ -66,10 +66,9 @@ dependencies {
 	//statemachine
 	//implementation("org.springframework.statemachine:spring-statemachine-starter:4.0.0")
 
-	implementation("org.drools:drools-core:9.44.0.Final")
-	implementation("org.drools:drools-compiler:9.44.0.Final")
-	implementation("org.drools:drools-mvel:9.44.0.Final")
-	//implementation("org.kie:kie-spring:7.74.1.Final")
+	implementation("org.drools:drools-core:10.0.0")
+	implementation("org.drools:drools-compiler:10.0.0")
+	implementation("org.drools:drools-mvel:10.0.0")
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
