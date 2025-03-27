@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
 
 @CircuitBreaker(name = "calleeservice")
-public interface CalleeControllerRemote {
+public interface CalleeAdapter {
 
     @GetExchange("/callees/sayMyName")
     Callee sayMyName(@RequestParam("name") String name);

@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class CalleControllerRemoteIT {
+class CalleeAdapterIT {
     @Autowired
-    private CalleeControllerRemote calleeControllerRemote;
+    private CalleeAdapter calleeAdapter;
 
     @Test
     void sayMyName() {
-        Assertions.assertThat(calleeControllerRemote.sayMyName("Heisenberg").message())
+        Assertions.assertThat(calleeAdapter.sayMyName("Heisenberg").message())
                 .isEqualTo("Your name is: Heisenberg");
     }
 
     @Test
     void sayMyOtherName() {
-        Assertions.assertThat(calleeControllerRemote.sayMyOtherName("SlimShady").message())
+        Assertions.assertThat(calleeAdapter.sayMyOtherName("SlimShady").message())
                 .isEqualTo("Your other name is: SlimShady");
     }
 }
