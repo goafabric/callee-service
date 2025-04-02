@@ -12,12 +12,12 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
 @Lazy
-public class AdapterConfiguration {
+public class CalleeControllerRemoteConfiguration {
 
     @Bean
     public CalleeControllerRemote calleControllerRemote(//ReactorLoadBalancerExchangeFilterFunction lbFunction,
-                                                       RestClient.Builder builder,
-                                                       @LocalServerPort String port, @Value("${adapter.timeout}") Long timeout, @Value("${adapter.maxlifetime:-1}") Long maxLifeTime) {
+                                                        RestClient.Builder builder,
+                                                        @LocalServerPort String port, @Value("${adapter.timeout}") Long timeout, @Value("${adapter.maxlifetime:-1}") Long maxLifeTime) {
         return createAdapter(CalleeControllerRemote.class, builder, "http://localhost:" + port, timeout, maxLifeTime);
     }
 
