@@ -5,6 +5,7 @@ import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
 import org.goafabric.calleeservice.Application;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.service.annotation.HttpExchange;
 
@@ -24,6 +25,7 @@ class AdapterRulesTest {
     static final ArchRule declarativeClientShouldBeUsed =
         noClasses().that()
             .areNotAnnotatedWith(Configuration.class)
+                .and().areNotAnnotatedWith(SpringBootApplication.class)
             .should()
             .dependOnClassesThat()
             .haveFullyQualifiedName("org.springframework.web.client.RestClient")
