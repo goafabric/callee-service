@@ -16,7 +16,10 @@ ENTRYPOINT ["java", "-Xms128M", "-Xmx128M", "-jar", "app.jar"]
 # running a container
 # docker run --rm -p50900:50900 goafabric/my-callee-service:1.0.0-SNAPSHOT
 # docker container ls
+# docker stats
 
-# pushing and pulling to registry
-# docker push goafabric/my-callee-service:1.0.0-SNAPSHOT
-# docker pull goafabric/my-callee-service:1.0.0-SNAPSHOT
+# pushing and pulling to/from registry
+# docker push docker.io/goafabric/my-callee-service:1.0.0-SNAPSHOT
+# lookup on dockerhub (arm64)
+# docker pull docker.io/goafabric/my-callee-service:1.0.0-SNAPSHOT
+
