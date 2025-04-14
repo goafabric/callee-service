@@ -20,6 +20,6 @@ ENTRYPOINT ["java", "-Xms128M", "-Xmx128M", "-jar", "app.jar"]
 
 # pushing and pulling to/from registry
 # docker push docker.io/goafabric/my-callee-service:1.0.0-SNAPSHOT
-# lookup on dockerhub
+# lookup on dockerhub (arm64)
 # docker pull docker.io/goafabric/my-callee-service:1.0.0-SNAPSHOT
 
