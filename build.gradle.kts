@@ -18,7 +18,7 @@ plugins {
 	id("net.researchgate.release") version "3.1.0"
 	id("org.sonarqube") version "6.1.0.5360"
 
-	id("org.cyclonedx.bom") version "2.2.0"
+	id("org.cyclonedx.bom") version "2.3.0"
 }
 
 repositories {
