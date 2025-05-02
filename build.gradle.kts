@@ -12,13 +12,14 @@ plugins {
 	jacoco
 	id("org.springframework.boot") version "3.4.4"
 	id("io.spring.dependency-management") version "1.1.7"
-	id("org.graalvm.buildtools.native") version "0.10.6"
+	//id("org.graalvm.buildtools.native") version "0.10.6"
 
 	id("com.google.cloud.tools.jib") version "3.4.5"
 	id("net.researchgate.release") version "3.1.0"
 	id("org.sonarqube") version "6.1.0.5360"
 
 	id("org.cyclonedx.bom") version "2.2.0"
+	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
 }
 
 repositories {
@@ -87,4 +88,9 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 configure<net.researchgate.release.ReleaseExtension> {
 	buildTasks.set(listOf("build", "test", "jib", "dockerImageNative"))
 	tagTemplate.set("v${version}".replace("-SNAPSHOT", ""))
+}
+
+openApi {
+	apiDocsUrl.set("http://localhost:50900/v3/api-docs")
+	outputDir.set(file("doc/generated"))
 }
