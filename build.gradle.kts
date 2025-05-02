@@ -91,6 +91,6 @@ configure<net.researchgate.release.ReleaseExtension> {
 }
 
 openApi {
-	apiDocsUrl.set("http://localhost:50900/v3/api-docs")
 	outputDir.set(file("doc/generated"))
+	customBootRun { args.set(listOf("--server.port=8080")) }
 }
