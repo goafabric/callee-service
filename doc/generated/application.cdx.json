@@ -1,17 +1,17 @@
 {
   "bomFormat" : "CycloneDX",
   "specVersion" : "1.6",
-  "serialNumber" : "urn:uuid:f5b9dd18-838c-4228-8ffd-9b923fe717e1",
+  "serialNumber" : "urn:uuid:e420eaef-507b-4c99-8f8d-c142fd0179fd",
   "version" : 1,
   "metadata" : {
-    "timestamp" : "2025-05-03T13:04:56Z",
+    "timestamp" : "2025-05-03T13:15:57Z",
     "tools" : {
       "components" : [
         {
           "type" : "application",
           "author" : "CycloneDX",
           "name" : "cyclonedx-gradle-plugin",
-          "version" : "2.2.0"
+          "version" : "2.3.0"
         }
       ],
       "services" : [ ]
