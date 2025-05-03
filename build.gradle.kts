@@ -90,10 +90,10 @@ configure<net.researchgate.release.ReleaseExtension> {
 	tagTemplate.set("v${version}".replace("-SNAPSHOT", ""))
 }
 
+tasks.cyclonedxBom { destination = file("doc/generated") }
 openApi {
 	outputDir.set(file("doc/generated"))
 	customBootRun { args.set(listOf("--server.port=8080")) }
 	tasks.forkedSpringBootRun { dependsOn("compileAotJava", "processAotResources") }
 }
-tasks.cyclonedxBom { destination = file("doc/generated") }
 
