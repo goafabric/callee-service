@@ -19,6 +19,7 @@ plugins {
 	id("org.sonarqube") version "6.0.1.5171"
 
 	id("org.cyclonedx.bom") version "2.1.0"
+	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
 
 	kotlin("jvm") version "2.1.10"
 	kotlin("plugin.spring") version "2.1.10"
@@ -102,4 +103,10 @@ configure<net.researchgate.release.ReleaseExtension> {
 	tagTemplate.set("v${version}".replace("-SNAPSHOT", ""))
 }
 
-tasks.cyclonedxBom {  setIncludeConfigs(listOf("compileClasspath")) }
+tasks.cyclonedxBom { destination = file("doc/generated") }
+openApi {
+	outputDir.set(file("doc/generated"))
+	customBootRun { args.set(listOf("--server.port=8080")) }
+	tasks.forkedSpringBootRun { dependsOn("compileAotJava", "processAotResources") }
+}
+
