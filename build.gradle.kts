@@ -103,7 +103,7 @@ configure<net.researchgate.release.ReleaseExtension> {
 	tagTemplate.set("v${version}".replace("-SNAPSHOT", ""))
 }
 
-tasks.cyclonedxBom { destination = file("doc/generated") }
+//tasks.cyclonedxBom { destination = file("doc/generated") }
 openApi {
 	outputDir.set(file("doc/generated"))
 	customBootRun { args.set(listOf("--server.port=8080")) }
