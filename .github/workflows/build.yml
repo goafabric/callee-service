@@ -25,9 +25,9 @@ jobs:
       - name: Test
         run: gradle build test generateOpenApiDocs
 
-#      - name: Sonar
-#        continue-on-error: true
-#        run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.host.url=http://v2202402203466256255.megasrv.de/sonar -Dsonar.token=${{ secrets.SONAR_USER_TOKEN }}
+      - name: Sonar
+        continue-on-error: true
+        run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=goafabric -Dsonar.token=${{ secrets.SONAR_USER_TOKEN }}
 
       - name: Add generated docs
         run: |
