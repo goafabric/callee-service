@@ -34,7 +34,7 @@ dependencies {
 		implementation("org.mapstruct:mapstruct:1.6.3")
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
 		implementation("io.github.resilience4j:resilience4j-spring-boot3:2.3.0")
-		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:1.1.0")
+		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:1.1.1")
 		testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
 	}
 }
