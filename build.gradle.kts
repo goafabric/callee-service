@@ -21,8 +21,8 @@ plugins {
 	id("org.cyclonedx.bom") version "2.3.0"
 	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
 
-	kotlin("jvm") version "2.1.20"
-	kotlin("plugin.spring") version "2.1.20"
+	kotlin("jvm") version "2.1.21"
+	kotlin("plugin.spring") version "2.1.21"
 }
 
 repositories {
@@ -37,7 +37,7 @@ dependencies {
 		implementation("org.mapstruct:mapstruct:1.6.3")
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
 		implementation("io.github.resilience4j:resilience4j-spring-boot3:2.3.0")
-		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:1.1.0")
+		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:1.1.1")
 		implementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
 		testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
 	}
