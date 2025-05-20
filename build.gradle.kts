@@ -16,7 +16,7 @@ plugins {
 
 	id("com.google.cloud.tools.jib") version "3.4.5"
 	id("net.researchgate.release") version "3.1.0"
-	id("org.sonarqube") version "6.1.0.5360"
+	id("org.sonarqube") version "6.2.0.5505"
 
 	id("org.cyclonedx.bom") version "2.3.0"
 	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
@@ -34,7 +34,7 @@ dependencies {
 		implementation("org.mapstruct:mapstruct:1.6.3")
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
 		implementation("io.github.resilience4j:resilience4j-spring-boot3:2.3.0")
-		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:1.1.0")
+		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:1.1.1")
 		testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
 	}
 }
@@ -90,7 +90,6 @@ configure<net.researchgate.release.ReleaseExtension> {
 	tagTemplate.set("v${version}".replace("-SNAPSHOT", ""))
 }
 
-//tasks.cyclonedxBom { destination = file("doc/generated") }
 openApi {
 	outputDir.set(file("doc/generated"))
 	customBootRun { args.set(listOf("--server.port=8080")) }
