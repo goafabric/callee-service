@@ -1,8 +1,6 @@
 package org.goafabric.calleeservice.extensions
 
 import io.micrometer.common.KeyValue
-import io.micrometer.observation.Observation
-import io.micrometer.observation.ObservationPredicate
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.Logger
@@ -40,26 +38,26 @@ class HttpInterceptor : HandlerInterceptor {
     }
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
-        TenantContext.setContext(request)
+        UserContext.setContext(request)
         configureLogsAndTracing(request)
 
         if (handler is HandlerMethod) {
-            log.info(" {} method called for user {} ", handler.shortLogMessage, TenantContext.userName)
+            log.info(" {} method called for user {} ", handler.shortLogMessage, UserContext.userName)
         }
         return true
     }
 
     override fun afterCompletion(request: HttpServletRequest, response: HttpServletResponse, handler: Any, ex: Exception?) {
-        TenantContext.removeContext()
+        UserContext.removeContext()
         MDC.remove("tenantId")
     }
 
     private fun configureLogsAndTracing(request: HttpServletRequest) {
-        MDC.put("tenantId", TenantContext.tenantId)
+        MDC.put("tenantId", UserContext.tenantId)
         ServerHttpObservationFilter.findObservationContext(request)
             .ifPresent { context: ServerRequestObservationContext ->
                 context.addHighCardinalityKeyValue(
-                    KeyValue.of("tenant.id", TenantContext.tenantId)
+                    KeyValue.of("tenant.id", UserContext.tenantId)
                 )
             }
     }
