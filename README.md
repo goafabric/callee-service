@@ -1,5 +1,11 @@
 # sonarqube
-[dashboard](https://v2202402203466256255.megasrv.de/sonar/dashboard?id=org.goafabric%3Acallee-service)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=org.goafabric%3Acallee-service)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=coverage)](https://sonarcloud.io/summary/new_code?id=org.goafabric%3Acallee-service)
+
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=org.goafabric%3Acallee-service)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=org.goafabric%3Acallee-service)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=org.goafabric%3Acallee-service)
+
 
 # docker compose
 go to /src/deploy/docker and do "./stack up" or "./stack up -native"
