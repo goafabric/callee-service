@@ -1,4 +1,5 @@
 # 3.5.0
+- upgrade of Spring Boot
 
 # 3.4.3
 - upgrade of Spring Boot

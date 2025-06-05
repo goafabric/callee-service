@@ -15,9 +15,3 @@ docker run --pull always --name callee-service --rm -p50900:50900 goafabric/call
 
 # run native image
 docker run --pull always --name callee-service-native --rm -p50900:50900 goafabric/callee-service-native:$(grep '^version=' gradle.properties | cut -d'=' -f2) -Xmx32m
-
-# run native image arm
-docker run --pull always --name callee-service-native --rm -p50900:50900 goafabric/callee-service-native-arm64v8:$(grep '^version=' gradle.properties | cut -d'=' -f2) -Xmx32m
-                         
-# native release tag
-IMAGE=goafabric/callee-service-native-arm64v8; VERSION=$(grep '^version=' gradle.properties | cut -d'=' -f2); docker pull $IMAGE:$VERSION && docker tag $IMAGE:$VERSION $IMAGE:${VERSION%-SNAPSHOT} && docker push $IMAGE:${VERSION%-SNAPSHOT}
