@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v4
 
@@ -20,14 +20,20 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 8.12
+          gradle-version: 8.14
 
       - name: Test
-        run: gradle build test
+        run: gradle build test generateOpenApiDocs
 
-#      - name: Sonar
-#        continue-on-error: true
-#        run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.host.url=http://v2202402203466256255.megasrv.de/sonar -Dsonar.token=${{ secrets.SONAR_USER_TOKEN }}
+      - name: Sonar
+        continue-on-error: true
+        run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=goafabric -Dsonar.token=${{ secrets.SONAR_USER_TOKEN }}
+
+      - name: Add generated docs
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add doc/generated && git diff --cached --quiet doc/generated || git commit -m "Update generated docs" -- doc/generated && git push --force
 
       - name: Archive SBOM
         uses: actions/upload-artifact@v4
@@ -36,32 +42,6 @@ jobs:
           path: build/resources/main/META-INF/sbom/application.cdx.json
 
   snapshot:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: 8.12
-          
-      - name: Container Images
-        run: gradle jib dockerImageNative
-
-  snapshot-arm:
     runs-on: ubuntu-24.04-arm
     needs: test
     steps:
@@ -82,13 +62,13 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 8.12
+          gradle-version: 8.14
 
       - name: Container Images
         run: gradle jib dockerImageNative
-        
+
   release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     needs: snapshot
     if: github.ref == 'refs/heads/main'
 
@@ -98,7 +78,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      
+
       - uses: actions/checkout@v4
 
       - name: Set up JDK
@@ -110,12 +90,12 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 8.12
+          gradle-version: 8.14
 
       - name: Setup git config
         run: |
           git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Release
         run: gradle release -Prelease.useAutomaticVersion=true

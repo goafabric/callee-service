@@ -39,25 +39,25 @@ public class HttpInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        TenantContext.setContext(request);
+        UserContext.setContext(request);
         configureLogsAndTracing(request);
 
         if (handler instanceof HandlerMethod handlerMethod) {
-            log.info(" {} method called for user {} ", handlerMethod.getShortLogMessage(), TenantContext.getUserName());
+            log.info(" {} method called for user {} ", handlerMethod.getShortLogMessage(), UserContext.getUserName());
         }
         return true;
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        TenantContext.removeContext();
+        UserContext.removeContext();
         MDC.remove("tenantId");
     }
 
     private static void configureLogsAndTracing(HttpServletRequest request) {
-        MDC.put("tenantId", TenantContext.getTenantId());
+        MDC.put("tenantId", UserContext.getTenantId());
         ServerHttpObservationFilter.findObservationContext(request).ifPresent(
-                context -> context.addHighCardinalityKeyValue(KeyValue.of("tenant.id", TenantContext.getTenantId())));
+                context -> context.addHighCardinalityKeyValue(KeyValue.of("tenant.id", UserContext.getTenantId())));
     }
 
 }

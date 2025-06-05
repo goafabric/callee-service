@@ -12,16 +12,15 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
 @Lazy
-public class AdapterConfiguration {
+public class CalleeControllerRemoteConfiguration {
 
     @Bean
-    public CalleeControllerRemote calleControllerRemote(//ReactorLoadBalancerExchangeFilterFunction lbFunction,
-                                                       RestClient.Builder builder,
-                                                       @LocalServerPort String port, @Value("${adapter.timeout}") Long timeout, @Value("${adapter.maxlifetime:-1}") Long maxLifeTime) {
-        return createAdapter(CalleeControllerRemote.class, builder, "http://localhost:" + port, timeout, maxLifeTime);
+    public CalleeControllerRemote calleControllerRemote(RestClient.Builder builder,
+                                                        @LocalServerPort String port, @Value("${adapter.timeout}") Long timeout) {
+        return createAdapter(CalleeControllerRemote.class, builder, "http://localhost:" + port, timeout);
     }
 
-    public static <A> A createAdapter(Class<A> adapterType, RestClient.Builder builder, String url, Long timeout, Long maxLifeTime) {
+    public static <A> A createAdapter(Class<A> adapterType, RestClient.Builder builder, String url, Long timeout) {
         var requestFactory = new SimpleClientHttpRequestFactory();
         requestFactory.setConnectTimeout(timeout.intValue());
         requestFactory.setReadTimeout(timeout.intValue());
@@ -29,7 +28,6 @@ public class AdapterConfiguration {
         builder.baseUrl(url)
                 .defaultHeaders(header -> header.setBasicAuth("admin", "admin"))
                 .requestFactory(requestFactory);
-                //.clientConnector(new ReactorClientHttpConnector(HttpClient.create(ConnectionProvider.builder("custom").maxLifeTime(Duration.ofMillis(maxLifeTime)).build())));
 
         return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(builder.build())).build()
                 .createClient(adapterType);
