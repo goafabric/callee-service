@@ -68,7 +68,7 @@ jobs:
         run: gradle jib dockerImageNative
 
   release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     needs: snapshot
     if: github.ref == 'refs/heads/main'
 
