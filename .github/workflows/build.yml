@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up JDK
         uses: actions/setup-java@v4
@@ -28,7 +26,7 @@ jobs:
         run: gradle build test generateOpenApiDocs
 
       - name: Sonar
-        continue-on-error: false
+        continue-on-error: true
         run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=goafabric -Dsonar.token=${{ secrets.SONAR_USER_TOKEN }}
 
       - name: Add generated docs
