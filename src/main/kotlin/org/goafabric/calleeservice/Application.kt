@@ -26,7 +26,7 @@ class Application(@Autowired private val context: ConfigurableApplicationContext
     CommandLineRunner {
     override fun run(vararg args: String?) {
         if (args.isNotEmpty() && "-check-integrity" == args[0]) {
-            context.addApplicationListener(ApplicationListener { event: ApplicationReadyEvent? ->
+            context.addApplicationListener(ApplicationListener { _: ApplicationReadyEvent? ->
                 RestClient.create().get()
                     .uri("http://localhost:" + context.environment.getProperty("local.server.port") + "/v3/api-docs")
                     .retrieve().body(
