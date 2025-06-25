@@ -4,6 +4,8 @@ package org.goafabric.calleeservice.s3;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.common.StorageSharedKeyCredential;
+import org.springframework.aot.hint.MemberCategory;
+import org.springframework.aot.hint.annotation.RegisterReflection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,9 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 @Component
+@RegisterReflection(classes = {com.fasterxml.jackson.dataformat.xml.XmlMapper.class, com.azure.storage.blob.implementation.models.BlobStorageExceptionInternal.class},
+        memberCategories = {MemberCategory.DECLARED_CLASSES, MemberCategory.DECLARED_FIELDS, MemberCategory.INVOKE_DECLARED_METHODS})
+
 public class ObjectStorageLogicAzure {
 
     private BlobServiceClient blobServiceClient;
