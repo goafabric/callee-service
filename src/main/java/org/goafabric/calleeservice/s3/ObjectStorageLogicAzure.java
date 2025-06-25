@@ -46,7 +46,7 @@ public class ObjectStorageLogicAzure {
     }
 
     public void save(ObjectEntry objectEntry) {
-        try { blobServiceClient.createBlobContainer(getBucketName()); } catch (Exception e) {} //ifnotexists does not work in native mode
+        blobServiceClient.createBlobContainerIfNotExists(getBucketName());
         blobServiceClient.getBlobContainerClient(getBucketName()).getBlobClient(objectEntry.objectName())
             .upload(new ByteArrayInputStream(objectEntry.data()), true);
     }
