@@ -12,17 +12,21 @@ jobs:
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_PASSWORD }}   
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
     - uses: actions/checkout@v4
-    - name: Set up JDK 
+
+    - name: Set up JDK
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
         java-version: '21'
 
-    - name: Native Image
-      uses: gradle/gradle-build-action@v3
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
       with:
-        gradle-version: 8.6
-        arguments: dockerImageNative
+        gradle-version: 8.14
+
+    - name: Container Images
+      run: gradle dockerImageNative
   
