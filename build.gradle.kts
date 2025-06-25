@@ -101,10 +101,8 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	}
 }
 
-/*
 graalvmNative {
 	binaries.named("main") {
 		buildArgs.add("--initialize-at-build-time=org.slf4j.helpers.Reporter") //required for azure blob from boot 3.3.3+
 	}
 }
-*/
