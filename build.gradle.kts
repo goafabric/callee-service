@@ -61,9 +61,6 @@ dependencies {
 	//pdf
 	//implementation("com.github.librepdf:openpdf:2.0.3")
 
-	//mail
-	//implementation("org.springframework.boot:spring-boot-starter-mail")
-
 	//statemachine
 	//implementation("org.springframework.statemachine:spring-statemachine-starter:4.0.0")
 
