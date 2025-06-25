@@ -15,8 +15,8 @@ spring.cloud.aws.region.static: "eu-central-1" #"us-east-1" //for localstack s3 
 #azure
 azure:
   storage:
-    url: http://localhost:10000/%s
-    #url: https://%s.blob.core.windows.net
+    url: http://localhost:10000/%s # local url for azurite
+    #url: https://%s.blob.core.windows.net # remote url on azure
     account-name: devstoreaccount1
     account-key: Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
 
