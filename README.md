@@ -12,3 +12,6 @@ docker run --pull always --name callee-service-native --rm -p50900:50900 goafabr
 
 # loki logger
 docker run --pull always --name callee-service --rm -p50900:50900 --log-driver=loki --log-opt loki-url="http://host.docker.internal:3100/loki/api/v1/push" goafabric/callee-service:3.1.2-SNAPSHOT
+                          
+# azurite
+docker run --name azurite --rm -p 10000:10000 -p 10001:10001 -p 10002:10002 mcr.microsoft.com/azure-storage/azurite
