@@ -1,4 +1,3 @@
-/*
 package org.goafabric.calleeservice.s3;
 
 import jakarta.annotation.PostConstruct;
@@ -11,14 +10,14 @@ import java.util.List;
 @Component
 public class ObjectStorageLogic {
     private final String blobStorageImplementation;
-    private final ObjectStorageLogicAWSSpring objectStorageLogicAWS;
+    private final ObjectStorageLogicAWS objectStorageLogicAWS;
     private final ObjectStorageLogicAzure objectStorageLogicAzure;
 
     private final List<ObjectEntry> objectEntriesInMem = new ArrayList<>();
 
     public ObjectStorageLogic(
             @Value("${blob.storage.implementation}") String blobStorageImplementation,
-            ObjectStorageLogicAWSSpring objectStorageLogicAWS,
+            ObjectStorageLogicAWS objectStorageLogicAWS,
             ObjectStorageLogicAzure objectStorageLogicAzure) {
         this.blobStorageImplementation = blobStorageImplementation;
         this.objectStorageLogicAWS = objectStorageLogicAWS;
@@ -63,4 +62,3 @@ public class ObjectStorageLogic {
 
 }
 
-*/

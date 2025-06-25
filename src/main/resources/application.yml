@@ -21,7 +21,7 @@ azure:
 
 
 multi-tenancy.schema-prefix: "callee_"
-blob.storage.implementation: "azure"
+blob.storage.implementation: "aws"
 
 #mail
 spring.mail.host: mail.gmx.net

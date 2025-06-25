@@ -1,4 +1,3 @@
-/*
 package org.goafabric.calleeservice.s3;
 
 import io.awspring.cloud.autoconfigure.config.parameterstore.ParameterStorePropertySources;
@@ -113,13 +112,5 @@ public class ObjectStorageLogicAWS {
     }
 
 
-    public record ObjectEntry(
-            String objectName,
-            String contentType,
-            Long objectSize,
-            byte[] data)
-    {}
-
 }
 
- */

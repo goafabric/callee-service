@@ -1,4 +1,3 @@
-/*
 package org.goafabric.calleeservice.s3;
 
 
@@ -58,4 +57,4 @@ public class ObjectStorageLogicAzure {
         return schemaPrefix.replaceAll("_", "-") + "0"; //TenantContext.getTenantId();
     }
 }
-*/
+
