@@ -1,7 +1,6 @@
 package org.goafabric.calleeservice.s3;
 
 import io.awspring.cloud.autoconfigure.core.AwsAutoConfiguration;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
@@ -23,17 +22,6 @@ public class ObjectStorageLogicAWS {
     public ObjectStorageLogicAWS(S3Client s3Client, @Value("${multi-tenancy.schema-prefix:}") String schemaPrefix) {
         this.s3Client = s3Client;
         this.schemaPrefix = schemaPrefix;
-    }
-
-    @PostConstruct
-    public void demo() {
-        save(
-                new ObjectEntry("hello_world.txt", "text/plain",
-                        Long.valueOf("hello world".length()), "hello world".getBytes()));
-
-        var objectEntry = getById("hello_world.txt");
-        System.err.println("getById : " + objectEntry);
-        search("hello").stream().forEach(s -> System.err.println("fromlist : " + s.toString()));
     }
 
     public void save(ObjectEntry objectEntry) {

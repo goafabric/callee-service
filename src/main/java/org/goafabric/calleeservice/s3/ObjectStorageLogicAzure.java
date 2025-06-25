@@ -14,8 +14,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 @Component
-@RegisterReflection(classes = {com.fasterxml.jackson.dataformat.xml.XmlMapper.class, com.azure.storage.blob.implementation.models.BlobStorageExceptionInternal.class},
-        memberCategories = {MemberCategory.DECLARED_CLASSES, MemberCategory.DECLARED_FIELDS, MemberCategory.INVOKE_DECLARED_METHODS})
+@RegisterReflection(classes = {com.fasterxml.jackson.dataformat.xml.XmlMapper.class, com.azure.storage.blob.implementation.models.BlobStorageExceptionInternal.class, com.azure.storage.blob.implementation.models.BlobStorageError.class},
+        memberCategories = {MemberCategory.DECLARED_CLASSES, MemberCategory.DECLARED_FIELDS, MemberCategory.INVOKE_DECLARED_METHODS, MemberCategory.INVOKE_DECLARED_CONSTRUCTORS})
 
 public class ObjectStorageLogicAzure {
 
