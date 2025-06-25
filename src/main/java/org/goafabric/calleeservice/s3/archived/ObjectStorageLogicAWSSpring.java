@@ -1,5 +1,5 @@
 /*
-package org.goafabric.calleeservice.s3;
+package org.goafabric.calleeservice.s3.archived;
 
 import am.ik.s3.ListBucketResult;
 import am.ik.s3.ListBucketsResult;

@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.s3;
 
 import io.awspring.cloud.autoconfigure.core.AwsAutoConfiguration;
@@ -68,3 +69,4 @@ public class ObjectStorageLogicAWS {
 
 }
 
+*/
