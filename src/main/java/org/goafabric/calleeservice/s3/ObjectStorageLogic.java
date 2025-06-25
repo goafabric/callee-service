@@ -55,9 +55,13 @@ public class ObjectStorageLogic {
 
     @PostConstruct
     public void demo() {
-        save(new ObjectEntry("hello_world.txt", "text/plain", Long.valueOf("hello world".length()), "hello world".getBytes()));
-        System.err.println("getById : " + getById("hello_world.txt"));
-        search("hello").stream().forEach(s -> System.err.println("fromlist : " + s.toString()));
+        try {
+            save(new ObjectEntry("hello_world.txt", "text/plain", Long.valueOf("hello world".length()), "hello world".getBytes()));
+            System.err.println("getById : " + getById("hello_world.txt"));
+            search("hello").stream().forEach(s -> System.err.println("fromlist : " + s.toString()));
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
     }
 
 }
