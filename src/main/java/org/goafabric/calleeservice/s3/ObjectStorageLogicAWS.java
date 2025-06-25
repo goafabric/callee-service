@@ -1,18 +1,10 @@
 package org.goafabric.calleeservice.s3;
 
-import io.awspring.cloud.autoconfigure.config.parameterstore.ParameterStorePropertySources;
-import io.awspring.cloud.autoconfigure.config.secretsmanager.SecretsManagerPropertySources;
 import io.awspring.cloud.autoconfigure.core.AwsAutoConfiguration;
 import jakarta.annotation.PostConstruct;
-import org.springframework.aot.hint.MemberCategory;
-import org.springframework.aot.hint.RuntimeHints;
-import org.springframework.aot.hint.RuntimeHintsRegistrar;
-import org.springframework.aot.hint.TypeReference;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ClassUtils;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
@@ -22,7 +14,6 @@ import java.util.List;
 
 @Component
 @Import(AwsAutoConfiguration.class)
-@ImportRuntimeHints(ObjectStorageLogicAWS.S3RuntimeHints.class)
 public class ObjectStorageLogicAWS {
 
     private final S3Client s3Client;
@@ -84,31 +75,6 @@ public class ObjectStorageLogicAWS {
 
     private String getBucketName() {
         return "console";
-    }
-
-    public static class S3RuntimeHints implements RuntimeHintsRegistrar {
-        private static final String STS_WEB_IDENTITY_TOKEN_FILE_CREDENTIALS_PROVIDER = "software.amazon.awssdk.services.sts.auth.StsWebIdentityTokenFileCredentialsProvider";
-
-        @Override
-        public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
-            hints.resources().registerPattern("io/awspring/cloud/s3/S3ObjectContentTypeResolver.properties");
-            hints.resources().registerPattern("io/awspring/cloud/core/SpringCloudClientConfiguration.properties");
-
-            // core
-            hints.reflection().registerType(TypeReference.of(ParameterStorePropertySources.class),
-                    hint -> hint.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
-                            MemberCategory.INTROSPECT_DECLARED_METHODS, MemberCategory.DECLARED_FIELDS));
-
-            hints.reflection().registerType(TypeReference.of(SecretsManagerPropertySources.class),
-                    hint -> hint.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
-                            MemberCategory.INTROSPECT_DECLARED_METHODS, MemberCategory.DECLARED_FIELDS));
-
-            if (ClassUtils.isPresent(STS_WEB_IDENTITY_TOKEN_FILE_CREDENTIALS_PROVIDER, classLoader)) {
-                hints.reflection().registerType(TypeReference.of(STS_WEB_IDENTITY_TOKEN_FILE_CREDENTIALS_PROVIDER),
-                        hint -> hint.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
-                                MemberCategory.INTROSPECT_DECLARED_METHODS, MemberCategory.DECLARED_FIELDS));
-            }
-        }
     }
 
 
