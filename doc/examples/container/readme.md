@@ -16,16 +16,15 @@ container image ls
 container run --rm --name postgres -e POSTGRES_PASSWORD=postgres postgres:17.4
 
 # run native image arm
-container run --name callee-service-native3 goafabric/callee-service-native:3.5.1-SNAPSHOT
-  
+container run --rm goafabric/callee-service-native:3.5.1-SNAPSHOT
 
 
 
 # images not working
 
 ## run jvm multi image
-container run --name callee-service --rm goafabric/callee-service::3.5.1-SNAPSHOT
+container run --rm goafabric/callee-service:3.5.1-SNAPSHOT
 
 ## run native image x86 
-container run --name callee-service-native3 goafabric/callee-service-native:3.4.1-SNAPSHOT
+container run --rm goafabric/callee-service-native:3.4.1-SNAPSHOT
 
