@@ -6,6 +6,8 @@ https://github.com/apple/container/releases
 container system start
 container system stop
 
+uninstall-container.sh -d                            
+
 # run
 container ls (identify ip address)
 container image ls
