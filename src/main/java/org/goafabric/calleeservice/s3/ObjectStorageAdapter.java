@@ -63,6 +63,17 @@ public class ObjectStorageAdapter {
         }
     }
 
+    @PostConstruct
+    public void demo() {
+        try {
+            put(new ObjectEntry("hello_world.txt", "text/plain", Long.valueOf("hello world".length()), "hello world".getBytes()));
+            System.err.println("getById : " + getByKey("hello_world.txt"));
+            deleteByKey("hello_world.txt");
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 */
