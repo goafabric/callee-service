@@ -1,13 +1,13 @@
 //gradle implementation("io.fabric8:kubernetes-client:7.3.1")
-//application.images: "goafabric/core-service:3.5.0,goafabric/catalog-batch-service:3.5.0"
 
-package org.goafabric.tenant.logic;
+package org.goafabric.calleeservice.kubernetes;
 
 import io.fabric8.kubernetes.api.model.EnvVar;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.PodBuilder;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +22,13 @@ import java.util.concurrent.TimeUnit;
 public class ProvisionLogic {
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-    @Value("${application.images}")
+    @Value("${application.images:goafabric/core-service-native:3.5.0,goafabric/person-service-native:3.5.0}")
     private String applicationImages;
 
     @Autowired
     private ApplicationContext context;
 
-    //@PostConstruct
+    @PostConstruct
     public void init() {
         Arrays.asList(applicationImages.split(",")).forEach(
                 imageName -> execute("example", imageName, "42", false));
@@ -87,7 +87,7 @@ public class ProvisionLogic {
                             log.info("Pod phase: {}", phase);
                             return "Succeeded".equals(phase) || "Failed".equals(phase);
                         },
-                        20, TimeUnit.SECONDS
+                        30, TimeUnit.SECONDS
                 );
     }
 }
