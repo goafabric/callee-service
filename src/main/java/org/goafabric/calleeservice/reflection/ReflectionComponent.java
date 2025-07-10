@@ -5,9 +5,11 @@ import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 @Component
@@ -21,6 +23,11 @@ public class ReflectionComponent {
     private static void reflectMethod() throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         var clazz = Class.forName("org.goafabric.calleeservice.reflection.Callee");
         System.err.println("Testing reflection : " + clazz.getMethod("getMessage").invoke(clazz.getDeclaredConstructor().newInstance()));
+        var fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            NonNull annon = field.getAnnotation(NonNull.class);
+            System.err.println(field.getName() + " " + annon);
+        }
     }
 
 
@@ -33,7 +40,7 @@ public class ReflectionComponent {
 
         @Override
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
-            hints.reflection().registerType(Callee.class, MemberCategory.INVOKE_DECLARED_METHODS, MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
+            hints.reflection().registerType(Callee.class, MemberCategory.INVOKE_DECLARED_METHODS, MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.DECLARED_FIELDS);
             hints.resources().registerPattern("secret/*");
         }
     }
