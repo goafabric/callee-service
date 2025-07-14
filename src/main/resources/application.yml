@@ -18,7 +18,7 @@ management:
           include: "health,prometheus,heapdump"
 
 
-#management.endpoint.health.probes.enabled: "true"
+management.endpoint.health.probes.enabled: "true"
 
 #tracing
 spring.application.name: callee-service
