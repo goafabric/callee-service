@@ -17,6 +17,9 @@ management:
         exposure:
           include: "health,prometheus,heapdump"
 
+
+#management.endpoint.health.probes.enabled: "true"
+
 #tracing
 spring.application.name: callee-service
 management.tracing.sampling.probability: "1.0"
