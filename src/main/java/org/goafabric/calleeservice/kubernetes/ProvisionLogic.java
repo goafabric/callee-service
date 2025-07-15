@@ -74,6 +74,7 @@ public class ProvisionLogic implements CommandLineRunner {
                 .withEnv(
                         new EnvVar("database.provisioning.goals", "-migrate -terminate", null),
                         new EnvVar("multi-tenancy.tenants", tenantId, null)
+                        //,new EnvVar("spring.datasource.url", "jdbc:wrong", null)
                 )
                 .endContainer()
                 .endSpec()
@@ -97,6 +98,10 @@ public class ProvisionLogic implements CommandLineRunner {
                             if (p == null || p.getStatus() == null) return false;
                             String phase = p.getStatus().getPhase();
                             log.info("Pod phase: {}", phase);
+                            if ("Failed".equals(phase)) {
+                                //log.error(client.pods().inNamespace(nameSpace).withName(podName).getLog());
+                                throw new IllegalStateException("Pods failed");
+                            }
                             return "Succeeded".equals(phase) || "Failed".equals(phase);
                         },
                         30, TimeUnit.SECONDS
