@@ -28,5 +28,5 @@ jobs:
         gradle-version: 8.14
 
     - name: Container Images
-      run: gradle dockerImageNative
+      run: gradle build #dockerImageNative
   
