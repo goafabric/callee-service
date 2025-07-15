@@ -36,7 +36,6 @@ public class ProvisionLogic implements CommandLineRunner {
 
 
     public void execute() {
-        boolean async = false;
         boolean update = false;
         String nameSpace = "example";
         List<String> tenantIds = List.of("0");
@@ -58,43 +57,10 @@ public class ProvisionLogic implements CommandLineRunner {
 
     }
 
-    private Integer scaleTo(KubernetesClient client, String namespace, String imageName, Integer replicaCount, boolean update) {
-        if (!update) {
-            return -1;
-        }
-        var deployment = findDeploymentByImage(client, namespace, imageName);
-
-        Integer replicas = deployment.getSpec().getReplicas();
-
-        log.info("scaling to {}" , replicaCount);
-        // Scale it to 0
-        client.apps()
-                .deployments()
-                .inNamespace(namespace)
-                .withName(deployment.getMetadata().getName())
-                .scale(replicaCount);
-        return replicas;
-    }
-
-
-    public static Deployment findDeploymentByImage(KubernetesClient client, String namespace, String imageName) {
-        return client.apps()
-                .deployments()
-                .inNamespace(namespace)
-                .list()
-                .getItems()
-                .stream()
-                .filter(deployment ->
-                        deployment.getSpec().getTemplate().getSpec().getContainers().stream()
-                                .anyMatch(container -> container.getImage().equals(imageName)))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("No deployment found with image: " + imageName));
-    }
 
     private void createPod(KubernetesClient client, String nameSpace, String imageName, String tenantId) {
         log.info("executing ... {}", imageName);
 
-        boolean async = false;
         String podName = imageName.split(":")[0].split("/")[1] + "-provision";
 
         // Delete existing Pod if it exists
@@ -121,10 +87,7 @@ public class ProvisionLogic implements CommandLineRunner {
         // Create the Pod
         client.pods().inNamespace(nameSpace).create(pod);
 
-        if (!async) {
-            waitToFinish(nameSpace, client, podName);
-        }
-
+        waitToFinish(nameSpace, client, podName);
     }
 
     private void waitToFinish(String nameSpace, KubernetesClient client, String podName) {
@@ -144,6 +107,40 @@ public class ProvisionLogic implements CommandLineRunner {
                         },
                         30, TimeUnit.SECONDS
                 );
+    }
+
+
+    private Integer scaleTo(KubernetesClient client, String namespace, String imageName, Integer replicaCount, boolean update) {
+        if (!update) {
+            return -1;
+        }
+        var deployment = findDeploymentByImage(client, namespace, imageName);
+
+        Integer replicas = deployment.getSpec().getReplicas();
+
+        log.info("scaling to {}" , replicaCount);
+        // Scale it to 0
+        client.apps()
+                .deployments()
+                .inNamespace(namespace)
+                .withName(deployment.getMetadata().getName())
+                .scale(replicaCount);
+        return replicas;
+    }
+
+
+    private Deployment findDeploymentByImage(KubernetesClient client, String namespace, String imageName) {
+        return client.apps()
+                .deployments()
+                .inNamespace(namespace)
+                .list()
+                .getItems()
+                .stream()
+                .filter(deployment ->
+                        deployment.getSpec().getTemplate().getSpec().getContainers().stream()
+                                .anyMatch(container -> container.getImage().equals(imageName)))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No deployment found with image: " + imageName));
     }
 
 }
