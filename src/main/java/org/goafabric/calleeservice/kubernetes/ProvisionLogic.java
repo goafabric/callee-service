@@ -37,15 +37,21 @@ public class ProvisionLogic implements CommandLineRunner {
     public void execute() {
         boolean async = false;
         String nameSpace = "example";
-        List<String> tenantIds = List.of("0", "5");
+        List<String> tenantIds = List.of("0");
 
-        try (KubernetesClient client = new KubernetesClientBuilder().build()) {
-            tenantIds.forEach(tenantId -> {
-                log.info("processing tenant {}", tenantId);
-                Arrays.asList(applicationImages.split(",")).forEach(
-                        imageName -> createPod(client, false, nameSpace, imageName, tenantId));
+        tenantIds.forEach(tenantId -> {
+            log.info("processing tenant {}", tenantId);
+            Arrays.asList(applicationImages.split(",")).forEach(imageName ->
+            {
+                try (KubernetesClient client = new KubernetesClientBuilder().build()) {
+                    createPod(client, false, nameSpace, imageName, tenantId);
+                } catch (Exception e) {
+                    log.error("error for tenant {} image {} cause {}", tenantId, imageName, e.getMessage());
+                }
+
             });
-        }
+        });
+
     }
 
     private void createPod(KubernetesClient client, boolean async, String nameSpace, String imageName, String tenantId) {
