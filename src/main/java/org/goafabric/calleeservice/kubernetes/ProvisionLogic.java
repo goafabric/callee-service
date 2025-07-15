@@ -37,7 +37,7 @@ public class ProvisionLogic implements CommandLineRunner {
 
     public void execute() {
         boolean async = false;
-        boolean update = true;
+        boolean update = false;
         String nameSpace = "example";
         List<String> tenantIds = List.of("0");
 
@@ -46,9 +46,9 @@ public class ProvisionLogic implements CommandLineRunner {
             Arrays.asList(applicationImages.split(",")).forEach(imageName ->
             {
                 try (KubernetesClient client = new KubernetesClientBuilder().build()) {
-                    Integer replicaCount = scaleTo(client, "example", imageName, 0);
+                    Integer replicaCount = scaleTo(client, "example", imageName, 0, update);
                     createPod(client, nameSpace, imageName, tenantId);
-                    scaleTo(client, "example", imageName, replicaCount);
+                    scaleTo(client, "example", imageName, replicaCount, update);
                 } catch (Exception e) {
                     log.error("error for tenant {} image {} cause {}", tenantId, imageName, e.getMessage());
                 }
@@ -58,7 +58,10 @@ public class ProvisionLogic implements CommandLineRunner {
 
     }
 
-    private Integer scaleTo(KubernetesClient client, String namespace, String imageName, Integer replicaCount) {
+    private Integer scaleTo(KubernetesClient client, String namespace, String imageName, Integer replicaCount, boolean update) {
+        if (!update) {
+            return -1;
+        }
         var deployment = findDeploymentByImage(client, namespace, imageName);
 
         Integer replicas = deployment.getSpec().getReplicas();
