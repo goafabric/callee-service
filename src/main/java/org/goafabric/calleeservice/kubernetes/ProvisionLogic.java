@@ -21,10 +21,10 @@ import static org.goafabric.calleeservice.kubernetes.ProvisionUtil.searchDeploym
 public class ProvisionLogic implements CommandLineRunner {
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-    @Value("${namespaces:example,core}")
+    @Value("${namespaces:example,core,billing}")
     private String namespaces;
 
-    @Value("${multi-tenancy.tenants:0,5}")
+    @Value("${multi-tenancy.tenants:0}")
     private String tenantIds;
 
     @Autowired
