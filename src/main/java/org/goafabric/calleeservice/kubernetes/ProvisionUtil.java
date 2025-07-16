@@ -32,13 +32,11 @@ public class ProvisionUtil {
                 .withEnv(
                         new EnvVar("database.provisioning.goals", "-migrate -terminate", null),
                         new EnvVar("multi-tenancy.tenants", tenantId, null)
-                        //,new EnvVar("spring.datasource.url", "jdbc:wrong", null)
                 )
                 .endContainer()
                 .endSpec()
                 .build();
 
-        // Create the Pod
         client.pods().inNamespace(nameSpace).create(pod);
 
         waitToFinish(nameSpace, client, podName);
@@ -61,7 +59,6 @@ public class ProvisionUtil {
                         30, TimeUnit.SECONDS
                 );
     }
-
 
     static List<DeploymentSpecification> searchDeployments2(KubernetesClient client, String namespaces) {
         List<DeploymentSpecification> deployments = new ArrayList<>();
@@ -88,6 +85,5 @@ public class ProvisionUtil {
         });
         return deployments;
     }
-
 
 }

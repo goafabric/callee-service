@@ -16,7 +16,7 @@ import static org.goafabric.calleeservice.kubernetes.ProvisionUtil.createPod;
 import static org.goafabric.calleeservice.kubernetes.ProvisionUtil.searchDeployments2;
 
 
-//TODO: seperate create + update, autodetection for spring boot apps and put config into hashmap
+//TODO: Connect to real database with secrets
 @Component
 public class ProvisionLogic implements CommandLineRunner {
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
@@ -32,7 +32,6 @@ public class ProvisionLogic implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        //execute();
         try (KubernetesClient client = new KubernetesClientBuilder().build()) {
             var deployments = searchDeployments2(client, this.namespaces);
             create(client, deployments);
@@ -41,7 +40,6 @@ public class ProvisionLogic implements CommandLineRunner {
             e.printStackTrace();
         }
     }
-
 
     public void create(KubernetesClient client, List<ProvisionUtil.DeploymentSpecification> deployments) {
         List.of(tenantIds.split(",")).stream().forEach(tenantId -> {
@@ -70,7 +68,5 @@ public class ProvisionLogic implements CommandLineRunner {
         client.apps().deployments().inNamespace(nameSpace).withName(name)
                 .scale(replicas);
     }
-
-
 
 }
