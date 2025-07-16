@@ -24,7 +24,7 @@ public class ProvisionLogic implements CommandLineRunner {
     @Value("${namespaces:example,core}")
     private String namespaces;
 
-    @Value("${multi-tenancy.tenants:0}")
+    @Value("${multi-tenancy.tenants:0,5}")
     private String tenantIds;
 
     @Autowired
@@ -35,8 +35,8 @@ public class ProvisionLogic implements CommandLineRunner {
         //execute();
         try (KubernetesClient client = new KubernetesClientBuilder().build()) {
             var deployments = searchDeployments2(client, this.namespaces);
-            //create(client, deployments);
-            update(client, deployments);
+            create(client, deployments);
+            //update(client, deployments);
         }  catch (Exception e) {
             e.printStackTrace();
         }
