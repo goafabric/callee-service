@@ -104,10 +104,9 @@ public class ProvisionLogic implements CommandLineRunner {
                             String phase = p.getStatus().getPhase();
                             log.info("Pod phase: {}", phase);
                             if ("Failed".equals(phase)) {
-                                //log.error(client.pods().inNamespace(nameSpace).withName(podName).getLog());
                                 throw new IllegalStateException("Pods failed");
                             }
-                            return "Succeeded".equals(phase) || "Failed".equals(phase);
+                            return "Succeeded".equals(phase);
                         },
                         30, TimeUnit.SECONDS
                 );
