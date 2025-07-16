@@ -13,7 +13,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -23,48 +22,41 @@ import java.util.concurrent.TimeUnit;
 public class ProvisionLogic implements CommandLineRunner {
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-    @Value("${application.images:goafabric/person-service-native:3.5.1-SNAPSHOT,goafabric/core-service-native:3.5.0,}")
-    private String applicationImages;
+    @Value("${namespaces:example,core}")
+    private String namespaces;
+
+    @Value("${multi-tenancy.tenants:0}")
+    private String tenantIds;
 
     @Autowired
     private ApplicationContext context;
 
-
     @Override
     public void run(String... args) throws Exception {
         //execute();
-        var deployments = searchDeployments2(new KubernetesClientBuilder().build(), "example");
-        deployments.stream().forEach(deploy
-                -> log.info("deployments detected: " + deploy));
+        try (KubernetesClient client = new KubernetesClientBuilder().build()) {
+            var deployments = searchDeployments2(client);
+            create(client, deployments);
+        }  catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
-    public void execute() {
-        boolean update = false;
-        String nameSpace = "example";
-        List<String> tenantIds = List.of("0");
-
-        tenantIds.forEach(tenantId -> {
+    public void create(KubernetesClient client, List<DeploymentSpec> deployments) {
+        List.of(tenantIds.split(",")).stream().forEach(tenantId -> {
             log.info("processing tenant {}", tenantId);
-            Arrays.asList(applicationImages.split(",")).forEach(imageName ->
-            {
-                try (KubernetesClient client = new KubernetesClientBuilder().build()) {
-                    Integer replicaCount = scaleTo(client, "example", imageName, 0, update);
-                    createPod(client, nameSpace, imageName, tenantId);
-                    scaleTo(client, "example", imageName, replicaCount, update);
-                } catch (Exception e) {
-                    log.error("error for tenant {} image {} cause {}", tenantId, imageName, e.getMessage());
-                }
-
+            deployments.forEach(deploy -> {
+                log.info("creating ... {}", deploy.name);
+                createPod(client, deploy.nameSpace, deploy.image, tenantId);
             });
         });
 
+        log.info("create finished successfully");
     }
 
 
     private void createPod(KubernetesClient client, String nameSpace, String imageName, String tenantId) {
-        log.info("executing ... {}", imageName);
-
         String podName = imageName.split(":")[0].split("/")[1] + "-provision";
 
         // Delete existing Pod if it exists
@@ -146,11 +138,10 @@ public class ProvisionLogic implements CommandLineRunner {
                 .orElseThrow(() -> new RuntimeException("No deployment found with image: " + imageName));
     }
 
-    private List<DeploymentSpec> searchDeployments2(KubernetesClient client, String namespace) {
-        List<String> namespaces = List.of(namespace); // your namespaces
+    private List<DeploymentSpec> searchDeployments2(KubernetesClient client) {
         List<DeploymentSpec> deployments = new ArrayList<>();
 
-        namespaces.forEach(ns -> {
+        List.of(this.namespaces.split(",")).forEach(ns -> {
             client.apps().deployments().inNamespace(ns).list().getItems()
                     .forEach(deployment -> {
                         deployment.getSpec().getTemplate().getSpec().getContainers().stream()
@@ -166,6 +157,9 @@ public class ProvisionLogic implements CommandLineRunner {
                                         deployments.add(new DeploymentSpec(deployment.getMetadata().getNamespace(), deployment.getMetadata().getName(), container.getImage()))
                                 );
                     });
+        });
+        deployments.stream().forEach(deploy -> {
+            log.info("deployments detected: " + deploy);
         });
         return deployments;
     }
