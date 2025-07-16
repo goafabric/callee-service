@@ -47,23 +47,23 @@ public class ProvisionLogic implements CommandLineRunner {
         List.of(tenantIds.split(",")).stream().forEach(tenantId -> {
             log.info("processing tenant {}", tenantId);
             deployments.forEach(deploy -> {
-                log.info("creating ... {}", deploy.name());
+                log.info("schema creation for tenant {} and app {}", tenantId, deploy.name());
                 createPod(client, deploy.nameSpace(), deploy.name(), deploy.image(), tenantId);
             });
         });
 
-        log.info("create finished successfully");
+        log.info("all creations finished successfully");
     }
 
     public void update(KubernetesClient client, List<ProvisionUtil.DeploymentSpecification> deployments) {
         deployments.forEach(deploy -> {
-            log.info("updating with all tenants ... {}", deploy.name());
+            log.info("schema update for tenants {} and app {}", tenantIds, deploy.name());
             scaleTo(client, deploy.nameSpace(), deploy.name(), 0);
             createPod(client, deploy.nameSpace(), deploy.name(), deploy.image(), tenantIds);
             scaleTo(client, deploy.nameSpace(), deploy.name(), deploy.replicas());
         });
 
-        log.info("update finished successfully");
+        log.info("all updates finished successfully");
     }
 
     private static void scaleTo(KubernetesClient client, String nameSpace, String name, Integer replicas) {
