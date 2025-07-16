@@ -1,8 +1,6 @@
 package org.goafabric.calleeservice.kubernetes;
 
-import io.fabric8.kubernetes.api.model.EnvVar;
-import io.fabric8.kubernetes.api.model.Pod;
-import io.fabric8.kubernetes.api.model.PodBuilder;
+import io.fabric8.kubernetes.api.model.*;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientBuilder;
@@ -33,7 +31,8 @@ public class ProvisionLogic implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        execute();
+        //execute();
+        searchDeployments2(new KubernetesClientBuilder().build(), "example");
     }
 
 
@@ -145,4 +144,59 @@ public class ProvisionLogic implements CommandLineRunner {
                 .orElseThrow(() -> new RuntimeException("No deployment found with image: " + imageName));
     }
 
+    private void searchDeployments(KubernetesClient client, String namespace) {
+        client.apps()
+                .deployments()
+                .inNamespace(namespace)
+                .list()
+                .getItems()
+                .stream()
+                .forEach(deployment -> {
+                    var spec = new DeploymentSpec(
+                            deployment.getMetadata().getNamespace(),
+                            deployment.getMetadata().getName(),
+                            deployment.getSpec().getTemplate().getSpec().getContainers().getFirst().getImage());
+
+                    //deployment.getSpec().getTemplate().getSpec().getContainers().getFirst().getEnvFrom().getFirst().getConfigMapRef()
+                    System.out.println("##" + spec);
+                });
+    }
+
+    private void searchDeployments2(KubernetesClient client, String namespace) {
+        List<String> namespaces = List.of("example"); // your namespaces
+
+        namespaces.forEach(ns -> {
+            client.apps().deployments().inNamespace(ns).list().getItems().stream()
+                    .filter(deployment -> hasSpringDatasourceUrlConfigMap(client, deployment, ns))
+                    .forEach(deployment -> System.out.println("Deployment: " + deployment.getMetadata().getName()));
+        });
+    }
+
+    private static boolean hasSpringDatasourceUrlConfigMap(KubernetesClient client, Deployment deployment, String namespace) {
+        return deployment.getSpec().getTemplate().getSpec().getContainers().stream().anyMatch(container -> {
+            // Check envFrom -> configMapRef
+            boolean envFromMatch = container.getEnvFrom().stream()
+                    .map(EnvFromSource::getConfigMapRef)
+                    .filter(ref -> ref != null && ref.getName() != null)
+                    .anyMatch(ref -> {
+                        ConfigMap cm = client.configMaps().inNamespace(namespace).withName(ref.getName()).get();
+                        return cm != null && cm.getData() != null && cm.getData().containsKey("spring.datasource.url");
+                    });
+
+            // Check env -> valueFrom.configMapKeyRef
+            boolean envMatch = container.getEnv().stream()
+                    .map(EnvVar::getValueFrom)
+                    //.filter(EnvVarSource::isNonNull)
+                    .map(EnvVarSource::getConfigMapKeyRef)
+                    .filter(ref -> ref != null && ref.getName() != null && ref.getKey() != null)
+                    .anyMatch(ref -> {
+                        ConfigMap cm = client.configMaps().inNamespace(namespace).withName(ref.getName()).get();
+                        return cm != null && cm.getData() != null && cm.getData().containsKey("spring.datasource.url");
+                    });
+
+            return envFromMatch || envMatch;
+        });
+    }
+
+    private record DeploymentSpec(String nameSpace, String name, String image) {}
 }
