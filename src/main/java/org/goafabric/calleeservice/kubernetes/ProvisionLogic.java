@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
+//TODO: seperate create + update, autodetection for spring boot apps and put config into hashmap
 @Component
 public class ProvisionLogic implements CommandLineRunner {
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
