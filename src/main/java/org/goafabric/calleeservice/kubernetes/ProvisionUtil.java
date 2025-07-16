@@ -14,8 +14,8 @@ public class ProvisionUtil {
 
     public record DeploymentSpecification(String nameSpace, String name, String image, Integer replicas) {}
 
-    public static void createPod(KubernetesClient client, String nameSpace, String imageName, String tenantId) {
-        String podName = imageName.split(":")[0].split("/")[1] + "-provision";
+    public static void createPod(KubernetesClient client, String nameSpace, String name, String imageName, String tenantId) {
+        String podName = name + "-provision";
 
         // Delete existing Pod if it exists
         client.pods().inNamespace(nameSpace).withName(podName).delete();

@@ -48,7 +48,7 @@ public class ProvisionLogic implements CommandLineRunner {
             log.info("processing tenant {}", tenantId);
             deployments.forEach(deploy -> {
                 log.info("creating ... {}", deploy.name());
-                createPod(client, deploy.nameSpace(), deploy.image(), tenantId);
+                createPod(client, deploy.nameSpace(), deploy.name(), deploy.image(), tenantId);
             });
         });
 
@@ -59,7 +59,7 @@ public class ProvisionLogic implements CommandLineRunner {
         deployments.forEach(deploy -> {
             log.info("updating with all tenants ... {}", deploy.name());
             scaleTo(client, deploy.nameSpace(), deploy.name(), 0);
-            createPod(client, deploy.nameSpace(), deploy.image(), tenantIds);
+            createPod(client, deploy.nameSpace(), deploy.name(), deploy.image(), tenantIds);
             scaleTo(client, deploy.nameSpace(), deploy.name(), deploy.replicas());
         });
 
