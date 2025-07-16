@@ -35,8 +35,8 @@ public class ProvisionLogic implements CommandLineRunner {
         //execute();
         try (KubernetesClient client = new KubernetesClientBuilder().build()) {
             var deployments = searchDeployments2(client, this.namespaces);
-            create(client, deployments);
-            //update(client, deployments);
+            //create(client, deployments);
+            update(client, deployments);
         }  catch (Exception e) {
             e.printStackTrace();
         }
