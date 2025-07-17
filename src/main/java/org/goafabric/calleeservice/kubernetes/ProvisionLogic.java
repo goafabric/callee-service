@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import static org.goafabric.calleeservice.kubernetes.ProvisionUtil.*;
 
 
-//TODO: Connect to real database with secrets
+//TODO: running inside kubernetes
 @Component
 public class ProvisionLogic implements CommandLineRunner {
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
