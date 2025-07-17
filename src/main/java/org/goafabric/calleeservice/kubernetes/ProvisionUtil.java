@@ -29,6 +29,9 @@ public class ProvisionUtil {
 
         client.pods().inNamespace(deployment.nameSpace).withName(podName).delete();
 
+        var secretBuilder = new EnvFromSourceBuilder();
+        deployment.secretEnvs.forEach(secretBuilder::withSecretRef);
+        
         Pod pod = new PodBuilder()
                 .withNewMetadata().withName(podName).endMetadata().withNewSpec()
                 .withRestartPolicy("Never")
@@ -38,7 +41,7 @@ public class ProvisionUtil {
                         new EnvVar("multi-tenancy.tenants", tenantId, null),
                         !inMemory ? new EnvVar("spring.datasource.url", deployment.dataSource(), null) : new EnvVar("dummy", "dummy", null)
                 )
-                .withEnvFrom(new EnvFromSourceBuilder().withSecretRef(deployment.secretEnvs.getFirst()).build())
+                .withEnvFrom(secretBuilder.build())
 
                 .endContainer()
                 .endSpec()
@@ -123,7 +126,7 @@ public class ProvisionUtil {
     }
 
 
-    static List<String> splitIntoGroupsAsCsv(String tenants, int maxUpdatePods) {
+    static List<String> splitIntoGroups(String tenants, int maxUpdatePods) {
         List<String> tenantIds = Arrays.asList(tenants.split(","));
         int groupSize = (int) Math.ceil((double) tenantIds.size() / maxUpdatePods);
 

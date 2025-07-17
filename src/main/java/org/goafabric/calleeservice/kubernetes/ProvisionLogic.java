@@ -68,12 +68,11 @@ public class ProvisionLogic implements CommandLineRunner {
     }
 
     public void update(KubernetesClient client, List<ProvisionUtil.DeploymentSpecification> deployments) {
-
         deployments.forEach(deploy -> {
             log.info("schema update for tenants {} and app {}", tenantIds, deploy.name());
             scaleTo(client, deploy.nameSpace(), deploy.name(), 0);
 
-            var futures = splitIntoGroupsAsCsv(tenantIds, maxUpdatePods).stream()
+            var futures = splitIntoGroups(tenantIds, maxUpdatePods).stream()
                     .map(groupCsv -> createPodAsync(client, deploy, groupCsv, inMemory))
                     .toList();
 
@@ -89,7 +88,5 @@ public class ProvisionLogic implements CommandLineRunner {
         client.apps().deployments().inNamespace(nameSpace).withName(name)
                 .scale(replicas);
     }
-
-
 
 }
