@@ -23,3 +23,8 @@ azure:
 
 multi-tenancy.schema-prefix: "callee_"
 blob.storage.implementation: "azure"
+
+provision:
+  namespaces: "example,core,billing"
+  tenants: "0"
+  maxUpdatePods: "1"

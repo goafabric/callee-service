@@ -24,14 +24,13 @@ import static org.goafabric.calleeservice.kubernetes.ProvisionUtil.*;
 public class ProvisionLogic implements CommandLineRunner {
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-    @Value("${namespaces:example,core,billing}")
+    @Value("${provision.namespaces:example,core,billing}")
     private String namespaces;
 
-
-    @Value("${multi-tenancy.tenants:0,5}")
+    @Value("${provision.tenants:0}")
     private String tenantIds;
 
-    @Value("${max.update.pods:5}")
+    @Value("${provision.maxUpdatePods:1}")
     private Integer maxUpdatePods;
 
     @Autowired
