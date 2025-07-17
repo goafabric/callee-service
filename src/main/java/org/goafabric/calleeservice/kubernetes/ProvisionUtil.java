@@ -1,6 +1,7 @@
 package org.goafabric.calleeservice.kubernetes;
 
 import io.fabric8.kubernetes.api.model.*;
+import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,36 +18,36 @@ import java.util.stream.Stream;
 public class ProvisionUtil {
     private static final Logger log = LoggerFactory.getLogger(ProvisionUtil.class.getName());
 
-    public record DeploymentSpecification(String nameSpace, String name, String image, String dataSource, Integer replicas) {}
+    public record DeploymentSpecification(String nameSpace, String name, String image, String dataSource, List<SecretEnvSource> secretEnvs, Integer replicas) {}
 
     public static CompletableFuture<Void> createPodAsync(KubernetesClient client, DeploymentSpecification deployment, String tenantId) {
         return CompletableFuture.runAsync(() -> createPod(client, deployment, tenantId));
     }
 
     public static void createPod(KubernetesClient client, DeploymentSpecification deployment, String tenantId) {
-        createPod(client, deployment.nameSpace(), deployment.name(), deployment.image(), tenantId);
-    }
+        String podName = deployment.name() + "-provision-" + UUID.randomUUID().toString().substring(0, 8);
 
-    private static void createPod(KubernetesClient client, String nameSpace, String name, String imageName, String tenantId) {
-        String podName = name + "-provision-" + UUID.randomUUID().toString().substring(0, 8);
-
-        client.pods().inNamespace(nameSpace).withName(podName).delete();
+        client.pods().inNamespace(deployment.nameSpace).withName(podName).delete();
 
         Pod pod = new PodBuilder()
                 .withNewMetadata().withName(podName).endMetadata().withNewSpec()
                 .withRestartPolicy("Never")
-                .addNewContainer().withName(podName).withImage(imageName)
+                .addNewContainer().withName(podName).withImage(deployment.image)
                 .withEnv(
                         new EnvVar("database.provisioning.goals", "-migrate -terminate", null),
-                        new EnvVar("multi-tenancy.tenants", tenantId, null)
+                        new EnvVar("multi-tenancy.tenants", tenantId, null),
+
+                        new EnvVar("spring.datasource.url", deployment.dataSource(), null)
                 )
+                .withEnvFrom(new EnvFromSourceBuilder().withSecretRef(deployment.secretEnvs.getFirst()).build())
+
                 .endContainer()
                 .endSpec()
                 .build();
 
-        client.pods().inNamespace(nameSpace).resource(pod).create();
+        client.pods().inNamespace(deployment.nameSpace).resource(pod).create();
 
-        waitToFinish(nameSpace, client, podName, tenantId);
+        waitToFinish(deployment.nameSpace, client, podName, tenantId);
     }
 
     private static void waitToFinish(String nameSpace, KubernetesClient client, String podName, String tenantId) {
@@ -88,14 +89,7 @@ public class ProvisionUtil {
                                         })
                                 )
                                 .forEach(container -> {
-                                            List<SecretEnvSource> lst = container.getEnvFrom().stream()
-                                                    .map(EnvFromSource::getSecretRef)
-                                                    .filter(ref -> ref != null && ref.getName() != null)
-                                                    .toList();
-                                            deployments.add(new DeploymentSpecification(deployment.getMetadata().getNamespace(),
-                                                    deployment.getMetadata().getName(), container.getImage(),
-                                                    configMap.get().getData().get("spring.datasource.url"),
-                                                    deployment.getSpec().getReplicas()));
+                                            extracted(deployment, container, deployments, configMap);
                                         }
                                 );
                     });
@@ -103,6 +97,18 @@ public class ProvisionUtil {
 
         deployments.forEach(deploy -> log.info("deployments detected: " + deploy));
         return deployments;
+    }
+
+    private static void extracted(Deployment deployment, Container container, List<DeploymentSpecification> deployments, AtomicReference<ConfigMap> configMap) {
+        List<SecretEnvSource> lst = container.getEnvFrom().stream()
+                .map(EnvFromSource::getSecretRef)
+                .filter(ref -> ref != null && ref.getName() != null)
+                .toList();
+        deployments.add(new DeploymentSpecification(deployment.getMetadata().getNamespace(),
+                deployment.getMetadata().getName(), container.getImage(),
+                configMap.get().getData().get("spring.datasource.url"),
+                lst,
+                deployment.getSpec().getReplicas()));
     }
 
     public static void deleteCompletedPods(KubernetesClient client, String namespaces) {
