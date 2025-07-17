@@ -28,3 +28,4 @@ provision:
   namespaces: "example,core,billing"
   tenants: "0"
   maxUpdatePods: "1"
+  inMemory: "false"

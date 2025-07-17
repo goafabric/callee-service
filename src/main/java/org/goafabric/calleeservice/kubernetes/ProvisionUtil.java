@@ -20,11 +20,11 @@ public class ProvisionUtil {
 
     public record DeploymentSpecification(String nameSpace, String name, String image, String dataSource, List<SecretEnvSource> secretEnvs, Integer replicas) {}
 
-    public static CompletableFuture<Void> createPodAsync(KubernetesClient client, DeploymentSpecification deployment, String tenantId) {
-        return CompletableFuture.runAsync(() -> createPod(client, deployment, tenantId));
+    public static CompletableFuture<Void> createPodAsync(KubernetesClient client, DeploymentSpecification deployment, String tenantId, boolean inMemory) {
+        return CompletableFuture.runAsync(() -> createPod(client, deployment, tenantId, inMemory));
     }
 
-    public static void createPod(KubernetesClient client, DeploymentSpecification deployment, String tenantId) {
+    public static void createPod(KubernetesClient client, DeploymentSpecification deployment, String tenantId, boolean inMemory) {
         String podName = deployment.name() + "-provision-" + UUID.randomUUID().toString().substring(0, 8);
 
         client.pods().inNamespace(deployment.nameSpace).withName(podName).delete();
@@ -36,8 +36,7 @@ public class ProvisionUtil {
                 .withEnv(
                         new EnvVar("database.provisioning.goals", "-migrate -terminate", null),
                         new EnvVar("multi-tenancy.tenants", tenantId, null),
-
-                        new EnvVar("spring.datasource.url", deployment.dataSource(), null)
+                        !inMemory ? new EnvVar("spring.datasource.url", deployment.dataSource(), null) : new EnvVar()
                 )
                 .withEnvFrom(new EnvFromSourceBuilder().withSecretRef(deployment.secretEnvs.getFirst()).build())
 

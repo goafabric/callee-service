@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.goafabric.calleeservice.kubernetes.ProvisionUtil.*;
@@ -33,6 +31,10 @@ public class ProvisionLogic implements CommandLineRunner {
     @Value("${provision.maxUpdatePods:1}")
     private Integer maxUpdatePods;
 
+    @Value("${provision.inMemory:false}")
+    private Boolean inMemory;
+
+
     @Autowired
     private ApplicationContext context;
 
@@ -40,10 +42,10 @@ public class ProvisionLogic implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try (KubernetesClient client = new KubernetesClientBuilder().build()) {
             var deployments = searchDeploymentsForJdbc(client, this.namespaces);
-            //create(client, deployments);
+            create(client, deployments);
 
-            tenantIds = IntStream.range(0, 100).mapToObj(String::valueOf).collect(Collectors.joining(","));
-            update(client, deployments);
+            //tenantIds = IntStream.range(0, 100).mapToObj(String::valueOf).collect(Collectors.joining(","));
+            //update(client, deployments);
         }  catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,7 +56,7 @@ public class ProvisionLogic implements CommandLineRunner {
             log.info("processing tenant {}", tenantId);
             deployments.forEach(deploy -> {
                 log.info("schema creation for tenant {} and app {}", tenantId, deploy.name());
-                createPod(client, deploy, tenantId);
+                createPod(client, deploy, tenantId, inMemory);
             });
         });
 
@@ -68,7 +70,7 @@ public class ProvisionLogic implements CommandLineRunner {
             scaleTo(client, deploy.nameSpace(), deploy.name(), 0);
 
             var futures = splitIntoGroupsAsCsv(tenantIds, maxUpdatePods).stream()
-                    .map(groupCsv -> createPodAsync(client, deploy, groupCsv))
+                    .map(groupCsv -> createPodAsync(client, deploy, groupCsv, inMemory))
                     .toList();
 
             CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
