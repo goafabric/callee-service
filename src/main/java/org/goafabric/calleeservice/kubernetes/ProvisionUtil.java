@@ -64,7 +64,7 @@ public class ProvisionUtil {
                             }
                             return "Succeeded".equals(phase);
                         },
-                        30, TimeUnit.SECONDS
+                        60, TimeUnit.SECONDS
                 );;
     }
 
@@ -89,7 +89,7 @@ public class ProvisionUtil {
                                         })
                                 )
                                 .forEach(container -> {
-                                            extracted(deployment, container, deployments, configMap);
+                                            createDeploymentSpec(deployment, container, deployments, configMap);
                                         }
                                 );
                     });
@@ -99,7 +99,7 @@ public class ProvisionUtil {
         return deployments;
     }
 
-    private static void extracted(Deployment deployment, Container container, List<DeploymentSpecification> deployments, AtomicReference<ConfigMap> configMap) {
+    private static void createDeploymentSpec(Deployment deployment, Container container, List<DeploymentSpecification> deployments, AtomicReference<ConfigMap> configMap) {
         List<SecretEnvSource> lst = container.getEnvFrom().stream()
                 .map(EnvFromSource::getSecretRef)
                 .filter(ref -> ref != null && ref.getName() != null)
@@ -115,7 +115,7 @@ public class ProvisionUtil {
         Stream.of(namespaces.split(",")).forEach(namespace -> {
             client.pods()
                     .inNamespace(namespace).list().getItems().stream()
-                    .filter(pod -> "Succeeded".equalsIgnoreCase(pod.getStatus().getPhase())).toList()
+                    .filter(pod ->( "Succeeded".equalsIgnoreCase(pod.getStatus().getPhase()) || "Failed".equalsIgnoreCase(pod.getStatus().getPhase()))).toList()
                     .forEach(pod -> {
                         String podName = pod.getMetadata().getName();
                         client.pods().inNamespace(namespace).withName(podName).delete();

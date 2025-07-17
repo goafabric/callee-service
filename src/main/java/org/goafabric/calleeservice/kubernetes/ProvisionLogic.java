@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.goafabric.calleeservice.kubernetes.ProvisionUtil.*;
@@ -25,11 +27,11 @@ public class ProvisionLogic implements CommandLineRunner {
     @Value("${namespaces:example,core,billing}")
     private String namespaces;
 
-    //@Value("${multi-tenancy.tenants:1,2,3,4,5,6,8,9}")
+
     @Value("${multi-tenancy.tenants:0,5}")
     private String tenantIds;
 
-    @Value("${max.update.pods:3}")
+    @Value("${max.update.pods:5}")
     private Integer maxUpdatePods;
 
     @Autowired
@@ -39,8 +41,10 @@ public class ProvisionLogic implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try (KubernetesClient client = new KubernetesClientBuilder().build()) {
             var deployments = searchDeploymentsForJdbc(client, this.namespaces);
-            create(client, deployments);
-            //update(client, deployments);
+            //create(client, deployments);
+
+            tenantIds = IntStream.range(0, 100).mapToObj(String::valueOf).collect(Collectors.joining(","));
+            update(client, deployments);
         }  catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,6 +63,7 @@ public class ProvisionLogic implements CommandLineRunner {
     }
 
     public void update(KubernetesClient client, List<ProvisionUtil.DeploymentSpecification> deployments) {
+
         deployments.forEach(deploy -> {
             log.info("schema update for tenants {} and app {}", tenantIds, deploy.name());
             scaleTo(client, deploy.nameSpace(), deploy.name(), 0);
