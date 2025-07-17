@@ -88,6 +88,10 @@ public class ProvisionUtil {
                                         })
                                 )
                                 .forEach(container -> {
+                                            List<SecretEnvSource> lst = container.getEnvFrom().stream()
+                                                    .map(EnvFromSource::getSecretRef)
+                                                    .filter(ref -> ref != null && ref.getName() != null)
+                                                    .toList();
                                             deployments.add(new DeploymentSpecification(deployment.getMetadata().getNamespace(),
                                                     deployment.getMetadata().getName(), container.getImage(),
                                                     configMap.get().getData().get("spring.datasource.url"),
