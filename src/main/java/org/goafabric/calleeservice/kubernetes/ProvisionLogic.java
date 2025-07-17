@@ -28,7 +28,7 @@ public class ProvisionLogic implements CommandLineRunner {
     @Value("${provision.tenants:0}")
     private String tenantIds;
 
-    @Value("${provision.maxUpdatePods:1}")
+    @Value("${provision.maxUpdatePods:5}")
     private Integer maxUpdatePods;
 
     @Value("${provision.inMemory:false}")

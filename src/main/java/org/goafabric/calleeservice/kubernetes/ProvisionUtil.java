@@ -36,7 +36,7 @@ public class ProvisionUtil {
                 .withEnv(
                         new EnvVar("database.provisioning.goals", "-migrate -terminate", null),
                         new EnvVar("multi-tenancy.tenants", tenantId, null),
-                        !inMemory ? new EnvVar("spring.datasource.url", deployment.dataSource(), null) : new EnvVar()
+                        !inMemory ? new EnvVar("spring.datasource.url", deployment.dataSource(), null) : new EnvVar("dummy", "dummy", null)
                 )
                 .withEnvFrom(new EnvFromSourceBuilder().withSecretRef(deployment.secretEnvs.getFirst()).build())
 
