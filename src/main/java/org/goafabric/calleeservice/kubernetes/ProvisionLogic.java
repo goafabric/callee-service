@@ -38,7 +38,7 @@ public class ProvisionLogic implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         try (KubernetesClient client = new KubernetesClientBuilder().build()) {
-            var deployments = searchDeployments(client, this.namespaces);
+            var deployments = searchDeploymentsForJdbc(client, this.namespaces);
             create(client, deployments);
             //update(client, deployments);
         }  catch (Exception e) {
