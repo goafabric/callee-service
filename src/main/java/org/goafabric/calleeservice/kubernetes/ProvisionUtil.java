@@ -18,7 +18,9 @@ import java.util.stream.Stream;
 public class ProvisionUtil {
     private static final Logger log = LoggerFactory.getLogger(ProvisionUtil.class.getName());
 
-    public record DeploymentSpecification(String nameSpace, String name, String image, String dataSource, List<SecretEnvSource> secretEnvs, Integer replicas) {}
+    public record DeploymentSpecification(String nameSpace, String name, String image, String dataSource,
+                                          List<SecretEnvSource> secretEnvs, Integer replicas) {
+    }
 
     public static CompletableFuture<Void> createPodAsync(KubernetesClient client, DeploymentSpecification deployment, String tenantId, boolean inMemory) {
         return CompletableFuture.runAsync(() -> createPod(client, deployment, tenantId, inMemory));
@@ -31,7 +33,7 @@ public class ProvisionUtil {
 
         var secretBuilder = new EnvFromSourceBuilder();
         deployment.secretEnvs.forEach(secretBuilder::withSecretRef);
-        
+
         Pod pod = new PodBuilder()
                 .withNewMetadata().withName(podName).endMetadata().withNewSpec()
                 .withRestartPolicy("Never")
@@ -67,15 +69,15 @@ public class ProvisionUtil {
                             return "Succeeded".equals(phase);
                         },
                         60, TimeUnit.SECONDS
-                );;
+                );
+        ;
     }
 
     static List<DeploymentSpecification> searchDeploymentsForJdbc(KubernetesClient client, String namespaces) {
         deleteCompletedPods(client, namespaces);
 
-        List<DeploymentSpecification> deployments = new ArrayList<>();
-
-        AtomicReference<ConfigMap> configMap = new AtomicReference<>();
+        var deployments = new ArrayList<DeploymentSpecification>();
+        var configMap = new AtomicReference<ConfigMap>();
 
         List.of(namespaces.split(",")).forEach(ns -> {
             client.apps().deployments().inNamespace(ns).list().getItems()
@@ -90,10 +92,7 @@ public class ProvisionUtil {
                                             return cm != null && cm.getData() != null && cm.getData().containsKey("spring.datasource.url");
                                         })
                                 )
-                                .forEach(container -> {
-                                            createDeploymentSpec(deployment, container, deployments, configMap);
-                                        }
-                                );
+                                .forEach(container -> createDeploymentSpec(deployment, container, deployments, configMap));
                     });
         });
 
@@ -102,26 +101,28 @@ public class ProvisionUtil {
     }
 
     private static void createDeploymentSpec(Deployment deployment, Container container, List<DeploymentSpecification> deployments, AtomicReference<ConfigMap> configMap) {
-        List<SecretEnvSource> lst = container.getEnvFrom().stream()
-                .map(EnvFromSource::getSecretRef)
-                .filter(ref -> ref != null && ref.getName() != null)
-                .toList();
         deployments.add(new DeploymentSpecification(deployment.getMetadata().getNamespace(),
                 deployment.getMetadata().getName(), container.getImage(),
                 configMap.get().getData().get("spring.datasource.url"),
-                lst,
+                getSecretsFromContainer(container),
                 deployment.getSpec().getReplicas()));
+    }
+
+    private static List<SecretEnvSource> getSecretsFromContainer(Container container) {
+        return container.getEnvFrom().stream().map(EnvFromSource::getSecretRef)
+                .filter(ref -> ref != null && ref.getName() != null)
+                .toList();
     }
 
     public static void deleteCompletedPods(KubernetesClient client, String namespaces) {
         Stream.of(namespaces.split(",")).forEach(namespace -> {
             client.pods()
                     .inNamespace(namespace).list().getItems().stream()
-                    .filter(pod ->( "Succeeded".equalsIgnoreCase(pod.getStatus().getPhase()) || "Failed".equalsIgnoreCase(pod.getStatus().getPhase()))).toList()
+                    .filter(pod -> ("Succeeded".equalsIgnoreCase(pod.getStatus().getPhase()) || "Failed".equalsIgnoreCase(pod.getStatus().getPhase()))).toList()
                     .forEach(pod -> {
                         String podName = pod.getMetadata().getName();
                         client.pods().inNamespace(namespace).withName(podName).delete();
-            });
+                    });
         });
     }
 
