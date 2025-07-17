@@ -68,9 +68,9 @@ public class ProvisionLogic implements CommandLineRunner {
 
             var futures = splitIntoGroups(tenantIds, maxUpdatePods).stream()
                     .map(groupCsv -> createPodAsync(client, deploy, groupCsv, inMemory))
-                    .toList();
+                    .toList().toArray(new CompletableFuture[0]);
 
-            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+            CompletableFuture.allOf(futures).join(); // wait to finish
 
             scaleTo(client, deploy.nameSpace(), deploy.name(), deploy.replicas());
         });
