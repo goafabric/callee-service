@@ -28,8 +28,11 @@ public class ProvisionLogic implements CommandLineRunner {
     @Value("${provision.tenants:0}")
     private String tenantIds;
 
-    @Value("${provision.maxUpdatePods:5}")
+    @Value("${provision.maxUpdatePods:8}")
     private Integer maxUpdatePods;
+
+    @Value("${provision.mode:create}")
+    private String mode;
 
     @Value("${provision.inMemory:false}")
     private Boolean inMemory;
@@ -42,10 +45,11 @@ public class ProvisionLogic implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try (KubernetesClient client = new KubernetesClientBuilder().build()) {
             var deployments = searchDeploymentsForJdbc(client, this.namespaces);
-            create(client, deployments);
-
-            //tenantIds = IntStream.range(0, 100).mapToObj(String::valueOf).collect(Collectors.joining(","));
-            //update(client, deployments);
+            switch (mode) {
+                case "create" -> create(client, deployments);
+                case "update" -> update(client, deployments);
+                default -> throw new IllegalStateException("unknown mode");
+            }
         }  catch (Exception e) {
             e.printStackTrace();
         }
