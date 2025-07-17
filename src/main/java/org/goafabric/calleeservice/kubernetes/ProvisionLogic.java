@@ -10,8 +10,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
@@ -30,7 +28,7 @@ public class ProvisionLogic implements CommandLineRunner {
     @Value("${multi-tenancy.tenants:1,2,3,4,5,6,8,9}")
     private String tenantIds;
 
-    @Value("${max.update.pods:1}")
+    @Value("${max.update.pods:3}")
     private Integer maxUpdatePods;
 
     @Autowired
@@ -39,7 +37,8 @@ public class ProvisionLogic implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         try (KubernetesClient client = new KubernetesClientBuilder().build()) {
-            var deployments = searchDeployments2(client, this.namespaces);
+            deleteCompletedPods(client, this.namespaces);
+            var deployments = searchDeployments(client, this.namespaces);
             //create(client, deployments);
             update(client, deployments);
         }  catch (Exception e) {
@@ -64,7 +63,7 @@ public class ProvisionLogic implements CommandLineRunner {
             log.info("schema update for tenants {} and app {}", tenantIds, deploy.name());
             scaleTo(client, deploy.nameSpace(), deploy.name(), 0);
 
-            var futures = splitIntoGroupsAsCsv(tenantIds, 3).stream()
+            var futures = splitIntoGroupsAsCsv(tenantIds, maxUpdatePods).stream()
                     .map(groupCsv -> createPodAsync(client, deploy, groupCsv))
                     .toList();
 
@@ -82,17 +81,5 @@ public class ProvisionLogic implements CommandLineRunner {
     }
 
 
-    private static List<String> splitIntoGroupsAsCsv(String tenants, int maxGroups) {
-        List<String> tenantIds = Arrays.asList(tenants.split(","));
-        int groupSize = (int) Math.ceil((double) tenantIds.size() / maxGroups);
-
-        List<String> groups = new ArrayList<>();
-        for (int i = 0; i < tenantIds.size(); i += groupSize) {
-            List<String> group = tenantIds.subList(i, Math.min(i + groupSize, tenantIds.size()));
-            String csv = String.join(",", group);
-            groups.add(csv);
-        }
-        return groups;
-    }
 
 }

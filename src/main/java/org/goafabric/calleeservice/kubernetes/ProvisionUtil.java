@@ -6,9 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 public class ProvisionUtil {
     private static final Logger log = LoggerFactory.getLogger(ProvisionUtil.class.getName());
@@ -53,7 +55,7 @@ public class ProvisionUtil {
                         p -> {
                             if (p == null || p.getStatus() == null) return false;
                             String phase = p.getStatus().getPhase();
-                            log.info("Pod phase: {}", phase);
+                            log.info("Pod {} phase: {}", podName, phase);
                             if ("Failed".equals(phase)) {
                                 throw new IllegalStateException("Pods failed");
                             }
@@ -64,7 +66,9 @@ public class ProvisionUtil {
         int x = 5;
     }
 
-    static List<DeploymentSpecification> searchDeployments2(KubernetesClient client, String namespaces) {
+    static List<DeploymentSpecification> searchDeployments(KubernetesClient client, String namespaces) {
+        deleteCompletedPods(client, namespaces);
+
         List<DeploymentSpecification> deployments = new ArrayList<>();
 
         List.of(namespaces.split(",")).forEach(ns -> {
@@ -84,10 +88,36 @@ public class ProvisionUtil {
                                 );
                     });
         });
-        deployments.stream().forEach(deploy -> {
+        deployments.forEach(deploy -> {
             log.info("deployments detected: " + deploy);
         });
         return deployments;
+    }
+
+    public static void deleteCompletedPods(KubernetesClient client, String namespaces) {
+        Stream.of(namespaces.split(",")).forEach(namespace -> {
+            client.pods()
+                    .inNamespace(namespace).list().getItems().stream()
+                    .filter(pod -> "Succeeded".equalsIgnoreCase(pod.getStatus().getPhase())).toList()
+                    .forEach(pod -> {
+                        String podName = pod.getMetadata().getName();
+                        client.pods().inNamespace(namespace).withName(podName).delete();
+            });
+        });
+    }
+
+
+    static List<String> splitIntoGroupsAsCsv(String tenants, int maxUpdatePods) {
+        List<String> tenantIds = Arrays.asList(tenants.split(","));
+        int groupSize = (int) Math.ceil((double) tenantIds.size() / maxUpdatePods);
+
+        List<String> groups = new ArrayList<>();
+        for (int i = 0; i < tenantIds.size(); i += groupSize) {
+            List<String> group = tenantIds.subList(i, Math.min(i + groupSize, tenantIds.size()));
+            String csv = String.join(",", group);
+            groups.add(csv);
+        }
+        return groups;
     }
 
 }
