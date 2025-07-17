@@ -27,5 +27,5 @@ blob.storage.implementation: "azure"
 provision:
   namespaces: "example,core,billing"
   tenants: "0"
-  maxUpdatePods: "5"
-  inMemory: "true"
+  maxUpdatePods: "8"
+  inMemory: "false"
