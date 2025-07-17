@@ -4,10 +4,8 @@ import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -36,10 +34,6 @@ public class ProvisionLogic implements CommandLineRunner {
 
     @Value("${provision.inMemory:false}")
     private Boolean inMemory;
-
-
-    @Autowired
-    private ApplicationContext context;
 
     @Override
     public void run(String... args) throws Exception {
