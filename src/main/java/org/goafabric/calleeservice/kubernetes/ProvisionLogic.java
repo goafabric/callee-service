@@ -25,7 +25,8 @@ public class ProvisionLogic implements CommandLineRunner {
     @Value("${namespaces:example,core,billing}")
     private String namespaces;
 
-    @Value("${multi-tenancy.tenants:1,2,3,4,5,6,8,9}")
+    //@Value("${multi-tenancy.tenants:1,2,3,4,5,6,8,9}")
+    @Value("${multi-tenancy.tenants:0,5}")
     private String tenantIds;
 
     @Value("${max.update.pods:3}")
@@ -37,10 +38,9 @@ public class ProvisionLogic implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         try (KubernetesClient client = new KubernetesClientBuilder().build()) {
-            deleteCompletedPods(client, this.namespaces);
             var deployments = searchDeployments(client, this.namespaces);
-            //create(client, deployments);
-            update(client, deployments);
+            create(client, deployments);
+            //update(client, deployments);
         }  catch (Exception e) {
             e.printStackTrace();
         }

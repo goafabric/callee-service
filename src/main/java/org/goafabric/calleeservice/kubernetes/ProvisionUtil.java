@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
@@ -26,7 +27,7 @@ public class ProvisionUtil {
     }
 
     private static void createPod(KubernetesClient client, String nameSpace, String name, String imageName, String tenantId) {
-        String podName = name + "-provision-" + tenantId.split(",")[0];
+        String podName = name + "-provision-" + UUID.randomUUID().toString().substring(0, 8);
 
         client.pods().inNamespace(nameSpace).withName(podName).delete();
 
@@ -44,10 +45,10 @@ public class ProvisionUtil {
 
         client.pods().inNamespace(nameSpace).create(pod);
 
-        waitToFinish(nameSpace, client, podName);
+        waitToFinish(nameSpace, client, podName, tenantId);
     }
 
-    private static void waitToFinish(String nameSpace, KubernetesClient client, String podName) {
+    private static void waitToFinish(String nameSpace, KubernetesClient client, String podName, String tenantId) {
         client.pods()
                 .inNamespace(nameSpace)
                 .withName(podName)
@@ -55,15 +56,14 @@ public class ProvisionUtil {
                         p -> {
                             if (p == null || p.getStatus() == null) return false;
                             String phase = p.getStatus().getPhase();
-                            log.info("Pod {} phase: {}", podName, phase);
+                            log.info("Phase: {} Tenant: {} Pod: {} ", phase, tenantId, podName);
                             if ("Failed".equals(phase)) {
                                 throw new IllegalStateException("Pods failed");
                             }
                             return "Succeeded".equals(phase);
                         },
                         30, TimeUnit.SECONDS
-                );
-        int x = 5;
+                );;
     }
 
     static List<DeploymentSpecification> searchDeployments(KubernetesClient client, String namespaces) {
@@ -114,8 +114,7 @@ public class ProvisionUtil {
         List<String> groups = new ArrayList<>();
         for (int i = 0; i < tenantIds.size(); i += groupSize) {
             List<String> group = tenantIds.subList(i, Math.min(i + groupSize, tenantIds.size()));
-            String csv = String.join(",", group);
-            groups.add(csv);
+            groups.add(String.join(",", group));
         }
         return groups;
     }
