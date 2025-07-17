@@ -10,10 +10,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
-import static org.goafabric.calleeservice.kubernetes.ProvisionUtil.createPod;
-import static org.goafabric.calleeservice.kubernetes.ProvisionUtil.searchDeployments2;
+import static org.goafabric.calleeservice.kubernetes.ProvisionUtil.*;
 
 
 //TODO: Connect to real database with secrets
@@ -24,8 +27,11 @@ public class ProvisionLogic implements CommandLineRunner {
     @Value("${namespaces:example,core,billing}")
     private String namespaces;
 
-    @Value("${multi-tenancy.tenants:0}")
+    @Value("${multi-tenancy.tenants:1,2,3,4,5,6,8,9}")
     private String tenantIds;
+
+    @Value("${max.update.pods:1}")
+    private Integer maxUpdatePods;
 
     @Autowired
     private ApplicationContext context;
@@ -34,19 +40,19 @@ public class ProvisionLogic implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try (KubernetesClient client = new KubernetesClientBuilder().build()) {
             var deployments = searchDeployments2(client, this.namespaces);
-            create(client, deployments);
-            //update(client, deployments);
+            //create(client, deployments);
+            update(client, deployments);
         }  catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void create(KubernetesClient client, List<ProvisionUtil.DeploymentSpecification> deployments) {
-        List.of(tenantIds.split(",")).stream().forEach(tenantId -> {
+        Stream.of(tenantIds.split(",")).forEach(tenantId -> {
             log.info("processing tenant {}", tenantId);
             deployments.forEach(deploy -> {
                 log.info("schema creation for tenant {} and app {}", tenantId, deploy.name());
-                createPod(client, deploy.nameSpace(), deploy.name(), deploy.image(), tenantId);
+                createPod(client, deploy, tenantId);
             });
         });
 
@@ -57,7 +63,13 @@ public class ProvisionLogic implements CommandLineRunner {
         deployments.forEach(deploy -> {
             log.info("schema update for tenants {} and app {}", tenantIds, deploy.name());
             scaleTo(client, deploy.nameSpace(), deploy.name(), 0);
-            createPod(client, deploy.nameSpace(), deploy.name(), deploy.image(), tenantIds);
+
+            var futures = splitIntoGroupsAsCsv(tenantIds, 3).stream()
+                    .map(groupCsv -> createPodAsync(client, deploy, groupCsv))
+                    .toList();
+
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
             scaleTo(client, deploy.nameSpace(), deploy.name(), deploy.replicas());
         });
 
@@ -67,6 +79,20 @@ public class ProvisionLogic implements CommandLineRunner {
     private static void scaleTo(KubernetesClient client, String nameSpace, String name, Integer replicas) {
         client.apps().deployments().inNamespace(nameSpace).withName(name)
                 .scale(replicas);
+    }
+
+
+    private static List<String> splitIntoGroupsAsCsv(String tenants, int maxGroups) {
+        List<String> tenantIds = Arrays.asList(tenants.split(","));
+        int groupSize = (int) Math.ceil((double) tenantIds.size() / maxGroups);
+
+        List<String> groups = new ArrayList<>();
+        for (int i = 0; i < tenantIds.size(); i += groupSize) {
+            List<String> group = tenantIds.subList(i, Math.min(i + groupSize, tenantIds.size()));
+            String csv = String.join(",", group);
+            groups.add(csv);
+        }
+        return groups;
     }
 
 }

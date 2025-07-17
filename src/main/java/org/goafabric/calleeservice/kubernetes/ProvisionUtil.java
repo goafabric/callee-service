@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 public class ProvisionUtil {
@@ -14,21 +15,23 @@ public class ProvisionUtil {
 
     public record DeploymentSpecification(String nameSpace, String name, String image, Integer replicas) {}
 
-    public static void createPod(KubernetesClient client, String nameSpace, String name, String imageName, String tenantId) {
-        String podName = name + "-provision";
+    public static CompletableFuture<Void> createPodAsync(KubernetesClient client, DeploymentSpecification deployment, String tenantId) {
+        return CompletableFuture.runAsync(() -> createPod(client, deployment, tenantId));
+    }
 
-        // Delete existing Pod if it exists
+    public static void createPod(KubernetesClient client, DeploymentSpecification deployment, String tenantId) {
+        createPod(client, deployment.nameSpace(), deployment.name(), deployment.image(), tenantId);
+    }
+
+    private static void createPod(KubernetesClient client, String nameSpace, String name, String imageName, String tenantId) {
+        String podName = name + "-provision-" + tenantId.split(",")[0];
+
         client.pods().inNamespace(nameSpace).withName(podName).delete();
 
         Pod pod = new PodBuilder()
-                .withNewMetadata()
-                .withName(podName)
-                .endMetadata()
-                .withNewSpec()
+                .withNewMetadata().withName(podName).endMetadata().withNewSpec()
                 .withRestartPolicy("Never")
-                .addNewContainer()
-                .withName(podName)
-                .withImage(imageName)
+                .addNewContainer().withName(podName).withImage(imageName)
                 .withEnv(
                         new EnvVar("database.provisioning.goals", "-migrate -terminate", null),
                         new EnvVar("multi-tenancy.tenants", tenantId, null)
@@ -58,6 +61,7 @@ public class ProvisionUtil {
                         },
                         30, TimeUnit.SECONDS
                 );
+        int x = 5;
     }
 
     static List<DeploymentSpecification> searchDeployments2(KubernetesClient client, String namespaces) {
