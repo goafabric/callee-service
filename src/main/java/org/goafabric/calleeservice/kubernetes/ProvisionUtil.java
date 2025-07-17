@@ -43,7 +43,7 @@ public class ProvisionUtil {
                 .endSpec()
                 .build();
 
-        client.pods().inNamespace(nameSpace).create(pod);
+        client.pods().inNamespace(nameSpace).resource(pod).create();
 
         waitToFinish(nameSpace, client, podName, tenantId);
     }
