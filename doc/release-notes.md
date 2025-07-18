@@ -1,3 +1,6 @@
+# 3.5.4
+- upgrade of Spring Boot
+
 # 3.5.3
 - upgrade of Spring Boot
 
