@@ -1,3 +1,6 @@
+# 3.5.3
+- upgrade of Spring Boot
+
 # 3.5.0
 - upgrade of Spring Boot
 - native images are now arm only
