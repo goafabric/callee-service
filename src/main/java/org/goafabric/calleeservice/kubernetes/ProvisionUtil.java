@@ -31,9 +31,6 @@ public class ProvisionUtil {
 
         client.pods().inNamespace(deployment.nameSpace).withName(podName).delete();
 
-        var secretBuilder = new EnvFromSourceBuilder();
-        deployment.secretEnvs.forEach(secretBuilder::withSecretRef);
-
         Pod pod = new PodBuilder()
                 .withNewMetadata().withName(podName).endMetadata().withNewSpec()
                 .withRestartPolicy("Never")
@@ -43,7 +40,7 @@ public class ProvisionUtil {
                         new EnvVar("multi-tenancy.tenants", tenantId, null),
                         !inMemory ? new EnvVar("spring.datasource.url", deployment.dataSource(), null) : new EnvVar("dummy", "dummy", null)
                 )
-                .withEnvFrom(secretBuilder.build())
+                .withEnvFrom(getSecrets(deployment))
 
                 .endContainer()
                 .endSpec()
@@ -52,6 +49,15 @@ public class ProvisionUtil {
         client.pods().inNamespace(deployment.nameSpace).resource(pod).create();
 
         waitToFinish(deployment.nameSpace, client, podName, tenantId);
+    }
+
+    //get secrets to be attached, this only works for secrets refs, not for CSI Driver like Volume Secrets
+    private static List<EnvFromSource> getSecrets(DeploymentSpecification deployment) {
+        return deployment.secretEnvs.stream()
+                .map(secretEnvSource -> new EnvFromSourceBuilder()
+                        .withSecretRef(secretEnvSource)
+                        .build())
+                .toList();
     }
 
     private static void waitToFinish(String nameSpace, KubernetesClient client, String podName, String tenantId) {
