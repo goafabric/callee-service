@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import static org.goafabric.calleeservice.kubernetes.ProvisionUtil.*;
 
 
-//TODO: running inside kubernetes
+//TODO: running inside kubernetes + registry update
 @Component
 public class ProvisionLogic implements CommandLineRunner {
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
