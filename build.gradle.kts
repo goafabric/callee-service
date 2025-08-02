@@ -67,6 +67,9 @@ dependencies {
 	//drools
 	//implementation("org.drools:drools-core:10.0.0"); implementation("org.drools:drools-compiler:10.0.0"); implementation("org.drools:drools-mvel:10.0.0")
 
+	//fabric8
+	//implementation("io.fabric8:kubernetes-client:7.3.1")
+
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
