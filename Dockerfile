@@ -1,4 +1,4 @@
-FROM ibm-semeru-runtimes:open-21.0.4.1_7-jre-focal
+FROM nginx:1.22.1
 
 # Set working directory
 WORKDIR /app
