@@ -1,25 +1,22 @@
-FROM nginx:1.22.1
-
-# Set working directory
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.1.18@sha256:7000c71ad64ef922005ac3ea9ebd0daf2ecd4c4329dadfe56ca3b80433c82a51 AS base
 WORKDIR /app
+EXPOSE 80
 
-# Copy the Spring Boot fat JAR
-COPY build/libs/*.jar app.jar
+FROM mcr.microsoft.com/dotnet/core/sdk:2.1.806@sha256:bdee2c2664cd8db7c68d782cb91fa722eca2730c84f9ee8040029b9dcd8fcc3b AS build
+WORKDIR /src
+COPY . .
+RUN [...]
 
-# Run the Spring Boot application
-ENTRYPOINT ["java", "-Xms128M", "-Xmx128M", "-jar", "app.jar"]
+FROM build AS publish
+WORKDIR /src/Web/Web.Startup
+RUN [...]
 
-# bulding an image
-# docker build -t goafabric/my-callee-service:1.0.0-SNAPSHOT -f src/deploy/Dockerfile .
-# docker image ls | grep my-callee
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
 
-# running a container
-# docker run --rm -p50900:50900 goafabric/my-callee-service:1.0.0-SNAPSHOT
-# docker container ls
-# docker stats
+# Local
+COPY /run-local.sh /run.sh
+RUN chmod a+x /run.sh
 
-# pushing and pulling to/from registry
-# docker push docker.io/goafabric/my-callee-service:1.0.0-SNAPSHOT
-# lookup on dockerhub (arm64)
-# docker pull docker.io/goafabric/my-callee-service:1.0.0-SNAPSHOT
-
+ENTRYPOINT ["/run.sh"]
