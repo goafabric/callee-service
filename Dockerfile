@@ -1,4 +1,4 @@
-FROM node:16.14.0
+FROM nginx:1.22.1
 
 # Set working directory
 WORKDIR /app
