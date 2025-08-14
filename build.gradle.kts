@@ -21,8 +21,8 @@ plugins {
 	id("org.cyclonedx.bom") version "2.3.1"
 	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
 
-	kotlin("jvm") version "2.2.0"
-	kotlin("plugin.spring") version "2.2.0"
+	kotlin("jvm") version "2.2.10"
+	kotlin("plugin.spring") version "2.2.10"
 }
 
 repositories {
