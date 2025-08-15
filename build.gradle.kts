@@ -1,3 +1,6 @@
+import io.sentry.Sentry
+import io.sentry.Sentry.OptionsConfiguration
+import io.sentry.SentryOptions
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 val group: String by project
@@ -48,7 +51,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-aop")
 
 	//implementation("com.nimbusds:nimbus-jose-jwt:9.22")
-	
+
 	//implementation("com.github.ben-manes.caffeine:caffeine"); implementation("org.springframework.boot:spring-boot-starter-cache");
 	//implementation("org.springframework.boot:spring-boot-starter-data-redis"); implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml"); implementation("org.springframework.boot:spring-boot-starter-cache");
 
@@ -72,6 +75,10 @@ dependencies {
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    //sentry
+    //Sentry.init(OptionsConfiguration { options: SentryOptions? -> options.setDsn("https://YOUR_PUBLIC_KEY@o0.ingest.sentry.io/PROJECT_ID") })
+    //implementation("io.sentry:sentry-spring-boot-starter-jakarta:8.19.1"); implementation ("io.sentry:sentry-opentelemetry-agentless-spring:8.19.1")
 
 }
 
