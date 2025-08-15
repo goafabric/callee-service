@@ -75,11 +75,6 @@ dependencies {
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-
-    //sentry
-    //Sentry.init(OptionsConfiguration { options: SentryOptions? -> options.setDsn("https://YOUR_PUBLIC_KEY@o0.ingest.sentry.io/PROJECT_ID") })
-    //implementation("io.sentry:sentry-spring-boot-starter-jakarta:8.19.1"); implementation ("io.sentry:sentry-opentelemetry-agentless-spring:8.19.1")
-
 }
 
 tasks.withType<Test> {
