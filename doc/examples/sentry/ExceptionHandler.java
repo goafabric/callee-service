@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 @ControllerAdvice
 public class ExceptionHandler {
     public ExceptionHandler(@Value("${sentry.dsn}") String sentryDsn, @Value("${sentry.send-default-pii}") boolean sentryDefaultPii) {
+        //if spring boot tracing dependency is used, the line below needs to be uncommented, otherwise tracing will not work
         Sentry.init(options -> {options.setDsn(sentryDsn); options.setSendDefaultPii(sentryDefaultPii);});
     }
 
