@@ -86,7 +86,7 @@ object ApplicationRulesTest {
             "io.swagger.v3..",
             "com.github.benmanes.caffeine..",
             "com.azure.storage.blob..",
-            "software.amazon.awssdk",
+            "software.amazon.awssdk..", "io.awspring.cloud..",
 
             "org.javers..",
             "com.nimbusds.jwt..",
