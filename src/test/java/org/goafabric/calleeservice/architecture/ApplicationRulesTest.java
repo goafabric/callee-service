@@ -11,7 +11,6 @@ import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportRuntimeHints;
-import org.springframework.scheduling.annotation.Async;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.*;
 
@@ -124,7 +123,7 @@ public class ApplicationRulesTest {
 
     @ArchTest
     static final ArchRule asyncIsBanished =
-            noMethods().should().beAnnotatedWith(Async.class)
+            noMethods().should().beAnnotatedWith(org.springframework.scheduling.annotation.Async.class)
                     .because("Using Async leads to ThreadLocals being erased, Exceptions being swallowed, Resilience4j not working and possible Concurrency Issues in General");
 
     @ArchTest
