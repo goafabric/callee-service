@@ -1,8 +1,12 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 val version: String by project
 val javaVersion = "21"
 java.sourceCompatibility = JavaVersion.toVersion(javaVersion)
+java.targetCompatibility = JavaVersion.toVersion(javaVersion)
+tasks.withType<KotlinCompile>().all { compilerOptions { jvmTarget.set(JvmTarget.fromTarget(javaVersion)) } }
 
 val dockerRegistry = "goafabric"
 val baseImage = "ibm-semeru-runtimes:open-21.0.8_9-jre@sha256:551139c6639d176c9591c2e2eee16b0092b97a31761c8a9202cf9fffc844d845"
