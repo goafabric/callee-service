@@ -8,24 +8,28 @@ import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.lang.ArchRule
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition
 import org.goafabric.calleeservice.Application
+import org.springframework.aot.hint.RuntimeHintsRegistrar
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
+import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.ImportRuntimeHints
+import org.springframework.scheduling.annotation.Async
+import kotlin.jvm.java
 
 @AnalyzeClasses(packagesOf = [Application::class], importOptions = [DoNotIncludeTests::class, ApplicationRulesTest.IgnoreCglib::class])
 object ApplicationRulesTest {
     @ArchTest
     val reflectionShouldBeAvoided: ArchRule = ArchRuleDefinition.noClasses()
         .that()
-        .areNotAnnotatedWith(org.springframework.context.annotation.Configuration::class.java)
+        .areNotAnnotatedWith(Configuration::class.java)
         .and()
-        .doNotImplement(org.springframework.aot.hint.RuntimeHintsRegistrar::class.java)
+        .doNotImplement(RuntimeHintsRegistrar::class.java)
         .and()
         .haveSimpleNameNotContaining("AuditTrailListener")
         .should()
         .dependOnClassesThat()
         .resideInAPackage("java.lang.reflect")
         .orShould()
-        .callMethod(java.lang.Class::class.java, "forName", String::class.java)
+        .callMethod(Class::class.java, "forName", String::class.java)
         .orShould()
         .dependOnClassesThat()
         .haveFullyQualifiedName("org.springframework.util.ReflectionUtils")
@@ -60,6 +64,34 @@ object ApplicationRulesTest {
         .because("Java 21+ and Spring cover the functionality already, managing extra libraries with transient dependencies should be avoided")
 
     @ArchTest
+    val onlyAllowedLibraries: ArchRule = ArchRuleDefinition.classes()
+        .should()
+        .onlyDependOnClassesThat()
+        .resideInAnyPackage(
+            "org.goafabric..",
+            "java..",
+            "javax..",
+            "jakarta..",
+            "org.springframework..",
+            "org.slf4j..",
+            "com.fasterxml.jackson..",
+            "org.flywaydb..",
+            "org.hibernate..",
+            "org.mapstruct..",
+            "io.github.resilience4j..",
+            "io.micrometer..",
+            "org.springdoc..",
+            "net.ttddyy..",
+
+            "org.javers..",
+            "com.nimbusds.jwt..",
+
+            "kotlin..",
+            "org.jetbrains.annotations.."
+        )
+        .because("Only core and allowed libraries should be used to avoid unnecessary third-party dependencies")
+
+    @ArchTest
     val componentNamesThatAreBanished: ArchRule = ArchRuleDefinition.noClasses()
         .that().haveSimpleNameNotContaining("Mapper")
         .should()
@@ -67,6 +99,15 @@ object ApplicationRulesTest {
         .andShould()
         .haveSimpleNameEndingWith("Management")
         .because("Avoid filler names like Impl or Management, use neutral Bean instead")
+
+    @ArchTest
+    val asyncIsBanished: ArchRule = ArchRuleDefinition.noMethods().should().beAnnotatedWith(Async::class.java)
+        .because("Using Async leads to ThreadLocals being erased, Exceptions being swallowed, Resilience4j not working and possible Concurrency Issues in General")
+
+    @ArchTest
+    val flywayJavaMigrationsAreBanished: ArchRule = ArchRuleDefinition.noClasses().should().dependOnClassesThat()
+        .resideInAnyPackage("org.flywaydb.core.api.migration..")
+        .because("Flyway Java Migrations should not be used, complex import logic should go to a separate batch, simple ones with a simple Java class if aware of the consequences")
 
     internal class IgnoreCglib : ImportOption {
         override fun includes(location: Location): Boolean {
