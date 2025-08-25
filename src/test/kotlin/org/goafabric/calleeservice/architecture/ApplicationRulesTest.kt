@@ -83,10 +83,16 @@ object ApplicationRulesTest {
             "org.springdoc..",
             "net.ttddyy..",
 
+            "io.swagger.v3..",
+            "com.github.benmanes.caffeine..",
+            "com.azure.storage.blob..",
+            "software.amazon.awssdk",
+
             "org.javers..",
             "com.nimbusds.jwt..",
 
             "kotlin..",
+            "kotlinx..",
             "org.jetbrains.annotations.."
         )
         .because("Only core and allowed libraries should be used to avoid unnecessary third-party dependencies")
