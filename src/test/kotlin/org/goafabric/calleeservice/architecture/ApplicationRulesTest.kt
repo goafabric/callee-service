@@ -12,7 +12,6 @@ import org.springframework.aot.hint.RuntimeHintsRegistrar
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.ImportRuntimeHints
-import org.springframework.scheduling.annotation.Async
 import kotlin.jvm.java
 
 @AnalyzeClasses(packagesOf = [Application::class], importOptions = [DoNotIncludeTests::class, ApplicationRulesTest.IgnoreCglib::class])
@@ -107,7 +106,8 @@ object ApplicationRulesTest {
         .because("Avoid filler names like Impl or Management, use neutral Bean instead")
 
     @ArchTest
-    val asyncIsBanished: ArchRule = ArchRuleDefinition.noMethods().should().beAnnotatedWith(Async::class.java)
+    val asyncIsBanished: ArchRule = ArchRuleDefinition.noMethods().should()
+        .beAnnotatedWith(org.springframework.scheduling.annotation.Async::class.java)
         .because("Using Async leads to ThreadLocals being erased, Exceptions being swallowed, Resilience4j not working and possible Concurrency Issues in General")
 
     @ArchTest
