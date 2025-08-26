@@ -16,7 +16,7 @@ plugins {
 
 	id("com.google.cloud.tools.jib") version "3.4.5"
 	id("net.researchgate.release") version "3.1.0"
-	id("org.sonarqube") version "6.2.0.5505"
+	id("org.sonarqube") version "6.3.0.5676"
 
 	id("org.cyclonedx.bom") version "2.3.1"
 	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
