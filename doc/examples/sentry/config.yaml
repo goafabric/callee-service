@@ -13,6 +13,12 @@ exporters:
     environment: "production"
     insecure_skip_verify: true
 
+#  otlphttp:
+#    endpoint: http://host.docker.internal:43180
+#    tls:
+#      insecure: true
+
+
 processors:
   batch:
 
@@ -22,6 +28,4 @@ service:
       receivers: [otlp]
       processors: [batch]
       exporters: [sentry]
-  telemetry:
-    logs:
-      level: "debug"
+#      exporters: [sentry, otlphttp]
