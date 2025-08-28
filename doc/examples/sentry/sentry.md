@@ -32,4 +32,4 @@ docker run --rm \
 -p 127.0.0.1:55679:55679 \
 otel/opentelemetry-collector-contrib:0.133.0
 
-
+management.otlp.tracing.endpoint: "http://127.0.0.1:4318/v1/traces"
