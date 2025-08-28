@@ -1,0 +1,24 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+exporters:
+  sentry:
+    dsn: https://5318f5c32dce4a04e10522fec0d3bf5c@o4509847473684480.ingest.de.sentry.io/4509847475978320
+    environment: "production"
+    insecure_skip_verify: true
+
+processors:
+  batch:
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [sentry]
+  telemetry:
+    logs:
+      level: "debug"
