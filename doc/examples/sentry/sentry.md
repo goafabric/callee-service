@@ -9,22 +9,22 @@ sentry:
   send-default-pii: true
   traces-sample-rate: 1.0
 
-# results
+# exception handler
 - simple sentry dependency without spring boot
   - will just create Exceptions
   - compatible with native + Spring Boot 4.0 M1
+
+# tracing library
 - sentry + spring boot + opentelemetry
   - will also create traces (exactly the same ones as in tempo)
   - compatible with native, but currently incomaptible with Spring Boot 4.0 M1
   - tracing has a bad bug, when an error is thrown the request will hang forever (receiver class io.opentelemetry.sdk.logs.ExtendedSdkLogRecordBuilder does not define or inherit an implementation of the resolved method 'abstract io.opentelemetry.api.incubator.logs.ExtendedLogRecordBuilder)
-- question
-  - what is the value over traces in tempo, and exceptions in loki ?
 
-# collector (not working)
-
-https://opentelemetry.io/docs/collector/quick-start/
-https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/exporter/sentryexporter/README.md
-
+# tracing via collector and double fan out
+  
+- as an alternative we can use otel collector and double fanout, one to sentry on to standard otel like tempo and jaeger
+       
+## docker
 docker run --rm \
 -v $(pwd)/config.yaml:/etc/otelcol-contrib/config.yaml \
 -p 4317:4317 \
@@ -32,5 +32,9 @@ docker run --rm \
 -p 55679:55679 \
 otel/opentelemetry-collector-contrib:0.133.0
 
-# jaeger
+## links
+https://opentelemetry.io/docs/collector/quick-start/
+https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/exporter/sentryexporter/README.md
+
+## jaeger
 docker run --rm --name jaeger -e COLLECTOR_OTLP_ENABLED=true -p 43180:4318 -p 16686:16686  jaegertracing/all-in-one:1.51.0 && open http://localhost:16686

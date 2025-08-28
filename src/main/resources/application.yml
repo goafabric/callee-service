@@ -22,7 +22,7 @@ management:
 #tracing
 spring.application.name: callee-service
 management.tracing.sampling.probability: "1.0"
-logging.level.io.opentelemetry.exporter: "OFF"
+#logging.level.io.opentelemetry.exporter: "OFF"
 management.otlp.tracing.endpoint: "http://localhost:4318/v1/traces"
 
 #logging
