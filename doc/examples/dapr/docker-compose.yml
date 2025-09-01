@@ -1,0 +1,28 @@
+services:
+  dapr:
+    image: "daprio/daprd:1.15.11"
+    container_name: dapr
+    command: [
+      "./daprd",
+      "--app-id", "callee-service",
+      "--app-port", "50900", # if you later add an app
+      "--app-channel-address", "host.docker.internal",
+      "--dapr-http-port", "3500",
+      "--dapr-grpc-port", "50001",
+      "--resources-path", "/components",
+    ]
+#    extra_hosts:
+#    - "host.docker.internal:host-gateway"
+    volumes:
+      - ./components.yaml:/components/components.yaml
+    ports:
+      - "3500:3500"   # Dapr HTTP API
+      - "50001:50001" # Dapr gRPC API
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7.2.4
+    container_name: redis
+    ports:
+      - "6379:6379"
