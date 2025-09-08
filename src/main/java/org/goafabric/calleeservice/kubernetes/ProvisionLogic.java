@@ -1,5 +1,4 @@
-package org.goafabric.calleeservice.kubernetes;
-//
+//package org.goafabric.calleeservice.kubernetes;
 //import io.fabric8.kubernetes.client.KubernetesClient;
 //import io.fabric8.kubernetes.client.KubernetesClientBuilder;
 //import org.slf4j.Logger;
