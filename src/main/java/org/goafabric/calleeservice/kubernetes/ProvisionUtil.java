@@ -1,4 +1,4 @@
-package org.goafabric.calleeservice.kubernetes;//package org.goafabric.calleeservice.kubernetes;
+//package org.goafabric.calleeservice.kubernetes;
 //
 //import io.fabric8.kubernetes.api.model.*;
 //import io.fabric8.kubernetes.api.model.apps.Deployment;
