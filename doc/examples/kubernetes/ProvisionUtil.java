@@ -51,7 +51,7 @@ public class ProvisionUtil {
         waitToFinish(deployment.nameSpace, client, podName, tenantId);
     }
 
-    get secrets to be attached, this only works for secrets refs, not for CSI Driver like Volume Secrets
+    //get secrets to be attached, this only works for secrets refs, not for CSI Driver like Volume Secrets
     private static List<EnvFromSource> getSecrets(DeploymentSpecification deployment) {
         return deployment.secretEnvs.stream()
                 .map(secretEnvSource -> new EnvFromSourceBuilder()

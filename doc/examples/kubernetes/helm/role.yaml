@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: callee-service-sa
+  namespace: example
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: callee-service-admin-binding
+subjects:
+  - kind: ServiceAccount
+    name: callee-service-sa
+    namespace: example
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+
+
+
+#apiVersion: v1
+#kind: ServiceAccount
+#metadata:
+#  name: callee-service-sa
+#  namespace: example
+#---
+#apiVersion: rbac.authorization.k8s.io/v1
+#kind: ClusterRole
+#metadata:
+#  name: callee-service-role
+#rules:
+#  - apiGroups: [""]
+#    resources: ["pods"]
+#    verbs: ["get", "list", "create", "delete", "watch"]
+#  - apiGroups: ["apps"]
+#    resources: ["deployments"]
+#    verbs: ["get", "list", "create", "delete", "watch"]
+#  - apiGroups: [""]
+#    resources: ["configmaps"]
+#    verbs: ["get", "list", "watch"]
+#---
+#apiVersion: rbac.authorization.k8s.io/v1
+#kind: ClusterRoleBinding
+#metadata:
+#  name: callee-service-rolebinding
+#subjects:
+#  - kind: ServiceAccount
+#    name: callee-service-sa
+#    namespace: example
+#roleRef:
+#  kind: ClusterRole
+#  name: callee-service-role
+#  apiGroup: rbac.authorization.k8s.io
