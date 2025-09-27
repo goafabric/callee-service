@@ -1,11 +1,11 @@
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 val version: String by project
-val javaVersion = "21"
+val javaVersion = "25"
 java.sourceCompatibility = JavaVersion.toVersion(javaVersion)
 
 val dockerRegistry = "goafabric"
-val baseImage = "ibm-semeru-runtimes:open-21.0.8_9-jre@sha256:551139c6639d176c9591c2e2eee16b0092b97a31761c8a9202cf9fffc844d845"
+val baseImage = "eclipse-temurin:25-jre@sha256:74d5c631e5db5a44e7f5a2dd49f93f0c6f7b8c22c1dc1b8e1caec7009872c5c3"
 
 plugins {
 	java
@@ -96,3 +96,4 @@ openApi {
 	tasks.forkedSpringBootRun { dependsOn("compileAotJava", "processAotResources") }
 }
 
+buildscript { configurations.all { resolutionStrategy { force("org.ow2.asm:asm:9.8") } } } //TODO: workaround for jib + java24, https://github.com/GoogleContainerTools/jib/pull/4252
