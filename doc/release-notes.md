@@ -1,3 +1,6 @@
+# 3.5.6
+- upgrade to java 25
+
 # 3.5.4
 - upgrade of Spring Boot
 
