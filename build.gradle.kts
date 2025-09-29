@@ -96,4 +96,4 @@ openApi {
 	tasks.forkedSpringBootRun { dependsOn("compileAotJava", "processAotResources") }
 }
 
-buildscript { configurations.all { resolutionStrategy { force("org.ow2.asm:asm:9.8") } } } //TODO: workaround for jib + java24, https://github.com/GoogleContainerTools/jib/pull/4252
+//buildscript { configurations.all { resolutionStrategy { force("org.ow2.asm:asm:9.8") } } } //TODO: workaround for jib + java24, https://github.com/GoogleContainerTools/jib/pull/4252
