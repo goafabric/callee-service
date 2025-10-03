@@ -54,7 +54,7 @@ dependencies {
 
 	//s3
 	//implementation("io.awspring.cloud:spring-cloud-aws-starter-s3:3.4.0");
-	//implementation("com.azure:azure-storage-blob:12.30.0"); implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
+	//implementation("com.azure:azure-storage-blob:12.31.3"); implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
 
 	//implementation("org.springframework.boot:spring-boot-starter-web"); implementation("am.ik.s3:simple-s3-client:0.2.1") {exclude("org.springframework", "spring-web")}; implementation("org.springframework.boot:spring-boot-starter-web");
 
