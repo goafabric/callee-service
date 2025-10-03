@@ -103,6 +103,6 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 
 graalvmNative {
 	binaries.named("main") {
-        buildArgs.add("--initialize-at-build-time=org.slf4j,ch.qos.logback,com.fasterxml.jackson.core")
+        buildArgs.add("--initialize-at-build-time=org.slf4j,ch.qos.logback,com.fasterxml.jackson.core") //azure blob
 	}
 }
