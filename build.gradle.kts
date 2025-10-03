@@ -18,7 +18,7 @@ plugins {
 	id("net.researchgate.release") version "3.1.0"
 	id("org.sonarqube") version "6.3.1.5724"
 
-	id("org.cyclonedx.bom") version "2.4.1"
+	id("org.cyclonedx.bom") version "3.0.0"
 	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
 }
 
