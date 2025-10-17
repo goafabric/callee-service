@@ -1,7 +1,7 @@
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 val version: String by project
-val javaVersion = "21"
+val javaVersion = "25"
 java.sourceCompatibility = JavaVersion.toVersion(javaVersion)
 
 val dockerRegistry = "goafabric"
