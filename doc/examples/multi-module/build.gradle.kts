@@ -40,5 +40,10 @@ subprojects {
 		}
 	}
 }
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-opentelemetry")
+    implementation("org.springframework.boot:spring-boot-starter-restclient")
+}
 //inside subprojects we can then do inside the dependencies section: implementation(project(":extensions"))
 

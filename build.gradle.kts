@@ -1,7 +1,7 @@
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 val version: String by project
-val javaVersion = "25"
+val javaVersion = "21"
 java.sourceCompatibility = JavaVersion.toVersion(javaVersion)
 
 val dockerRegistry = "goafabric"
@@ -10,7 +10,7 @@ val baseImage = "ibm-semeru-runtimes:open-jdk-25.0.0_36-jre@sha256:8ae073345116c
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.5.6"
+	id("org.springframework.boot") version "4.0.0-M3"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("org.graalvm.buildtools.native") version "0.11.1"
 
@@ -20,6 +20,7 @@ plugins {
 
 	id("org.cyclonedx.bom") version "3.0.1"
 	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
+    id("org.openrewrite.rewrite") version "7.16.0"
 }
 
 repositories {
@@ -34,7 +35,7 @@ dependencies {
 		implementation("org.mapstruct:mapstruct:1.6.3")
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
 		implementation("io.github.resilience4j:resilience4j-spring-boot3:2.3.0")
-		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:1.2.0")
+		//implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:1.2.0")
 		testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
 	}
 }
@@ -45,9 +46,8 @@ dependencies {
 
 	//monitoring
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
-	implementation("io.micrometer:micrometer-registry-prometheus")
-	implementation("io.micrometer:micrometer-tracing-bridge-otel")
-	implementation("io.opentelemetry:opentelemetry-exporter-otlp")
+	implementation("org.springframework.boot:spring-boot-starter-opentelemetry")
+    implementation("io.micrometer:micrometer-registry-prometheus")
 
 	//openapi
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
@@ -56,6 +56,8 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.github.resilience4j:resilience4j-spring-boot3")
 	testImplementation("com.tngtech.archunit:archunit-junit5")
+    testImplementation("org.springframework.boot:spring-boot-starter-restclient")
+
 }
 
 tasks.withType<Test> {
@@ -95,3 +97,4 @@ openApi {
 	customBootRun { args.set(listOf("--server.port=8080")) }
 	tasks.forkedSpringBootRun { dependsOn("compileAotJava", "processAotResources") }
 }
+rewrite { activeRecipe("UpgradeSpringBoot_4_0", "UpgradeSpringBatch_6_0") }

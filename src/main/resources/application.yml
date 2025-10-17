@@ -34,3 +34,5 @@ logging.level.org.springframework: "INFO"
 logging.level.org.goafabric: "INFO"
 logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
+springdoc.enable-kotlin: false
+logging.level.io.micrometer.registry.otlp: "OFF"
