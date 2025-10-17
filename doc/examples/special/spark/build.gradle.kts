@@ -14,9 +14,7 @@ repositories {
 }
 
 dependencies {
-	implementation("org.apache.spark:spark-core_2.13:3.4.0")
-    implementation("org.springframework.boot:spring-boot-starter-opentelemetry")
-    implementation("org.springframework.boot:spring-boot-starter-restclient") //{exclude("org.apache.logging.log4j", "log4j-slf4j2-impl")}
+	implementation("org.apache.spark:spark-core_2.13:3.4.0") //{exclude("org.apache.logging.log4j", "log4j-slf4j2-impl")}
 }
 
 tasks.withType<JavaExec> { jvmArgs("--add-opens=java.base/sun.nio.ch=ALL-UNNAMED") }
