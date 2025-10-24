@@ -10,13 +10,13 @@ val baseImage = "ibm-semeru-runtimes:open-jdk-25.0.0_36-jre@sha256:8ae073345116c
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.5.6"
+	id("org.springframework.boot") version "3.5.7"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("org.graalvm.buildtools.native") version "0.11.2"
 
 	id("com.google.cloud.tools.jib") version "3.4.5"
 	id("net.researchgate.release") version "3.1.0"
-	id("org.sonarqube") version "7.0.0.6105"
+	id("org.sonarqube") version "7.0.1.6134"
 
 	id("org.cyclonedx.bom") version "3.0.1"
 	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
