@@ -8,13 +8,13 @@
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.jdbc.core.JdbcTemplate;
-//import org.springframework.web.bind.annotation.RestController;
 //
 //import java.util.HashMap;
 //import java.util.Map;
 //import java.util.function.Consumer;
 //import java.util.stream.Stream;
 //
+////implementation("org.springframework.boot:spring-boot-starter-jdbc"); implementation("com.h2database:h2")
 //@Configuration
 //public class DbPurgeConfiguration {
 //    private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
@@ -61,4 +61,6 @@
 //
 //        public record DataSourceProperties(String url, String username, String password, String sqlscript) {}
 //    }
+//
+//
 //}

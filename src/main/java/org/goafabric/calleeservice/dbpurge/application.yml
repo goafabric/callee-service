@@ -1,0 +1,46 @@
+#application
+server:
+  port: 50900
+  tomcat.threads.max: 20
+  forward-headers-strategy: FRAMEWORK
+
+#logging
+logging.level.root: "WARN"
+logging.level.org.springframework: "INFO"
+logging.level.org.goafabric: "INFO"
+
+
+#s3
+spring.cloud.aws.s3.enabled: "true"
+spring.cloud.aws.s3.path-style-access-enabled: "true"
+spring.cloud.aws.s3.endpoint: "http://localhost:9100" #"http://s3.localhost.localstack.cloud:4566"
+spring.cloud.aws.credentials.access-key: "minioadmin"
+spring.cloud.aws.credentials.secret-key: "minioadmin"
+spring.cloud.aws.region.static: "eu-central-1" #"us-east-1" //for localstack s3 + native client us-east seems to be needed
+
+#azure
+azure:
+  storage:
+    url: http://localhost:10000/%s # local url for azurite
+    #url: https://%s.blob.core.windows.net # remote url on azure
+    account-name: devstoreaccount1
+    account-key: Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
+
+
+multi-tenancy.schema-prefix: "callee_"
+blob.storage.implementation: "azure"
+
+purge:
+  poolsize: 5
+  datasource:
+    org:
+      url: jdbc:h2:mem:org;DATABASE_TO_UPPER=FALSE
+      username: postgres
+      password: postgres
+      sqlscript: "create schema if not exists org_%TENANT_ID%; set schema org_%TENANT_ID%; create table if not exists example(id INT); delete from example;"
+
+    mrs:
+      url: jdbc:h2:mem:mrs;DATABASE_TO_UPPER=FALSE
+      username: postgres
+      password: postgres
+      sqlscript: "create schema if not exists org_%TENANT_ID%; set schema org_%TENANT_ID%; create table if not exists example(id INT); delete from example;"
