@@ -1,4 +1,8 @@
-$: n("<0 4 0 9 7>*16").scale("g:minor").trans(-12)
+setcpm(120/4)
+
+$: n("<0 4 0 9 7>*16")
+.add("<7__6 5__6>*2")
+.scale("g:minor").trans(-12)
 .s("sawtooth")._pianoroll()
 
 $: n("<0>*16").scale("g:minor").trans(-24)
