@@ -49,7 +49,7 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus")
 
 	//openapi
-	//implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
