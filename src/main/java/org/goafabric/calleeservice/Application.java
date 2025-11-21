@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestClient;
 
 @SpringBootApplication
+//@RegisterReflection(classNames = "org.springdoc.core.providers.SpringWebProvider$$SpringCGLIB$$0", memberCategories = MemberCategory. ACCESS_DECLARED_FIELDS)
 public class Application {
 
     public static void main(String[] args){
