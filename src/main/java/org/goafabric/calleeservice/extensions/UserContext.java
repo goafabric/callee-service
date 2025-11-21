@@ -1,9 +1,8 @@
 package org.goafabric.calleeservice.extensions;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import tools.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
 import java.util.Base64;
 import java.util.Map;
 
@@ -59,10 +58,6 @@ public class UserContext {
     }
 
     private static String getUserNameFromUserInfo(String userInfo) {
-        try {
-            return userInfo != null ? (String) new ObjectMapper().readValue(Base64.getUrlDecoder().decode(userInfo), Map.class).get("preferred_username") : null;
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        return userInfo != null ? (String) new ObjectMapper().readValue(Base64.getUrlDecoder().decode(userInfo), Map.class).get("preferred_username") : null;
     }
 }
