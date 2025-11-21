@@ -23,7 +23,7 @@ jobs:
           gradle-version: 9.1.0
 
       - name: Test
-        run: gradle build test generateOpenApiDocs
+        run: gradle build test #generateOpenApiDocs
 
       - name: Sonar
         continue-on-error: true
