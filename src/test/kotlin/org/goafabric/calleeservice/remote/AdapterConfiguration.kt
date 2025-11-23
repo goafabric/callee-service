@@ -44,7 +44,7 @@ class AdapterConfiguration {
 
             //.clientConnector(new ReactorClientHttpConnector(HttpClient.create(ConnectionProvider.builder("custom").maxLifeTime(Duration.ofMillis(maxLifeTime)).build())));
             return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(builder.build())).build()
-                .createClient(adapterType)
+                .createClient(adapterType as Class<A & Any>)
         }
     }
 }

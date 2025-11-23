@@ -17,14 +17,10 @@ import org.springframework.context.ApplicationListener
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.web.client.RestClient
 
-@RegisterReflection(
-    classes = [Schema31Mixin.TypeSerializer::class, JsonSchema::class, BeanDescription::class],
-    memberCategories = [MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, INVOKE_PUBLIC_METHODS]
-)
 @SpringBootApplication
 class Application(@Autowired private val context: ConfigurableApplicationContext):
     CommandLineRunner {
-    override fun run(vararg args: String?) {
+    override fun run(vararg args: String) {
         if (args.isNotEmpty() && "-check-integrity" == args[0]) {
             context.addApplicationListener(ApplicationListener { _: ApplicationReadyEvent? ->
                 RestClient.create().get()
@@ -32,7 +28,7 @@ class Application(@Autowired private val context: ConfigurableApplicationContext
                     .retrieve().body(
                         String::class.java
                     )
-                SpringApplication.exit(context, ExitCodeGenerator { 0 })
+                SpringApplication.exit(context!!, ExitCodeGenerator { 0 })
             })
         }
     }

@@ -23,7 +23,7 @@ object ApplicationRulesTest {
         .and()
         .doNotImplement(RuntimeHintsRegistrar::class.java)
         .and()
-        .haveSimpleNameNotContaining("AuditTrailListener")
+        .haveSimpleNameNotContaining("AuditTrailListener").and().resideOutsideOfPackage("..persistence.entity..")
         .should()
         .dependOnClassesThat()
         .resideInAPackage("java.lang.reflect")
@@ -73,7 +73,7 @@ object ApplicationRulesTest {
             "jakarta..",
             "org.springframework..",
             "org.slf4j..",
-            "com.fasterxml.jackson..",
+            "com.fasterxml.jackson..","tools.jackson..",
             "org.flywaydb..",
             "org.hibernate..",
             "org.mapstruct..",

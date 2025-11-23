@@ -13,7 +13,7 @@ val baseImage = "eclipse-temurin:25-jre@sha256:74d5c631e5db5a44e7f5a2dd49f93f0c6
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.5.8"
+	id("org.springframework.boot") version "4.0.0"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("org.graalvm.buildtools.native") version "0.11.3"
 
@@ -26,6 +26,7 @@ plugins {
 
 	kotlin("jvm") version "2.2.21"
 	kotlin("plugin.spring") version "2.2.21"
+    id("org.openrewrite.rewrite") version "7.20.0"
 }
 
 repositories {
@@ -38,12 +39,16 @@ dependencies {
 	constraints {
 		annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
 		implementation("org.mapstruct:mapstruct:1.6.3")
-		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.14")
+		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0")
 		implementation("io.github.resilience4j:resilience4j-spring-boot3:2.3.0")
-		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:1.2.0")
+		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:2.0.0")
 		implementation("org.mockito.kotlin:mockito-kotlin:6.1.0")
 		testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
 	}
+
+    implementation("org.springframework.boot:spring-boot-jackson2")
+    implementation("org.springframework.boot:spring-boot-starter-opentelemetry")
+    implementation("org.springframework.boot:spring-boot-starter-restclient")
 }
 
 dependencies {
@@ -54,17 +59,17 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("io.micrometer:micrometer-registry-prometheus")
 
-	implementation("io.micrometer:micrometer-tracing-bridge-otel")
-	implementation("io.opentelemetry:opentelemetry-exporter-otlp")
-
 	//openapi
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
 
 	//crosscuting
-	implementation("org.springframework.boot:spring-boot-starter-aop")
+	implementation("org.springframework.boot:spring-boot-jackson2")
+    implementation("org.springframework.boot:spring-boot-starter-aspectj")
 
 	//kotlin
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.springframework.boot:spring-boot-starter-opentelemetry")
+    implementation("org.springframework.boot:spring-boot-starter-restclient")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	testImplementation("com.tngtech.archunit:archunit-junit5")
@@ -97,7 +102,7 @@ tasks.named<BootBuildImage>("bootBuildImage") {
 	imageName.set(nativeImageName)
 	environment.set(mapOf("BP_NATIVE_IMAGE" to "true", "BP_JVM_VERSION" to "25", "BP_NATIVE_IMAGE_BUILD_ARGUMENTS" to "-J-Xmx5000m -march=compatibility"))
 	doLast {
-		project.objects.newInstance<InjectedExecOps>().execOps.exec { commandLine("/bin/sh", "-c", "docker run --rm $nativeImageName -check-integrity") }
+		project.objects.newInstance<InjectedExecOps>().execOps.exec { commandLine("/bin/sh", "-c", "docker run --rm $nativeImageName -Dspring.context.exit=onRefresh") }
 		project.objects.newInstance<InjectedExecOps>().execOps.exec { commandLine("/bin/sh", "-c", "docker push $nativeImageName") }
 	}
 }
@@ -115,3 +120,4 @@ openApi {
 }
 
 kotlin.compilerOptions.freeCompilerArgs.add("-Xannotation-default-target=param-property")
+rewrite { activeRecipe("UpgradeSpringBoot_4_0", "UpgradeSpringBatch_6_0") }
