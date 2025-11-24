@@ -43,5 +43,19 @@ class ApplicationBaseRuntimeHints : RuntimeHintsRegistrar {
         hints.reflection().registerType(
             TypeReference.of("org.springframework.web.client.ResourceAccessException"),
             Consumer { builder: TypeHint.Builder? -> builder!!.withMembers(MemberCategory.INVOKE_DECLARED_METHODS) })
+
+        //kotlin reflection stuff
+        hints.reflection().registerType(
+            TypeReference.of("java.lang.reflect.Parameter"),
+            Consumer { builder: TypeHint.Builder? -> builder!!.withMembers(MemberCategory.INVOKE_DECLARED_METHODS) })
+
+        hints.reflection().registerType(
+            TypeReference.of("java.lang.reflect.Executable"),
+            Consumer { builder: TypeHint.Builder? -> builder!!.withMembers(MemberCategory.INVOKE_DECLARED_METHODS) })
+
+        //flyway scripts
+        hints.resources().registerPattern("db/migration/h2/*.sql")
+        hints.resources().registerPattern("db/migration/common/*.sql")
+        hints.resources().registerPattern("db/migration/postgresql/*.sql")
     }
 }
