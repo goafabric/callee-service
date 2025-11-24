@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportRuntimeHints;
 
 @Configuration
-@ImportRuntimeHints(ApplicationRuntimeHints.class)
-public class ApplicationRuntimeHints implements RuntimeHintsRegistrar {
+@ImportRuntimeHints(ApplicationBaseRuntimeHints.class)
+public class ApplicationBaseRuntimeHints implements RuntimeHintsRegistrar {
 
     @Override
     public void registerHints(RuntimeHints hints, @Nullable ClassLoader classLoader) {
@@ -40,8 +40,22 @@ public class ApplicationRuntimeHints implements RuntimeHintsRegistrar {
         hints.reflection().registerType(TypeReference.of("org.apache.kafka.common.security.oauthbearer.DefaultJwtValidator"),
                 builder -> builder.withMembers(MemberCategory.INVOKE_DECLARED_METHODS));
 
+        //kotlin reflection stuff
+        hints.reflection().registerType(
+                TypeReference.of("java.lang.reflect.Parameter"),
+                builder -> builder.withMembers(MemberCategory.INVOKE_DECLARED_METHODS));
+
+        hints.reflection().registerType(
+                TypeReference.of("java.lang.reflect.Executable"),
+                builder -> builder.withMembers(MemberCategory.INVOKE_DECLARED_METHODS));
+
         //adapter
         hints.reflection().registerType(TypeReference.of("org.springframework.web.client.ResourceAccessException"),
                 builder -> builder.withMembers(MemberCategory.INVOKE_DECLARED_METHODS));
+
+        //flyway scripts
+        hints.resources().registerPattern("db/migration/h2/*.sql");
+        hints.resources().registerPattern("db/migration/common/*.sql");
+        hints.resources().registerPattern("db/migration/postgresql/*.sql");
     }
 }
