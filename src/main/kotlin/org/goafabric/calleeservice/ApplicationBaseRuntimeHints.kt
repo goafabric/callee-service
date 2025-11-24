@@ -6,8 +6,8 @@ import org.springframework.context.annotation.ImportRuntimeHints
 import java.util.function.Consumer
 
 @Configuration
-@ImportRuntimeHints(ApplicationRuntimeHints::class)
-class ApplicationRuntimeHints : RuntimeHintsRegistrar {
+@ImportRuntimeHints(ApplicationBaseRuntimeHints::class)
+class ApplicationBaseRuntimeHints : RuntimeHintsRegistrar {
     override fun registerHints(hints: RuntimeHints, classLoader: ClassLoader?) {
         //springdoc
         hints.reflection().registerType(
