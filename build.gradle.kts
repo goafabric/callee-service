@@ -26,7 +26,6 @@ plugins {
 
 	kotlin("jvm") version "2.2.21"
 	kotlin("plugin.spring") version "2.2.21"
-    id("org.openrewrite.rewrite") version "7.20.0"
 }
 
 repositories {
@@ -120,4 +119,3 @@ openApi {
 }
 
 kotlin.compilerOptions.freeCompilerArgs.add("-Xannotation-default-target=param-property")
-rewrite { activeRecipe("UpgradeSpringBoot_4_0", "UpgradeSpringBatch_6_0") }
