@@ -1,0 +1,32 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+
+exporters:
+  sentry:
+    dsn: https://5318f5c32dce4a04e10522fec0d3bf5c@o4509847473684480.ingest.de.sentry.io/4509847475978320
+    environment: "production"
+    insecure_skip_verify: true
+
+#  for both sentry and tempo we need to exporters configured, this is just an example with a local docker jaeger, which basically works the same
+#  otlphttp:
+#    endpoint: http://host.docker.internal:43180
+#    tls:
+#      insecure: true
+
+
+processors:
+  batch:
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [sentry]
+#      exporters: [sentry, otlphttp]

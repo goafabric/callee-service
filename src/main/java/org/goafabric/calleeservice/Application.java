@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestClient;
 
 @SpringBootApplication
-public class Application {
+public class Application{
 
-    public static void main(String[] args){
+    static void main(String[] args){
         SpringApplication.run(Application.class, args);
     }
 

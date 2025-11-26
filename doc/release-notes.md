@@ -1,3 +1,12 @@
+# 4.0.0
+upgrade to Spring Boot 4.0.0
+
+# 3.5.6
+- upgrade to java 25
+
+# 3.5.4
+- upgrade of Spring Boot
+
 # 3.5.3
 - upgrade of Spring Boot
 
