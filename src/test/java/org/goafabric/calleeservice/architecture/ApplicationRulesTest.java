@@ -89,6 +89,7 @@ public class ApplicationRulesTest {
                     "org.slf4j..",
                     "org.aspectj.lang..",
                     "com.fasterxml.jackson..",
+                    "tools.jackson..",
                     "org.flywaydb..",
                     "org.hibernate..",
                     "org.mapstruct..",
