@@ -1,12 +1,14 @@
 package org.goafabric.calleeservice.extensions;
 
 import jakarta.servlet.http.HttpServletRequest;
-import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.util.Base64;
 import java.util.Map;
 
 public class UserContext {
+    private static final JsonMapper jsonMapper = JsonMapper.builder().build();
+
     record UserContextRecord(String tenantId, String organizationId, String userName) {
         public Map<String, String> toAdapterHeaderMap() {
             return Map.of("X-TenantId", tenantId, "X-OrganizationId", organizationId, "X-Auth-Request-Preferred-Username", userName);
@@ -58,6 +60,6 @@ public class UserContext {
     }
 
     private static String getUserNameFromUserInfo(String userInfo) {
-        return userInfo != null ? (String) new ObjectMapper().readValue(Base64.getUrlDecoder().decode(userInfo), Map.class).get("preferred_username") : null;
+        return userInfo != null ? (String) jsonMapper.readValue(Base64.getUrlDecoder().decode(userInfo), Map.class).get("preferred_username") : null;
     }
 }
