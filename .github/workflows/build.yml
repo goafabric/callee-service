@@ -25,21 +25,7 @@ jobs:
       - name: Test
         run: gradle build test
 
-      - name: Sonar
-        continue-on-error: true
-        run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=goafabric -Dsonar.token=${{ secrets.SONAR_USER_TOKEN }}
 
-      - name: Add generated docs
-        run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add doc/generated && git diff --cached --quiet doc/generated || git commit -m "Update generated docs" -- doc/generated && git push --force
-
-      - name: Archive SBOM
-        uses: actions/upload-artifact@v5
-        with:
-          name: SBOM
-          path: build/resources/main/META-INF/sbom/application.cdx.json
 
   snapshot:
     runs-on: ubuntu-24.04-arm
