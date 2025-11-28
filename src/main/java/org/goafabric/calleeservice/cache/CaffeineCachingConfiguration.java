@@ -56,6 +56,8 @@ public class CaffeineCachingConfiguration implements CachingConfigurer {
             hints.reflection().registerTypeIfPresent(classLoader, "com.github.benmanes.caffeine.cache.SSMSA", MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
             hints.reflection().registerType(TypeReference.of("com.github.benmanes.caffeine.cache.SSMSA"),
                     builder -> builder.withField("FACTORY"));
+            hints.reflection().registerType(TypeReference.of("com.github.benmanes.caffeine.cache.SSMS"),
+                    builder -> builder.withField("FACTORY"));
         }
     }
 }
