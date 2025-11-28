@@ -51,6 +51,7 @@ public class CaffeineCachingConfiguration implements CachingConfigurer {
     static class CacheRuntimeHints implements RuntimeHintsRegistrar {
         @Override
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
+            hints.reflection().registerTypeIfPresent(classLoader, "com.github.benmanes.caffeine.cache.SSMS", MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
             hints.reflection().registerTypeIfPresent(classLoader, "com.github.benmanes.caffeine.cache.PSAMS", MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
             hints.reflection().registerTypeIfPresent(classLoader, "com.github.benmanes.caffeine.cache.SSMSA", MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
             hints.reflection().registerType(TypeReference.of("com.github.benmanes.caffeine.cache.SSMSA"),
