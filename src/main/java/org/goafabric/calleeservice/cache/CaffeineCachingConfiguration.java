@@ -1,11 +1,11 @@
 /*
 package org.goafabric.calleeservice.cache;
 
-
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
+import org.springframework.aot.hint.TypeReference;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
@@ -50,12 +50,12 @@ public class CaffeineCachingConfiguration implements CachingConfigurer {
     static class CacheRuntimeHints implements RuntimeHintsRegistrar {
         @Override
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
-            try { //caffeine hints
-                hints.reflection().registerType(Class.forName("com.github.benmanes.caffeine.cache.SSMSA"), MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
-                hints.reflection().registerType(Class.forName("com.github.benmanes.caffeine.cache.PSAMS"), MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            hints.reflection().registerType(TypeReference.of("com.github.benmanes.caffeine.cache.SSMSA"),
+                    builder ->  builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS));
+            hints.reflection().registerType(TypeReference.of("com.github.benmanes.caffeine.cache.PSAMS"),
+                    builder ->  builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS));
+            hints.reflection().registerType(TypeReference.of("com.github.benmanes.caffeine.cache.SSMSA"),
+                    builder -> builder.withField("FACTORY"));
         }
     }
 }
