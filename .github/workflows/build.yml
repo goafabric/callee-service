@@ -2,31 +2,111 @@ name: Java CI
 
 on: [push]
 
-jobs:
-  build:
+permissions:
+  contents: write
 
-    runs-on: ubuntu-latest
+jobs:
+  test:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          gradle-version: 9.2.1
+
+      - name: Test
+        run: gradle build test generateOpenApiDocs
+
+      - name: Sonar
+        continue-on-error: true
+        run: gradle sonar -Dsonar.plugins.downloadOnlyRequired=true -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=goafabric -Dsonar.token=${{ secrets.SONAR_USER_TOKEN }}
+
+      - name: Add generated docs
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add doc/generated && git diff --cached --quiet doc/generated || git commit -m "Update generated docs" -- doc/generated && git push --force
+
+      - name: Archive SBOM
+        uses: actions/upload-artifact@v5
+        with:
+          name: SBOM
+          path: build/resources/main/META-INF/sbom/application.cdx.json
+
+  snapshot:
+    runs-on: ubuntu-24.04-arm
+    needs: test
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - uses: actions/checkout@v6
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          gradle-version: 9.2.1
+
+      - name: Container Images
+        run: gradle jib dockerImageNative
+
+  release:
+    runs-on: ubuntu-24.04-arm
+    needs: snapshot
+    if: github.ref == 'refs/heads/main'
 
     steps:
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-    - name: Set up JDK
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '21'
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '25'
 
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v4
-      with:
-        gradle-version: 8.14
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          gradle-version: 9.2.1
 
-    - name: Container Images
-      run: gradle dockerImageNative
-  
+      - name: Setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Release
+        run: gradle release -Prelease.useAutomaticVersion=true
+
+      - name: Get Latest Tag
+        id: latest_tag
+        run: echo "tag=$(git describe --abbrev=0 --tags)" >> $GITHUB_OUTPUT
+
+      - name: Github Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.latest_tag.outputs.tag }}
+          body: |
+            [Release Notes](doc/release-notes.md)

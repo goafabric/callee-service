@@ -1,20 +1,20 @@
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
-val group: String by project
 val version: String by project
-java.sourceCompatibility = JavaVersion.VERSION_21
+val javaVersion = "25"
+java.sourceCompatibility = JavaVersion.toVersion(javaVersion)
 
 val dockerRegistry = "goafabric"
-val baseImage = "ibm-semeru-runtimes:open-21.0.4.1_7-jre-focal@sha256:8b94f8b14fd1d4660f9dc777b1ad3630f847b8e3dc371203bcb857a5e74d6c39"
+val baseImage = "ibm-semeru-runtimes:open-jdk-25.0.0_36-jre@sha256:8ae073345116cfd51ec37b26c3a1c25de9336d436354e0be4271bda1463e119c"
 
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.5.6"
+	id("org.springframework.boot") version "4.0.0"
 	id("io.spring.dependency-management") version "1.1.7"
-	id("org.graalvm.buildtools.native") version "0.11.1"
+	id("org.graalvm.buildtools.native") version "0.11.3"
 
-	id("com.google.cloud.tools.jib") version "3.4.5"
+	id("com.google.cloud.tools.jib") version "3.5.1"
 }
 
 repositories {
@@ -31,21 +31,13 @@ dependencies {
 		implementation("org.mapstruct:mapstruct:1.5.5.Final")
 	}
 }
-/*
-dependencyManagement {
-	imports {
-		mavenBom("org.springframework.statemachine:spring-statemachine-bom:4.0.0")
-	}
-}
-
- */
 
 dependencies {
 	//web
 	implementation("org.springframework.boot:spring-boot-starter")
 
 	//crosscuting
-	implementation("org.springframework.boot:spring-boot-starter-aop")
+	implementation("org.springframework.boot:spring-boot-starter-aspectj")
 
 	//implementation("com.nimbusds:nimbus-jose-jwt:9.22")
 
@@ -94,7 +86,7 @@ tasks.register("dockerImageNative") { description= "Native Image"; group = "buil
 tasks.named<BootBuildImage>("bootBuildImage") {
 	val nativeImageName = "${dockerRegistry}/${project.name}-native" + (if (System.getProperty("os.arch").equals("aarch64")) "-arm64v8" else "") + ":${project.version}"
 	imageName.set(nativeImageName)
-	environment.set(mapOf("BP_NATIVE_IMAGE" to "true", "BP_JVM_VERSION" to "21", "BP_NATIVE_IMAGE_BUILD_ARGUMENTS" to "-J-Xmx5000m -march=compatibility --initialize-at-build-time=org.slf4j.helpers.Reporter"))
+	environment.set(mapOf("BP_NATIVE_IMAGE" to "true", "BP_JVM_VERSION" to javaVersion, "BP_NATIVE_IMAGE_BUILD_ARGUMENTS" to "-J-Xmx5000m -march=compatibility --initialize-at-build-time=org.slf4j.helpers.Reporter"))
 	doLast {
 		project.objects.newInstance<InjectedExecOps>().execOps.exec { commandLine("/bin/sh", "-c", "docker run --rm $nativeImageName -check-integrity") }
 		project.objects.newInstance<InjectedExecOps>().execOps.exec { commandLine("/bin/sh", "-c", "docker push $nativeImageName") }
