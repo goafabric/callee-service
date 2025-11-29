@@ -1,8 +1,9 @@
 package org.goafabric.calleeservice.extensions
 
 import jakarta.servlet.http.HttpServletRequest
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
+import tools.jackson.databind.json.JsonMapper
+import tools.jackson.module.kotlin.jacksonMapperBuilder
+import tools.jackson.module.kotlin.readValue
 import java.util.*
 
 object UserContext {
@@ -15,6 +16,8 @@ object UserContext {
             )
         }
     }
+
+    private val jacksonMapper : JsonMapper = jacksonMapperBuilder().build()
 
     private val CONTEXT: ThreadLocal<UserContextRecord> =
         ThreadLocal.withInitial { UserContextRecord("0", "0", "anonymous") }
@@ -61,7 +64,7 @@ object UserContext {
 
     private fun getUserNameFromUserInfo(userInfo: String?): String? {
         return if (userInfo != null) {
-            val map: Map<String, Any>? = jacksonObjectMapper().readValue(Base64.getUrlDecoder().decode(userInfo))
+            val map: Map<String, Any>? = jacksonMapper.readValue(Base64.getUrlDecoder().decode(userInfo))
             map?.get("preferred_username") as? String
         } else { null }
     }

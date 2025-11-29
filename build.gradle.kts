@@ -44,10 +44,6 @@ dependencies {
 		implementation("org.mockito.kotlin:mockito-kotlin:6.1.0")
 		testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
 	}
-
-    implementation("org.springframework.boot:spring-boot-jackson2")
-    implementation("org.springframework.boot:spring-boot-starter-opentelemetry")
-    implementation("org.springframework.boot:spring-boot-starter-restclient")
 }
 
 dependencies {
@@ -62,7 +58,6 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
 
 	//crosscuting
-	implementation("org.springframework.boot:spring-boot-jackson2")
     implementation("org.springframework.boot:spring-boot-starter-aspectj")
 
 	//kotlin
@@ -70,7 +65,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-restclient")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("tools.jackson.module:jackson-module-kotlin")
 	testImplementation("com.tngtech.archunit:archunit-junit5")
 
 	//test
