@@ -15,16 +15,13 @@ public class ApplicationBaseRuntimeHints implements RuntimeHintsRegistrar {
     @Override
     public void registerHints(RuntimeHints hints, @Nullable ClassLoader classLoader) {
         //springdoc
-        hints.reflection().registerType(
-                TypeReference.of("org.springdoc.core.providers.SpringWebProvider$$SpringCGLIB$$0"),
+        hints.reflection().registerType(TypeReference.of("org.springdoc.core.providers.SpringWebProvider$$SpringCGLIB$$0"),
                 builder -> builder.withField("CGLIB$FACTORY_DATA"));
 
-        hints.reflection().registerType(
-                TypeReference.of("org.springdoc.core.providers.SpringWebProvider$$SpringCGLIB$$0"),
+        hints.reflection().registerType(TypeReference.of("org.springdoc.core.providers.SpringWebProvider$$SpringCGLIB$$0"),
                 builder -> builder.withField("CGLIB$CALLBACK_FILTER"));
 
-        hints.reflection().registerType(
-                TypeReference.of("org.springdoc.core.providers.SpringWebProvider"),
+        hints.reflection().registerType(TypeReference.of("org.springdoc.core.providers.SpringWebProvider"),
                 builder -> builder.withMembers(MemberCategory.INVOKE_DECLARED_METHODS));
 
         //kafka
@@ -52,6 +49,18 @@ public class ApplicationBaseRuntimeHints implements RuntimeHintsRegistrar {
         //adapter
         hints.reflection().registerType(TypeReference.of("org.springframework.web.client.ResourceAccessException"),
                 builder -> builder.withMembers(MemberCategory.INVOKE_DECLARED_METHODS));
+
+        //caffeine cache
+        hints.reflection().registerType(TypeReference.of("com.github.benmanes.caffeine.cache.PSAMS"),
+                builder -> builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS));
+        hints.reflection().registerType(TypeReference.of("com.github.benmanes.caffeine.cache.SSMS"),
+                builder -> builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS));
+        hints.reflection().registerType(TypeReference.of("com.github.benmanes.caffeine.cache.SSMSA"),
+                builder -> builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS));
+        hints.reflection().registerType(TypeReference.of("com.github.benmanes.caffeine.cache.SSMS"),
+                builder -> builder.withField("FACTORY"));
+        hints.reflection().registerType(TypeReference.of("com.github.benmanes.caffeine.cache.SSMSA"),
+                builder -> builder.withField("FACTORY"));
 
         //flyway scripts
         hints.resources().registerPattern("db/migration/h2/*.sql");
