@@ -7,7 +7,7 @@ import java.util.Base64;
 import java.util.Map;
 
 public class UserContext {
-    private static final JsonMapper jsonMapper = JsonMapper.builder().build();
+    private static final JsonMapper JSON_MAPPER = JsonMapper.builder().build();
 
     record UserContextRecord(String tenantId, String organizationId, String userName) {
         public Map<String, String> toAdapterHeaderMap() {
@@ -60,6 +60,6 @@ public class UserContext {
     }
 
     private static String getUserNameFromUserInfo(String userInfo) {
-        return userInfo != null ? (String) jsonMapper.readValue(Base64.getUrlDecoder().decode(userInfo), Map.class).get("preferred_username") : null;
+        return userInfo != null ? (String) JSON_MAPPER.readValue(Base64.getUrlDecoder().decode(userInfo), Map.class).get("preferred_username") : null;
     }
 }
