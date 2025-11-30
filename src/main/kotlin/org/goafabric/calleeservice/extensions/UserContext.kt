@@ -9,15 +9,15 @@ import java.util.*
 object UserContext {
     data class UserContextRecord(val tenantId: String, val organizationId: String, val userName: String) {
         fun toAdapterHeaderMap(): Map<String, String> {
-            return java.util.Map.of(
-                "X-TenantId", tenantId,
-                "X-OrganizationId", organizationId,
-                "X-Auth-Request-Preferred-Username", userName
+            return mapOf(
+                "X-TenantId" to tenantId,
+                "X-OrganizationId" to organizationId,
+                "X-Auth-Request-Preferred-Username" to userName
             )
         }
     }
 
-    private val jacksonMapper : JsonMapper = jacksonMapperBuilder().build()
+    private val jsonMapper : JsonMapper = jacksonMapperBuilder().build()
 
     private val CONTEXT: ThreadLocal<UserContextRecord> =
         ThreadLocal.withInitial { UserContextRecord("0", "0", "anonymous") }
@@ -64,7 +64,7 @@ object UserContext {
 
     private fun getUserNameFromUserInfo(userInfo: String?): String? {
         return if (userInfo != null) {
-            val map: Map<String, Any>? = jacksonMapper.readValue(Base64.getUrlDecoder().decode(userInfo))
+            val map: Map<String, Any>? = jsonMapper.readValue(Base64.getUrlDecoder().decode(userInfo))
             map?.get("preferred_username") as? String
         } else { null }
     }
