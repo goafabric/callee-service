@@ -1,27 +1,28 @@
 /*
 package org.goafabric.calleeservice.s3.archived;
 
-import am.ik.s3.ListBucketResult;
-import am.ik.s3.ListBucketsResult;
-import am.ik.s3.S3Content;
-import am.ik.s3.S3RequestBuilders;
+import am.ik.s3.*;
+import jakarta.annotation.PostConstruct;
+import org.goafabric.calleeservice.s3.ObjectEntry;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static am.ik.s3.S3RequestBuilder.s3Request;
 
 @Component
-@RegisterReflectionForBinding({ListBucketResult.class, ListBucketsResult.class}) //implementation("am.ik.s3:simple-s3-client:0.1.1") {exclude("org.springframework", "spring-web")}
+@RegisterReflectionForBinding({ListBucketResult.class, ListBucketsResult.class, S3Request.class}) //implementation("am.ik.s3:simple-s3-client:0.1.1") {exclude("org.springframework", "spring-web")}
 public class ObjectStorageLogicAWSSpring {
 
     private final Boolean    s3Enabled;
@@ -45,14 +46,16 @@ public class ObjectStorageLogicAWSSpring {
         this.region = region;
         this.accessKey = accessKey;
         this.secretKey = secretKey;
-        this.restClient = RestClient.builder().messageConverters(httpMessageConverters -> httpMessageConverters.add(new MappingJackson2XmlHttpMessageConverter())).build();
+        this.restClient = RestClient.builder()
+                //messageConverters(httpMessageConverters -> httpMessageConverters.add(new MappingJackson2XmlHttpMessageConverter()))
+                .build();
     }
 
     public ObjectEntry getById(String key) {
         if (!s3Enabled) { return objectEntriesInMem.stream().filter(o -> o.objectName().equals(key)).findFirst().get(); }
 
         var request = s3RequestPath(HttpMethod.GET, schemaPrefix + "/" + key).build();
-        var response = restClient.get().uri(request.uri()).headers(request.headers()).retrieve().toEntity(byte[].class);
+        var response = restClient.get().uri(request.uri()).headers(getHeaders(request)).retrieve().toEntity(byte[].class);
         return new ObjectEntry(key, response.getHeaders().getFirst("Content-Type"), (long) response.getBody().length, response.getBody());
     }
 
@@ -79,19 +82,22 @@ public class ObjectStorageLogicAWSSpring {
                 .build();
 
         restClient.put().uri(request.uri())
-                .headers(request.headers())
+                .headers(getHeaders(request))
                 .body(objectEntry.data())
                 .retrieve().toBodilessEntity();
     }
 
     private void createBucketIfNotExists(String bucket) {
         var request = s3Path(HttpMethod.GET).path(b -> b).build();
-        var response = restClient.get().uri(request.uri()).headers(request.headers()).retrieve()
+        var response = restClient.get().uri(request.uri()).headers(getHeaders(request)).retrieve()
                 .toEntity(ListBucketsResult.class).getBody();
 
         if (response.buckets().stream().noneMatch(b -> b.name().equals(bucket))) { //this could be slow
             var request2 = s3RequestPath(HttpMethod.PUT, null).build();
-            restClient.put().uri(request2.uri()).headers(request2.headers()).retrieve().toBodilessEntity();
+
+            getHeaders(request2);
+
+            restClient.put().uri(request2.uri()).headers(getHeaders(request2)).retrieve().toBodilessEntity();
         }
     }
 
@@ -115,5 +121,27 @@ public class ObjectStorageLogicAWSSpring {
         return schemaPrefix.replaceAll("_", "-") + "5"; //TenantContext.getTenantId();
     }
 
+    private static Consumer<HttpHeaders> getHeaders(S3Request request2) { //ugly workaround to ensure spring boot 4.0 compatibility
+        try {
+            Field f = S3Request.class.getDeclaredField("httpHeaders");
+            f.setAccessible(true);
+            var httpHeaders = (HttpHeaders) f.get(request2);
+            return headers -> headers.addAll(httpHeaders);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @PostConstruct
+    public void demo() {
+        try {
+            save(new ObjectEntry("hello_world.txt", "text/plain", Long.valueOf("hello world".length()), "hello world".getBytes()));
+            System.err.println("getById : " + getById("hello_world.txt"));
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
-*/
+
+ */
