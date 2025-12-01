@@ -12,21 +12,7 @@ import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.web.client.RestClient
 
 @SpringBootApplication
-class Application(@Autowired private val context: ConfigurableApplicationContext):
-    CommandLineRunner {
-    override fun run(vararg args: String) {
-        if (args.isNotEmpty() && "-check-integrity" == args[0]) {
-            context.addApplicationListener(ApplicationListener { _: ApplicationReadyEvent? ->
-                RestClient.create().get()
-                    .uri("http://localhost:" + context.environment.getProperty("local.server.port") + "/v3/api-docs")
-                    .retrieve().body(
-                        String::class.java
-                    )
-                SpringApplication.exit(context!!, ExitCodeGenerator { 0 })
-            })
-        }
-    }
-}
+class Application
 
 fun main(args: Array<String>) {
     runApplication<Application>(*args)
