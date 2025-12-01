@@ -113,6 +113,6 @@ openApi {
 	tasks.forkedSpringBootRun { dependsOn("compileAotJava", "processAotResources") }
 }
 
-sonar { properties { property("sonar.exclusions", "**/ApplicationBaseRuntimeHints.java") } }
+sonar { properties { property("sonar.exclusions", "**/ApplicationBaseRuntimeHints.*") } }
 
 kotlin.compilerOptions.freeCompilerArgs.add("-Xannotation-default-target=param-property")
