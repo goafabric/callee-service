@@ -96,3 +96,5 @@ openApi {
 	customBootRun { args.set(listOf("--server.port=8080")) }
 	tasks.forkedSpringBootRun { dependsOn("compileAotJava", "processAotResources") }
 }
+
+sonar { properties { property("sonar.coverage.exclusions", "**/ApplicationBaseRuntimeHints.java"); property("sonar.cpd.exclusions", "**/ApplicationBaseRuntimeHints.java") } }
