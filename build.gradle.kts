@@ -97,4 +97,5 @@ openApi {
 	tasks.forkedSpringBootRun { dependsOn("compileAotJava", "processAotResources") }
 }
 
-sonar { properties { property("sonar.coverage.exclusions", "**/ApplicationBaseRuntimeHints.java"); property("sonar.cpd.exclusions", "**/ApplicationBaseRuntimeHints.java") } }
+
+sonar { properties { property("sonar.exclusions", "**/ApplicationBaseRuntimeHints.*") } }
