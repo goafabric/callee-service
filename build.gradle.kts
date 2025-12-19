@@ -13,13 +13,13 @@ val baseImage = "eclipse-temurin:25-jre@sha256:74d5c631e5db5a44e7f5a2dd49f93f0c6
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "4.0.0"
+	id("org.springframework.boot") version "4.0.1"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("org.graalvm.buildtools.native") version "0.11.3"
 
 	id("com.google.cloud.tools.jib") version "3.5.2"
 	id("net.researchgate.release") version "3.1.0"
-	id("org.sonarqube") version "7.2.1.6560"
+	id("org.sonarqube") version "7.2.2.6593"
 
 	id("org.cyclonedx.bom") version "3.1.0"
 	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
