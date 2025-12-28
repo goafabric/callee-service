@@ -36,7 +36,7 @@ jobs:
           git add doc/generated && git diff --cached --quiet doc/generated || git commit -m "Update generated docs" -- doc/generated && git push --force
 
       - name: Archive SBOM
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: SBOM
           path: build/resources/main/META-INF/sbom/application.cdx.json
