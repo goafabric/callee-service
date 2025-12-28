@@ -87,14 +87,13 @@ public class ApplicationRulesTest {
                     "jakarta..",
                     "org.springframework..",
                     "org.slf4j..",
-                    "org.aspectj.lang..",
-                    "com.fasterxml.jackson..",
-                    "tools.jackson..",
+                    "com.fasterxml.jackson..","tools.jackson..",
                     "org.flywaydb..",
                     "org.hibernate..",
                     "org.mapstruct..",
                     "io.github.resilience4j..",
                     "io.micrometer..",
+
                     "org.springdoc..",
                     "net.ttddyy..",
 
@@ -105,6 +104,10 @@ public class ApplicationRulesTest {
 
                     "org.javers..",
                     "com.nimbusds.jwt..",
+                    "tools.jackson.databind.jsontype..",
+
+                    "org.aspectj..",
+                    "io.opentelemetry..",
 
                     "kotlin..",
                     "kotlinx..",
