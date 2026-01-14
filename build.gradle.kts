@@ -61,7 +61,7 @@ dependencies {
 
 	//fabric8
 	//implementation("io.fabric8:kubernetes-client:7.3.1")
-	implementation("de.muehlencord.epcqr:epc-qr:1.1.3")
+	//implementation("de.muehlencord.epcqr:epc-qr:1.1.3") //https://github.com/jomu78/epc-qr, https://github.com/zxing/zxing
 
 	//test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

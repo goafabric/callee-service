@@ -1,3 +1,4 @@
+/*
 package org.goafabric.calleeservice.epcqr;
 
 import de.muehlencord.epcqr.EpcBuilder;
@@ -23,3 +24,5 @@ public class EpcQr {
         //System.out.println(new Base64ImageGenerator().generate(builder););
     }
 }
+
+ */
