@@ -34,7 +34,7 @@ problems
 - mtls only works when using Daprs prop. service invocation, not with springs / quarkus default implementations
 - it introduces an extra sidecar per app with about 30mb
 
-# what problem does it really solve, what are we using ?
+# what problem does it really solve / what are we using instead ?
 Infrastructure
 - mTLS, Security, Observability: Istio Ambient Mesh, works WITHOUT a sidecar for all HTTP Traffic independent of implementation, defacto Standard
 - Service registry: Already part of Kubernetes with by DNS
@@ -42,7 +42,7 @@ Infrastructure
 - State: Redis which has become the defacto Standard (Dragonfly has in Drop Replacement)
 - Secrets: (Azure) Vault, injected via FS or Environment, without ANY Application Coupling
 - Configuration: application.properties, overriden by Kubernetes Configmap
-- Cryptography: Encryption of managed Databases, should NOT be party of applications
+- Cryptography: Encryption of managed Databases, should NOT be part of applications
               
 Implementation
 - Messaging Integration: Spring Boot, Quarkus, GOFR
