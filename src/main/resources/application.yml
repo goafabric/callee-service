@@ -23,7 +23,7 @@ management.tracing.sampling.probability: "1.0"
 management.opentelemetry.tracing.export.otlp.endpoint: "http://localhost:4318/v1/traces"
 logging.level.io.opentelemetry: "OFF"
 
-#management.otlp.metrics.export.url: "http://otel-collector:4318/v1/metrics" #otel collector (prometheus) metrics endpoints, currently disabled because not used
+#management.otlp.metrics.export.url: "http://otel-collector:4318/v1/metrics" #otel collector (prometheus) metrics endpoints
 management.otlp.metrics.export.enabled: false
 
 #logging
