@@ -23,7 +23,8 @@ management.tracing.sampling.probability: "1.0"
 management.opentelemetry.tracing.export.otlp.endpoint: "http://localhost:4318/v1/traces"
 logging.level.io.opentelemetry: "OFF"
 
-#management.otlp.metrics.export.url: "http://otel-collector:4318/v1/metrics" #otel collector (prometheus) metrics endpoints
+#otel collector (prometheus) metrics configuration, disabled currently, for details https://spring.io/blog/2025/11/18/opentelemetry-with-spring-boot
+#management.otlp.metrics.export.url: "http://otel-collector:4318/v1/metrics"
 management.otlp.metrics.export.enabled: false
 
 #logging
