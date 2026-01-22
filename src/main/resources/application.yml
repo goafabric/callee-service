@@ -25,7 +25,7 @@ logging.level.io.opentelemetry: "OFF"
 
 #otel collector (prometheus) metrics configuration, disabled currently, for details https://spring.io/blog/2025/11/18/opentelemetry-with-spring-boot
 #management.otlp.metrics.export.url: "http://otel-collector:4318/v1/metrics"
-management.otlp.metrics.export.enabled: false
+logging.level.io.micrometer.registry.otlp: "OFF"
 
 #logging
 logging.pattern.level: "%5p tenantId=%X{tenantId:-}" #"%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}] tenantId=%X{tenantId:-}"
