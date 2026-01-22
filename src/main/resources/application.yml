@@ -21,7 +21,10 @@ management:
 spring.application.name: callee-service
 management.tracing.sampling.probability: "1.0"
 management.opentelemetry.tracing.export.otlp.endpoint: "http://localhost:4318/v1/traces"
-#management.otlp.metrics.export.url: http://localhost:4318/v1/metrics
+logging.level.io.opentelemetry: "OFF"
+
+management.otlp.metrics.export.url: "http://localhost:4318/v1/metrics"
+#logging.level.io.micrometer.registry.otlp: "OFF"
 
 #logging
 logging.pattern.level: "%5p tenantId=%X{tenantId:-}" #"%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}] tenantId=%X{tenantId:-}"
