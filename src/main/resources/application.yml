@@ -11,8 +11,6 @@ spring.threads.virtual.enabled: "true"
 management:
     endpoint:
       health:
-        probes:
-          enabled: true
         show-details: never
     endpoints:
       web:
@@ -22,8 +20,8 @@ management:
 #tracing
 spring.application.name: callee-service
 management.tracing.sampling.probability: "1.0"
-#management.otlp.tracing.endpoint: "http://localhost:4318/v1/traces"
 management.opentelemetry.tracing.export.otlp.endpoint: "http://localhost:4318/v1/traces"
+#management.otlp.metrics.export.url: http://localhost:4318/v1/metrics
 
 #logging
 logging.pattern.level: "%5p tenantId=%X{tenantId:-}" #"%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}] tenantId=%X{tenantId:-}"
@@ -34,5 +32,3 @@ logging.level.org.springframework: "INFO"
 logging.level.org.goafabric: "INFO"
 logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
-springdoc.enable-kotlin: false
-logging.level.io.micrometer.registry.otlp: "OFF"
