@@ -21,6 +21,9 @@ public class ApplicationBaseRuntimeHints implements RuntimeHintsRegistrar {
         hints.reflection().registerType(TypeReference.of("org.springdoc.core.providers.SpringWebProvider$$SpringCGLIB$$0"),
                 builder -> builder.withField("CGLIB$CALLBACK_FILTER"));
 
+        hints.reflection().registerType(TypeReference.of("org.springdoc.core.providers.SpringWebProvider$$SpringCGLIB$$0"),
+                builder -> builder.withMembers(MemberCategory.INVOKE_DECLARED_METHODS));
+
         hints.reflection().registerType(TypeReference.of("org.springdoc.core.providers.SpringWebProvider"),
                 builder -> builder.withMembers(MemberCategory.INVOKE_DECLARED_METHODS));
 
