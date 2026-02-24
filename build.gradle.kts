@@ -8,7 +8,7 @@ java.sourceCompatibility = JavaVersion.toVersion(javaVersion)
 tasks.withType<KotlinCompile>().all { compilerOptions { jvmTarget.set(JvmTarget.fromTarget(javaVersion)) } }
 
 val dockerRegistry = "goafabric"
-val baseImage = "eclipse-temurin:25-jre@sha256:74d5c631e5db5a44e7f5a2dd49f93f0c6f7b8c22c1dc1b8e1caec7009872c5c3"
+val baseImage = "ibm-semeru-runtimes:open-jdk-25.0.2_10-jdk-noble@sha256:67bc0624caa00a2ad369037a0826962d3657b9b47312e43cf98cbddb2feda476"
 
 plugins {
 	java
