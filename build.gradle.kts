@@ -23,8 +23,8 @@ plugins {
 
 	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
 
-	kotlin("jvm") version "2.3.10"
-	kotlin("plugin.spring") version "2.3.10"
+	kotlin("jvm") version "2.3.20"
+	kotlin("plugin.spring") version "2.3.20"
 }
 
 repositories {
@@ -39,7 +39,7 @@ dependencies {
 		implementation("org.mapstruct:mapstruct:1.6.3")
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.2")
 		implementation("io.github.resilience4j:resilience4j-spring-boot4:2.4.0")
-		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:2.1.1")
+		implementation("net.ttddyy.observation:datasource-micrometer-spring-boot:2.2.0")
 		implementation("org.mockito.kotlin:mockito-kotlin:6.2.3")
 		testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
 	}
