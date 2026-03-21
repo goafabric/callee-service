@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.service.annotation.HttpExchange
 
 @AnalyzeClasses(packagesOf = [Application::class], importOptions = [DoNotIncludeTests::class])
-internal object AdapterRulesTest {
+class AdapterRulesTest {
     @ArchTest
     val adapterName: ArchRule = ArchRuleDefinition.methods().that()
         .areMetaAnnotatedWith(HttpExchange::class.java)

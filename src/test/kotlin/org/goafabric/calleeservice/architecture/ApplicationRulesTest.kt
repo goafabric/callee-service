@@ -15,7 +15,7 @@ import org.springframework.context.annotation.ImportRuntimeHints
 import kotlin.jvm.java
 
 @AnalyzeClasses(packagesOf = [Application::class], importOptions = [DoNotIncludeTests::class, ApplicationRulesTest.IgnoreCglib::class])
-object ApplicationRulesTest {
+class ApplicationRulesTest {
     @ArchTest
     val reflectionShouldBeAvoided: ArchRule = ArchRuleDefinition.noClasses()
         .that()
@@ -119,7 +119,7 @@ object ApplicationRulesTest {
         .resideInAnyPackage("org.flywaydb.core.api.migration..")
         .because("Flyway Java Migrations should not be used, complex import logic should go to a separate batch, simple ones with a simple Java class if aware of the consequences")
 
-    internal class IgnoreCglib : ImportOption {
+    class IgnoreCglib : ImportOption {
         override fun includes(location: Location): Boolean {
             return !location.contains("$$") && !location.contains("EnhancerByCGLIB")
         }

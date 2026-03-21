@@ -3,7 +3,7 @@ package org.goafabric.calleeservice.extensions
 import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
 
-internal class TenantContextTest {
+class TenantContextTest {
     @Test
     fun getTenantId() {
         UserContext.setContext(null, null, null, null)

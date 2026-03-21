@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.goafabric.calleeservice.controller.dto.Callee
 import org.junit.jupiter.api.Test
 
-internal class CalleeLogicTest {
+class CalleeLogicTest {
     private val calleeLogic = CalleeLogic()
 
     @Test

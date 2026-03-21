@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 
-internal class HttpInterceptorTest {
+class HttpInterceptorTest {
     private val httpInterceptor = HttpInterceptor()
 
     @Test

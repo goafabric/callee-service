@@ -14,7 +14,7 @@ import com.tngtech.archunit.library.Architectures
 import org.goafabric.calleeservice.Application
 
 @AnalyzeClasses(packagesOf = [Application::class], importOptions = [DoNotIncludeTests::class])
-object PersistenceRulesTest {
+class PersistenceRulesTest {
     @ArchTest
     val layerAreRespectedWithPersistence: ArchRule = Architectures.layeredArchitecture()
         .consideringOnlyDependenciesInLayers()

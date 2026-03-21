@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 
 
 @AnalyzeClasses(packagesOf = [Application::class], importOptions = [DoNotIncludeTests::class])
-internal object ControllerRulesTest {
+class ControllerRulesTest {
     @ArchTest
     val layerAreRespectedBasic: ArchRule = Architectures.layeredArchitecture()
         .consideringOnlyDependenciesInLayers()
