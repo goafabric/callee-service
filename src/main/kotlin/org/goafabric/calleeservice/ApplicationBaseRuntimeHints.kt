@@ -90,7 +90,7 @@ class ApplicationBaseRuntimeHints : RuntimeHintsRegistrar {
         hints.reflection().registerType(
             org.springframework.aot.hint.TypeReference.of("org.hibernate.validator.internal.util.logging.Messages_\$bundle"),
             java.util.function.Consumer { builder: TypeHint.Builder? ->
-                builder.withMembers(MemberCategory.INVOKE_DECLARED_METHODS).withField("INSTANCE")
+                builder!!.withMembers(MemberCategory.INVOKE_DECLARED_METHODS).withField("INSTANCE")
             })
 
     }
