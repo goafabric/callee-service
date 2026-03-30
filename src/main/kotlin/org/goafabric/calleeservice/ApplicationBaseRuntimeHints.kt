@@ -1,6 +1,8 @@
 package org.goafabric.calleeservice
 
 import org.springframework.aot.hint.*
+import org.springframework.aot.hint.MemberCategory
+import org.springframework.aot.hint.TypeHint
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.ImportRuntimeHints
 import java.util.function.Consumer
@@ -84,5 +86,12 @@ class ApplicationBaseRuntimeHints : RuntimeHintsRegistrar {
         hints.reflection().registerType(
             TypeReference.of("org.hibernate.validator.internal.util.logging.Log_\$logger"),
             Consumer { builder: TypeHint.Builder? -> builder!!.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS) })
+
+        hints.reflection().registerType(
+            org.springframework.aot.hint.TypeReference.of("org.hibernate.validator.internal.util.logging.Messages_\$bundle"),
+            java.util.function.Consumer { builder: TypeHint.Builder? ->
+                builder.withMembers(MemberCategory.INVOKE_DECLARED_METHODS).withField("INSTANCE")
+            })
+
     }
 }
