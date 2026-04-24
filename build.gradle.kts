@@ -67,6 +67,9 @@ dependencies {
     implementation("tools.jackson.module:jackson-module-kotlin")
 	testImplementation("com.tngtech.archunit:archunit-junit5")
 
+	//mcp
+	implementation("org.springframework.ai:spring-ai-starter-mcp-server-webmvc:1.1.4")
+
 	//test
 	testImplementation("org.mockito.kotlin:mockito-kotlin")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

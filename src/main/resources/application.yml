@@ -36,3 +36,21 @@ logging.level.org.springframework: "INFO"
 logging.level.org.goafabric: "INFO"
 logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
+
+
+spring:
+  ai:
+    mcp:
+      server:
+        name: callee-service
+        version: 1.0.0
+        type: SYNC
+        instructions: "This server provides weather information tools and resources"
+        capabilities:
+          tool: true
+          resource: true
+          prompt: true
+          completion: true
+        # sse properties
+        sse-endpoint: /mcp/sse
+        keep-alive-interval: 30s
