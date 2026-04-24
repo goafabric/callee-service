@@ -1,0 +1,126 @@
+# setting up new projects
+
+## use latest gradle stable version for new projects
+- when setting up a new project always use the latest gradle stable version, looked up from the internet
+- for building with gradle, always use the gradlew wrapper
+- do not use maven
+
+## use latest spring boot stable version
+- when setting up a new project, always use the latest spring boot stable version, looked up from the internet
+- also use the latest stable and fitting "io.spring.dependency-management" version, looked up from the internet
+- if kotlin is required, please use the latest version of kotlin, looked up from the internet
+- for application properties always use application.yml with yaml
+- Application classes should just be called "Application" without any prefix or suffix
+
+## use java 21
+- when setting up java versions / compatibility use java 21
+
+
+# layers
+
+## layer naming
+- every project should follow these layers: controller, logic, persistence, adapter
+- these layers should be put in a java package equal to the layer name
+- adapter will represent the rest client, controller will represent the controller layer, the logic layer will represent the business logic, the persistence layer will represent the persistence layer
+- adapter package is optional, only if an external system is connected via rest
+
+## controller layer
+- dtos should reside in a subpackage "dto" inside the controller package
+- dtos should be immutable java records not java classes, for kotlin use data classes
+- they should not be suffixed with "DTO" just the plain name (e.g. Person for a Person)
+- controller return values should never be wrapped inside ResponseEntity, they should just return the simple DTO
+- usage of "@ResponseStatus" is als forbidden
+
+# controller class method names
+- inside a controller class, there should be a method getById, that retrieves via REST GET/{id}
+- inside a controller class, there should be a method delete, that deletes via REST DELETE/{id}
+- inside a controller class, there should be a method save, that creates via REST POST
+- inside a controller class, there is never an update method
+
+# persistence layer
+- the persistence layer should be built with spring data jpa
+- with repository classes going to a subpackage "repository" inside the persistence package, suffixing the classes with "Repository"
+- with entity classes going to a subpackage "entity" inside the persistence package, suffixing the classes with "Eo"
+- entities should be immutable java classes, with a full args constructor, with getters, but no setters
+- they should of course be annotated with @Entity, @Table, @Id and @GeneratedValue
+- the id should be generated like "@GeneratedValue(strategy = GenerationType.UUID)"
+- entities should follow the structure of the dtos, so mostly a copy to decouple persistence from controller
+- entities should have an @Version field for optimistic locking
+- the version field will also be part of the dto
+- Repository methods that return a Collection or List, should always return a Page<> and have a Pageable parameter as last parameter
+
+## logic layer
+- classes inside the logic layer should be annotated with springs "org.springframework.transaction.annotation.Transactional" and "@Component" at the class level
+- the logic layer will also be a bridge the persistence layer and the controller layer
+- it will call the repository classes and map the results from the entities to dtos
+
+## mapping
+- for mapping the latest stable mapstruct version is used
+- mappers reside in a subpackage "mapper" inside the logic package
+- thy are just an interface annotated with @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+- all methods inside the mapper should should just be called "map" as long as overloading of types allows it
+
+# controller class search methods
+- a controller class can have a method for searching / finding named "find", that retrieves a List<> just via GET/
+- this find method should have to query parameters for page and size, as the two last parameters
+- the parameters for finding, should be added via a special DTO *search added as first parameter with @ModelAttribute, this dto has to be created as a record inside the dto sub package
+- this controller method will call a method find(*search, page, size) in the logic layer
+- the logic layer find method will call an existing method from the repository "Page<> findAll(Example<> example, Pageable pageable)", for classes of JPARepository this method exists and should not be created
+- the logic layer method implementation as an example could look as simple as this: "return mapper.map(repository.findAll(Example.of(mapper.map(*search)), PageRequest.of(page,size)));"
+- for the logic layer method there have to be mappings to map the repository methods to the controller via the logic
+
+# forbidden usages
+
+## usage of reflection is forbidden
+- usage of classes that will deal with reflection is forbidden
+- these can for example be the usage or imports on "Class.forName", "java.lang.reflect", "org.springframework.util.ReflectionUtils", "org.springframework.beans.BeanWrapperImpl", "akarta.validation.ConstraintValidator"
+
+## usage of specific libraries
+- usage of these libraries or imports on these is forbidden
+    - "com.google.common", "org.apache.commons", "dev.mccue.guava"
+
+
+# usage of declarative rest client
+
+## enforce declarative restclient
+
+- Always use the declarative rest client from Spring Boot in both main and test sources.
+- This means defining interfaces annotated with @RestClient and method mappings.
+- Disallow usage of RestTemplate, TestRestTemplate, WebClient, OpenFeign, or imperative RestClient usage.
+- you can find examples for the declarative rest clientinterface, as well es a fitting configuration class below, they should be created as separate classes outside the test class
+- The adapter should have an @Circuitbreaker, for this use the latest stable version of "io.github.resilience4j:resilience4j-spring-boot3", looked up from the internet
+- Inside the src/main folder the naming schema is "*ServiceAdapter" for configuration and declarative rest client
+- Inside the src/test folder the naming schema is "*ControllerRemote" for configuration and declarative rest client
+
+## example for declarative rest client
+@HttpExchange(value = "/persons", contentType = MediaType.APPLICATION_JSON_VALUE) 
+@CircuitBreaker(name = "personservice")
+public interface PersonServiceAdapter {
+
+    @GetExchange("{id}")
+    Person getById(@PathVariable("id") String id);
+}
+
+# example for declarative rest client configuration
+@Configuration
+@Lazy
+public class PersonServiceAdapterConfiguration {
+
+    @Bean
+    public PersonServiceAdapter personServiceAdapter(RestClient.Builder builder,
+                                                         @LocalServerPort String port, @Value("${adapter.timeout}") Long timeout) {
+        return createAdapter(PersonServiceAdapter.class, builder, "http://localhost:" + port, timeout);
+    }
+
+    public static <A> A createAdapter(Class<A> adapterType, RestClient.Builder builder, String url, Long timeout) {
+        var requestFactory = new org.springframework.http.client.SimpleClientHttpRequestFactory();
+        requestFactory.setConnectTimeout(timeout.intValue());
+        requestFactory.setReadTimeout(timeout.intValue());
+        builder.baseUrl(url).requestFactory(requestFactory);
+
+        return HttpServiceProxyFactory.builderFor(org.springframework.web.client.support.RestClientAdapter.create(builder.build())).build()
+                .createClient(adapterType);
+    }
+
+}
+

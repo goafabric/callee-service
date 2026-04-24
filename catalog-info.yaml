@@ -1,0 +1,47 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: callee-service
+  description: |
+    Very tiny SPRING Service without Persistence
+    
+    [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=org.goafabric%3Acallee-service)
+    [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=coverage)](https://sonarcloud.io/summary/new_code?id=org.goafabric%3Acallee-service)
+
+    [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=org.goafabric%3Acallee-service)
+    [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=org.goafabric%3Acallee-service)
+    [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=org.goafabric%3Acallee-service&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=org.goafabric%3Acallee-service)
+  tags:
+    - spring-boot
+    - microservice
+  annotations:
+    github.com/project-slug: goafabric/callee-service
+  links:
+    - url: https://github.com/goafabric/callee-service
+      title: GitHub Repository
+
+
+spec:
+  type: service
+  lifecycle: production
+  owner: team-blue
+  
+  providesApis:
+    - callee-api
+
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: callee-api
+  description: OpenAPI definition for Core Service.
+  tags:
+    - openapi
+    - callee-service
+spec:
+  type: openapi
+  lifecycle: production
+  owner: team-blue
+  definition:
+    $text: doc/generated/openapi.json

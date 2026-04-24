@@ -1,0 +1,22 @@
+#security
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          oidc-generic:
+            scope:
+              - openid
+            client-id: oauth2-proxy
+            clientSecret: none
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/oidc-generic"
+        provider:
+          oidc-generic:
+            issuerUri: http://127.0.0.1:30200
+            #issuerUri: http://localhost:30200/oidc/realms/tenant-0
+            user-name-attribute: preferred_username
+
+# implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+# docker run --name auth-server --rm -p30200:30200 goafabric/spring-auth-server-native:1.0.3 -Xmx32m
+
