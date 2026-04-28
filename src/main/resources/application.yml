@@ -44,13 +44,5 @@ spring:
       server:
         name: callee-service
         version: 1.0.0
-        type: SYNC
-        instructions: "This server provides weather information tools and resources"
-        capabilities:
-          tool: true
-          resource: true
-          prompt: true
-          completion: true
-        # sse properties
-        sse-endpoint: /mcp/sse
-        keep-alive-interval: 30s
+        protocol: streamable
+        instructions: "This server provides Name Information"
