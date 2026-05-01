@@ -68,7 +68,7 @@ dependencies {
 	testImplementation("com.tngtech.archunit:archunit-junit5")
 
 	//mcp
-	implementation("org.springframework.ai:spring-ai-starter-mcp-server-webmvc:1.1.4")
+	implementation("org.springframework.ai:spring-ai-starter-mcp-server-webmvc:2.0.0-M4")
 
 	//test
 	testImplementation("org.mockito.kotlin:mockito-kotlin")
