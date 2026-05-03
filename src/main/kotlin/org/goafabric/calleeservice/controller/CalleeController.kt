@@ -2,7 +2,7 @@ package org.goafabric.calleeservice.controller
 
 import org.goafabric.calleeservice.controller.dto.Callee
 import org.goafabric.calleeservice.logic.CalleeLogic
-import org.springframework.ai.mcp.annotation.McpTool
+import org.springaicommunity.mcp.annotation.McpTool
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.bind.annotation.*
 

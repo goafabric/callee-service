@@ -54,7 +54,7 @@ dependencies {
 	implementation("io.micrometer:micrometer-registry-prometheus")
 
 	//openapi
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
+	//implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
 
 	//crosscuting
     implementation("org.springframework.boot:spring-boot-starter-aspectj")
@@ -68,7 +68,7 @@ dependencies {
 	testImplementation("com.tngtech.archunit:archunit-junit5")
 
 	//mcp
-	implementation("org.springframework.ai:spring-ai-starter-mcp-server-webmvc:2.0.0-M4")
+	implementation("org.springframework.ai:spring-ai-starter-mcp-server-webmvc:1.1.4")
 
 	//test
 	testImplementation("org.mockito.kotlin:mockito-kotlin")
