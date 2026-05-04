@@ -12,13 +12,13 @@ class CalleeController (
     private val calleeLogic : CalleeLogic) {
 
     @GetMapping("sayMyName")
-    @McpTool(name = "sayMyName", description = "say my name")
+    @McpTool(description = "say my name")
     fun sayMyName (@RequestParam("name") name : String) : Callee {
         return calleeLogic.sayMyName(name)
     }
 
     @GetMapping("sayMyOtherName/{name}")
-    @McpTool(name = "sayMyOtherName", description = "say my other name")
+    @McpTool(description = "say my other name")
     fun sayMyOtherName (@PathVariable("name") name : String) : Callee {
         return calleeLogic.sayMyOtherName(name)
     }
