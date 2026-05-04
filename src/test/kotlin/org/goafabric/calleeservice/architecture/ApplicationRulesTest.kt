@@ -93,6 +93,7 @@ class ApplicationRulesTest {
 
             "org.aspectj..",
             "io.opentelemetry..",
+            "org.springaicommunity..",
 
             "kotlin..",
             "kotlinx..",
