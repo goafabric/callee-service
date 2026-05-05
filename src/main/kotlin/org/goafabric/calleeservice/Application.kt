@@ -14,8 +14,3 @@ class Application
 fun main(args: Array<String>) {
     runApplication<Application>(*args)
 }
-
-@Bean
-fun weatherTools(calleeController: CalleeController): ToolCallbackProvider {
-    return MethodToolCallbackProvider.builder().toolObjects(calleeController).build()
-}
