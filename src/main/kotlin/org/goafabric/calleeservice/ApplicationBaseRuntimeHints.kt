@@ -93,6 +93,5 @@ class ApplicationBaseRuntimeHints : RuntimeHintsRegistrar {
         hints.reflection().registerType(
             TypeReference.of("org.springaicommunity.mcp.context.DefaultMetaProvider"),
             Consumer { builder: TypeHint.Builder? -> builder!!.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_DECLARED_METHODS) })
-
     }
 }
