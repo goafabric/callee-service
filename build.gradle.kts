@@ -10,13 +10,13 @@ val baseImage = "ibm-semeru-runtimes:open-jdk-25.0.2_10-jre-noble@sha256:b02e4cd
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "4.0.5"
+	id("org.springframework.boot") version "4.1.0"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("org.graalvm.buildtools.native") version "0.11.5"
 
 	id("com.google.cloud.tools.jib") version "3.5.3"
 	id("net.researchgate.release") version "3.1.0"
-	id("org.sonarqube") version "7.2.3.7755"
+	id("org.sonarqube") version "7.3.1.8318"
 
 	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
 }
@@ -31,9 +31,9 @@ dependencies {
 	constraints {
 		annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
 		implementation("org.mapstruct:mapstruct:1.6.3")
-		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.2")
+		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3")
 		implementation("io.github.resilience4j:resilience4j-spring-boot4:2.4.0")
-		testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
+		testImplementation("com.tngtech.archunit:archunit-junit5:1.4.2")
 	}
 }
 
