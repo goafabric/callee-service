@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 val version: String by project
-val javaVersion = "24"
+val javaVersion = "25"
 java.sourceCompatibility = JavaVersion.toVersion(javaVersion)
 tasks.withType<KotlinCompile>().all { compilerOptions { jvmTarget.set(JvmTarget.fromTarget(javaVersion)) } }
 
@@ -13,7 +13,7 @@ val baseImage = "ibm-semeru-runtimes:open-jdk-25.0.2_10-jre-noble@sha256:b02e4cd
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "4.0.5"
+	id("org.springframework.boot") version "4.1.0"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("org.graalvm.buildtools.native") version "0.11.5"
 
