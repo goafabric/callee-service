@@ -95,6 +95,10 @@ class ApplicationBaseRuntimeHints : RuntimeHintsRegistrar {
             Consumer { builder: TypeHint.Builder? -> builder!!.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS) })
 
         hints.reflection().registerType(
+            TypeReference.of("org.hibernate.validator.internal.util.logging.Messages_\$bundle"),
+            Consumer { builder: TypeHint.Builder? -> builder!!.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS) })
+
+        hints.reflection().registerType(
             TypeReference.of("com.google.protobuf.ExtensionRegistry"),
             Consumer { builder: TypeHint.Builder? -> builder!!.withMembers(MemberCategory.INVOKE_DECLARED_METHODS) })
     }
