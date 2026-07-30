@@ -91,6 +91,10 @@ class ApplicationBaseRuntimeHints : RuntimeHintsRegistrar {
 
         //org.graalvm.buildtools.native 1.0 regression
         hints.reflection().registerType(
+            TypeReference.of("org.hibernate.validator.internal.util.logging.Log_\$logger"),
+            Consumer { builder: TypeHint.Builder? -> builder!!.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS) })
+
+        hints.reflection().registerType(
             TypeReference.of("com.google.protobuf.ExtensionRegistry"),
             Consumer { builder: TypeHint.Builder? -> builder!!.withMembers(MemberCategory.INVOKE_DECLARED_METHODS) })
     }
