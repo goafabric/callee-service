@@ -15,7 +15,7 @@ plugins {
 	jacoco
 	id("org.springframework.boot") version "4.1.0"
 	id("io.spring.dependency-management") version "1.1.7"
-	id("org.graalvm.buildtools.native") version "0.11.5"
+	id("org.graalvm.buildtools.native") version "1.1.6"
 
 	id("com.google.cloud.tools.jib") version "3.5.3"
 	id("net.researchgate.release") version "3.1.0"
@@ -60,7 +60,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-aspectj")
 
 	//kotlin
-	implementation("org.springframework.boot:spring-boot-starter-opentelemetry")
+	//implementation("org.springframework.boot:spring-boot-starter-opentelemetry")
     implementation("org.springframework.boot:spring-boot-starter-restclient")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
