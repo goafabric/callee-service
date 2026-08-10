@@ -38,4 +38,4 @@ logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
 
 # mcp
-spring.ai.mcp.server.protocol: "streamable"
+spring.ai.mcp.server.protocol: "streamable" # "STATELESS" , currently would only work with 2.0, but bugs out because of missing "/discover" endpoint
