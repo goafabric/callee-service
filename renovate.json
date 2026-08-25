@@ -1,7 +1,6 @@
 {
   "baseBranches": [
-    "develop",
-    "java"
+    "develop"
   ],
   "extends": [
     "github>goafabric/renovate-bot"
