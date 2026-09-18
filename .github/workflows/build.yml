@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     steps:
       - uses: actions/checkout@v7
 
@@ -36,7 +36,7 @@ jobs:
           git add doc/generated && git diff --cached --quiet doc/generated || git commit -m "Update generated docs" -- doc/generated && git push --force
 
   snapshot:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     needs: test
     steps:
       - name: Login to Docker Hub
@@ -62,7 +62,7 @@ jobs:
         run: gradle jib dockerImageNative
 
   release:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     needs: snapshot
     if: github.ref == 'refs/heads/main'
 
