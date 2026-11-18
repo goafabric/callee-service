@@ -21,7 +21,7 @@ plugins {
 	id("net.researchgate.release") version "3.1.0"
 	id("org.sonarqube") version "7.2.3.7755"
 
-	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
+	id("org.springdoc.openapi-gradle-plugin") version "2.1.0"
 
 	kotlin("jvm") version "2.3.20"
 	kotlin("plugin.spring") version "2.3.20"
